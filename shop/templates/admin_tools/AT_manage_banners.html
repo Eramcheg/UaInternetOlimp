@@ -1,0 +1,133 @@
+{% load static %}
+{% load i18n %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+
+    .down-button, .up-button{
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid #e2e2e2;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .up-button:hover, .down-button:hover, .delete-button:hover, .submit:hover, .cancel:hover{
+        background-color: #d8d8d8;
+    }
+    .delete-button, .submit, .cancel{
+        width: 100px;
+        height: 40px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 2px solid #e2e2e2;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .add-new-banner{
+        margin-top: 20px;
+        {#text-decoration: underline;#}
+        font-size: 20px;
+        background-color: transparent;
+        width: 500px;
+        border: 3px solid #e2e2e2;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    form{
+        width: 250px;
+        height: 200px;
+    }
+</style>
+<section id="content" class="page-content col-md-12 col-lg-9 myacc_content" >
+<h1 style="font-weight: 600">Here you can manage banners on home page</h1>
+    {% if banners %}
+    <ul id="banners-list">
+        {% for banner in banners %}
+            <li id="banner-{{ banner.id }}" data-priority="{{ banner.priority }}" style="display: flex;margin: 50px 0 0;">
+                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" height="120" width="300" style="">
+                <div style="display: flex;flex-direction: column; margin: auto 10px; align-items: center">
+                    <button class="up-button" onclick="moveUp(this, '{{ banner.id }}')" data-url="{% url 'move_up' banner_id=banner.id %}"><i class="fa-solid fa-arrow-up"></i></button>
+                    <button class="down-button" onclick="moveDown(this, '{{ banner.id }}')" data-url="{% url 'move_down' banner_id=banner.id %}"><i class="fa-solid fa-arrow-down"></i></button>
+                    <button class="delete-button" onclick="deleteBanner(this, '{{ banner.id }}')" data-url="{% url 'delete_banner' banner_id=banner.id %}" style="margin-top: 15px">Delete</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p><h1>No banners yet.</h1></p>
+{% endif %}
+<div class="banners-footer">
+    <button class="add-new-banner" id="add-banner-btn">Add new banner</button>
+</div>
+<div id="banner-form" style="display:none;">
+    <form method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>New banner</h2>
+        {{ form.as_p }}
+        <button class="submit" type="submit">Submit</button>
+        <button class="cancel" type="button" onclick="cancelForm()">Cancel</button>
+    </form>
+</div>
+</section>
+<script>
+    document.getElementById('add-banner-btn').addEventListener('click', function() {
+    document.getElementById('banner-form').style.display = 'block';
+});
+
+function cancelForm() {
+    document.getElementById('banner-form').style.display = 'none';
+    document.getElementById('banner-form').reset();
+}
+function deleteBanner(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            'banner_id': bannerId
+        },
+        success: function() {
+            $(`#banner-${bannerId}`).remove();  // Удаление элемента из DOM
+        }
+    });
+}
+
+// Функции moveUp и moveDown должны быть определены для изменения приоритета
+function moveUp(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function() {
+            let item = $(`#banner-${bannerId}`);
+            if (item.prev().length) {  // Проверяем, есть ли элемент перед текущим
+                item.insertBefore(item.prev());
+            }
+        }
+    });
+}
+
+function moveDown(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function() {
+            let item = $(`#banner-${bannerId}`);
+            if (item.next().length) {  // Проверяем, есть ли элемент после текущего
+                item.insertAfter(item.next());
+            }
+        }
+    });
+}
+</script>

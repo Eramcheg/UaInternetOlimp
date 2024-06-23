@@ -1,0 +1,68 @@
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Additional styles -->
+</head>
+<style>
+.button-group {
+  font-family: Arial, sans-serif;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  border-color: #000;
+}
+
+.accept {
+  background: linear-gradient(to right, #007bff, #4b9cdb);
+  color: white;
+}
+
+.cancel {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* Mimicking the active or focus state */
+input[type="radio"]:checked + label.accept {
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
+}
+
+input[type="radio"]:checked + label.cancel {
+  background: #e0e0e0;
+}
+
+</style>
+<body>
+ <div class="button-group">
+  <input type="radio" id="accept" name="choice" value="accept" checked>
+  <label for="accept" class="btn accept">Accept</label>
+
+  <input type="radio" id="cancel" name="choice" value="cancel">
+  <label for="cancel" class="btn cancel">Cancel</label>
+</div>
+
+    <!-- Additional scripts -->
+</body>
+</html>
+{% endblock %}

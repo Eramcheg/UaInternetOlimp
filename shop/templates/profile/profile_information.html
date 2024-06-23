@@ -1,0 +1,287 @@
+{% load static %}
+{% load i18n %}
+<link rel="stylesheet"  href="{% static 'css/profile/profile_information.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
+    <header class="page-header">
+        <h1 style=" color: #0a0a0a"> {% trans "Your personal information" %}</h1>
+    </header>
+    <form action="" id="customer-form" class="js-customer-form" method="post" autocomplete="off">
+        <div>
+            <div class="form-group row ">
+                <div class="col-md-12 form-control-valign">
+                    <label>{% trans "Social title" %}</label>
+                    <label class="radio-inline">
+                        <span class="custom-radio">
+                            <input name="id_gender" type="radio" value="1" {% if user_info.social_title == "Mr" %}checked{% endif %}>
+                            <span></span>
+                        </span>
+                        Mr.
+                    </label>
+                    <label class="radio-inline">
+                        <span class="custom-radio">
+                            <input name="id_gender" type="radio" value="2" {% if user_info.social_title == "Mrs" %}checked{% endif %}>
+                            <span>
+
+                            </span>
+                        </span> Mrs. </label>
+                </div>
+                <div class="col-md-12 form-control-comment">
+
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>{% trans "First name" %}</label>
+                    <input class="form-control" name="firstname" type="text" value="{{ user_info.first_name }}" required="">
+                </div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>{% trans "Last name" %}</label>
+                    <input class="form-control" name="lastname" type="text" value="{{ user_info.last_name }}" required=""></div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>Email</label>
+                    <input class="form-control" name="email" type="email" value="{{ user_info.email }}" required="">
+                </div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>{% trans "Password" %}</label>
+                    <div class="input-group js-parent-focus">
+                        <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>{% trans "New password" %}</label>
+                    <div class="input-group js-parent-focus">
+                        <input class="form-control js-child-focus js-visible-password" name="new_password" type="password" value="" pattern=".{5,}">
+                        <span class="input-group-btn">
+                            <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 form-control-comment">
+
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>{% trans "Birthdate" %}</label>
+                    <input class="form-control" name="birthday" type="text" value="{{ user_info.birthday }}" placeholder="YYYY-MM-DD">
+                    <span class="form-control-comment"> (E.g.: 1970-05-31) </span>
+                </div>
+                <div class="col-md-12 form-control-comment">
+
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label></label>
+                    <span class="custom-checkbox">
+                       <input name="optin" type="checkbox" value="1"  {% if user_info.receive_offers == True %}checked{% endif %}>
+                        <span>
+                            <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                        </span>
+                        <label>{% trans "Receive offers from our partners" %}</label>
+                    </span>
+                </div>
+                <div class="col-md-12 form-control-comment">
+
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label></label>
+                    <span class="custom-checkbox">
+                        <input name="newsletter" type="checkbox" value="1"  {%  if user_info.receive_newsletter == True %} checked {% endif %} >
+                        <span>
+                            <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                        </span>
+                        <label>{% trans "Sign up for our newsletter" %}<br>
+                            <em>{% trans "You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice" %}.</em>
+                        </label>
+                    </span>
+                </div>
+                <div class="col-md-12 form-control-comment"></div>
+            </div>
+        </div>
+        <footer class="form-footer clearfix">
+            <input type="hidden" name="submitCreate" value="1">
+            <button class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit"> {% trans "Save" %} </button>
+        </footer>
+    </form>
+    <aside id="notifications">
+        <div class="container">
+
+        </div>
+    </aside>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select the button by its data-action attribute
+    const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
+
+    // Listen for a click event on the button
+    togglePasswordButtons.forEach(togglePasswordButton =>
+        togglePasswordButton.addEventListener('click', function() {
+            // Select the password input
+            const passwordInput = this.parentElement.parentElement.querySelector('input');
+
+            // Check the current type of the password input and toggle
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text"; // Show the password
+                // Change the SVG to 'eye'
+                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></i>';
+            } else {
+                passwordInput.type = "password"; // Hide the password
+                // Change the SVG back to 'eye-off'
+                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></i>';
+            }
+        })
+    );
+});
+
+window.onload = function() {
+    document.getElementsByName("password")[0].value = "";
+};
+
+function isValidBirthday(birthday) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!birthday.match(regex)) return false; // Checks format
+
+    const date = new Date(birthday);
+    const timestamp = date.getTime();
+
+    if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false; // Checks existence
+
+    if (date.toISOString().slice(0, 10) !== birthday) return false; // Ensures the date is valid (e.g., not Feb 30)
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize today's date to ensure comparison is only based on date, not time
+
+    if (date > today) return false; // Checks that the birthday is not in the future
+
+    return true; // The birthday passes all checks
+}
+
+document.getElementById('customer-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent the normal form submission
+
+    // Validation logic here
+    let isValid = true;
+    let messages = [];
+
+    // Example: Check if the first name is filled out
+    if (!this.firstname.value) {
+        isValid = false;
+        messages.push('{{ _("First name is required")|escapejs }}.');
+    }
+    if (!this.lastname.value) {
+        isValid = false;
+        messages.push('{{ _("Last name is required")|escapejs }}.');
+    }
+    if (!this.email.value) {
+        isValid = false;
+        messages.push('{{ _("Email is required")|escapejs }}.');
+    }
+    if (!this.password.value) {
+        isValid = false;
+        messages.push('{{ _("Password is required")|escapejs }}.');
+    }
+    const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+    // Example: Check if the birthday is in correct format
+    if(this.birthday.value !== ""){
+        if (!isValidBirthday(this.birthday.value)) {
+            isValid = false;
+            messages.push('{{ _("Invalid birthday. Ensure the date is valid, in YYYY-MM-DD format, and not in the future")|escapejs }}.');
+        }
+    }
+
+    // If not valid, display messages and return
+    if (!isValid) {
+        alert(messages.join("\n")); // Or display the messages in a more user-friendly way
+        return;
+    }
+
+    const formData = new FormData(document.getElementById('customer-form'));
+    const jsonObject = {
+        old: {{ user_info_dict|safe }},
+        new: Object.fromEntries(formData.entries())
+    };
+    const csrftoken = getCookie('csrftoken');
+
+    fetch('{% url 'update_user_account' %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken, // Ensure you have csrftoken available
+        },
+        body: JSON.stringify(jsonObject),
+    })
+    .then(response => {
+        if (!response.ok) {
+            // If response is not ok, parse the JSON to get the error message
+            // and throw it to be caught by the catch block
+            return response.json().then(json => {
+                throw new Error(json.message || "Something went wrong");
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        alert("{{ _("The information has been successfully updated!")|escapejs }}");
+        window.location.href = "{% url 'profile' feature_name='dashboard' %}";
+        // Handle success response data
+    }).catch(error => {
+        console.error('Error:', error);
+        alert(error.message); // Display the error message from the catch or throw
+    });
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>

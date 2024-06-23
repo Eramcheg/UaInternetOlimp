@@ -1,0 +1,13 @@
+.table-groups{
+  width: 300px;
+}
+.table-groups div label{
+    display: flex;
+  align-items: center;
+  margin: 0;
+  height: 20px;
+}
+.table-groups div label input{
+   margin-right: 10px;
+   width: 20px;
+}

@@ -1,0 +1,12 @@
+
+.container-page {
+   width: 1450px;
+   max-width: 100%;
+    display: flex;
+}
+.container-page{
+   margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}

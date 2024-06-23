@@ -1,0 +1,275 @@
+{% load static %}
+{% load i18n %}
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet"  href="{% static 'css/profile/profile_information.css' %}">
+<style>
+    .delete-cart-content, .show-details-order{
+        cursor: pointer;
+        color: black!important;
+        transition: 0.2s opacity;
+    }
+    .delete-cart-content:hover, .show-details-order:hover{
+        opacity: 0.5;
+    }
+
+
+</style>
+<section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
+
+    <div class="card customer-personal-informations-card">
+        <h3 class="card-header">
+            <i class="material-icons">person</i>
+            {{ user_info.first_name }}
+            {{ user_info.last_name }}
+            [{{ user_info.userId }}]
+            -
+            <a>
+                {{ user_info.email }}
+            </a>
+            <a href="{% url "at_edit_user" user_id=user_info.userId %}" class="tooltip-link float-right edit-link" data-toggle="pstooltip" title="" data-placement="top" data-original-title="Edit">
+                <i class="material-icons">edit</i>
+            </a>
+        </h3>
+        <div class="card-body">
+            <div class="row mb-1">
+                <div class="col-4 text-right">
+                    Social Title
+                </div>
+                <div class="customer-social-title col-8">
+                    Mr.
+                </div>
+            </div>
+            {% if user_info.birthday %}
+                <div class="row mb-1">
+                    <div class="col-4 text-right">
+                        Birthdate
+                    </div>
+                    <div class="col-8 customer-registration-date">
+                        {{ user_info.birthday }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if user_info.agent_number %}
+                <div class="row mb-1">
+                    <div class="col-4 text-right">
+                        Client number
+                    </div>
+                    <div class="col-8 customer-registration-date">
+                        {{ user_info.agent_number }}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row mb-1">
+                <div class="col-4 text-right">
+                    Registration Date
+                </div>
+                <div class="col-8 customer-registration-date">
+                    {{ user_info.registrationDate }}
+                </div>
+            </div>
+            <div class="row mb-1">
+                    <div class="col-4 text-right">
+                        Currency
+                    </div>
+                    <div class="col-8 customer-registration-date">
+                        {{ user_info.currency|default:"Euro" }}
+                    </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4 text-right">
+                    Price category
+                </div>
+                <div class="col-8 customer-registration-date">
+                    {{ user_info.price_category }}
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <div class="col-4 text-right">
+                    Status
+                </div>
+                <div class="col-8">
+                    {% if user_info.Enabled %}
+                        <span class="customer-status badge badge-success rounded">
+                            <i class="material-icons">check</i>
+                            Active
+                        </span>
+                    {% else %}
+                        <span class="customer-status badge badge-danger rounded">
+                            <i class="material-icons">cancel</i>
+                            Disabled
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card customer-orders-card">
+        <h3 class="card-header">
+            <i class="material-icons">shopping_basket</i>
+            Orders
+            <span class="badge badge-primary rounded">{{ orders|length }}</span>
+        </h3>
+        <div class="card-body">
+             {% if orders|length != 0 %}
+                <table class="outer-table table table-striped table-bordered table-labeled hidden-sm-down" id="table-orders-{{ user.email }}" style="border:1px solid" >
+                    <thead>
+                      <tr>
+                          <th> Order ID </th>
+                          <th> Date </th>
+                          <th> Total price </th>
+                          <th> Payment </th>
+                          <th> Status </th>
+                          <th>  </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in orders %}
+                              <tr class="tr-outer" id="content-{{ document.order_id }}">
+                                  <th class="td-outer">{{ document.order_id }}</th>
+                                  <td class="td-outer">{{ document.date }}</td>
+                                  <td class="td-outer">{{ document.currency|default:"€" }}{{ document.sum|floatformat:2 }}</td>
+                                  <td class="td-outer">Bank transfer</td>
+                                  <td class="td-outer">{{ document.Status }}</td>
+                                  <td class="td-outer">
+                                      <span> <a href="/admin_tools/orders_control/view_order/{{ document.order_id }}/" data-order-id="{{ document.order_id }}" class="show-details-order" id="show-button-{{ document.order_id }}">Show Details</a></span>
+                                  </td>
+                              </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted text-center">
+                   {{ user_info.first_name }} {{ user_info.last_name}} has not placed any orders yet
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="customer-carts-card card">
+        <h3 class="card-header">
+            <i class="material-icons">shopping_cart</i>
+            Cart
+            <span class="badge badge-primary rounded">{{ cart|length }}</span>
+        </h3>
+        <div class="card-body">
+            {% if cart|length != 0 %}
+                <table class="outer-table table table-striped table-bordered table-labeled hidden-sm-down" id="table-cart-{{ user.email }}" style="border:1px solid" >
+                    <thead>
+                      <tr>
+                          <th> Product Id </th>
+                          <th> Description </th>
+                          <th> Quantity </th>
+                          <th> Total </th>
+                          <th>  </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in cart %}
+                              <tr class="tr-outer" id="content-{{ document.name }}">
+                                  <th class="td-outer">{{ document.name }}  </th>
+                                  <th class="td-outer">{{ document.description }}</th>
+                                  <td class="td-outer">{{ document.quantity }}</td>
+                                  <td class="td-outer">{{ user_currency }}{{ document.total_price }}</td>
+                                  <td class="td-outer">
+                                      <span> <a data-cart-product-id="{{ document.name }}" data-owner-email="{{ document.emailOwner }}"  class="delete-cart-content" id="delete-button-{{ document.name }}">Delete</a></span>
+                                  </td>
+                              </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted text-center">
+                    {{ user_info.first_name }} {{ user_info.last_name}} has empty cart
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card customer-addresses-card">
+        <h3 class="card-header">
+            <i class="material-icons">location_on</i>
+                Addresses
+            <span class="badge badge-primary rounded">{{addresses|length}}</span>
+        </h3>
+        <div class="card-body">
+            {% if addresses|length != 0 %}
+                <table class="outer-table table table-striped table-bordered table-labeled hidden-sm-down" id="table-addresses-{{ user.email }}" style="border:1px solid" >
+                    <thead>
+                      <tr>
+                          <th> Address Id </th>
+                          <th> Company </th>
+                          <th> Name </th>
+                          <th> Address </th>
+                          <th> Country </th>
+                          <th> Phone number </th>
+                          <th>  </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in addresses %}
+                              <tr class="tr-outer" id="content-{{ document.address_id }}">
+
+                                  <th class="td-outer">{{ document.address_id }}</th>
+                                  <th class="td-outer">{{ document.company }}</th>
+                                  <td class="td-outer">{{ document.first_name }} {{ document.last_name }}</td>
+                                  <td class="td-outer">{{ document.address_name }}</td>
+                                  <td class="td-outer">{{ document.country }}</td>
+                                  <td class="td-outer">{{ document.phone }}</td>
+                                  <td class="td-outer">
+{#                                      <span> <a data-order-id="{{ document.order_id }}"  class="show-content" id="show-button-{{ document.order_id }}">Delete</a></span>#}
+                                  </td>
+                              </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted text-center">
+                    {{ user_info.first_name }} {{ user_info.last_name}} doesn't have addresses yet
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+</section>
+<script>
+    console.log("{{ orders|safe }}");
+
+    document.querySelectorAll('.delete-cart-content').forEach((element) => {
+    element.addEventListener('click', function (){
+        console.log("click");
+        deleteFromUserCart(element.getAttribute('data-cart-product-id'),element.getAttribute('data-owner-email'));
+    });
+});
+    function deleteFromUserCart(documentId, email) {
+                fetch('{% url "delete_document" %}', { // Replace with the actual URL as needed
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ document_id: documentId, email: email })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Document deleted successfully');
+                        window.location.reload()
+                        // Optionally, update UI here
+                    } else {
+                        alert('Error in deletion');
+                        // Optionally, provide user feedback here
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Optionally, provide user feedback here
+                });
+            }
+</script>

@@ -1,0 +1,554 @@
+/*body{*/
+/*    font-family: 'Poppins', Verdana, sans-serif;*/
+/*}*/
+.cart-panel{
+    font-family: 'Poppins', Verdana, sans-serif;
+}
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css');
+    .toolbar {
+
+
+    background-color: #003765;
+    padding: 6px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+
+
+}
+
+.logo img {
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.links {
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.toolbar .link, .icon-link {
+    font-family: 'Poppins', Verdana, sans-serif;
+    cursor: pointer;
+    color: white !important;
+    font-size: 20px;
+    text-decoration: none !important;
+    padding: 5px;
+    margin: 0 5px 0 0px;
+    font-family: 'Poppins', Verdana, sans-serif;
+    position: relative;
+}
+.icon-link{
+    transition: opacity 0.2s;
+}
+.icon-link:hover{
+    color: #ffffff !important;
+    opacity: 50%;
+}
+.link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 0%;
+    height: 1.5px;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+.link:hover::after {
+    width: 100%;
+}
+
+.link:hover {
+    color: #ffffff !important;
+}
+.toolbar .dropdown-link {
+    font-family: 'Poppins', Verdana, sans-serif;
+    cursor: pointer;
+    color: black !important;
+    font-size: 14px;
+    text-decoration: none !important;
+    padding: 5px;
+    margin: 0 5px 0 0px;
+    font-family: 'Poppins', Verdana, sans-serif;
+    position: relative;
+}
+.dropdown-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 0%;
+    height: 1.5px;
+    background-color: #000000;
+    transition: width 0.3s ease;
+}
+.dropdown-link:hover::after {
+    width: 100%;
+}
+
+.dropdown-link:hover {
+    color: #000000 !important;
+}
+
+
+
+
+.users{
+    text-align: right;
+}
+.lang-menu {
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 0px;
+    position: relative;
+}
+.selected-lang{
+    font-weight: normal;
+}
+.lang-menu .selected-lang:before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.lang-menu .selected-lang {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 2;
+  cursor: pointer;
+  color: white;
+  font-family: poppins, Verdana, sans-serif;
+  background-color: #003765;
+}
+
+
+.lang-menu ul {
+    margin: 0;
+    padding: 0;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #f8f8f8;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    width: 125px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+}
+
+
+.lang-menu ul li {
+    list-style: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lang-menu ul li a {
+    text-decoration: none;
+    width: 125px;
+    padding: 5px 10px;
+    display: block;
+}
+
+.lang-menu ul li:hover {
+    background-color: #f2f2f2;
+}
+
+.lang-menu ul li a:before {
+    content: '';
+    display: inline-block;
+    width: 25px;
+    text-align: center;
+    height: 25px;
+    vertical-align: middle;
+    margin-right: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.selected-lang::before{
+    background-image: url(https://www.worldometers.info/img/flags/gm-flag.gif);
+}
+.gm:before {
+    background-image: url(https://www.worldometers.info/img/flags/gm-flag.gif);
+}
+
+.uk:before {
+    background-image: url(https://www.worldometers.info/img/flags/uk-flag.gif);
+}
+.fr:before {
+    background-image: url(https://www.worldometers.info/img/flags/fr-flag.gif);
+}
+
+.sp:before {
+    background-image: url(https://www.worldometers.info/img/flags/sp-flag.gif);
+}
+.it:before {
+    background-image: url(https://www.worldometers.info/img/flags/it-flag.gif);
+}
+
+.lang-menu:hover ul {
+    display: block;
+}
+
+ .circular-select {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+    background-image: url('https://www.worldometers.info/img/flags/gm-flag.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+  }
+ .circular-select{
+     color: transparent;
+ }
+ .circular-select option{
+     color: black;
+ }
+
+ .icons-container{
+     display: flex;
+ }
+ #logout-icon{
+     margin-top: 10px;
+ }
+ #cartBtn{
+      margin-right: 10px;
+     margin-top: 5px;
+     cursor: pointer;
+ }
+.cart-panel, .accPanel{
+    height: 100%;
+    position: fixed;
+    z-index: 1111;
+    top: 0;
+    right: -420px; /* Ensure this matches the panel width to start off-screen */
+    width: 420px; /* Fixed width */
+    transition: right 0.4s; /* Animate the right property */
+    background-color: white;
+    overflow: hidden; /* Prevents overflow content from being visible */
+    padding-top: 60px;
+    /* Add box shadow or other styles as needed */
+}
+
+.cart-panel.open , .accPanel.open{
+    /*right: 0;!* Or any other width *!*/
+    right: 0;
+    display: "";
+}
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    z-index: 1100; /* Ensure it's below the cart panel but above other content */
+}
+.cart-panel, .accPanel {
+    /* Other styles remain the same */
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-header, .cart-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cart-footer{
+    flex-direction: column;
+}
+.cart-header{
+}
+.shopping-cart-span{
+    font-size: 22px;
+    color:#1c1c1c !important;
+}
+#closeCartBtn{
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s;
+    margin-right: 20px;
+}
+#closeCartBtn:hover{
+    color: #919191;
+
+}
+.cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.checkout-btn {
+    width: 90%;
+    margin: 10px 5%; /* Centers the button and ensures 90% width */
+    padding: 22px 32px;
+    background-color: #003765; /* Example color */
+    border-radius: 7px;
+    color: white;
+    border: none;
+    cursor: pointer;
+margin-bottom: 50px;
+}
+.cart-header, .cart-items, .cart-footer {
+    padding: 15px; /* Adjust padding as needed */
+}
+img{
+    margin-top: 10px;
+}
+.attrs-container{
+    display: flex;
+    width:100%;
+    justify-content: space-between;
+}
+.cart-first-attrs-column{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+.cart-first-attrs-column span{
+    font-size: 12px;
+    color: #8d8d8d
+}
+
+
+.cart-product-name{
+    font-size: 14px!important;
+    color: #1c1c1c !important;
+}
+
+.mini-cart-product{
+    display: flex;
+}
+
+.cart-second-attrs-column{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    text-align: center;
+    color: #1c1c1c !important;
+}
+
+.mini-cart-product-price{
+    margin-top: 20px;
+    font-size: 14px;
+}
+.mini-cart-product-quantity{
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.subtotal{
+  color:#1c1c1c !important;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px 0 20px;
+  font-size: 18px;
+}
+.cart-footer hr {
+    background-color: #1c1c1c; /* Color of the hr line */
+    height: 3px; /* Thickness of the hr line */
+    width: 100%;
+    border: none; /* Removes the default border */
+    opacity: 1; /* Ensure it's fully opaque */
+    margin-top: 0;
+}
+.mini-cart-product {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
+  max-height: 200px; /* Adjust based on your item's actual height */
+}
+
+.delete-panel {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0; /* Initial width is 0 */
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  overflow: hidden; /* Ensures content is clipped during transition */
+  transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.mini-cart-product:hover .delete-panel {
+  width: 30px; /* Expand width on hover */
+}
+
+.delete-icon {
+  color: white;
+  cursor: pointer;
+  visibility: hidden; /* Initially hide the delete icon */
+    padding: 10px 5px 10px 5px;
+}
+
+.mini-cart-product:hover .delete-icon {
+  visibility: visible; /* Only show icon when panel is fully visible */
+}
+.delete-icon-tooltip {
+  position: fixed; /* Use fixed positioning relative to the viewport */
+  transform: translate(-50%, 0); /* Adjust if necessary for your design */
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+}
+
+.delete-icon:hover + .delete-icon-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s; /* Remove delay when showing tooltip */
+}
+
+
+.item-deleting {
+  opacity: 0;
+  transform: translateX(-100%);
+  max-height: 0; /* Triggers the transition */
+}
+.empty-cart-container {
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    display: none; /* Initially hidden */
+}
+
+/* Style to make the container visible and fade in */
+.show-empty-cart {
+    display: block;
+    opacity: 1;
+}
+.empty-message{
+    margin-top: 20px;
+    color:#1c1c1c;
+    font-size: 16px;
+
+}
+.cart-items-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Set to 100% of the viewport height, or the height you want */
+}
+
+
+.close_cross{
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+.close_cross:hover{
+    opacity: 0.5;
+}
+.accPanel{
+    padding: 50px 24px 0 24px;
+}
+.accPanel *{
+    font-family: 'Poppins',Verdana,sans-serif;
+}
+.account-header{
+    padding-bottom: 50px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.acc_ul.acc_links{
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    /*width: 100%;*/
+    /*margin-bottom: 20px;*/
+}
+.acc_ul.acc_links a {
+    color: #000000;
+    font-size: 18px;
+    margin-bottom: 18px;
+    display: flex !important;
+    align-items: center !important; /* This ensures vertical alignment */
+    text-decoration: none !important;
+}
+.acc_ul.acc_links i{
+    opacity: .3;
+    margin-right: 10px;
+}
+.acc_ul.acc_links a {
+    color: #000000;
+    font-size: 18px;
+    margin-bottom: 18px;
+    align-items: center;
+    display: flex;
+    text-decoration: none!important;
+    transition: color 0.3s ease, transform 0.3s ease; /* Add transition for color and transform */
+}
+
+/* Base styles for icons */
+.acc_ul.acc_links i {
+    opacity: .3;
+    margin: 0 10px 0 0;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Add transition for opacity and transform */
+}
+
+/* Hover styles for link */
+.acc_ul.acc_links a:hover {
+    /*color: #003665; !* Change text color on hover *!*/
+}
+
+/* Hover styles for icons within a link */
+.acc_ul.acc_links a:hover i {
+    opacity: 1; /* Change icon opacity on hover */
+    transform: translateX(3px); /* Move icon to the right by 3px */
+}
+.acc_links .logout{
+
+    margin-top: 30px;
+}
+.acc_links .name a span{
+    font-size: 24px!important;
+    margin-bottom: 10px;
+}
+
+
+.acc_ul.acc_links svg {
+    /* If needed, ensure there is no extra space inside the SVG that could affect alignment */
+    display: block;
+}
+.acc_ul.acc_links a {
+    /* Other styles... */
+    line-height: 22px; /* Set this to the height of your SVG icon */
+}

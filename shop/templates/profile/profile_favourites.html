@@ -1,0 +1,290 @@
+{% load static %}
+{% load i18n %}
+
+<link rel="stylesheet" href="{% static 'css/profile/profile_favourites.css' %}">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static "js/product_cards.js" %}"></script>
+<section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
+    <header class="page-header">
+        <h1>
+           {% trans "Favorite products" %}
+        </h1>
+    </header>
+    <div id="favoriteproducts_block_account">
+        <div id="products" class="view_grid">
+            <div class="products-grid">
+
+            </div>
+        </div>
+    </div>
+</section>
+<dialog id="product-card">
+
+</dialog>
+<dialog id="product-card-success" >
+
+</dialog>
+{% include 'widgets/overlay.html' %}
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+    let translations_categories = {
+    "Earrings": "{{ _("Earrings")|escapejs }}",
+    "Pendant": "{{ _("Pendant")|escapejs }}",
+    "Chain": "{{ _("Chain")|escapejs }}",
+    "Collier": "{{ _("Collier")|escapejs }}",
+    "Pearlchain": "{{ _("Pearlchain")|escapejs }}",
+    "Necklace": "{{ _("Necklace")|escapejs }}",
+    "Post Earrings": "{{ _("Post earrings")|escapejs }}",
+    "Hoop": "{{ _("Hoop")|escapejs }}",
+    "Creole": "{{ _("Creole")|escapejs }}",
+    "Clip": "{{ _("Clip")|escapejs }}",
+    "Piercing": "{{ _("Piercing")|escapejs }}",
+    "Bracelet": "{{ _("Bracelet")|escapejs }}",
+    "Bangle": "{{ _("Bangle")|escapejs }}",
+    "Anklet": "{{ _("Anklet")|escapejs }}",
+    "Ring": "{{ _("Ring")|escapejs }}",
+    "Match": "{{ _("Match")|escapejs }}",
+    "Pen": "{{ _("Pen")|escapejs }}",
+    "Key": "{{ _("Key")|escapejs }}",
+    "Brooch": "{{ _("Brooch")|escapejs }}",
+    "Nailfile": "{{ _("Nailfile")|escapejs }}",
+    "Extension": "{{ _("Extension")|escapejs }}",
+    "UV": "{{ _("UV")|escapejs }}"
+}
+
+let filters_dict = {
+    "Default": "{{ _("Default")|escapejs }}",
+    "Rhodium": "{{ _("Rhodium")|escapejs }}",
+    "Gold": "{{ _("Gold")|escapejs }}",
+    "Rosegold": "{{ _("Rosegold")|escapejs }}",
+    "Without": "{{ _("Without")|escapejs }}",
+    "Steel": "{{ _("Steel")|escapejs }}",
+    "Steel Brass": "{{ _("Steel Brass")|escapejs }}",
+    "Silver": "{{ _("Silver")|escapejs }}",
+}
+    var firebaseConfig = {
+        apiKey: "AIzaSyAM0wDc_WO0wP3-_TPRPLENZDIHbezH7U4",
+        authDomain: "flutterapp-fd5c3.firebaseapp.com",
+        projectId: "flutterapp-fd5c3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const show_quantities = "{{ show_quantities|safe }}" !== "False";
+    let favouriteItems = [];
+    document.addEventListener("DOMContentLoaded", async function () {
+        showOverlay();
+        favouriteItems = await fetchFavouriteItems("{{user.email}}");
+        {#console.log(favouriteItems);#}
+        buildPageFavourites(favouriteItems);
+        hideOverlay();
+    });
+
+    async function fetchFavouriteItems(userEmail) {
+        const favouritesQuery = query(collection(db, "Favourites"), where("email", "==", userEmail));
+        const querySnapshot = await getDocs(favouritesQuery);
+        return querySnapshot.docs.map(doc => doc.data());
+    }
+
+    function buildPageFavourites(items){
+        if (favouriteItems.length > 0){
+            const productsGrid = document.querySelector('.products-grid');
+            productsGrid.innerHTML = '';
+            let itemId= 0;
+            let vocabulary_dialog = {{ vocabulary|safe}};
+            let vocabulary = Object.assign(vocabulary_dialog, translations_categories, filters_dict);
+            items.forEach((item) => {
+                const productContainer = document.createElement('div');
+                productContainer.className = 'product-container';
+                productContainer.id = `product-${item.name}`;
+                productContainer.style.position ="relative";
+                productContainer.setAttribute('data-id', itemId);
+
+                productContainer.addEventListener('click', () => {
+                    generateDialogContent(`${item.name}`, favouriteItems, currency, show_quantities, "{% url "add_from_catalog" %}", vocabulary, getCookie('csrftoken'), "{% url "cart" %}");
+                });
+
+                const container_card = document.createElement("div");
+                // Create the image section
+                const imgSection = document.createElement('div');
+                imgSection.className = 'img-section';
+                const imgWrapper = document.createElement('div');
+                imgWrapper.className = 'img-wrapper';
+                const img = document.createElement('img');
+                img.src = item.preview_image;
+                img.width = 250;
+                img.height = 250;
+                img.style.borderRadius = '10px';
+
+                const iconContainer = document.createElement('div');
+                iconContainer.className = 'icon-container';
+
+                const heartIconContainer = document.createElement('div');
+                heartIconContainer.className = 'heart-icon-container';
+                const favouriteItem = favouriteItems.find(item_fav => item_fav.name === item.name); // Assuming `item.name` is the name of your current item
+
+        // Check if the item was found in the favourites
+
+                const itemIsFavourite = Boolean(favouriteItem); // Converts the result to a boolean
+
+                heartIconContainer.innerHTML = itemIsFavourite ?
+                `<i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg></i>` :
+                `<i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg></i>`; // Example with FontAwesome
+
+                // Adding your new icon
+                const newIconContainer = document.createElement('div');
+                newIconContainer.className = 'new-icon-container';
+                newIconContainer.innerHTML = `<i class="rts" data-size="24" data-color="#000000" style="width: 26px; height: 26px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M21.46,26H6.54C4,26,4,23.86,4,22.46V2H24V22.46C24,23.86,24,26,21.46,26Z" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:2px"></path><path d="M10,8v.78c0,2.68,1.8,4.88,4,4.88s4-2.19,4-4.88V8" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:2px"></path></svg></i>`;
+
+
+                heartIconContainer.addEventListener('mouseenter', (event) => {
+                    const favouriteItem = favouriteItems.find(item_fav => item_fav.name === item.name); // Assuming `item.name` is the name of your current item
+                    const isFavBefore = Boolean(favouriteItem); // Converts the result to a boolean
+                    let message_fav = isFavBefore ? "{{ _("Remove from favorites")|escapejs }}" : "{{ _("Add to favorites")|escapejs }}";
+
+                    showTooltip(event, message_fav)
+                });
+                heartIconContainer.addEventListener('click', async (event) => {
+                    const favouriteItem = favouriteItems.find(item_fav => item_fav.name === item.name); // Assuming `item.name` is the name of your current item
+                    const isFavBefore = Boolean(favouriteItem); // Converts the result to a boolean
+
+                    // Stop the event from propagating to other elements
+                    event.stopPropagation();
+                    try {
+                        // Replace `yourItemId` with the actual item ID or any identifier you use
+                        const response = await fetch('{% url "change_favorite_state" %}', {
+                            method: 'POST', // or 'DELETE' if removing from favorites
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken'),
+
+                                // Include other headers as needed, like authorization tokens
+                            },
+                            body: JSON.stringify({item: JSON.stringify(item), "alreadyFavourite": isFavBefore ? "true":"false"}),
+                        });
+
+                        if (!response.ok) throw new Error('Network response was not ok.');
+
+                        // Assuming the backend responds with the updated favorite status
+                        const data = await response.json();
+                        const isFavourite = data.isFavourite === "true";
+                        const itemToAddOrRemove = JSON.parse(data.item); // Assuming this is an object {name_id: "someId", ...}
+
+                        const existingTooltip = document.querySelector('.custom-tooltip');
+                        if (existingTooltip) {
+                            existingTooltip.remove();
+                        }
+                        if (isFavourite) {
+
+                            // Add to favoriteItems if not already present
+                            const exists = favouriteItems.some(item => item.name === itemToAddOrRemove.name);
+                            console.log("consists equals " + exists.toString());
+                            if (!exists) {
+                                favouriteItems.push(itemToAddOrRemove);
+                                console.log("Added to favorites", itemToAddOrRemove);
+                            }
+                        } else {
+                            // Remove from favoriteItems
+
+                            favouriteItems = favouriteItems.filter(item => item.name !== itemToAddOrRemove.name);
+                            console.log("Removed from favorites", itemToAddOrRemove);
+                            {#heartIconContainer.parentElement.parentElement.parentElement.parentElement.remove();#}
+                        }
+
+                        // Update the heart icon based on `isFavourite`
+                        heartIconContainer.innerHTML = isFavourite ?
+                            `<i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg></i>` :
+                            `<i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg></i>`;
+                    } catch (error) {
+                        console.error('Error updating favorites:', error);
+                    }
+                });
+                // Add event listeners for the new icon
+                newIconContainer.addEventListener('mouseenter', (event) => showTooltip(event, 'Add to cart'));
+                // Append both icon containers to the iconContainer
+
+                iconContainer.appendChild(newIconContainer);
+                iconContainer.appendChild(heartIconContainer);
+                // Finally, append the iconContainer to the imgWrapper or imgSection
+
+                imgWrapper.appendChild(img);
+                imgWrapper.appendChild(iconContainer);
+                // Append the imgWrapper to the imgSection
+                imgSection.appendChild(imgWrapper);
+                // Create the info section
+                const infoSection = document.createElement('div');
+                infoSection.className = 'info-section';
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'info-name';
+                nameSpan.textContent = item.product_name;
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'info-price';
+                priceSpan.textContent = currency + `${item.price}`;
+                infoSection.appendChild(nameSpan);
+                infoSection.appendChild(document.createElement('br'));
+                infoSection.appendChild(priceSpan);
+
+
+                const removeButtonContainer = document.createElement('div');
+                removeButtonContainer.classList.add("remove-fav", "btn");
+                removeButtonContainer.style.position = "absolute";
+                removeButtonContainer.style.top = "-20";
+                removeButtonContainer.style.right = "calc(50%-20px)";
+                removeButtonContainer.style.zIndex = "2";
+                removeButtonContainer.style.padding = "6px";
+                removeButtonContainer.style.backgroundColor = "#003665";
+                removeButtonContainer.style.lineHeight = "0";
+
+                removeButtonContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+
+
+                removeButtonContainer.addEventListener('click', async (event) => {
+
+                    const favouriteItem = favouriteItems.find(item_fav => item_fav.name === item.name); // Assuming `item.name` is the name of your current item
+                    const isFavBefore = Boolean(favouriteItem); // Converts the result to a boolean
+
+                    event.stopPropagation();
+                    try {
+                        // Replace `yourItemId` with the actual item ID or any identifier you use
+                        if(isFavBefore){
+                            const response = await fetch('{% url "change_favorite_state" %}', {
+                                method: 'POST', // or 'DELETE' if removing from favorites
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': getCookie('csrftoken'),
+
+                                    // Include other headers as needed, like authorization tokens
+                                },
+                                body: JSON.stringify({item: JSON.stringify(item), "alreadyFavourite": "true"}),
+                            });
+
+                        }
+                        removeButtonContainer.parentElement.remove();
+                    }
+                    catch (error) {
+                        console.error('Error updating favorites:', error);
+                    }
+
+                });
+
+
+                // Assemble the product container
+                container_card.appendChild(imgSection);
+                container_card.appendChild(infoSection);
+                productContainer.appendChild(container_card);
+                productContainer.appendChild(removeButtonContainer);
+
+                // Append the product container to the products grid
+                productsGrid.appendChild(productContainer);
+                itemId+=1;
+            });
+        }
+        else{
+            console.log("Null");
+        }
+    }
+
+</script>

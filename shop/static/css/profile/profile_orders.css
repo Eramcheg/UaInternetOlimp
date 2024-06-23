@@ -1,0 +1,298 @@
+.section-orders{
+    padding-left: 2rem;
+    width: 75%;
+}
+.page-header {
+  margin-bottom: 40px;
+}
+h1{
+
+    font-size: 24px !important;
+    font-weight: 600;
+}
+h6{
+font-size: 16px;
+}
+table {
+    border-collapse: collapse;
+    font-family: 'Poppins',Verdana,sans-serif;
+    color: #777!important;
+    background-color: rgba(0,0,0,0);
+}
+.table-bordered{
+    border: 2px solid #f6f6f6;
+
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 4px solid #f6f6f6;
+}
+.table-bordered th, .table-bordered td {
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 500;
+}
+.table-bordered th, .table-bordered td {
+    border-color: #f2f2f2;
+}
+.thead-default th {
+  color: #7A7A7A;
+  background-color: #f6f6f6;
+}
+.table-bordered th, .table-bordered td {
+    border: 2px solid #f6f6f6;
+}
+.table th, .table td {
+    padding: .75rem;
+}
+th {
+  text-align: left;
+}
+table tbody tr:nth-of-type(2n+1) {
+  background-color: rgba(0,0,0,.05);
+}
+
+.nested-table-container {
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-height: 0;
+}
+
+.nested-table-container.expanded {
+    max-height: 1000px; /* Adjust this value as needed, it should be large enough to fit the content */
+}.table th:first-child, .table td:first-child {
+    width: 120px; /* Adjust the width as needed */
+}
+
+.nested-table-container {
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    overflow: hidden;
+}
+.show-content{
+    font-weight: 600;
+    font-size: 14px;
+    color: #000 !important;
+    cursor: pointer;
+}
+
+section a {
+  position: relative; /* Required for absolute positioning of pseudo-elements */
+  display: inline-block; /* Ensures the container fits the content, allowing the underline to match link width */
+  text-decoration: none; /* Optional: Removes the default underline */
+}
+
+/* Initial state of the pseudo-element used for the underline */
+section a::before {
+  content: ''; /* Required for the pseudo-element to be generated */
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Adjust this value to control the vertical position of the underline */
+  width: 0;
+  height: 2px; /* Thickness of the underline */
+  background: #003665; /* Color of the underline */
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Controls the animation speed and easing */
+  opacity: 0; /* Start with the underline invisible */
+}
+
+/* State of the pseudo-element when the link is hovered */
+ section a:hover::before, section a:focus::before {
+  width: 100%;
+  opacity: 1; /* Make the underline fully visible on hover/focus */
+}
+
+/*.outer-table {*/
+/*    font-family: 'Poppins', Verdana, sans-serif;*/
+/*    color: #efefef; !* Default text color *!*/
+/*    margin: 0 auto;*/
+/*    width: 98%;*/
+
+/*    border-collapse: separate;*/
+/*    border-spacing: 0;*/
+/*    !*border: 12px solid #003665;*!*/
+/*    border-radius: 10px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.outer-table th, .outer-table .td-outer {*/
+/*    padding: 1em;*/
+/*    width: 10em;*/
+/*    !*border: 1px solid #003665;*!*/
+
+/*}*/
+
+/*.outer-table th, .outer-table .tr-outer .td-outer:first-child {*/
+/*    background: linear-gradient(145deg, #e6e6e6, #ffffff);*/
+/*    color: #777;*/
+/*}*/
+
+/*.outer-table th:first-child {*/
+/*    border-top-left-radius: 10px;*/
+
+/*}*/
+/*.outer-table .tr-outer:last-child .td-outer:first-child{*/
+/*    border-bottom-left-radius: 10px;*/
+/*}*/
+/*.outer-table th:last-child {*/
+/*    border-top-right-radius: 10px;*/
+/*}*/
+/*.outer-table tr:last-child .td-outer:last-child{*/
+/*     border-bottom-right-radius: 10px;*/
+/*}*/
+/*.outer-table .tr-outer:nth-child(2n+3) {*/
+/*    background: #fff;*/
+/*}*/
+
+/*.outer-table .td-outer:not(:first-child) {*/
+/*    color: #464646;*/
+/*}*/
+
+/*.outer-table .td-outer:first-child, .outer-table th:first-child {*/
+/*    width: 40px;*/
+/*}*/
+
+/*.outer-table {*/
+/*    font-family: 'Open Sans', Helvetica;*/
+/*    color: #efefef; !* Default text color *!*/
+/*    margin: 0 auto;*/
+/*    width: 98%;*/
+
+/*    border-collapse: separate;*/
+/*    border-spacing: 0;*/
+/*    !*border: 12px solid #003665;*!*/
+/*    border-radius: 10px;*/
+/*    overflow: hidden;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.outer-table th, .outer-table .td-outer {*/
+/*    padding: 1em;*/
+/*    width: 10em;*/
+/*    !*border: 1px solid #003665;*!*/
+
+/*}*/
+
+/*.outer-table th, .outer-table .tr-outer .td-outer:first-child {*/
+/*    background: linear-gradient(145deg, #e6e6e6, #ffffff);*/
+/*    color: #777;*/
+/*}*/
+
+/*.outer-table th:first-child {*/
+/*    border-top-left-radius: 10px;*/
+
+/*}*/
+/*.outer-table .tr-outer:last-child .td-outer:first-child{*/
+/*    border-bottom-left-radius: 10px;*/
+/*}*/
+/*.outer-table th:last-child {*/
+/*    border-top-right-radius: 10px;*/
+/*}*/
+/*.outer-table tr:last-child .td-outer:last-child{*/
+/*     border-bottom-right-radius: 10px;*/
+/*}*/
+/*.outer-table .tr-outer:nth-child(2n+3) {*/
+/*    background: #fff;*/
+/*}*/
+
+/*.outer-table .td-outer:not(:first-child) {*/
+/*    color: #464646;*/
+/*}*/
+
+/*.outer-table .td-outer:first-child, .outer-table th:first-child {*/
+/*    width: 40px;*/
+/*}*/
+
+/*.nested-table {*/
+/*    font-family: 'Open Sans', Helvetica;*/
+/*    color: #efefef; !* Default text color *!*/
+/*    margin: 0 auto;*/
+/*    width: 98%;*/
+
+/*    border-collapse: separate;*/
+/*    border-spacing: 0;*/
+/*    !*border: 1px solid #003665;*!*/
+/*    border-radius: 10px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.nested-table th, .nested-table td {*/
+/*    padding: 1em;*/
+/*    width: 10em;*/
+/*    !*border: 1px solid #003665;*!*/
+
+/*}*/
+
+/*.nested-table th, .nested-table tr td:first-child {*/
+/*    background: linear-gradient(145deg, #e6e6e6, #ffffff);*/
+/*    color: #777;*/
+/*}*/
+
+/*.nested-table th:first-child {*/
+/*    border-top-left-radius: 10px;*/
+
+/*}*/
+/*.nested-table tr:last-child td:first-child{*/
+/*    border-bottom-left-radius: 10px;*/
+/*}*/
+/*.nested-table th:last-child {*/
+/*    border-top-right-radius: 10px;*/
+/*}*/
+/*.nested-table tr:last-child td:last-child{*/
+/*     border-bottom-right-radius: 10px;*/
+/*}*/
+/*.nested-table tr:nth-child(2n+3) {*/
+/*    background: #fff;*/
+/*}*/
+
+/*.nested-table td:not(:first-child) {*/
+/*    color: #464646;*/
+/*}*/
+
+/*.nested-table td:first-child, .nested-table th:first-child {*/
+/*    width: 40px;*/
+/*}*/
+
+/*.profile-section {*/
+/*    padding: 20px 20px 20px 50px;*/
+/*    background-color: #f0f0f0;*/
+/*    border-bottom: 2px solid #ddd;*/
+/*    margin-bottom: 20px;*/
+/*    border-radius: 0px 0px 50px 50px;*/
+/*}*/
+
+/*.username {*/
+/*    margin-bottom: 20px; !* Increased spacing below the username *!*/
+/*    font-size: 32px; !* Larger font size for prominence *!*/
+/*    color: #333;*/
+/*    font-weight: 700;*/
+/*}*/
+
+/*.profile-details {*/
+/*    display: flex;*/
+/*    justify-content: center; !* Center the columns horizontally *!*/
+/*    flex-wrap: wrap; !* Allow the columns to wrap if needed *!*/
+/*}*/
+
+/*.column {*/
+/*    display: flex;*/
+/*    flex-direction: column; !* Stack items vertically *!*/
+/*    flex: 1; !* Each column takes up equal width *!*/
+/*    min-width: 250px; !* Minimum width for each column to prevent too much squeezing *!*/
+/*}*/
+
+/*.profile-section h2, .profile-section h3 {*/
+/*    margin: 5px 0; !* Reduced spacing for a tighter layout *!*/
+/*    color: #333;*/
+/*}*/
+
+/*.profile-section h2 {*/
+/*    font-size: 18px;*/
+/*}*/
+
+/*.profile-section h3 {*/
+/*    font-size: 16px; !* Slightly smaller font size for the user role if not admin *!*/
+/*}*/
+/*.profile-labels{*/
+/*    font-weight: 600;*/
+/*    font-size: 20px;*/
+/*}*/
