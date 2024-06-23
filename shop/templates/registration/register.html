@@ -14,158 +14,6 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Additional styles -->
 </head>
-{#<style>#}
-{#    body {#}
-{#    font-family: 'Redshift Book', serif; /* Add a generic font family as a fallback */#}
-{#    background: #7599b3;#}
-{#    display: flex;#}
-{#    align-items: center;#}
-{#    justify-content: center;#}
-{#    height: 100vh;#}
-{#    margin: 0;#}
-{#}#}
-{##}
-{##}
-{#.login-container {#}
-{#    background-color: #e6e6e6;#}
-{#    box-shadow: 0 4px 8px rgba(0,0,0,0.1);#}
-{#    width: 400px; /* Increased width */#}
-{#}#}
-{##}
-{#        .login-header {#}
-{#    background-color: #003665;#}
-{#    color: white;#}
-{#    padding: 30px; /* Increased padding */#}
-{#    text-align: center;#}
-{#    font-size: 24px; /* Increased font-size */#}
-{#}#}
-{##}
-{#        .login-form {#}
-{#    padding: 30px; /* Increased padding */#}
-{#    position: relative;#}
-{#    box-sizing: border-box;#}
-{#}#}
-{#        .login-form input[type="submit"] {#}
-{#    width: calc(100% + 100px); /* Increase width to maintain the extended effect */#}
-{#    margin-left: -50px; /* Increase margin to maintain the extended effect */#}
-{#    padding: 20px; /* Increased padding */#}
-{#    border: none;#}
-{#    background-color: #003665;#}
-{#    color: white;#}
-{#    cursor: pointer;#}
-{#    position: relative;#}
-{#    z-index: 0;#}
-{#    font-size: 20px; /* Increased font-size */#}
-{#    overflow: visible;#}
-{#}#}
-{##}
-{#        .login-form input[type="submit"]:hover {#}
-{#            background-color: #005f87; /* Change hover color */#}
-{#            opacity: 0.9;#}
-{#        }#}
-{##}
-{#        .login-form a {#}
-{#    display: block;#}
-{#    text-align: center;#}
-{#    margin-top: 15px; /* Increased margin */#}
-{#    color: #003665;#}
-{#    text-decoration: none;#}
-{#    font-size: 16px; /* Increased font-size */#}
-{#}#}
-{##}
-{##}
-{#        .login-form a:hover {#}
-{#            text-decoration: underline;#}
-{#        }#}
-{##}
-{#        .input-container {#}
-{#            position: relative;#}
-{#            display: flex;#}
-{#            align-items: center;#}
-{#            border-bottom: 1px solid #0a5fa9;#}
-{#            margin-bottom: 15px;#}
-{#        }#}
-{##}
-{#        .input-container .fas {#}
-{#            color: #a6abc7;#}
-{#            margin-right: 10px;#}
-{#        }#}
-{##}
-{#        .login-form input[type="text"],#}
-{#.login-form input[type="password"],#}
-{#        .login-form input[type="email"]{#}
-{#    width: calc(100% - 40px); /* Adjust width for larger padding */#}
-{#    padding: 15px 15px 15px 0; /* Increased padding */#}
-{#    border: none;#}
-{#    outline: none;#}
-{#    background-color: transparent;#}
-{#    color: #00427a;#}
-{#    font-size: 18px; /* Increased font-size */#}
-{#}#}
-{##}
-{#        .input-container input::placeholder {#}
-{#            color: #a6abc7;#}
-{#        }#}
-{#        .login-form input[type="submit"]::before,#}
-{#.login-form input[type="submit"]::after {#}
-{#            content: '';#}
-{#            position: absolute;#}
-{#            top: 50%; /* Position the pseudo-elements in the middle vertically */#}
-{#            width: 20px; /* Width of the extended part */#}
-{#            height: 50%; /* Reduce the height to make the shadow visible below the button */#}
-{#            background: transparent;#}
-{#            z-index: 0;#}
-{#            transform: translateY(50%); /* Move the pseudo-elements down below the button */#}
-{##}
-{#        }#}
-{#        #errorText{#}
-{#            text-align: center;#}
-{#  font-size: 28px;#}
-{#        }#}
-{#        .modal {#}
-{#    display: none;#}
-{#    position: fixed;#}
-{#    z-index: 1;#}
-{#    left: 0;#}
-{#    top: 0;#}
-{#    width: 100%;#}
-{#    height: 100%;#}
-{#    overflow: auto;#}
-{#    background-color: rgb(0,0,0);#}
-{#    background-color: rgba(0,0,0,0.4);#}
-{#}#}
-{##}
-{#.modal-content {#}
-{#    background-color: #fefefe;#}
-{#    margin: 16% auto;#}
-{#    padding: 20px;#}
-{#    border: 1px solid #888;#}
-{#    width: 60%;#}
-{#    border-radius: 10px;#}
-{#    text-align: center;#}
-{#}#}
-{##}
-{#.close-button {#}
-{#    color: #aaa;#}
-{#    float: right;#}
-{#    font-size: 28px;#}
-{#    font-weight: bold;#}
-{#}#}
-{##}
-{#.close-button:hover,#}
-{#.close-button:focus {#}
-{#    color: black;#}
-{#    text-decoration: none;#}
-{#    cursor: pointer;#}
-{#}#}
-{##okButton{#}
-{#    text-align: center;#}
-{#    padding: 10px;#}
-{#    width: 100px;#}
-{#    font-size: 18px;#}
-{#    border-radius: 10px;#}
-{#}#}
-{#</style>#}
 <style>
     .logininstead a:hover {
   text-decoration: none;
@@ -248,7 +96,7 @@
             <section id="main">
                 <div class="container">
                     <header class="page-header" style="text-align: center">
-                        <h1> Create an account</h1>
+                        <h1> Створення акаунту</h1>
                     </header>
                     <section id="content" class="page-content card card-block">
                         <section class="sociallogin displayCustomerAccountFormTop authentication hidden-print">
@@ -260,27 +108,23 @@
                         {% csrf_token %}
                             <div>
                                 <div class="form-group row ">
-                                    <div class="col-md-12 form-control-valign">
-                                        <label>Social title</label>
-                                        {% for radio in form.social_title %}
-                                            <label class="radio-inline">
-                                                <span class="custom-radio">
-                                                    {{ radio.tag }}
-                                                    <span></span>
-                                                </span> {{ radio.choice_label }}
-                                            </label>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="col-md-12 form-control-comment"></div>
-                                </div>
 
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Логін</label>
+                                        {{ form.login | add_class:"form-control" | attr:"" }}
+
+                                    </div>
+                                </div>
                                 <div class="form-group row ">
 
                                     <div class="col-md-12 form-control-comment">
                                         <span class="req">*</span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>First name</label>
+                                        <label>Ім'я</label>
                                         {{ form.first_name | add_class:"form-control" | attr:"" }}
 
                                     </div>
@@ -291,8 +135,18 @@
                                         <span class="req">*</span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Last name</label>
+                                        <label>Прізвище</label>
                                         {{ form.last_name | add_class:"form-control" | attr:"" }}
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>По батькові</label>
+                                        {{ form.third_name | add_class:"form-control" | attr:"" }}
                                     </div>
                                 </div>
                                 <div class="form-group row ">
@@ -300,7 +154,7 @@
                                         <span class="req">*</span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Email</label>
+                                        <label>Емейл</label>
                                         {{ form.email | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
                                     </div>
 
@@ -311,7 +165,7 @@
                                         <span class="req">*</span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Password</label>
+                                        <label>Пароль</label>
                                         <div class="input-group js-parent-focus">
                                              {{ form.password1 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
 {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
@@ -331,7 +185,7 @@
                                         <span class="req">*</span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Confirm you password</label>
+                                        <label>Підтвердження пароля</label>
                                         <div class="input-group js-parent-focus">
                                              {{ form.password2 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
 {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
@@ -346,48 +200,44 @@
                                     </div>
                                 </div>
                                 <div class="form-group row ">
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
                                     <div class="col-md-12">
-                                        <label>Birthdate</label>
-                                        {{ form.birthdate | add_class:"form-control" | attr:"" }}
-                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>
+                                        <label>Школа</label>
+                                        {{ form.school | add_class:"form-control" | attr:"" }}
+{#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
                                     </div>
                                     <div class="col-md-12 form-control-comment"></div>
                                 </div>
                                 <div class="form-group row ">
-                                    <div class="col-md-12">
-                                        <label></label>
-                                        <span class="custom-checkbox">
-                                            {{ form.offers | add_class:"form-control" | attr:"" }}
-                                            <span>
-                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
-                                            </span>
-                                            <label>Receive offers from our partners</label>
-                                        </span>
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12 form-control-valign">
+                                        <label>Паралель</label>
+                                        {{ form.paralel_number | add_class:"form-control" | attr:""  }}
                                     </div>
                                     <div class="col-md-12 form-control-comment"></div>
                                 </div>
                                 <div class="form-group row ">
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
                                     <div class="col-md-12">
-                                        <label></label>
-                                        <span class="custom-checkbox">
-                                            {{ form.receive_newsletter | add_class:"form-control" | attr:"" }}
-                                            <span>
-                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
-                                            </span>
-                                            <label>
-                                                Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em>
-                                            </label>
-                                        </span>
+                                        <label>Номер телефону</label>
+                                        {{ form.phone_number | add_class:"form-control" | attr:"" }}
+{#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
                                     </div>
                                     <div class="col-md-12 form-control-comment"></div>
                                 </div>
                             </div>
                             <footer class="form-footer clearfix">
-                                <button style="width: 100%" class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" value="REGISTER"> Save </button>
+                                <button style="width: 100%" class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" value="REGISTER">  Зареєструватись </button>
                             </footer>
                         </form>
                     </section>
-                        <p class="logininstead">Already have an account? <a class="" href="{% url 'login' %}">Log in instead!</a>
+                        <p class="logininstead">Вже маєте акаунт? <a class="" href="{% url 'login' %}"> Увійдіть тут!</a>
                         </p>
                     </section>
                     <footer class="page-footer hidden"> </footer>

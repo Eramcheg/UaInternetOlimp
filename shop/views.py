@@ -26,14 +26,14 @@ from django.utils.translation import gettext as _
 
 from shop.models import Banner
 
-json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "key2.json")
+json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "olimp_key.json")
 GEOIP_path = os.path.join(settings.BASE_DIR, "shop", "static", "GEOIP", "GeoLite2-Country.mmdb")
 cred = credentials.Certificate(json_file_path)
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 db = firestore.client()
 orders_ref = db.collection("Orders")
-users_ref = db.collection('webUsers')
+users_ref = db.collection('users')
 itemsRef = db.collection('item')
 cart_ref = db.collection("Cart")
 addresses_ref = db.collection('Addresses')
@@ -357,23 +357,12 @@ def get_vocabulary_product_card():
 
 def home_page(request):
     context = {
-        'address': request.META.get('REMOTE_ADDR'),
-        'banners': Banner.objects.all().order_by('priority')
     }
 
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
 
-    category, currency = get_user_prices(request, email)  # Для пользователей валюта определяется по IP
-
-    currency = '€' if currency == 'Euro' else '$'
-    info = get_user_info(email) or {}
-    sale = round((0 if "sale" not in info else info['sale']) / 100, 2) or 0
-    show_quantities = info['show_quantities'] if 'show_quantities' in info else False
-    context['currency'] = currency
-    context['category'] = category
-    context['sale'] = sale
-    context['show_quantities'] = show_quantities
+    context['role'] = "anonym"
     context['hello'] = test_text
     context['vocabulary_dialog'] = get_vocabulary_product_card()
     print(context['hello'])

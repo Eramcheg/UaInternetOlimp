@@ -19,6 +19,7 @@ class User(AbstractUser):
         related_name="%(app_label)s_user_set",
         related_query_name="user",
     )
+
     class Meta:
         app_label = 'shop'
 
