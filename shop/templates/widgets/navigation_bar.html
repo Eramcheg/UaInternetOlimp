@@ -109,12 +109,12 @@
         {% if user.email == "uainternetolimp@gmail.com" %}
             <a></a>
             <a></a>
-            <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Інструменти адміна</a>
+            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Інструменти адміна </a>
         {% endif %}
         {% if role == "Student" %}
-
+            <a href="{% url 'student_tools' feature_name='home' %}" class="link"> Меню учасника олімпіади </a>
         {% elif role == "Jury" %}
-
+            <a href="{% url 'jury_tools' feature_name='home' %}" class="link"> Меню члена жюри </a>
         {% endif %}
             <a></a>
             <a></a>

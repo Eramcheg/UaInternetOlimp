@@ -26,7 +26,7 @@ from django.utils.translation import gettext as _
 
 from shop.models import Banner
 
-json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "olimp_key.json")
+json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json")
 GEOIP_path = os.path.join(settings.BASE_DIR, "shop", "static", "GEOIP", "GeoLite2-Country.mmdb")
 cred = credentials.Certificate(json_file_path)
 if not firebase_admin._apps:
