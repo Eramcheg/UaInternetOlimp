@@ -82,9 +82,9 @@
 <body class="this-page">
     <div class="toolbar large">
         <div class="logo" >
-            <a href="{% url "home" %}">
-                <img class = "imag" src="{% static "logonormal.webp" %}" style="cursor:pointer" height="70px"/>
-            </a>
+{#            <a href="{% url "home" %}">#}
+{#                <img class = "imag" src="{% static "logonormal.webp" %}" style="cursor:pointer" height="70px"/>#}
+{#            </a>#}
         </div>
         <a></a>
         <a></a>
@@ -121,20 +121,20 @@
         {% if user.is_authenticated %}
         {% else %}
             <a></a>
-            <a href="{% url 'login'%}" class="link">Login</a>
+            <a href="{% url 'login'%}" class="link">Логін</a>
             <a></a>
-            <a href="{% url 'register'%}" class="link">Register</a>
+            <a href="{% url 'register'%}" class="link">Реєстрація</a>
             <a></a>
         {% endif %}
         <span class="icons-container">
-            <div class="language-dropdown">
-                <select class="selected-language" id="languageSelect">
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                    <option value="es">Español </option>
-                </select>
-            </div>
+{#            <div class="language-dropdown">#}
+{#                <select class="selected-language" id="languageSelect">#}
+{#                    <option value="en">English</option>#}
+{#                    <option value="de">Deutsch</option>#}
+{#                    <option value="it">Italiano</option>#}
+{#                    <option value="es">Español </option>#}
+{#                </select>#}
+{#            </div>#}
             <span class="icon-link" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
                 <a id="account-icon" style="display: flex" ><i class="rts" data-size="28" data-color="#000000" style="width: 28px; height: 28px; margin-right: 4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 28px; height: 28px; "><path d="M23.67,25V22.65A4.67,4.67,0,0,0,19,18H9.67A4.67,4.67,0,0,0,5,22.65V25" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></path><circle cx="14.33" cy="8.65" r="4.67" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></circle></svg></i>
                     <span style="margin-top: 6px">
@@ -146,7 +146,9 @@
                             {% else %}
 
                             {% endif %}
-                                {{ user.last_name|default:"" }}
+                            {{ user.last_name|default:"" }}
+                            {{ user.third_name|default:"" }}
+
                         {% endif %}
                     </span>
                 </a>

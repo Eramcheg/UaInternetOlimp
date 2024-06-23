@@ -1,5 +1,5 @@
 import concurrent
-
+import string
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, get_cart, cart_ref, single_order_ref, \
@@ -43,66 +43,79 @@ def get_new_user_id():
     new_user_id = increment_user_id(transaction, user_counter_ref)
     return new_user_id
 
+def generate_random_code(length=10):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
 
+def check_code_unique(code, collection_ref):
+    query = collection_ref.where('user_id', '==', code).limit(1).stream()
+    return any(query)
+
+def get_unique_user_id():
+
+    while True:
+        new_user_id = generate_random_code()
+        if not check_code_unique(new_user_id, users_ref):
+            return new_user_id
+def check_login_unique_in_firestore(login_name):
+    query = users_ref.where('login', '==', login_name).limit(1).stream()
+    return any(query)
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
 
             email = form.cleaned_data.get('email')
+            login_name = form.cleaned_data.get('login')
+            if check_login_unique_in_firestore(login_name):
+                form.add_error('login', 'Логін вже використовується.')
+                return render(request, 'registration/register.html', {'form': form})
+
+                # Check if login is unique in Django's database
+            if User.objects.filter(username=login_name).exists():
+                form.add_error('login', 'Логін вже використовується.')
+                return render(request, 'registration/register.html', {'form': form})
 
             existing_user = users_ref.where('email', '==', email).limit(1).get()
 
             if list(existing_user):  # Convert to list to check if it's non-empty
                 print('Error: User with this Email already exists.')
-                form.add_error('email', 'User with this Email already exists.')
+                form.add_error('email', 'Користувач з таким емейлем вже існує.')
                 return render(request, 'registration/register.html', {'form': form})
             else:
 
-                user_id = get_new_user_id()
+                user_id = get_unique_user_id()
                 current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
-                birthdate = form.cleaned_data.get('birthdate')
-                social_title = "Mr" if form.cleaned_data.get('social_title') == "1" else "Mrs"
-                offers = form.cleaned_data.get('offers')
-                newsletter = form.cleaned_data.get('receive_newsletter')
-                category, currency = get_user_prices(request, email)
+                third_name = form.cleaned_data.get('third_name')
+                school = form.cleaned_data.get('school')
+                paralel = form.cleaned_data.get('paralel_number')
+                phone = form.cleaned_data.get('phone_number')
+
                 new_user = {
                     'Enabled': 'True',
-                    "display_name": "undefined",
-                    'social_title': social_title,
+                    "login": login_name,
                     'first_name': first_name,
                     'last_name': last_name,
+                    'third_name': third_name,
                     'email': email,
-                    'birthday': birthdate,
-                    'country': "",
-                    "agent_number": "",
-                    'price_category': 'Default',
-                    'currency': currency,
-                    'receive_offers': offers,
-                    'receive_newsletter': newsletter,
+                    'school': school,
+                    'paralel': paralel,
+                    'phone': phone,
                     'registrationDate': current_time,
                     'userId': user_id,
-                    'sale': 0,
-                    'show_quantities': False
-
                 }
                 users_ref.add(new_user)
 
-                username = email
-                unique_suffix = 1
-                original_username = username
-                while User.objects.filter(username=username).exists():
-                    username = f"{original_username}{unique_suffix}"
-                    unique_suffix += 1
                 user = form.save(commit=False)
-                user.username = username  # Set the unique username
+                user.username = login_name  # Set the username to be the login field
                 user.save()  # Now save the user to the database
 
                 password = form.cleaned_data.get('password1')
                 form.save()
-                user = authenticate(username=username, password=password)
+                user = authenticate(username=login_name, password=password)
                 if user:
                     login(request, user)
                     return redirect('home')
