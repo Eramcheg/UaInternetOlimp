@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-GEOIP_PATH = os.path.join(BASE_DIR, 'olympiad/static/GEOIP'),
+GEOIP_PATH = os.path.join(BASE_DIR, 'shop/static/GEOIP'),
 
 # Application definition
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'background_task',
     'widget_tweaks',
-    'olympiad',
+    'shop',
     # 'autotranslate',
 ]
 
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'olympiad.middleware.ensure_anon_session_middleware.EnsureAnonymousSessionMiddleware',
+    'shop.middleware.ensure_anon_session_middleware.EnsureAnonymousSessionMiddleware',
     # 'django.middleware.cache.UpdateCacheMiddleware',
     # 'django.middleware.common.CommonMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware',
@@ -70,7 +70,7 @@ CSRF_COOKIE_SECURE = True     # Только если используется H
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'olympiad/templates']
+        'DIRS': [BASE_DIR / 'shop/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -147,10 +147,10 @@ EMAIL_HOST_PASSWORD = 'thfx sduu sgeu urhz'
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'olympiad/static'),
+    os.path.join(BASE_DIR, 'shop/static'),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'olympiad/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'shop/media')
 # URL, по которому файлы будут доступны
 MEDIA_URL = '/media/'
 # Default primary key field type
