@@ -1,0 +1,325 @@
+{% block content %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order form</title>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static "shop_page.css" %}">
+    <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
+</head>
+<body>
+
+<script>
+    let cartData = {{cart|safe}};
+    let inside = "{{ inside|safe }}";
+</script>
+
+{% include 'widgets/navigation_bar.html' %}
+<div class="form" style="margin-top: 150px">
+    <form action="" method="Post" id="searchForm">
+        {% csrf_token %}
+        <label for="number" style="font-size: 22px">{% trans "Product number" %}</label>
+        <br>
+        <input name="number" id="number" onkeyup="updateDropdown()" autocomplete="off">
+        <br>
+        <div id="dropdown"></div>
+        <br>
+        <button type="submit" class="search">{% trans "Search" %}</button>
+    </form>
+</div>
+
+<div class="products">
+    <div class="results">
+        {% if documents %}
+
+            {% if search_term %}
+            <h2>{% trans "Searched Results for" %} "{{ search_term }}":</h2>
+        {% else %}
+            <h2>{% trans "Searched Results" %}:</h2>
+        {% endif %}
+    </div>
+
+    <ul>
+        {% for document in documents %}
+            <div class="document-container" data-document="{{ document }}">
+                <div class="number-in-cart" data-product-id="{{ document.name }}" style="{% if not inside %} display: none {% endif %}">{{ document.number }}</div>
+
+                <div class="document-info" id="info-{{ document.name }}">
+
+                    <div class="document-number"> {{ document.name }} </div> <br><br>
+                    <div class="document-price" >{{ currency }}{{ document.price }}</div>
+                    <div class="document-in-stock">{% trans "In stock" %}: {{ document.quantity }}</div> <br><br>
+                    <div class="document-description">{{ document.description }}</div>     <br>
+
+                    <div class="deleteBut"  data-product-id="{{ document.name }}"
+                         style="{% if not inside %} display: none {% endif %}">
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+
+                    <div>
+                        <div class="quantity-input" id="quantity-input-{{ document.name }}">
+                               <input class="inp" min=1 id="quantity-input-inp-{{ document.name }}" type="number" placeholder="Enter the quantity">
+                        </div>
+                        <div class="quantity-slider" id="quantity-slider-{{ document.name }}">
+                            <span class="min">{{ 1 }}</span>
+                            <input type="range" min="1" max="{{ document.quantity }}" value="{{ quantity }}" class="slider" id="slider-{{ document.name }}">
+                            <span class="max">{{ document.quantity }}</span>
+                        </div>
+                        <button class="quantity-input-button" id="quantity-input-apply-{{ document.name }}">{% trans "Confirm" %}</button>
+                    </div>
+
+                    <br>
+                    <br>
+                    <span class="current-quantity" id="current-quantity-{{ document.name }}" >{% trans "Current quantity" %}: 0</span>
+                    <span class="sum" id="sum-{{ document.name }}" style="{% if not inside %} display: none {% endif %}">{{ document.price }}</span>
+                </div>
+                <img class="document-image" src="{{ document.image_url }}" alt="{{ document.name }}">
+            </div>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% else %}
+    <div class="NoRes">
+    <p>{% trans "No results to display" %}.</p>
+    </div>
+{% endif %}
+
+
+
+
+<script src="../../static/js/shop_page.js"></script>
+{% include "widgets/footer.html" %}
+</body>
+<script>
+    const currency_symbol = "{{ currency|safe }}";
+    document.addEventListener('DOMContentLoaded', function() {
+        restoreState();
+    });
+    function restoreState() {
+        const Id =  document.querySelector('.number-in-cart').getAttribute('data-product-id');
+        document.querySelector('.number-in-cart').innerText = localStorage.getItem('number-'+Id);
+
+        const sum = document.getElementById('sum-'+Id);
+        if (localStorage.getItem('sum-'+Id)!==null && inside !== "False")
+            sum.innerText = "{{ _("Total")|escapejs }}: " + currency_symbol + localStorage.getItem('sum-'+Id);
+        else {
+            sum.innerText = "{{ _("Total")|escapejs }}:"+currency_symbol+"0";
+
+        }
+        if (localStorage.getItem('quantity-'+Id)!==null && inside !== "False" )
+            changeCurrentQuantityText(Id, localStorage.getItem('quantity-'+Id));
+        else {
+            changeCurrentQuantityText(Id, 0);
+        }
+
+    }
+
+    function updateDropdown() {
+        let inputVal = document.getElementById('number').value;
+        if (inputVal.length === 0) {
+            document.getElementById('dropdown').innerHTML = '';
+            return;
+        }
+        fetch('/fetch-numbers/?term=' + inputVal)
+        .then(response => response.json())
+        .then(data => {
+            let dropdownHTML = '';
+            data.forEach((item) => {
+                dropdownHTML += `<div onclick="fillInput('${item}')">${item}</div> <hr style="margin: 0 10px; ">`;
+            });
+            document.getElementById('dropdown').innerHTML = dropdownHTML;
+        });
+    }
+
+    function fillInput(value) {
+        document.getElementById('number').value = value;
+        document.getElementById('dropdown').innerHTML = '';
+    }
+
+
+    function togglePurchaseButton(productId) {
+        const deleteButton = document.querySelector('.deleteBut[data-product-id="' + productId + '"]');
+        const number = document.querySelector('.number-in-cart');
+        const quantityInput = document.getElementById('quantity-input-' + productId);
+        const sum = document.getElementById('sum-'+productId);
+        const current_quantity = document.getElementById('current-quantity-'+productId);
+        current_quantity.style.display = 'inline';
+        number.style.display = 'flex';
+        quantityInput.style.display = 'block';
+        deleteButton.style.display = 'inline';
+        sum.style.display = 'block';
+    }
+
+
+    document.querySelectorAll('.deleteBut').forEach(button => {
+        button.addEventListener('click', function() {
+            const documentId = this.getAttribute('data-product-id');
+
+            const confirmed = confirm("{{ _("Do you really want to delete this product from your cart")|escapejs }}?");
+
+            if (confirmed) {
+                fetch('{% url "delete_document" %}', {  // Replace with your actual URL
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ document_id: documentId })
+                })
+                .then(response => {
+                    if(response.ok) {
+                        inside = "False";
+                        saveState();
+                        toggleQuantityForm(documentId);
+                    } else {
+                        console.error('Error in deletion');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+    function toggleQuantityForm(productId) {
+        const delBut = document.querySelector('.deleteBut[data-product-id="' + productId + '"]');
+        const number = document.querySelector('.number-in-cart');
+        const total = document.getElementById('sum-'+productId);
+        delBut.style.display = 'none';
+        number.style.display = 'none';
+        total.style.display = 'none';
+        let input = document.getElementById('quantity-input-inp-'+productId);
+        input.value = "";
+        let slider = document.getElementById('slider-'+productId);
+        slider.value = 1;
+        changeCurrentQuantityText(productId,0);
+        const button = document.getElementById("quantity-input-apply-"+ productId);
+        button.innerText = "{{ _("Confirm")|escapejs }}";
+        button.style.background = "#1daede"
+    }
+
+    function saveState(name, value) {
+        localStorage.setItem(name, value);
+    }
+
+    $(document).ready(function(){
+        $('.slider').on('input change', function() {
+            let product_id = $(this).attr('id').split('-')[1];
+            let quantity_new = $(this).val();
+            const quantityElement = document.getElementById('quantity-input-inp-' + product_id);
+            quantityElement.value = quantity_new;
+
+            const button = document.getElementById("quantity-input-apply-"+ product_id);
+                button.innerText = "{{ _("Confirm")|escapejs }}";
+                button.style.background = "#1daede"
+        });
+    });
+
+    document.querySelectorAll('.quantity-input-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const documentContainer = this.closest('.document-container');
+            console.log(documentContainer.getAttribute('data-document').replace(/'/g, '"'));
+            const documentValue = JSON.parse(documentContainer.getAttribute('data-document').replace(/'/g, '"'));
+
+            const productId = documentValue['name'];
+
+            const inp = document.getElementById('quantity-input-inp-' + productId);
+
+            const quantity = parseInt(inp.value);
+
+
+            if (isNaN(quantity) || quantity <= 0) {
+                alert("{{ _("Type of written quantity has to be numeric and greater than 0")|escapejs }}");
+            }
+            else if (quantity > documentValue.quantity) {
+
+                alert("{{ _("Quantity has to be less than maximum on storage")|escapejs }}");
+            }
+            else {
+                updateQuantityInput(productId, quantity, documentValue);
+            }
+        });
+    });
+
+    function updateQuantityInput(product_id, quantity_new, doc) {
+        fetch('{% url "update_input" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ product_id: product_id, quantity_new: quantity_new, 'document': JSON.stringify(doc), price:doc.price})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                changeCurrentQuantityText(product_id, quantity_new);
+
+                const button = document.getElementById("quantity-input-apply-"+ product_id);
+                button.innerText = "{{ _("Confirmed!")|escapejs }}";
+                button.style.background = "#06b206";
+
+                const sum  = document.getElementById('sum-'+data.product_id);
+                sum.innerText = "{{ _("Total")|escapejs }}: " + currency_symbol + data.sum;
+                saveState('sum-'+product_id, data.sum);
+
+                saveState('quantity-'+data.product_id, data.quantity);
+                if(data.was_inside === 'False'){
+                    inside = "True";
+                    saveState('number-'+product_id, data.number);
+                    togglePurchaseButton(product_id);
+                    restoreState();
+                }
+
+            } else {
+            }
+        });
+    }
+    document.querySelectorAll('.quantity-input input[type="number"]').forEach(input => {
+        input.addEventListener('input', function() {
+            const documentContainer = this.closest('.document-container');
+            const documentValue = JSON.parse(documentContainer.getAttribute('data-document').replace(/'/g, '"'));
+            const productId = documentValue['name'];
+            const slider = document.getElementById('slider-'+productId);
+            slider.value =  input.value;
+            const button = document.getElementById("quantity-input-apply-"+ productId);
+            button.innerText = "{{ _("Confirm")|escapejs }}";
+            button.style.background = "#1daede"
+        });
+    });
+
+
+let csrftoken = getCookie('csrftoken');
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function changeCurrentQuantityText(productId, quantity){
+    const current_quantity = document.getElementById('current-quantity-'+productId);
+    current_quantity.innerText = "{{ _("Current quantity")|escapejs }}: "+ quantity;
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+</html>
+{%endblock%}
