@@ -1,0 +1,333 @@
+span, h1{
+    font-family: 'Poppins',Oswald,Verdana,sans-serif !important;
+}
+h1{
+
+}
+.page-header{
+    display: block;
+    margin-bottom: 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+}h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.1;
+  color: inherit;
+}
+ h1, .h1 {
+  font-size: 24px;
+}
+ h1, h2, h3, h4, h5, h6 {
+  line-height: 1.125;
+}
+ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .roycontent .bview.bview-first .mask .content h2.item-title {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+  display: block;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}@media (min-width: 768px) {
+  .col-md-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}@media (min-width: 992px) {
+  .col-lg-9 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+.col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 576px) {
+  .col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 768px) {
+  .col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 992px) {
+  .col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 1200px) {
+  .col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 992px) {
+  .col-lg-9 {
+    float: left;
+    width: 75%;
+  }
+}
+@media (min-width: 992px) {
+  .myacc_content {
+    padding-left: 2rem;
+  }
+}
+
+.products-grid{
+    display: grid;
+    justify-content: center;
+    gap: 60px;
+    /*max-width: 800px;*/
+    /*margin-left: 15px;*/
+    margin-right: 30px;
+    margin-left: 30px;
+}
+.products-grid{
+    grid-template-columns: 250px 250px 250px !important;
+}
+.img-section{
+    width: 250px!important;
+    height: 250px !important;
+    margin-bottom: 20px;
+}
+.info-section{
+    margin-bottom: 10px;
+}
+.product-container{
+    cursor: pointer;
+  flex: 0 1 150px;
+  justify-content: center;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+}
+.info-name{
+    font-size: 16px;
+}
+.info-price{
+    font-size:16px
+}
+.img-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 250px !important; /* Match the image width */
+    height: 250px !important; /* Match the image height */
+    border-radius: 10px;
+    overflow: hidden;
+}
+.icon-container {
+    position: absolute;
+    top: 60%; /* Adjust based on your design */
+    left: 50%;
+    /* Initial state set to be below center, but visible for debugging */
+    transform: translate(-50%, 60px); /* Adjust starting position */
+    opacity: 0; /* Start fully transparent */
+    transition: opacity 0.5s ease, transform 0.4s ease; /* Apply transitions */
+    display: flex;
+    justify-content: space-around;
+    width: 75px; /* Adjust based on content */
+}
+
+.icon-container div{
+    width: 32px; /* Rectangle size */
+    height: 32px; /* Rectangle size */
+    background-color: white; /* Rectangle color */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the icon within the rectangle */
+    z-index: 2;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2); /* Shadow added here */
+}
+/* Style your heart-icon-container and new-icon-container if needed */
+.icon-container i, .icon-container div {
+    transition: transform 0.3s ease; /* Smooth transition for the transform */
+}
+.custom-tooltip {
+    background-color: white;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 1000; /* Ensure it appears above other content */
+    pointer-events: none; /* Allows mouse events to pass through the tooltip */
+
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2); /* Shadow added here */
+}
+/* Hover effect */
+.icon-container div:hover {
+    transform: translateY(-5px); /* Move up by 10 pixels */
+}
+.product-container div:hover .icon-container {
+    opacity: 1;
+    transform: translate(-50%, -50%); /* Move to center and scale to original size */
+}
+.product-container:hover .icon-container {
+}
+.remove-fav.btn{
+   position: absolute;
+  top: -20px;
+  /*right: calc(50% - 20px);*/
+  z-index: 2;
+  padding: 6px !important;
+  line-height: 0 !important;
+    color: white;
+    cursor: pointer;
+}
+#product-card-success, #product-card{
+    border: none;
+    border-radius: 10px;
+    line-height: 1.5rem;
+    padding: 20px 40px;
+}
+dialog{
+    transform: translate(0%, 0%) scale(0);
+
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+dialog[open] {
+  /* Final state when dialog is open */
+  opacity: 1;
+  transform: translate(-0%, -0%) scale(1);
+}
+::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  /* Initial state for backdrop fade-in */
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+dialog[open]::backdrop {
+  /* Final state for backdrop */
+  opacity: 1;
+}
+
+
+.card-content, .success-card-content {
+    display: grid;
+}
+
+
+.card-content, .success-card-content {
+        grid-template-columns: auto auto;
+    }
+.card-content, .success-card-content {
+    .img-card{
+        margin: auto;
+    }
+    .close-card{
+        position: absolute;
+        font-size: 25px;
+        top: 0;
+        right: 0;
+        margin: 10px 20px 0 0;
+    }
+    .close-card:hover{
+        cursor: pointer;
+    }
+    .second-column{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-left: 10px;
+
+        .card-dropdown-label{
+            font-weight: 500;
+            font-size: 16px;
+            color: #575757;
+        }
+        .card-dropdown{
+            width: 50%;
+            padding: 15px 20px;
+            background-color: white;
+            border-radius: 4px;
+            border: 2px solid #f2f2f2;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .bottom-card-part{
+            margin-top: auto;
+            text-align: center;
+
+            .plus-button-dialog, .minus-button-dialog{
+                background: #003665;
+                color: #efefef;
+                border-radius:5px;
+                width: 50px;
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .plus-button-dialog, .minus-button-dialog, .quantity-input-dialog{
+                height: 40px;
+            }
+        }
+        .add-to-cart-dialog{
+            width: 100%;
+            padding: 20px;
+            background: #003665;
+            color: #efefef;
+            border-radius:5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+
+        /*Success section */
+        .added-text{
+            font-weight: bolder;
+            font-size: 18px;
+            color: #003665;
+            margin-bottom: 20px;
+        }
+        .button-proceed-to-checkout, .button-continue-shopping{
+            padding: 19px 32px;
+            color: white !important;
+            background-color:  #003665;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 7px;
+            cursor: pointer;
+            border: none;
+            margin-left: 5px;
+
+        }
+        .button-proceed-to-checkout:hover{
+            text-decoration: none;
+        }
+    }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

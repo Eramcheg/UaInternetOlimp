@@ -1,0 +1,479 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+<meta charset="UTF-8">
+<title>Checkout user info</title>
+<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+<link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/checkout_cart.css' %}">
+<link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+<script src="{% static "js/checkout/totalCalculation.js" %}"></script>
+
+    <style>
+    .informational-content {
+        width: 66%;
+        margin: auto;
+        position: relative;
+    }
+
+    .shopping-cart-label {
+        width: initial;
+    }
+
+    .labels {
+        display: flex;
+        justify-content: start;
+        gap: 20px; /* 20px gap between the labels */
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+    .labels label {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .underline {
+        {#background: black;#}
+        position: absolute;
+        bottom: 0!important;
+        left: 0;
+        height: 2px;
+        transition: all 0.3s ease-in-out; /* Smooth transition */
+        width: 0; /* Initial width to 0 for animation */
+    }
+    .underline::before {
+        {#background: black;#}
+        position: absolute!important;
+        bottom: 8!important;
+
+    }
+
+  #errorText{
+            text-align: center;
+  font-size: 28px;
+        }
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 16% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#okButton{
+    text-align: center;
+    padding: 10px;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.logininstead a:hover {
+  text-decoration: none;
+        color: black;
+}
+    .logininstead a {
+  color: black;
+}
+    .logininstead{
+        padding: 30px;
+  text-align: center;
+  border: 2px solid #f2f2f2;
+  margin-top: 50px;
+    }
+    </style>
+<body>
+    <div id="errorModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="errorText"></p>
+            <button id="okButton">OK</button>
+        </div>
+    </div>
+    {% include 'widgets/navigation_bar.html' %}
+    <div class="all" style="margin-top: 150px">
+        <div class="page-content">
+            <div class="doc-content">
+                <div class="informational-content">
+                    <div class="shopping-cart-label">{% trans "Personal Information"%}<hr style="padding: 0;"></div>
+                    <div class="labels">
+                        <label for="section1">{% trans "Order as a guest"%}</label>
+                        <input type="radio" id="section1" name="section" style="display:none" checked>
+                        <label for="section2">{% trans "Sign in"%}</label>
+                        <input type="radio" id="section2" name="section" style="display:none">
+                        <div class="underline"></div>
+                    </div>
+                </div>
+
+                <section id="wrapper" class="stick_parent_lb section-1" style="opacity: 1; margin: auto auto 0 14%;">
+                    <aside id="notifications">
+                        <div class="container"></div>
+                    </aside>
+                    <div class="container">
+                        <div id="content-wrapper">
+                            <section id="main">
+                                <div class="container">
+                                    <header class="page-header" style="color: #f2f2f2">
+                                        <h1 style="color: #626262">{% trans "Create an account"%} </h1>
+                                    </header>
+                                    <section id="content" class="page-content card card-block">
+                                        <section class="sociallogin displayCustomerAccountFormTop authentication hidden-print">
+                                            <div class="col-xs-12">
+                                            </div>
+                                        </section>
+                                    <section class="register-form">
+                                        <form action="{% url 'cart_anonymous_register' %}" id="customer-form" class="js-customer-form" method="post">
+                                        {% csrf_token %}
+                                            <div>
+                                                <div class="form-group row ">
+                                                    <div class="col-md-12 form-control-valign">
+                                                        <label>{% trans "Social title"%}</label>
+                                                        {% for radio in form_register.social_title %}
+                                                            <label class="radio-inline">
+                                                                <span class="custom-radio">
+                                                                    {{ radio.tag }}
+                                                                    <span></span>
+                                                                </span> {{ radio.choice_label }}
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="col-md-12 form-control-comment"></div>
+                                                </div>
+
+                                                <div class="form-group row ">
+
+                                                    <div class="col-md-12 form-control-comment">
+                                                        <span class="req">*</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>{% trans "First name"%}</label>
+                                                        {{ form_register.first_name | add_class:"form-control" | attr:"" }}
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+
+                                                    <div class="col-md-12 form-control-comment">
+                                                        <span class="req">*</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>{% trans "Last name"%}</label>
+                                                        {{ form_register.last_name | add_class:"form-control" | attr:"" }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <div class="col-md-12 form-control-comment">
+                                                        <span class="req">*</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>Email</label>
+                                                        {{ form_register.email | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row ">
+
+                                                    <div class="col-md-12 form-control-comment">
+                                                        <span class="req">*</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>{% trans "Password"%}</label>
+                                                        <div class="input-group js-parent-focus">
+                                                             {{ form_register.password1 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+                {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                                            <span class="input-group-btn" style="position: initial!important; ">
+                                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                                    <i>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                                    </i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+
+                                                    <div class="col-md-12 form-control-comment">
+                                                        <span class="req">*</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>{% trans "Confirm you password"%}</label>
+                                                        <div class="input-group js-parent-focus">
+                                                             {{ form_register.password2 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+                {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                                            <span class="input-group-btn" style="position: initial!important; ">
+                                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                                    <i>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                                    </i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <div class="col-md-12">
+                                                        <label>{% trans "Birthdate"%}</label>
+                                                        {{ form_register.birthdate | add_class:"form-control" | attr:"" }}
+                                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>
+                                                    </div>
+                                                    <div class="col-md-12 form-control-comment"></div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <div class="col-md-12">
+                                                        <label></label>
+                                                        <span class="custom-checkbox">
+                                                            {{ form_register.offers | add_class:"form-control" | attr:"" }}
+                                                            <span>
+                                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                                                            </span>
+                                                            <label>{% trans "Receive offers from our partners"%}</label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-12 form-control-comment"></div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <div class="col-md-12">
+                                                        <label></label>
+                                                        <span class="custom-checkbox">
+                                                            {{ form_register.receive_newsletter | add_class:"form-control" | attr:"" }}
+                                                            <span>
+                                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                                                            </span>
+                                                            <label>
+                                                                {% trans "Sign up for our newsletter"%}<br><em>{% trans "You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice."%}</em>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-12 form-control-comment"></div>
+                                                </div>
+                                            </div>
+                                            <footer class="form-footer clearfix">
+                                                <button style="width: 100%" class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" value="REGISTER">{% trans "Continue"%} </button>
+                                            </footer>
+                                        </form>
+                                    </section>
+
+                                    </section>
+                                    <footer class="page-footer hidden"> </footer>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+                <section id="wrapper" class="stick_parent_lb section-2" style="opacity: 1; display: none ;  margin: auto auto 0 14%">
+
+                    <aside id="notifications">
+                        <div class="container"></div>
+                    </aside>
+                    <div class="container">
+                        <div id="content-wrapper">
+                            <section id="main">
+                                <div class="container">
+                                    <section id="content" class="page-content card card-block">
+                                        <section class="login-form">
+                                            <form id="login-form" action="{% url 'cart_anonymous_login' %}" method="post">
+                                                {% csrf_token %}
+                                                <div>
+                                                    <input type="hidden" name="back" value="my-account">
+                                                    <div class="form-group row ">
+                                                        <div class="col-md-12 form-control-comment">
+                                                            <span class="req">*</span>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label>Email</label>
+                                                            {{ form_login.username | add_class:"form-control" | attr:"placeholder: " }}
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group row ">
+                                                        <div class="col-md-12 form-control-comment">
+                                                            <span class="req">*</span>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label>{% trans "Password"%}</label>
+                                                            <div class="input-group js-parent-focus">
+                                                                {{  form_login.password | add_class:"form-control js-child-focus js-visible-password" | attr:"placeholder: "  }}
+                                                                <span class="input-group-btn" style="position: initial!important;">
+                                                                    <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                                        <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                                        </i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <footer class="form-footer text-sm-center clearfix">
+                                                    <button style="width: 100%" class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                                        {% trans "Continue"%}
+                                                    </button>
+                                                </footer>
+                                            </form>
+                                        </section>
+                                    </section>
+                                    <footer class="page-footer hidden">
+                                    </footer>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="final-container">
+                <div class="finish-section">
+                    <div class="card-detailed-totals">
+                        <h4>Subtotal</h4>
+                        <div class="info-cart-block">
+                            <div class="block-total">
+                                <div class="final-unique-quantity">5 items</div>
+                                <div class="final-sum" id="final-sum">{{ currency }}500.00</div>
+                            </div>
+                        </div>
+                        <div class="promo-block">
+                            <div class="voucher">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag"> <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path> <line x1="7" y1="7" x2="7" y2="7"></line> </svg>
+                                <span class="label-voucher">Have a promo code?</span>
+
+                            </div>
+                        </div>
+                        <div class="card-block-totals">
+                            <div class="cart-total">
+                                <span class="label-total">Total (VAT Excl.)</span>
+                                <span class="value-total">{{ currency }}500.00</span>
+                            </div>
+                            <div class="cart-taxes" style="display: none">
+                                <span class="label-taxes">Included taxes:</span>
+                                <span class="value-taxes">{{ currency }}84.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{{ form.errors|json_script:"form_errors" }}
+<script>
+let isCheckout = true;
+let documentss = [];
+function init() {
+    documentss = {{ documents|safe }};
+    calculate_final(0, currency);
+}
+document.addEventListener("DOMContentLoaded", function() {
+    isCheckout = true;
+         init();
+         const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
+         togglePasswordButtons.forEach(togglePasswordButton =>
+         togglePasswordButton.addEventListener('click', function() {
+             // Select the password input
+             const passwordInput = this.parentElement.parentElement.querySelector('input');
+
+             // Check the current type of the password input and toggle
+             if (passwordInput.type === "password") {
+                passwordInput.type = "text"; // Show the password
+                // Change the SVG to 'eye'
+                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></i>';
+             } else {
+                passwordInput.type = "password"; // Hide the password
+                // Change the SVG back to 'eye-off'
+                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></i>';
+             }
+         }));
+        var formErrors = {% if form.errors %}true{% else %}false{% endif %};
+        var errorModal = document.getElementById("errorModal");
+        var errorText = document.getElementById("errorText");
+        var okButton = document.getElementById("okButton");
+        var closeButton = document.querySelector(".close-button");
+
+        if (formErrors) {
+            var errorMessage = "";
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errorMessage += "{{ error }}\n";
+                {% endfor %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    errorMessage += "{{ error }}\n";
+                {% endfor %}
+            {% endif  %}
+            errorText.innerText = errorMessage;
+            errorModal.style.display = "block";
+        }
+
+        okButton.onclick = function() {
+            errorModal.style.display = "none";
+        }
+
+        closeButton.onclick = function() {
+            errorModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = "none";
+            }
+        }
+    });
+document.getElementById("section1").addEventListener("change", function() {
+    document.querySelector(".section-1").style.display = "block";
+    document.querySelector(".section-2").style.display = "none";
+});
+
+document.getElementById("section2").addEventListener("change", function() {
+    document.querySelector(".section-1").style.display = "none";
+    document.querySelector(".section-2").style.display = "block";
+});
+const labels = document.querySelectorAll('.labels label');
+const underline = document.querySelector('.underline');
+
+function moveUnderline(element) {
+    underline.style.width = element.offsetWidth + 'px';
+    underline.style.left = element.offsetLeft + 'px';
+}
+
+labels.forEach(label => {
+    label.addEventListener('click', function() {
+        moveUnderline(label);
+    });
+});
+
+// Initial placement of the underline
+moveUnderline(document.querySelector('label[for="section1"]'));
+</script>
+{% endblock %}

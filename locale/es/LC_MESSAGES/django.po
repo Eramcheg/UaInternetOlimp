@@ -1,0 +1,4135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-28 17:01+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\cart.html:53
+msgid "Shopping cart"
+msgstr "Carro de la compra"
+
+#: .\templates\cart.html:66
+msgid "In cart"
+msgstr "En el carrito"
+
+#: .\templates\cart.html:76 .\templates\cart.html:186
+#: .\templates\cart.html:250 .\templates\shop_page.html:71
+#: .\templates\shop_page.html:200 .\templates\shop_page.html:216
+#: .\templates\shop_page.html:289
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: .\templates\cart.html:98 .\views.py:325
+msgid "Continue shopping"
+msgstr "Seguir comprando"
+
+#: .\templates\cart.html:132 .\templates\widgets\navigation_bar.html:262
+#: .\views.py:326
+msgid "Proceed to checkout"
+msgstr "Pasar por la caja"
+
+#: .\templates\cart.html:195 .\templates\cart.html:233
+#: .\templates\shop_page.html:235
+msgid "Type of written quantity has to be numeric and greater than 0"
+msgstr "El tipo de cantidad escrita debe ser numérico y mayor que 0."
+
+#: .\templates\cart.html:199 .\templates\cart.html:236
+#: .\templates\shop_page.html:239
+msgid "Quantity has to be less than maximum on storage"
+msgstr "La cantidad debe ser inferior al máximo en almacenamiento."
+
+#: .\templates\cart.html:214
+msgid "Do you really want to delete this product from your cart?"
+msgstr "¿Realmente deseas eliminar este producto de tu carrito?"
+
+#: .\templates\cart.html:271 .\templates\shop_page.html:262
+msgid "Confirmed!"
+msgstr "¡Confirmado!"
+
+#: .\templates\catalog.html:24
+msgid "Categories"
+msgstr "Categorías"
+
+#: .\templates\catalog.html:30
+msgid "Filters"
+msgstr "Filtros"
+
+#: .\templates\catalog.html:32
+msgid "Name, Product Article"
+msgstr "Nombre, artículo del producto"
+
+#: .\templates\catalog.html:37 .\templates\catalog.html:159
+#: .\templates\catalog.html:160 .\templates\profile\profile_orders.html:256
+msgid "Price"
+msgstr "Precio"
+
+#: .\templates\catalog.html:55 .\templates\widgets\navigation_bar.html:294
+#: .\views.py:320
+msgid "Crystal color"
+msgstr "Color cristal"
+
+#: .\templates\catalog.html:77
+msgid "Plating material"
+msgstr "Material de revestimiento"
+
+#: .\templates\catalog.html:100 .\views.py:321
+msgid "Base material"
+msgstr "Material de base"
+
+#: .\templates\catalog.html:116 .\views.py:314
+msgid "Size"
+msgstr "Tamaño"
+
+#: .\templates\catalog.html:147
+msgid "Items per page"
+msgstr "Artículos por página"
+
+#: .\templates\catalog.html:155
+msgid "Order by"
+msgstr "Ordenar por"
+
+#: .\templates\catalog.html:157 .\templates\catalog.html:158
+#: .\templates\profile\profile_orders.html:253
+msgid "Name"
+msgstr "Nombre"
+
+#: .\templates\catalog.html:182
+msgid "Previous"
+msgstr "Anterior"
+
+#: .\templates\catalog.html:184
+msgid "Next"
+msgstr "Próximo"
+
+#: .\templates\catalog.html:189
+msgid "Jump"
+msgstr "Saltar"
+
+#: .\templates\catalog.html:732 .\templates\home.html:572
+#: .\templates\profile\profile_favourites.html:110
+msgid "Remove from favorites"
+msgstr "Quitar de favoritos"
+
+#: .\templates\catalog.html:732 .\templates\home.html:572
+#: .\templates\profile\profile_favourites.html:110
+msgid "Add to favorites"
+msgstr "Agregar a los favoritos"
+
+#: .\templates\catalog.html:940 .\templates\catalog.html:1026
+msgid "No items found"
+msgstr "No se encontraron artículos"
+
+#: .\templates\catalog.html:1021
+msgid "Current page"
+msgstr "Página actual"
+
+#: .\templates\home.html:74
+msgid "ELEGANT JEWELRY AND ACCESSORIES"
+msgstr "JOYAS Y ACCESORIOS ELEGANTES"
+
+#: .\templates\home.html:134
+msgid "BEST SELLERS"
+msgstr "LOS MÁS VENDIDOS"
+
+#: .\templates\orderAnonymAddresses.html:137
+#: .\templates\orderAnonymously.html:128
+msgid "Personal Information"
+msgstr "Informacion personal"
+
+#: .\templates\orderAnonymAddresses.html:138
+#: .\templates\profile\profile_side_menu.html:30
+#: .\templates\widgets\navigation_bar.html:167
+msgid "Addresses"
+msgstr "Direcciones"
+
+#: .\templates\orderAnonymAddresses.html:143
+msgid "Shipping address"
+msgstr "Dirección de envío"
+
+#: .\templates\orderAnonymAddresses.html:171
+#: .\templates\orderAnonymAddresses.html:230
+#: .\templates\profile\profile_addresses.html:33
+msgid "Update"
+msgstr "Actualizar"
+
+#: .\templates\orderAnonymAddresses.html:177
+#: .\templates\orderAnonymAddresses.html:236
+#: .\templates\profile\profile_addresses.html:39
+msgid "Delete"
+msgstr "Borrar"
+
+#: .\templates\orderAnonymAddresses.html:188
+#: .\templates\orderAnonymAddresses.html:247
+msgid "Add new address"
+msgstr "Agregar nueva dirección"
+
+#: .\templates\orderAnonymAddresses.html:192
+msgid "Billing address differs from shipping address"
+msgstr "La dirección de facturación difiere de la dirección de envío"
+
+#: .\templates\orderAnonymAddresses.html:202
+msgid "Billing address"
+msgstr "Dirección de Envio"
+
+#: .\templates\orderAnonymAddresses.html:251
+msgid "Billing address is the same as shipping address"
+msgstr "La dirección de facturación es la misma que la dirección de envío."
+
+#: .\templates\orderAnonymAddresses.html:276
+#: .\templates\orderAnonymously.html:179
+#: .\templates\profile\profile_create_address.html:23
+#: .\templates\profile\profile_information.html:36
+#: .\templates\profile\profile_update_address.html:24
+msgid "First name"
+msgstr "Nombre de pila"
+
+#: .\templates\orderAnonymAddresses.html:286
+#: .\templates\orderAnonymously.html:190
+#: .\templates\profile\profile_create_address.html:32
+#: .\templates\profile\profile_information.html:45
+#: .\templates\profile\profile_update_address.html:33
+msgid "Last name"
+msgstr "Apellido"
+
+#: .\templates\orderAnonymAddresses.html:293
+#: .\templates\profile\profile_create_address.html:41
+#: .\templates\profile\profile_update_address.html:42
+msgid "Company"
+msgstr "Compañía"
+
+#: .\templates\orderAnonymAddresses.html:304
+#: .\templates\profile\profile_create_address.html:49
+#: .\templates\profile\profile_update_address.html:50
+msgid "Address"
+msgstr "DIRECCIÓN"
+
+#: .\templates\orderAnonymAddresses.html:311
+#: .\templates\profile\profile_create_address.html:58
+#: .\templates\profile\profile_update_address.html:59
+msgid "Address Complement"
+msgstr "Complemento de dirección"
+
+#: .\templates\orderAnonymAddresses.html:321
+#: .\templates\profile\profile_create_address.html:65
+#: .\templates\profile\profile_update_address.html:66
+msgid "Postal Code"
+msgstr "Código Postal"
+
+#: .\templates\orderAnonymAddresses.html:331
+#: .\templates\profile\profile_create_address.html:74
+#: .\templates\profile\profile_update_address.html:75
+msgid "City"
+msgstr "Ciudad"
+
+#: .\templates\orderAnonymAddresses.html:341
+#: .\templates\profile\profile_create_address.html:83
+#: .\templates\profile\profile_update_address.html:84
+msgid "Country"
+msgstr "País"
+
+#: .\templates\orderAnonymAddresses.html:355
+#: .\templates\our_company_pages\Privacy_policy.html:55
+#: .\templates\profile\profile_create_address.html:96
+#: .\templates\profile\profile_update_address.html:97
+msgid "Phone"
+msgstr "Teléfono"
+
+#: .\templates\orderAnonymAddresses.html:363
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: .\templates\orderAnonymAddresses.html:370
+#: .\templates\orderAnonymously.html:282 .\templates\orderAnonymously.html:340
+msgid "Continue"
+msgstr "Continuar"
+
+#: .\templates\orderAnonymAddresses.html:472
+msgid "Please select a shipping address first"
+msgstr "Seleccione primero una dirección de envío"
+
+#: .\templates\orderAnonymAddresses.html:544
+#: .\templates\profile\profile_create_address.html:135
+msgid "The address has been successfully added!"
+msgstr "¡La dirección ha sido agregada exitosamente!"
+
+#: .\templates\orderAnonymAddresses.html:557
+#: .\templates\profile\profile_addresses.html:63
+msgid "Are you sure you want to delete this address?"
+msgstr "¿Estás seguro de que deseas eliminar esta dirección?"
+
+#: .\templates\orderAnonymAddresses.html:615
+msgid "Order will be delivered to your email"
+msgstr "El pedido será entregado a su correo electrónico."
+
+#: .\templates\orderAnonymAddresses.html:639
+msgid "You have to add at least 1 item to finish order"
+msgstr "Tienes que agregar al menos 1 artículo para finalizar el pedido."
+
+#: .\templates\orderAnonymAddresses.html:643
+msgid "You didn't provide billing address"
+msgstr "No proporcionaste la dirección de facturación"
+
+#: .\templates\orderAnonymAddresses.html:647
+msgid "You didn't provide shipping address"
+msgstr "No proporcionaste la dirección de envío"
+
+#: .\templates\orderAnonymously.html:130
+msgid "Order as a guest"
+msgstr "Ordenar como invitado"
+
+#: .\templates\orderAnonymously.html:132
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+#: .\templates\orderAnonymously.html:147
+msgid "Create an account"
+msgstr "Crea una cuenta"
+
+#: .\templates\orderAnonymously.html:160
+#: .\templates\profile\profile_information.html:14
+msgid "Social title"
+msgstr "Título social"
+
+#: .\templates\orderAnonymously.html:210 .\templates\orderAnonymously.html:324
+#: .\templates\profile\profile_information.html:62
+msgid "Password"
+msgstr "Contraseña"
+
+#: .\templates\orderAnonymously.html:230
+msgid "Confirm you password"
+msgstr "Confirma tu contraseña"
+
+#: .\templates\orderAnonymously.html:246
+#: .\templates\profile\profile_information.html:98
+msgid "Birthdate"
+msgstr "Fecha de nacimiento"
+
+#: .\templates\orderAnonymously.html:260
+#: .\templates\profile\profile_information.html:114
+msgid "Receive offers from our partners"
+msgstr "Reciba ofertas de nuestros socios"
+
+#: .\templates\orderAnonymously.html:274
+#: .\templates\profile\profile_information.html:129
+msgid "Sign up for our newsletter"
+msgstr "Suscríbete a nuestro boletín"
+
+#: .\templates\orderAnonymously.html:274
+msgid ""
+"You may unsubscribe at any moment. For that purpose, please find our contact"
+" info in the legal notice."
+msgstr ""
+"Puedes darte de baja en cualquier momento. Para ello, encontrará nuestros "
+"datos de contacto en el aviso legal."
+
+#: .\templates\our_company_pages\Impressum.html:47
+msgid "Value added tax registration number(s)"
+msgstr "Número(s) de registro del impuesto al valor agregado"
+
+#: .\templates\our_company_pages\Impressum.html:48
+msgid ""
+"Professional indemnity insurance:<br>R V Allgemeine Versicherung "
+"AG<br>Raiffeisenplatz 1<br>65189 Wiesbaden<br>The territorial scope of the "
+"insurance covers activities in Within the limits defined by terms and "
+"conditions of the insurance our comapny grants the insured cover against "
+"third-party-claims on the basis of legal liability provisions under private "
+"law with respect to aby bodily injury and property damage occurring during "
+"the validity of the insurance."
+msgstr ""
+"Seguro de responsabilidad civil profesional:<br>R V Allgemeine Versicherung "
+"AG<br>Raiffeisenplatz 1<br>65189 Wiesbaden<br>El ámbito territorial del "
+"seguro cubre las actividades dentro de los límites definidos por los "
+"términos y condiciones del seguro que nuestra empresa concede al asegurado. "
+"contra reclamaciones de terceros sobre la base de disposiciones legales de "
+"responsabilidad del derecho privado en relación con lesiones corporales y "
+"daños materiales ocurridos durante la vigencia del seguro."
+
+#: .\templates\our_company_pages\Impressum.html:49
+msgid ""
+"The European Commission provides a platform for online dispute resolutions "
+"(ODR) which can be accessed at"
+msgstr ""
+"La Comisión Europea proporciona una plataforma para la resolución de "
+"disputas en línea (ODR) a la que se puede acceder en"
+
+#: .\templates\our_company_pages\Impressum.html:49
+msgid ""
+"We are ready to participate in extra-judicial dispute settlement proceedings"
+" before a consumer dispute resolution body. The competent body in this "
+"matter is"
+msgstr ""
+"Estamos dispuestos a participar en procedimientos extrajudiciales de "
+"solución de litigios ante un organismo de resolución de litigios en materia "
+"de consumo. El órgano competente en esta materia es"
+
+#: .\templates\our_company_pages\Impressum.html:51
+msgid "CONTACT US"
+msgstr "CONTÁCTENOS"
+
+#: .\templates\our_company_pages\Impressum.html:59
+#: .\templates\service_pages\contact_us.html:50
+msgid "Call us at"
+msgstr "Llamenos al"
+
+#: .\templates\our_company_pages\Impressum.html:63
+msgid "Office Hours"
+msgstr "Horas de oficina"
+
+#: .\templates\our_company_pages\Impressum.html:64
+msgid ""
+"Monday&nbsp;to Thursday from 08:00 to 17:00,&nbsp;and Friday "
+"from&nbsp;08:00&nbsp;to 13:00, except bank holidays."
+msgstr ""
+"De lunes a jueves de 08:00 a 17:00 horas, y viernes de 08:00 a 13:00 horas, "
+"excepto festivos."
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:28
+#: .\templates\widgets\footer.html:100
+msgid "Oliver Weber for Press"
+msgstr "Oliver Weber para la prensa"
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:44
+msgid "PRESS RELEASES&nbsp;FOR MEDIA AND JOURNALIST"
+msgstr "COMUNICADOS DE PRENSA PARA MEDIOS Y PERIODISTAS"
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:46
+msgid "Here you will find our contact details for the company Oliver Weber."
+msgstr ""
+"Aquí encontrará nuestros datos de contacto de la empresa Oliver Weber."
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:48
+msgid ""
+"Do you have requests for magazines or magazines?<br><br>We will inform you "
+"about news and activities of our company.<br><br>Do you search for "
+"information about our current collection or printable print material and "
+"photos, e.g. from our collection?<br><br>Please contact the Oliver Weber "
+"Press Office directly:<br><br>Tel .: +43 (0) 5223 41 881<br>Fax .: +43 (0) "
+"5223 41 881-3<br><br>Email: office@oliverweber.at<br><br>&nbsp;<br><br>"
+msgstr ""
+"¿Tiene solicitudes de revistas o revistas?<br><br>Le informaremos sobre las "
+"noticias y actividades de nuestra empresa.<br><br>¿Busca información sobre "
+"nuestra colección actual o material impreso y fotografías imprimibles, p. de"
+" nuestra colección?<br><br>Por favor, póngase en contacto directamente con "
+"la Oficina de Prensa de Oliver Weber:<br><br>Tel.: +43 (0) 5223 41 "
+"881<br>Fax.: +43 (0) 5223 41 881 -3<br><br>Correo electrónico: "
+"office@oliverweber.at<br><br> <br><br>"
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:50
+msgid ""
+"General information about Oliver Weber: Wide range of affordable luxury "
+"available worldwide"
+msgstr ""
+"Información general sobre Oliver Weber: Amplia gama de lujo asequible "
+"disponible en todo el mundo"
+
+#: .\templates\our_company_pages\Oliver_Weber_for_Press.html:52
+msgid ""
+"'Oliver Weber' has become a trusted and known and also a sought-after "
+"jewellery brand in more than 50 countries around the world.<br><br>All the "
+"jewels of Oliver Weber are made with the highest quality crystals. Every "
+"piece of jewellery in the fashion collection or silver jewellery and "
+"matching chic accessories, are selected with the utmost precision and all "
+"crystals or cubic zirconia’s are carefully set by hand.<br><br>The color "
+"palette of the crystals range from classic transparency to deep shades of "
+"red, blue and green, while the materials are coated with 18ct gold, rose "
+"gold, palladium and rhodium to keep the shine.<br><br>In our partners shop "
+"in shop solution stores and as well in our own Oliver Weber flagship stores "
+"you will find the extensive product range of the Oliver Weber "
+"Collection.<br><br>Our team of international designers and trend scouts "
+"create 2 new seasonal collections each year with the latest jewellery trends"
+" for seasonal occasions. In the fashion jewellery collection you will find a"
+" wide range of styles and colors.<br><br>In the Oliver Weber collection you "
+"will find jewellery for every occasion, whether is for a wedding, a "
+"birthday, Mother's Day, Valentine's Day or for Christmas gift.<br><br>With "
+"over 1500 individual pieces of jewellery there is something for everyone and"
+" any occasion.<br><br>Jewellery is very trendy. The wide range of rings, "
+"earrings to pendants to necklaces and brooches decorated with high end "
+"crystals will help you to find the right jewellery for you.<br><br>If you "
+"want to know more about Oliver Weber and the concept you can find us as well"
+" on exhibitions fairs worldwide with worldwide delivery and local "
+"representatives."
+msgstr ""
+"'Oliver Weber' se ha convertido en una marca de joyería confiable, conocida "
+"y también solicitada en más de 50 países alrededor del mundo.<br><br>Todas "
+"las joyas de Oliver Weber están hechas con cristales de la más alta calidad."
+" Cada pieza de joyería de la colección de moda o joyería de plata y "
+"accesorios elegantes a juego se seleccionan con la máxima precisión y todos "
+"los cristales o circonitas cúbicas se engarzan cuidadosamente a "
+"mano.<br><br>La paleta de colores de los cristales abarca desde la "
+"transparencia clásica hasta tonos profundos de rojo, azul y verde, mientras "
+"que los materiales están recubiertos con oro de 18 quilates, oro rosa, "
+"paladio y rodio para mantener el brillo.<br><br>Compra en nuestras tiendas "
+"asociadas y también en las nuestras propias. En las tiendas insignia de "
+"Oliver Weber encontrará la amplia gama de productos de la Colección Oliver "
+"Weber.<br><br>Nuestro equipo de diseñadores internacionales y buscadores de "
+"tendencias crea 2 nuevas colecciones de temporada cada año con las últimas "
+"tendencias en joyería para ocasiones de temporada. En la colección de "
+"bisutería encontrará una amplia gama de estilos y colores.<br><br>En la "
+"colección de Oliver Weber encontrará joyas para cada ocasión, ya sea para "
+"una boda, un cumpleaños, el Día de la Madre, el Día de San Valentín o para "
+"regalo de Navidad.<br><br>Con más de 1500 piezas de joyería individuales, "
+"hay algo para todos y para cualquier ocasión.<br><br>Las joyas están muy de "
+"moda. La amplia gama de anillos, pendientes, colgantes, collares y broches "
+"decorados con cristales de alta gama le ayudarán a encontrar la joyería "
+"adecuada para usted.<br><br>Si desea saber más sobre Oliver Weber y el "
+"concepto, puede encontrar nosotros también en ferias de exposición en todo "
+"el mundo con entrega en todo el mundo y representantes locales."
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:28
+msgid "Oliver Weber's World "
+msgstr "El mundo de Oliver Weber"
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:44
+msgid ""
+"The jewelry of Oliver Weber is made exclusively with precision cut, crystals"
+" of the highest quality on the market. Every piece of jewelry undergoes an "
+"exact quality control and all crystals are used by hand with the utmost "
+"care. The Oliver Weber Collection underscores the infinite creativity of "
+"crystals and unites them in magical combinations of light and color."
+msgstr ""
+"Las joyas de Oliver Weber están elaboradas exclusivamente con cristales "
+"tallados con precisión y de la más alta calidad del mercado. Cada pieza de "
+"joyería pasa por un exacto control de calidad y todos los cristales se "
+"utilizan a mano con el máximo cuidado. La colección Oliver Weber subraya la "
+"infinita creatividad de los cristales y los une en mágicas combinaciones de "
+"luz y color."
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:49
+msgid "The founder"
+msgstr "El fundador"
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:50
+msgid ""
+"Oliver Weber was founded in 1994 in Mils, in the heart of Austria, the home "
+"of the most famous cut crystals. The brand bears the name of one of the two "
+"founders, both of whom have held management positions with the renowned "
+"Swarovski company for many years. The company Westa combines quality with "
+"perfect design and convinces the conscious customer worldwide."
+msgstr ""
+"Oliver Weber se fundó en 1994 en Mils, en el corazón de Austria, cuna de los"
+" cristales tallados más famosos. La marca lleva el nombre de uno de los dos "
+"fundadores, quienes ocupan desde hace muchos años puestos directivos en la "
+"reconocida empresa Swarovski. La empresa Westa combina calidad con un diseño"
+" perfecto y convence a clientes interesados ​​en todo el mundo."
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:55
+msgid "The Company"
+msgstr "La empresa"
+
+#: .\templates\our_company_pages\Olivers_Weber_World.html:56
+msgid ""
+"From the beginning, the aim of the Oliver Weber brand was to develop a "
+"jewelry collection that enriches the crystal jewelry market with a high "
+"degree of creativity. Thanks to Oliver Weber, the boundaries between fashion"
+" and jewelery are increasingly dissolving, and the jewelry becomes part of "
+"the clothing, completing the outfit and acquiring a very special style: "
+"affordable luxury that adapts to every occasion and the most varied tastes."
+msgstr ""
+"Desde el principio, el objetivo de la marca Oliver Weber fue desarrollar una"
+" colección de joyas que enriqueciera el mercado de la joyería de cristal con"
+" un alto grado de creatividad. Gracias a Oliver Weber, las fronteras entre "
+"moda y joyería se disuelven cada vez más, y las joyas pasan a formar parte "
+"de la ropa, completando el outfit y adquiriendo un estilo muy especial: un "
+"lujo asequible que se adapta a cada ocasión y a los gustos más variados."
+
+#: .\templates\our_company_pages\Privacy_policy.html:38
+#: .\templates\widgets\footer.html:103
+msgid "Website Privacy Policy"
+msgstr "Política de privacidad del sitio web"
+
+#: .\templates\our_company_pages\Privacy_policy.html:53
+msgid "Responsible for the processing of data is:"
+msgstr "El responsable del tratamiento de los datos es:"
+
+#: .\templates\our_company_pages\Privacy_policy.html:56
+msgid ""
+"Thank you for visiting our online shop. Protection of your privacy is very "
+"important to us. Below you will find extensive information about how we "
+"handle your data."
+msgstr ""
+"Gracias por visitar nuestra tienda en línea. La protección de su privacidad "
+"es muy importante para nosotros. A continuación encontrará amplia "
+"información sobre cómo tratamos sus datos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:57
+msgid "Access data and hosting"
+msgstr "Acceso a datos y hosting"
+
+#: .\templates\our_company_pages\Privacy_policy.html:58
+msgid ""
+"You may visit our website without revealing any personal information. With "
+"every visit on the website, the web server stores automatically only a so-"
+"called server log file which contains e.g. the name of the requested file, "
+"your IP address, the date and time of the request, the volume of data "
+"transferred and the requesting provider (access data), and documents the "
+"request. These access data are analysed exclusively for the purpose of "
+"ensuring the smooth operation of the website and improving our offer. This "
+"serves according to Art. 6 (1) 1 lit. f GDPR the protection of our "
+"legitimate interests in the proper presentation of our offer that are "
+"overriding in the process of balancing of interests. All access data are "
+"deleted no later than seven days after the end of your visit on our website."
+msgstr ""
+"Puede visitar nuestro sitio web sin revelar ninguna información personal. "
+"Con cada visita al sitio web, el servidor web almacena automáticamente sólo "
+"el llamado archivo de registro del servidor, que contiene, por ejemplo. el "
+"nombre del fichero solicitado, su dirección IP, la fecha y hora de la "
+"solicitud, el volumen de datos transferidos y el proveedor solicitante "
+"(datos de acceso), y documenta la solicitud. Estos datos de acceso se "
+"analizan exclusivamente con la finalidad de garantizar el buen "
+"funcionamiento del sitio web y mejorar nuestra oferta. Esto sirve según el "
+"art. 6 (1) 1 litro. f GDPR la protección de nuestros intereses legítimos en "
+"la presentación adecuada de nuestra oferta que prevalecen en el proceso de "
+"equilibrio de intereses. Todos los datos de acceso se eliminan a más tardar "
+"siete días después de finalizar su visita a nuestro sitio web."
+
+#: .\templates\our_company_pages\Privacy_policy.html:60
+msgid ""
+"The services for hosting and displaying the website are partly provided by "
+"our service providers on the basis of processing on our behalf. Unless "
+"otherwise stated in this privacy policy, all access data and all data "
+"collected in forms provided for this purpose on this website are processed "
+"on their servers. If you have any questions about our service providers and "
+"the basis of our cooperation with them, please use the contact option "
+"described in this privacy policy."
+msgstr ""
+"Los servicios de alojamiento y visualización del sitio web son "
+"proporcionados en parte por nuestros proveedores de servicios sobre la base "
+"del procesamiento por cuenta nuestra. Salvo que se indique lo contrario en "
+"esta política de privacidad, todos los datos de acceso y todos los datos "
+"recogidos en los formularios dispuestos al efecto en este sitio web son "
+"tratados en sus servidores. Si tiene alguna pregunta sobre nuestros "
+"proveedores de servicios y la base de nuestra cooperación con ellos, utilice"
+" la opción de contacto descrita en esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:61
+msgid "Content Delivery Network"
+msgstr "Red de entrega de contenidos"
+
+#: .\templates\our_company_pages\Privacy_policy.html:62
+msgid ""
+"For the purpose of a shorter loading time, we use for some offers a so-"
+"called Content Delivery Network ('CDN') . This service provides content, "
+"e.g. large media files, via regionally distributed servers of external CDN "
+"service providers. For this reason, access data will be processed on the "
+"servers of these service providers. We engage our service providers on the "
+"basis of processing on our behalf. If you have any questions about our "
+"service providers and the basis of our cooperation with them, please use the"
+" contact option described in this privacy policy."
+msgstr ""
+"Para acortar el tiempo de carga, utilizamos para algunas ofertas la "
+"denominada red de entrega de contenidos ('CDN'). Este servicio proporciona "
+"contenido, p.e. archivos multimedia de gran tamaño, a través de servidores "
+"distribuidos regionalmente de proveedores de servicios CDN externos. Por "
+"este motivo, los datos de acceso serán tratados en los servidores de estos "
+"proveedores de servicios. Contratamos a nuestros proveedores de servicios "
+"sobre la base del procesamiento en nuestro nombre. Si tiene alguna pregunta "
+"sobre nuestros proveedores de servicios y la base de nuestra cooperación con"
+" ellos, utilice la opción de contacto descrita en esta política de "
+"privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:63
+msgid ""
+"Data processing for the purposes of processing the contract, establishing "
+"contact"
+msgstr ""
+"Tratamiento de datos con la finalidad de tramitar el contrato, establecer "
+"contacto"
+
+#: .\templates\our_company_pages\Privacy_policy.html:64
+msgid "Data processing for the purposes of performing the contract"
+msgstr "Tratamiento de datos con el fin de ejecutar el contrato"
+
+#: .\templates\our_company_pages\Privacy_policy.html:65
+msgid ""
+"For the purpose of performing the contract in accordance with Art. 6 (1) (b)"
+" GDPR, we collect personal data if you provide it to us voluntarily as part "
+"of your order. Mandatory fields are marked as such, as in these cases we "
+"necessarily need the data to process the contract and we cannot send the "
+"order without their specification. Which data is collected can be seen from "
+"the respective input forms."
+msgstr ""
+"A los efectos de ejecutar el contrato de conformidad con el art. 6 (1) (b) "
+"GDPR, recopilamos datos personales si nos los proporciona voluntariamente "
+"como parte de su pedido. Los campos obligatorios están marcados como tales, "
+"ya que en estos casos necesitamos necesariamente los datos para tramitar el "
+"contrato y no podemos enviar el pedido sin su especificación. Los datos que "
+"se recopilan se pueden ver en los respectivos formularios de entrada."
+
+#: .\templates\our_company_pages\Privacy_policy.html:66
+msgid ""
+"Further information on the processing of your data, in particular on the "
+"forwarding of the data to our service providers for the purpose of order, "
+"payment and shipping, can be found in the following sections of this privacy"
+" policy. After complete processing of the contract, your data will be "
+"restricted for further processing and deleted after expiry of the retention "
+"periods under tax and commercial law in accordance with Art. 6 (1) (c) GDPR,"
+" unless you have expressly consented to further use of your data in "
+"accordance with Art. 6 (1) (a) GDPR or we reserve the right to use data "
+"beyond this, which is permitted by law and about which we inform you in this"
+" privacy policy."
+msgstr ""
+"Puede encontrar más información sobre el procesamiento de sus datos, en "
+"particular sobre la transmisión de los datos a nuestros proveedores de "
+"servicios con fines de pedido, pago y envío, en las siguientes secciones de "
+"esta política de privacidad. Una vez finalizado el procesamiento del "
+"contrato, sus datos se limitarán para su posterior procesamiento y se "
+"eliminarán una vez transcurridos los plazos de conservación previstos en la "
+"legislación fiscal y mercantil de conformidad con el art. 6 (1) (c) del "
+"RGPD, a menos que haya dado su consentimiento expreso para un uso posterior "
+"de sus datos de conformidad con el art. 6 (1) (a) GDPR o nos reservamos el "
+"derecho de utilizar datos más allá de esto, lo que está permitido por la ley"
+" y sobre el cual le informamos en esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:67
+msgid "Customer account"
+msgstr "Cuenta de cliente"
+
+#: .\templates\our_company_pages\Privacy_policy.html:68
+msgid ""
+"Insofar as you have given your consent to this in accordance with Art. 6 (1)"
+" (a) GDPR by deciding to open a customer account, we will use and store your"
+" data for the purpose of opening the customer account as well as for further"
+" future orders on our website. Deletion of your customer account is possible"
+" at any time and can be done either by sending a message to the contact "
+"option described in this privacy policy or via a function provided for this "
+"purpose in the customer account. After deletion of your customer account, "
+"your data will be deleted unless you have expressly consented to further use"
+" of your data in accordance with Art. 6 (1) (a) GDPR or we reserve the right"
+" to use data beyond this, which is permitted by law and about which we "
+"inform you in this privacy policy."
+msgstr ""
+"En la medida en que haya dado su consentimiento de conformidad con el art. 6"
+" (1) (a) GDPR al decidir abrir una cuenta de cliente, usaremos y "
+"almacenaremos sus datos con el fin de abrir la cuenta de cliente, así como "
+"para futuros pedidos en nuestro sitio web. La eliminación de su cuenta de "
+"cliente es posible en cualquier momento y puede realizarse enviando un "
+"mensaje a la opción de contacto descrita en esta política de privacidad o "
+"mediante una función proporcionada para este fin en la cuenta de cliente. "
+"Después de la eliminación de su cuenta de cliente, sus datos se eliminarán a"
+" menos que haya dado su consentimiento expreso para seguir utilizando sus "
+"datos de conformidad con el art. 6 (1) (a) GDPR o nos reservamos el derecho "
+"de utilizar datos más allá de esto, lo que está permitido por la ley y sobre"
+" el cual le informamos en esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:69
+msgid "Establishing contact"
+msgstr "Estableciendo contacto"
+
+#: .\templates\our_company_pages\Privacy_policy.html:70
+msgid ""
+"As part of our customer communication, we collect personal data in order to "
+"process your enquiries in accordance with Art. 6 (1) (b) GDPR if you "
+"voluntarily provide us with this data when contacting us (e.g. via contact "
+"form or e-mail). Mandatory fields are marked as such, as in these cases we "
+"necessarily need the data to process your enquiry. Which data is collected "
+"can be seen from the respective input forms. After your enquiry has been "
+"fully processed, your data will be deleted unless you have expressly "
+"consented to further use of your data in accordance with Art. 6 (1) (a) GDPR"
+" or we reserve the right to use data beyond this, which is permitted by law "
+"and about which we inform you in this privacy policy."
+msgstr ""
+"Como parte de nuestra comunicación con el cliente, recopilamos datos "
+"personales para procesar sus consultas de conformidad con el art. 6 (1) (b) "
+"GDPR si nos proporciona voluntariamente estos datos cuando se pone en "
+"contacto con nosotros (por ejemplo, a través del formulario de contacto o "
+"por correo electrónico). Los campos obligatorios están marcados como tales, "
+"ya que en estos casos necesitamos necesariamente los datos para procesar su "
+"consulta. Los datos que se recopilan se pueden ver en los respectivos "
+"formularios de entrada. Una vez que su consulta se haya procesado por "
+"completo, sus datos se eliminarán a menos que haya dado su consentimiento "
+"expreso para seguir utilizando sus datos de conformidad con el art. 6 (1) "
+"(a) GDPR o nos reservamos el derecho de utilizar datos más allá de esto, lo "
+"que está permitido por la ley y sobre el cual le informamos en esta política"
+" de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:71
+msgid "Live-Chat-Tool Zendesk"
+msgstr "Herramienta de chat en vivo Zendesk"
+
+#: .\templates\our_company_pages\Privacy_policy.html:72
+msgid ""
+"For the purposes of customer communication, we use the live chat tool "
+"of&nbsp;"
+msgstr ""
+"Para fines de comunicación con el cliente, utilizamos la herramienta de chat"
+" en vivo de"
+
+#: .\templates\our_company_pages\Privacy_policy.html:72
+msgid ""
+"This serves to protect our legitimate interests in effective and improved "
+"customer communication, which prevail in the context of a balancing of "
+"interests pursuant to Art. 6 (1) (f) GDPR. Zendesk acts as a data processor."
+" There is no adequacy decision for the United States by the European "
+"Commission. Our cooperation is based on standard data protection clauses "
+"adopted by the European Commission."
+msgstr ""
+"Esto sirve para proteger nuestros intereses legítimos en una comunicación "
+"eficaz y mejorada con el cliente, que prevalece en el contexto de un "
+"equilibrio de intereses según el art. 6 (1) (f) RGPD. Zendesk actúa como "
+"procesador de datos. No existe ninguna decisión de adecuación para Estados "
+"Unidos por parte de la Comisión Europea. Nuestra cooperación se basa en "
+"cláusulas estándar de protección de datos adoptadas por la Comisión Europea."
+
+#: .\templates\our_company_pages\Privacy_policy.html:73
+msgid "Data processing for the purposes of shipment"
+msgstr "Tratamiento de datos con fines de envío"
+
+#: .\templates\our_company_pages\Privacy_policy.html:74
+msgid ""
+"We forward your data to the shipping company within the scope required for "
+"the delivery of the ordered goods according to Art. 6 (1) (b) GDPR."
+msgstr ""
+"Transmitimos sus datos a la empresa de transporte en la medida necesaria "
+"para la entrega de la mercancía solicitada según el art. 6 (1) (b) RGPD."
+
+#: .\templates\our_company_pages\Privacy_policy.html:75
+msgid ""
+"Data transmission to a shipping provider for the purpose of shipment "
+"notification"
+msgstr ""
+"Transmisión de datos a un proveedor de transporte con el fin de notificar el"
+" envío"
+
+#: .\templates\our_company_pages\Privacy_policy.html:76
+msgid ""
+"Provided that you have given us your explicit consent, during or after your "
+"order, we will forward your e-mail address and phone number in accordance "
+"with Art. 6 (1) (a) GDPR to the selected shipping provider in order to "
+"enable them to contact you for the purpose of shipment notification or "
+"coordination prior to shipment.<br>This consent may be withdrawn at any time"
+" by sending a message to the contact information described in this privacy "
+"policy or directly to the shipping provider using the contact address listed"
+" below. After consent withdrawal, we will delete the data you have provided "
+"for this purpose, unless you have expressly consented to further use of your"
+" data or we have reserved the right to use your data for other purposes "
+"which are permitted by law and about which we inform you in this privacy "
+"policy. &ZeroWidthSpace;&ZeroWidthSpace;"
+msgstr ""
+"Siempre que nos haya dado su consentimiento explícito, durante o después de "
+"su pedido, le enviaremos su dirección de correo electrónico y su número de "
+"teléfono de conformidad con el art. 6 (1) (a) GDPR al proveedor de envío "
+"seleccionado para permitirle comunicarse con usted con el fin de notificarle"
+" o coordinar el envío antes del envío.<br>Este consentimiento puede "
+"retirarse en cualquier momento enviando un mensaje al información de "
+"contacto descrita en esta política de privacidad o directamente al proveedor"
+" de envío utilizando la dirección de contacto que figura a continuación. "
+"Después de retirar el consentimiento, eliminaremos los datos que nos haya "
+"proporcionado para este fin, a menos que haya dado su consentimiento expreso"
+" para seguir utilizando sus datos o nos hayamos reservado el derecho de "
+"utilizar sus datos para otros fines permitidos por la ley y sobre los cuales"
+" le informamos. usted en esta política de privacidad. "
+"&ZeroWidthSpace;&ZeroWidthSpace;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:82
+msgid "Data processing for the purposes of payment"
+msgstr "Tratamiento de datos con fines de pago"
+
+#: .\templates\our_company_pages\Privacy_policy.html:83
+msgid ""
+"As part of the payment process in our online shop, we work together with "
+"these partners: technical service provider, credit institution, payment "
+"service provider."
+msgstr ""
+"Como parte del proceso de pago en nuestra tienda online, trabajamos junto "
+"con estos socios: proveedor de servicios técnicos, entidad de crédito, "
+"proveedor de servicios de pago."
+
+#: .\templates\our_company_pages\Privacy_policy.html:84
+msgid "Data processing for the purposes of transaction processing"
+msgstr "Procesamiento de datos con fines de procesamiento de transacciones"
+
+#: .\templates\our_company_pages\Privacy_policy.html:85
+msgid ""
+"Depending on the selected payment method, we forward the data necessary for "
+"processing the payment transaction to our technical service providers, who "
+"act for us on the basis of processing on our behalf or to the authorised "
+"credit institutions or to the selected payment service provider insofar as "
+"this is necessary for the payment process. This serves the fulfilment of the"
+" contract according to Art. 6 (1) (b) GDPR. In certain cases, payment "
+"service providers collect the data required for processing the payment "
+"themselves, e.g. on their own website or via technical solution within the "
+"ordering process. In this respect, the privacy policy of the respective "
+"payment service provider applies. If you have any questions about our "
+"payment processing partners and the basis of our cooperation with them, "
+"please use the contact option described in this privacy policy."
+msgstr ""
+"Dependiendo del método de pago seleccionado, transmitimos los datos "
+"necesarios para procesar la transacción de pago a nuestros proveedores de "
+"servicios técnicos, quienes actúan en nuestro nombre sobre la base del "
+"procesamiento en nuestro nombre o a las instituciones de crédito autorizadas"
+" o al proveedor de servicios de pago seleccionado, en la medida en que esto "
+"es necesario para el proceso de pago. Esto sirve para el cumplimiento del "
+"contrato según el art. 6 (1) (b) RGPD. En determinados casos, los "
+"proveedores de servicios de pago recopilan ellos mismos los datos necesarios"
+" para procesar el pago, p. en su propio sitio web o a través de una solución"
+" técnica dentro del proceso de pedido. A este respecto se aplica la política"
+" de privacidad del respectivo proveedor de servicios de pago. Si tiene "
+"alguna pregunta sobre nuestros socios de procesamiento de pagos y la base de"
+" nuestra cooperación con ellos, utilice la opción de contacto descrita en "
+"esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:86
+msgid ""
+"Data processing for the purposes of fraud prevention and optimisation of our"
+" payment processes"
+msgstr ""
+"Procesamiento de datos con fines de prevención del fraude y optimización de "
+"nuestros procesos de pago."
+
+#: .\templates\our_company_pages\Privacy_policy.html:87
+msgid ""
+"We may forward other data to our service providers, which they use for the "
+"purpose of fraud prevention and to optimise our payment processes (e.g. "
+"invoicing, processing of contested payments, accounting support) together "
+"with the data necessary to process the payment as our processors.<br>This "
+"serves to safeguard our legitimate interests in fraud prevention or an "
+"efficient payment management in accordance with Art. 6 (1) (f) GDPR that are"
+" overriding in the process of balancing of interests."
+msgstr ""
+"Podemos enviar otros datos a nuestros proveedores de servicios, que utilizan"
+" con el fin de prevenir el fraude y optimizar nuestros procesos de pago (por"
+" ejemplo, facturación, procesamiento de pagos impugnados, soporte contable) "
+"junto con los datos necesarios para procesar el pago como nuestros "
+"procesadores. <br>Esto sirve para salvaguardar nuestros intereses legítimos "
+"en la prevención del fraude o en una gestión eficiente de los pagos de "
+"conformidad con el art. 6 (1) (f) GDPR que prevalecen en el proceso de "
+"equilibrio de intereses."
+
+#: .\templates\our_company_pages\Privacy_policy.html:88
+msgid "Marketing via e-mail, mail, telephone"
+msgstr "Marketing a través de correo electrónico, correo postal, teléfono."
+
+#: .\templates\our_company_pages\Privacy_policy.html:89
+msgid "E-mail advertising upon subscription to the newsletter"
+msgstr "Publicidad por correo electrónico al suscribirse al boletín"
+
+#: .\templates\our_company_pages\Privacy_policy.html:90
+msgid ""
+"If you subscribe to our newsletter, we will regularly send you our email "
+"newsletter based on your consent according to Art. 6 (1) (a) GDPR, using the"
+" data required or disclosed by you separately for this "
+"purpose.<br>&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;You"
+" can unsubscribe from the newsletter at any time. This can either be done by"
+" sending a message to the contact option described in this privacy policy or"
+" via a link provided for this purpose in the newsletter. After "
+"unsubscribing, we will delete your e-mail address from the list of "
+"recipients, unless you have expressly consented to the further use of your "
+"data or we have reserved the right to use your data for other purposes that "
+"are permitted by law and about which we inform you in this privacy policy."
+msgstr ""
+"Si se suscribe a nuestro boletín informativo, le enviaremos periódicamente "
+"nuestro boletín informativo por correo electrónico en función de su "
+"consentimiento según el art. 6 (1) (a) GDPR, utilizando los datos requeridos"
+" o divulgados por usted por separado para este "
+"propósito.<br>&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;Puede"
+" darse de baja del boletín en cualquier momento. Esto se puede hacer "
+"enviando un mensaje a la opción de contacto descrita en esta política de "
+"privacidad o a través de un enlace proporcionado a tal efecto en el boletín."
+" Después de cancelar la suscripción, eliminaremos su dirección de correo "
+"electrónico de la lista de destinatarios, a menos que haya consentido "
+"expresamente el uso posterior de sus datos o nos hayamos reservado el "
+"derecho de utilizar sus datos para otros fines permitidos por la ley y sobre"
+" los cuales Te informamos en esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:91
+msgid "Newsletter mailing"
+msgstr "Envío de boletines"
+
+#: .\templates\our_company_pages\Privacy_policy.html:92
+msgid ""
+"The newsletter is sent to you by our service provider who processes data on "
+"our behalf and to whom we disclose your email address. "
+"&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;&ZeroWidthSpace;If"
+" you have any questions about our service providers and the basis of our "
+"cooperation with them, please use the contact option described in this "
+"privacy policy."
+msgstr ""
+"El boletín lo envía nuestro proveedor de servicios, que procesa datos en "
+"nuestro nombre y a quien revelamos su dirección de correo electrónico. Si "
+"tiene alguna pregunta sobre nuestros proveedores de servicios y la base de "
+"nuestra cooperación con ellos, utilice la opción de contacto descrita en "
+"esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:93
+msgid ""
+"Our service providers are located and/or use servers in the USA and in other"
+" countries outside the EU and the EEA. For these countries, there is no "
+"adequacy decision by&nbsp;the European Commission. Our cooperation is based "
+"on standard data protection clauses adopted by the European Commission."
+msgstr ""
+"Nuestros proveedores de servicios están ubicados y/o utilizan servidores en "
+"los EE. UU. y en otros países fuera de la UE y el EEE. Para estos países, no"
+" existe ninguna decisión de adecuación por parte de la Comisión Europea. "
+"Nuestra cooperación se basa en cláusulas estándar de protección de datos "
+"adoptadas por la Comisión Europea."
+
+#: .\templates\our_company_pages\Privacy_policy.html:94
+msgid "Postal advertising and your right to opt out"
+msgstr "Publicidad postal y su derecho a no participar"
+
+#: .\templates\our_company_pages\Privacy_policy.html:95
+msgid ""
+"Furthermore, we reserve the right to use your first and last name and your "
+"postal address for our advertising purposes, e.g. for sending interesting "
+"offers and information about our products by post. This serves to safeguard "
+"our legitimate interests in promoting and advertising our products to "
+"customers according to Art. 6 (1) (f) GDPR that are overriding in the "
+"process of balancing of interests. You can opt out of the storage and use of"
+" your data for these purposes at any time by sending a message to the "
+"contact option specified below."
+msgstr ""
+"Además, nos reservamos el derecho de utilizar su nombre y apellido y su "
+"dirección postal para nuestros fines publicitarios, p. para enviar ofertas "
+"interesantes e información sobre nuestros productos por correo postal. Esto "
+"sirve para salvaguardar nuestros intereses legítimos en la promoción y "
+"publicidad de nuestros productos a los clientes según el art. 6 (1) (f) GDPR"
+" que prevalecen en el proceso de equilibrio de intereses. Puede optar por no"
+" participar en el almacenamiento y uso de sus datos para estos fines en "
+"cualquier momento enviando un mensaje a la opción de contacto que se "
+"especifica a continuación."
+
+#: .\templates\our_company_pages\Privacy_policy.html:96
+msgid "Phone advertising"
+msgstr "Publicidad telefónica"
+
+#: .\templates\our_company_pages\Privacy_policy.html:97
+msgid ""
+"If you have given your consent in accordance with Art. 6 (1) (a) GDPR, we "
+"will use the data required for this purpose or provided separately by you "
+"for our own advertising purposes, e.g. to inform you about interesting "
+"offers and our products. You can withdraw your consent at any time, either "
+"by sending a message to the contact option described in this privacy policy "
+"or by verbal notification within each call. After withdrawal, we will delete"
+" your telephone number unless you have expressly consented to the further "
+"use of your data or we have reserved the right to use your data for other "
+"purposes that are permitted by law and about which we inform you in this "
+"privacy policy."
+msgstr ""
+"Si ha dado su consentimiento de conformidad con el art. 6 (1) (a) GDPR, "
+"utilizaremos los datos necesarios para este propósito o que usted nos haya "
+"proporcionado por separado para nuestros propios fines publicitarios, p. "
+"para informarle sobre ofertas interesantes y nuestros productos. Puede "
+"retirar su consentimiento en cualquier momento, ya sea enviando un mensaje a"
+" la opción de contacto descrita en esta política de privacidad o mediante "
+"notificación verbal dentro de cada llamada. Después de la retirada, "
+"eliminaremos su número de teléfono a menos que haya dado su consentimiento "
+"expreso para el uso posterior de sus datos o nos hayamos reservado el "
+"derecho de utilizar sus datos para otros fines permitidos por la ley y sobre"
+" los cuales le informamos en esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:98
+msgid "Cookies and further technologies"
+msgstr "Cookies y otras tecnologías"
+
+#: .\templates\our_company_pages\Privacy_policy.html:99
+msgid "General information"
+msgstr "Información general"
+
+#: .\templates\our_company_pages\Privacy_policy.html:100
+msgid ""
+"In order to make visiting our website attractive and to enable the use of "
+"certain functions, to display suitable products or for market research, we "
+"use technologies on various pages, including so-called cookies. Cookies are "
+"small text files that are automatically stored on your end device. Some of "
+"the cookies we use are deleted after the end of the browser session, i.e. "
+"after closing your browser (so-called session cookies). Other cookies remain"
+" on your end device and enable us to recognise your browser during your next"
+" visit (persistent cookies). We use such technologies that are strictly "
+"necessary for the use of certain functions of our website (e.g. shopping "
+"cart function). These technologies are used to collect and process IP "
+"addresses, time of visit, device and browser information as well as "
+"information on your use of our website (e.g. information on the contents of "
+"the shopping basket). This serves to safeguard our legitimate interests in "
+"an optimised presentation of our offer in accordance with Art. 6 (1) (f) "
+"GDPR that are overriding in the process of balancing of interests."
+msgstr ""
+"Para hacer atractiva la visita a nuestro sitio web y permitir el uso de "
+"determinadas funciones, mostrar productos adecuados o realizar estudios de "
+"mercado, utilizamos tecnologías en varias páginas, incluidas las llamadas "
+"cookies. Las cookies son pequeños archivos de texto que se almacenan "
+"automáticamente en su dispositivo final. Algunas de las cookies que "
+"utilizamos se eliminan una vez finalizada la sesión del navegador, es decir,"
+" después de cerrar el navegador (las llamadas cookies de sesión). Otras "
+"cookies permanecen en su dispositivo final y nos permiten reconocer su "
+"navegador durante su próxima visita (cookies persistentes). Utilizamos "
+"tecnologías que son estrictamente necesarias para el uso de determinadas "
+"funciones de nuestro sitio web (por ejemplo, la función del carrito de "
+"compras). Estas tecnologías se utilizan para recopilar y procesar "
+"direcciones IP, hora de visita, información del dispositivo y del navegador,"
+" así como información sobre su uso de nuestro sitio web (por ejemplo, "
+"información sobre el contenido de la cesta de la compra). Esto sirve para "
+"salvaguardar nuestros intereses legítimos en una presentación optimizada de "
+"nuestra oferta de conformidad con el art. 6 (1) (f) GDPR que prevalecen en "
+"el proceso de equilibrio de intereses."
+
+#: .\templates\our_company_pages\Privacy_policy.html:101
+msgid ""
+"In addition, we use technologies to fulfil the legal obligations, which we "
+"are subject to (e.g. to be able to prove consent to the processing of your "
+"personal data) as well as for web analysis and online marketing. Further "
+"information on this, including the respective legal basis for data "
+"processing, can be found in the following sections of this privacy policy."
+msgstr ""
+"Además, utilizamos tecnologías para cumplir con las obligaciones legales a "
+"las que estamos sujetos (por ejemplo, para poder demostrar el consentimiento"
+" al procesamiento de sus datos personales), así como para el análisis web y "
+"el marketing online. Puede encontrar más información al respecto, incluida "
+"la respectiva base legal para el procesamiento de datos, en las siguientes "
+"secciones de esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:102
+msgid ""
+"On our website we may use other technologies, which are not listed "
+"individually in this privacy policy. Further information on these "
+"technologies and the respective legal basis can be found on the platform of "
+"our consent management service Usercentrics."
+msgstr ""
+"En nuestro sitio web podemos utilizar otras tecnologías, que no se enumeran "
+"individualmente en esta política de privacidad. Puede encontrar más "
+"información sobre estas tecnologías y la base legal respectiva en la "
+"plataforma de nuestro servicio de gestión de consentimiento Usercentrics."
+
+#: .\templates\our_company_pages\Privacy_policy.html:103
+msgid ""
+"You can access the plattform by clicking on the fingerprint button in the "
+"bottom right or left corner of the page."
+msgstr ""
+"Puede acceder a la plataforma haciendo clic en el botón de huella digital en"
+" la esquina inferior derecha o izquierda de la página."
+
+#: .\templates\our_company_pages\Privacy_policy.html:104
+msgid ""
+"You can find the cookies settings for your browser by clicking on the "
+"following links:&nbsp;"
+msgstr ""
+"Puede encontrar la configuración de cookies de su navegador haciendo clic en"
+" los siguientes enlaces:"
+
+#: .\templates\our_company_pages\Privacy_policy.html:105
+msgid ""
+"If you have consented to the use of the technologies in accordance with Art."
+" 6 (1) (a) GDPR, you can withdraw your consent at any time by sending a "
+"message to the contact option described in the privacy policy. "
+"Alternatively, you can also click on the fingerprint button in the lower "
+"right or left corner of the page. If cookies are not accepted, the "
+"functionality of our website may be limited."
+msgstr ""
+"Si ha dado su consentimiento para el uso de las tecnologías de conformidad "
+"con el art. 6 (1) (a) GDPR, puede retirar su consentimiento en cualquier "
+"momento enviando un mensaje a la opción de contacto descrita en la política "
+"de privacidad. Alternativamente, también puede hacer clic en el botón de "
+"huella digital en la esquina inferior derecha o izquierda de la página. Si "
+"no se aceptan cookies, la funcionalidad de nuestro sitio web puede verse "
+"limitada."
+
+#: .\templates\our_company_pages\Privacy_policy.html:106
+msgid ""
+"Use of Usercentrics Consent Management Platform for obtaining and managing "
+"consent"
+msgstr ""
+"Uso de la plataforma de gestión de consentimiento Usercentrics para obtener "
+"y gestionar el consentimiento"
+
+#: .\templates\our_company_pages\Privacy_policy.html:107
+msgid "On our website we use the&nbsp;"
+msgstr "En nuestro sitio web utilizamos el"
+
+#: .\templates\our_company_pages\Privacy_policy.html:107
+msgid ""
+"to inform you about the cookies and the technologies we use on our website "
+"and to obtain, manage and document your consent to the processing of your "
+"personal data by these technologies. This is required under Art. 6 (1) (c) "
+"GDPR to fulfil our legal obligation under Art. 7 (1) GDPR to be able to "
+"prove your consent to the processing of your personal data, to which we are "
+"subject. The consent management service Usercentrics is provided by "
+"Usercentrics GmbH, Sendlinger Straße 7, 80331 Munich, Germany, which "
+"processes your data on our behalf. When you visit our website, Usercentrics'"
+" web server stores a so-called server log file, which also contains your "
+"anonymised IP address, the date and time of your visit, device and browser "
+"information as well as information on your consent behaviour. Your data will"
+" be deleted after three years, unless you have expressly consented to "
+"further use of your data in accordance with Art. 6 (1) (a) GDPR or we "
+"reserve the right to use your data in a manner that goes beyond this, which "
+"is legally permitted and about which we inform you in this privacy policy."
+msgstr ""
+"para informarle sobre las cookies y las tecnologías que utilizamos en "
+"nuestro sitio web y para obtener, gestionar y documentar su consentimiento "
+"para el procesamiento de sus datos personales mediante estas tecnologías. "
+"Esto es requerido por el art. 6 (1) (c) GDPR para cumplir con nuestra "
+"obligación legal según el art. 7 (1) GDPR para poder acreditar su "
+"consentimiento al procesamiento de sus datos personales al que estamos "
+"sujetos. El servicio de gestión de consentimiento Usercentrics es "
+"proporcionado por Usercentrics GmbH, Sendlinger Straße 7, 80331 Munich, "
+"Alemania, que procesa sus datos en nuestro nombre. Cuando visita nuestro "
+"sitio web, el servidor web de Usercentrics almacena el llamado archivo de "
+"registro del servidor, que también contiene su dirección IP anónima, la "
+"fecha y hora de su visita, información del dispositivo y del navegador, así "
+"como información sobre su comportamiento de consentimiento. Sus datos se "
+"eliminarán después de tres años, a menos que haya dado su consentimiento "
+"expreso para seguir utilizando sus datos de conformidad con el art. 6 (1) "
+"(a) GDPR o nos reservamos el derecho de utilizar sus datos de una manera que"
+" vaya más allá de lo permitido legalmente y sobre lo cual le informamos en "
+"esta política de privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:108
+msgid ""
+"Use of cookies and other technologies for web analytics and advertising "
+"purposes"
+msgstr ""
+"Uso de cookies y otras tecnologías con fines publicitarios y de análisis web"
+
+#: .\templates\our_company_pages\Privacy_policy.html:109
+msgid ""
+"If you have given your consent in accordance with Art. 6 (1) (a) GDPR, we "
+"use the following cookies and other third-party technologies on our website."
+" The data collected in this context will be deleted after the relevant "
+"purpose has been fulfilled and we have ended the use of the respective "
+"technology. You can withdraw your consent at any time with effect for the "
+"future. Further information on your withdrawal options can be found in the "
+"section 'cookies and further technologies'. Further information including "
+"the legal basis for data processing can be found within the respective "
+"technologies. If you have any questions about our service providers and the "
+"basis of our cooperation with them, please use the contact option described "
+"in this privacy policy."
+msgstr ""
+"Si ha dado su consentimiento de conformidad con el art. 6 (1) (a) GDPR, "
+"utilizamos las siguientes cookies y otras tecnologías de terceros en nuestro"
+" sitio web. Los datos recopilados en este contexto se eliminarán una vez que"
+" se haya cumplido el propósito correspondiente y hayamos finalizado el uso "
+"de la tecnología respectiva. Puede retirar su consentimiento en cualquier "
+"momento con efecto para el futuro. Puede encontrar más información sobre sus"
+" opciones de retiro en la sección \"cookies y otras tecnologías\". Puede "
+"encontrar más información, incluida la base legal para el procesamiento de "
+"datos, en las respectivas tecnologías. Si tiene alguna pregunta sobre "
+"nuestros proveedores de servicios y la base de nuestra cooperación con "
+"ellos, utilice la opción de contacto descrita en esta política de "
+"privacidad."
+
+#: .\templates\our_company_pages\Privacy_policy.html:110
+msgid "Use of Adobe services for webanalysis and advertising purposes"
+msgstr ""
+"Uso de los servicios de Adobe con fines publicitarios y de análisis web"
+
+#: .\templates\our_company_pages\Privacy_policy.html:111
+msgid ""
+"We use the technologies described below from Adobe Systems, Software Ireland"
+" Limited, Ireland, 4-6 Riverwalk, Citywest Business Campus, Dublin 24, "
+"Ireland ('Adobe'). The information automatically collected by Adobe "
+"technologies about your use of our website is generally transmitted to and "
+"stored on a server operated by Adobe, Inc, 345 Park Avenue San Jose, CA "
+"95110-2704, USA. For the USA, there is no adequacy decision of the European "
+"Commission. Our cooperation is based on standard data protection clauses of "
+"the European Commission. If your IP address is collected via Adobe "
+"technologies, it is shortened or completely replaced by a generic IP address"
+" before being stored on Adobe servers by activating appropriate settings."
+msgstr ""
+"Utilizamos las tecnologías que se describen a continuación de Adobe Systems,"
+" Software Ireland Limited, Irlanda, 4-6 Riverwalk, Citywest Business Campus,"
+" Dublín 24, Irlanda ('Adobe'). La información recopilada automáticamente por"
+" las tecnologías de Adobe sobre su uso de nuestro sitio web generalmente se "
+"transmite y almacena en un servidor operado por Adobe, Inc, 345 Park Avenue "
+"San Jose, CA 95110-2704, EE. UU. Para los EE.UU. no existe ninguna decisión "
+"de adecuación de la Comisión Europea. Nuestra cooperación se basa en las "
+"cláusulas estándar de protección de datos de la Comisión Europea. Si su "
+"dirección IP se recopila a través de tecnologías de Adobe, se acorta o "
+"reemplaza completamente por una dirección IP genérica antes de almacenarse "
+"en los servidores de Adobe activando la configuración adecuada."
+
+#: .\templates\our_company_pages\Privacy_policy.html:112
+msgid "Adobe Fonts"
+msgstr "Fuentes de Adobe"
+
+#: .\templates\our_company_pages\Privacy_policy.html:113
+msgid ""
+"In order to provide a uniform presentation of the content on our website, "
+"the script code 'Adobe Fonts' collects data (IP address, time of visit, "
+"device and browser information), transmits it to Adobe and then processes it"
+" by Adobe. We have no influence on this subsequent data processing. "
+"&nbsp;The&nbsp;data processing&nbsp;is carried out on the basis of an "
+"agreement between jointly responsible parties in accordance with Art. 26 "
+"GDPR."
+msgstr ""
+"Para ofrecer una presentación uniforme del contenido de nuestro sitio web, "
+"el código script 'Adobe Fonts' recopila datos (dirección IP, hora de la "
+"visita, información del dispositivo y del navegador), los transmite a Adobe "
+"y luego Adobe los procesa. No tenemos ninguna influencia sobre este "
+"procesamiento posterior de datos. El tratamiento de datos se realiza sobre "
+"la base de un acuerdo entre corresponsables de conformidad con el art. 26 "
+"RGPD."
+
+#: .\templates\our_company_pages\Privacy_policy.html:114
+msgid "Use of Google services for web analysis and advertising purposes"
+msgstr ""
+"Uso de los servicios de Google con fines publicitarios y de análisis web"
+
+#: .\templates\our_company_pages\Privacy_policy.html:115
+msgid ""
+"We use the following technologies of Google Ireland Ltd, Gordon House, "
+"Barrow Street, Dublin 4, Ireland ('Google'). The information automatically "
+"collected by Google technologies about your use of our website is usually "
+"transferred to a server of Google LLC, 1600 Amphitheatre Parkway Mountain "
+"View, CA 94043, USA and stored there. There is no adequacy decision with "
+"respect to the USA by the European Commission. Our cooperation is based on "
+"standard data protection clauses adopted by the European Commission. If your"
+" IP address is collected using Google technologies, it will be shortened by "
+"activating IP anonymisation before being stored on Google's servers. Only in"
+" exceptional cases will the full IP address be transferred to a Google "
+"server and shortened there. Unless otherwise specified for the specific "
+"technologies, data processing is based on an agreement concluded for the "
+"respective technology between jointly responsible parties in accordance with"
+" Art. 26 GDPR. Further information about data processing by Google can be "
+"found in&nbsp;"
+msgstr ""
+"Utilizamos las siguientes tecnologías de Google Ireland Ltd, Gordon House, "
+"Barrow Street, Dublin 4, Irlanda ('Google'). La información recopilada "
+"automáticamente por las tecnologías de Google sobre su uso de nuestro sitio "
+"web generalmente se transfiere a un servidor de Google LLC, 1600 "
+"Amphitheatre Parkway Mountain View, CA 94043, EE. UU. y se almacena allí. No"
+" existe ninguna decisión de adecuación con respecto a los EE.UU. por parte "
+"de la Comisión Europea. Nuestra cooperación se basa en cláusulas estándar de"
+" protección de datos adoptadas por la Comisión Europea. Si su dirección IP "
+"se recopila utilizando tecnologías de Google, se acortará activando la "
+"anonimización de IP antes de almacenarse en los servidores de Google. Sólo "
+"en casos excepcionales se transmitirá la dirección IP completa a un servidor"
+" de Google y allí se acortará. A menos que se especifique lo contrario para "
+"las tecnologías específicas, el procesamiento de datos se basa en un acuerdo"
+" celebrado para la tecnología respectiva entre partes corresponsables de "
+"conformidad con el art. 26 RGPD. Puede encontrar más información sobre el "
+"procesamiento de datos por parte de Google en"
+
+#: .\templates\our_company_pages\Privacy_policy.html:116
+msgid "Google Analytics"
+msgstr "Google analitico"
+
+#: .\templates\our_company_pages\Privacy_policy.html:117
+msgid ""
+"For the purpose of website analytics, Google Analytics automatically "
+"collects and stores data (IP address, time of visit, device and browser "
+"information as well as information on your use of our website), from which "
+"usage profiles are created using pseudonyms. Cookies can be used for this "
+"purpose. Your IP address will not be merged with other data from Google. The"
+" data processing is based on a data processing agreement with Google."
+msgstr ""
+"Para fines de análisis de sitios web, Google Analytics recopila y almacena "
+"automáticamente datos (dirección IP, hora de la visita, información del "
+"dispositivo y del navegador, así como información sobre su uso de nuestro "
+"sitio web), a partir de los cuales se crean perfiles de uso utilizando "
+"seudónimos. Se pueden utilizar cookies para este fin. Su dirección IP no se "
+"combinará con otros datos de Google. El procesamiento de datos se basa en un"
+" acuerdo de procesamiento de datos con Google."
+
+#: .\templates\our_company_pages\Privacy_policy.html:118
+msgid ""
+"In order to optimize the marketing of our website, we have activated "
+"the&nbsp;data sharing settings for 'Google products and services'. This "
+"allows Google to access the data collected and processed by Google Analytics"
+" and then use it to improve Google services. The data sharing to Google "
+"within the scope of these data sharing settings is based on an additional "
+"agreement between the data controllers. We have no influence on the "
+"subsequent data processing by Google."
+msgstr ""
+"Para optimizar el marketing de nuestro sitio web, hemos activado la "
+"configuración de intercambio de datos para \"productos y servicios de "
+"Google\". Esto permite a Google acceder a los datos recopilados y procesados"
+" ​​por Google Analytics y luego utilizarlos para mejorar los servicios de "
+"Google. El intercambio de datos con Google en el marco de estas "
+"configuraciones de intercambio de datos se basa en un acuerdo adicional "
+"entre los controladores de datos. No tenemos ninguna influencia sobre el "
+"procesamiento posterior de datos por parte de Google."
+
+#: .\templates\our_company_pages\Privacy_policy.html:119
+msgid ""
+"We also use the extension function of Google Analytics&nbsp;Google "
+"Optimize&nbsp;to create and run tests."
+msgstr ""
+"También utilizamos la función de extensión de Google Analytics Google "
+"Optimize para crear y ejecutar pruebas."
+
+#: .\templates\our_company_pages\Privacy_policy.html:120
+msgid ""
+"For the purposes of optimized marketing of our website, we use the so-"
+"called&nbsp;user ID function. With the help of this function, we can assign "
+"a unique, permanent ID to your interaction data for one or more sessions on "
+"our websites and thus analyze your user behavior across devices and "
+"sessions."
+msgstr ""
+"Para optimizar el marketing de nuestro sitio web utilizamos la llamada "
+"función de identificación de usuario. Con la ayuda de esta función, podemos "
+"asignar una identificación única y permanente a sus datos de interacción "
+"para una o más sesiones en nuestros sitios web y así analizar su "
+"comportamiento de usuario en todos los dispositivos y sesiones."
+
+#: .\templates\our_company_pages\Privacy_policy.html:121
+msgid ""
+"For web analytics purposes, the extension function of Google "
+"Analytics&nbsp;Google Signals&nbsp;enables so-called 'cross-device "
+"tracking'. If your internet-enabled devices are linked to your Google "
+"Account and you have activated the 'personalised advertising' setting in "
+"your Google Account, Google can generate reports on your usage behaviour (in"
+" particular cross-device user numbers), even if you change your device. We "
+"do not process personal data in this respect; we only receive statistics "
+"based on Google Signals."
+msgstr ""
+"Para fines de análisis web, la función de extensión de Google "
+"Analytics Google Signals permite el llamado \"seguimiento entre "
+"dispositivos\". Si sus dispositivos con acceso a Internet están vinculados a"
+" su cuenta de Google y ha activado la configuración de \"publicidad "
+"personalizada\" en su cuenta de Google, Google puede generar informes sobre "
+"su comportamiento de uso (en particular, números de usuarios entre "
+"dispositivos), incluso si cambia su dispositivo. No procesamos datos "
+"personales a este respecto; Solo recibimos estadísticas basadas en Google "
+"Signals."
+
+#: .\templates\our_company_pages\Privacy_policy.html:122
+msgid ""
+"For web analytics and advertising purposes, the extension function of Google"
+" Analytics enables the so-called&nbsp;DoubleClick cookie&nbsp;to recognize "
+"your browser when visiting other websites. Google will use this information "
+"to compile reports about your website activities and to provide other "
+"services related to the use of the website."
+msgstr ""
+"Para fines publicitarios y de análisis web, la función de extensión de "
+"Google Analytics permite que la denominada cookie DoubleClick reconozca su "
+"navegador cuando visita otros sitios web. Google utilizará esta información "
+"para compilar informes sobre las actividades de su sitio web y para "
+"proporcionar otros servicios relacionados con el uso del sitio web."
+
+#: .\templates\our_company_pages\Privacy_policy.html:124
+msgid ""
+"Our Website markets advertising space to third party service providers and "
+"advertising networks via Google AdSense. Those advertisements will be shown "
+"to you in different places on this website. The so-called DoubleClick cookie"
+" enables the display of interest-based advertising through the collection "
+"and processing of data (IP address, time of visit, device and browser "
+"information as well as information on your use of our website) and the "
+"automatic assignment of a pseudonymous UserID, which is used to determine "
+"interests based on visits to this and other websites."
+msgstr ""
+"Nuestro sitio web comercializa espacios publicitarios a proveedores de "
+"servicios externos y redes publicitarias a través de Google AdSense. Esos "
+"anuncios se le mostrarán en diferentes lugares de este sitio web. La llamada"
+" cookie de DoubleClick permite mostrar publicidad basada en intereses "
+"mediante la recopilación y el procesamiento de datos (dirección IP, hora de "
+"la visita, información del dispositivo y del navegador, así como información"
+" sobre su uso de nuestro sitio web) y la asignación automática de una ID de "
+"usuario seudónimo, que se utiliza para determinar intereses en función de "
+"las visitas a este y otros sitios web."
+
+#: .\templates\our_company_pages\Privacy_policy.html:126
+msgid ""
+"For advertising purposes in the Google search results as well as on the "
+"websites of third parties, the so-called Google&nbsp;Remarketing&nbsp;Cookie"
+" is used when you visit our website, which automatically enables interest-"
+"based advertising through the collection and processing of data (IP address,"
+" time of visit, device and browser information as well as information on "
+"your use of our website), by means of a pseudonymous cookie ID and on the "
+"basis of the pages you visit. Any further data processing only takes place "
+"if you have activated the setting 'personalised advertising' in your Google "
+"account. In this case, if you are logged into Google while visiting our "
+"website, Google will use your data together with Google Analytics data to "
+"create and define target group lists for cross-device remarketing."
+msgstr ""
+"Con fines publicitarios en los resultados de búsqueda de Google, así como en"
+" sitios web de terceros, cuando visita nuestro sitio web se utiliza la "
+"llamada cookie de remarketing de Google, que permite automáticamente la "
+"publicidad basada en intereses mediante la recopilación y el procesamiento "
+"de datos (dirección IP , hora de la visita, información del dispositivo y "
+"del navegador, así como información sobre su uso de nuestro sitio web), "
+"mediante un ID de cookie seudónimo y en función de las páginas que visita. "
+"Cualquier procesamiento posterior de datos solo se llevará a cabo si ha "
+"activado la configuración \"publicidad personalizada\" en su cuenta de "
+"Google. En este caso, si ha iniciado sesión en Google mientras visita "
+"nuestro sitio web, Google utilizará sus datos junto con los datos de Google "
+"Analytics para crear y definir listas de grupos objetivo para el remarketing"
+" entre dispositivos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:127
+msgid ""
+"For website analysis and event tracking, we use Google Ads&nbsp;Conversion "
+"Tracking&nbsp;to measure your subsequent usage behavior when you arrive on "
+"our website via a Google Ads ad. For this purpose, cookies may be used and "
+"data (IP address, time of visit, device and browser information as well as "
+"information on your use of our website based on events specified by us, such"
+" as a visit to a website or newsletter registration) may be collected, from "
+"which usage profiles are created using pseudonyms."
+msgstr ""
+"Para el análisis del sitio web y el seguimiento de eventos, utilizamos el "
+"seguimiento de conversiones de Google Ads para medir su comportamiento de "
+"uso posterior cuando llega a nuestro sitio web a través de un anuncio de "
+"Google Ads. Para este propósito, se pueden utilizar cookies y datos "
+"(dirección IP, hora de la visita, información del dispositivo y del "
+"navegador, así como información sobre su uso de nuestro sitio web en función"
+" de eventos especificados por nosotros, como una visita a un sitio web o el "
+"registro en un boletín informativo). se pueden recoger, a partir de los "
+"cuales se elaboran perfiles de uso utilizando seudónimos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:129
+msgid ""
+"For the visual representation of geographical information, Google Maps "
+"collects data on your use of the Maps functions, in particular the IP "
+"address and location data, and transmits this data to Google and then "
+"processes it by Google. We have no influence on this subsequent data "
+"processing."
+msgstr ""
+"Para la representación visual de información geográfica, Google Maps "
+"recopila datos sobre su uso de las funciones de Maps, en particular la "
+"dirección IP y los datos de ubicación, los transmite a Google y luego Google"
+" los procesa. No tenemos ninguna influencia sobre este procesamiento "
+"posterior de datos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:131
+msgid ""
+"For the purpose of protection against misuse of our web forms as well as "
+"against spam by automated software (so-called bots), Google reCAPTCHA "
+"collects data (IP address, time of visit, browser information as well as "
+"information on your use of our website) and performs an analysis of your use"
+" of our website by means of a so-called JavaScript and cookies. In addition,"
+" other cookies stored in your browser by Google services are evaluated. "
+"Personal data is not read out or stored from the input fields of the "
+"respective form."
+msgstr ""
+"Para protegernos contra el uso indebido de nuestros formularios web y contra"
+" el spam por parte de software automatizado (los llamados bots), Google "
+"reCAPTCHA recopila datos (dirección IP, hora de la visita, información del "
+"navegador e información sobre su uso de nuestro sitio web). ) y realiza un "
+"análisis de su uso de nuestro sitio web mediante el llamado JavaScript y "
+"cookies. Además, se evalúan otras cookies almacenadas en su navegador por "
+"los servicios de Google. Los datos personales de los campos de entrada del "
+"formulario correspondiente no se leen ni se almacenan."
+
+#: .\templates\our_company_pages\Privacy_policy.html:133
+msgid ""
+"For the purpose of a uniform presentation of the contents on our website, "
+"data (IP address, time of visit, device and browser information) are "
+"collected by the script code 'Google Fonts', transmitted to Google and then "
+"processed by Google. We have no influence on this subsequent data "
+"processing."
+msgstr ""
+"Para una presentación uniforme de los contenidos de nuestro sitio web, los "
+"datos (dirección IP, hora de la visita, información del dispositivo y del "
+"navegador) se recopilan mediante el código de script \"Google Fonts\", se "
+"transmiten a Google y luego son procesados ​​por Google. No tenemos ninguna "
+"influencia sobre este procesamiento posterior de datos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:135
+msgid ""
+"In order to integrate third party content, data (IP address, time of visit, "
+"device and browser information) are collected via the YouTube Video Plugin "
+"in the expanded data protection mode used by us, transmitted to Google and "
+"then processed by Google only when you play a video."
+msgstr ""
+"Para integrar contenidos de terceros, los datos (dirección IP, hora de la "
+"visita, información del dispositivo y del navegador) se recopilan a través "
+"del complemento de vídeo de YouTube en el modo de protección de datos "
+"ampliado que utilizamos, se transmiten a Google y luego Google los procesa "
+"solo cuando usted reproducir un vídeo."
+
+#: .\templates\our_company_pages\Privacy_policy.html:137
+msgid "Use of Facebook Pixel"
+msgstr "Uso del píxel de Facebook"
+
+#: .\templates\our_company_pages\Privacy_policy.html:138
+msgid ""
+"We use the Facebook pixel within the framework of the technologies of&nbsp;"
+msgstr "Utilizamos el píxel de Facebook en el marco de las tecnologías de"
+
+#: .\templates\our_company_pages\Privacy_policy.html:138
+msgid ""
+"as described below. The Facebook pixel is used to automatically collect and "
+"store data (IP address, time of visit, device and browser information as "
+"well as information on your use of our website based on events specified by "
+"us, such as a visit to a website or newsletter registration), from which "
+"user profiles are created using pseudonyms.<br>As part of the so-called "
+"advanced matching, information is also collected and stored hashed for "
+"matching purposes, with which individuals can be identified (e.g. names, "
+"e-mail addresses and telephone numbers). For this purpose, a cookie is "
+"automatically set by the Facebook pixel when you visit our website, which "
+"automatically enables recognition of your browser when visiting other "
+"websites by means of a pseudonymous cookie ID. Facebook will combine this "
+"information with other data from your Facebook account and use it to compile"
+" reports on website activities and to provide other services associated with"
+" website use, in particular personalised and group-based advertising. We "
+"have no influence on data processing by Facebook and only receive statistics"
+" based on Facebook pixels.<br>The information automatically collected by "
+"Facebook technologies about your use of our website is usually transferred "
+"to a server of Facebook, Inc. 1601 Willow Road, Menlo Park, California "
+"94025, USA and stored there. There is no adequacy decision for the United "
+"States by the European Commission. If the data transfer to the USA falls "
+"within the scope of our responsibility, our cooperation is based on standard"
+" data protection clauses of the European Commission. Further information "
+"about data processing by Facebook can be found in&nbsp;"
+msgstr ""
+"como se describe abajo. El píxel de Facebook se utiliza para recopilar y "
+"almacenar datos automáticamente (dirección IP, hora de visita, información "
+"del dispositivo y del navegador, así como información sobre su uso de "
+"nuestro sitio web en función de eventos especificados por nosotros, como una"
+" visita a un sitio web o el registro en un boletín informativo). ), a partir"
+" de los cuales se crean perfiles de usuario utilizando seudónimos.<br>Como "
+"parte de la llamada coincidencia avanzada, para fines de coincidencia "
+"también se recopila y almacena información con hash, con la que se pueden "
+"identificar personas (por ejemplo, nombres, direcciones de correo "
+"electrónico y números telefónicos). Para ello, cuando visita nuestro sitio "
+"web, el píxel de Facebook instala automáticamente una cookie que permite "
+"reconocer automáticamente a su navegador cuando visita otros sitios web "
+"mediante un ID de cookie seudónimo. Facebook combinará esta información con "
+"otros datos de su cuenta de Facebook y la utilizará para recopilar informes "
+"sobre las actividades del sitio web y para proporcionar otros servicios "
+"asociados con el uso del sitio web, en particular publicidad personalizada y"
+" basada en grupos. No tenemos influencia en el procesamiento de datos por "
+"parte de Facebook y solo recibimos estadísticas basadas en los píxeles de "
+"Facebook.<br>La información recopilada automáticamente por las tecnologías "
+"de Facebook sobre su uso de nuestro sitio web generalmente se transfiere a "
+"un servidor de Facebook, Inc. 1601 Willow Road, Menlo Park, California "
+"94025, EE. UU. y almacenado allí. No existe ninguna decisión de adecuación "
+"para Estados Unidos por parte de la Comisión Europea. Si la transferencia de"
+" datos a los EE. UU. cae dentro del ámbito de nuestra responsabilidad, "
+"nuestra cooperación se basa en las cláusulas estándar de protección de datos"
+" de la Comisión Europea. Puede encontrar más información sobre el "
+"procesamiento de datos por parte de Facebook en"
+
+#: .\templates\our_company_pages\Privacy_policy.html:140
+msgid ""
+"As part of Facebook Analytics, the statistics created via Facebook pixels "
+"about your use of our website enable us to analyse visitor activity on the "
+"website. The data processing is based on a data processing agreement with "
+"Facebook. The analysis serves the optimal presentation and marketing of our "
+"website."
+msgstr ""
+"Como parte de Facebook Analytics, las estadísticas creadas a través de los "
+"píxeles de Facebook sobre su uso de nuestro sitio web nos permiten analizar "
+"la actividad de los visitantes en el sitio web. El procesamiento de datos se"
+" basa en un acuerdo de procesamiento de datos con Facebook. El análisis "
+"sirve para una presentación y marketing óptimos de nuestro sitio web."
+
+#: .\templates\our_company_pages\Privacy_policy.html:142
+msgid ""
+"We use Facebook Ads to promote this website on Facebook and other platforms."
+" We determine the parameters of the respective advertising campaign. "
+"Facebook is responsible for the exact implementation, in particular the "
+"decision on the placement of the ads with individual users. Unless otherwise"
+" specified for the individual technologies, data processing is based on an "
+"arrangement between joint controllers in accordance with Art. 26 GDPR. The "
+"joint controllership is limited to the collection of data and its "
+"transmission to Facebook Ireland. The subsequent data processing by Facebook"
+" Ireland is not covered by this arrangement."
+msgstr ""
+"Utilizamos anuncios de Facebook para promocionar este sitio web en Facebook "
+"y otras plataformas. Determinamos los parámetros de la respectiva campaña "
+"publicitaria. Facebook es responsable de la implementación exacta, en "
+"particular de la decisión sobre la colocación de los anuncios ante los "
+"usuarios individuales. A menos que se especifique lo contrario para las "
+"tecnologías individuales, el procesamiento de datos se basa en un acuerdo "
+"entre corresponsables del tratamiento de conformidad con el art. 26 RGPD. La"
+" corresponsabilidad se limita a la recogida de datos y su transmisión a "
+"Facebook Irlanda. El tratamiento posterior de datos por parte de Facebook "
+"Irlanda no está cubierto por este acuerdo."
+
+#: .\templates\our_company_pages\Privacy_policy.html:143
+msgid ""
+"Based on the statistics about visitor activity on our website created via "
+"Facebook pixels, we operate group-based advertising on Facebook via "
+"Facebook&nbsp;Custom Audience&nbsp;by determining the characteristics of the"
+" respective target group. As part of the advanced matching (see above) that "
+"takes place to determine the respective target group, Facebook acts as our "
+"data processor."
+msgstr ""
+"Basándonos en las estadísticas sobre la actividad de los visitantes en "
+"nuestro sitio web creadas a través de los píxeles de Facebook, operamos "
+"publicidad basada en grupos en Facebook a través de Facebook Custom "
+"Audience determinando las características del grupo objetivo respectivo. En "
+"el marco de la búsqueda avanzada (ver arriba) para determinar el grupo "
+"objetivo correspondiente, Facebook actúa como nuestro procesador de datos."
+
+#: .\templates\our_company_pages\Privacy_policy.html:144
+msgid ""
+"On the basis of the pseudonym cookie ID used by the Facebook pixel and the "
+"collected data about your usage behavior on our website, we operate "
+"personalized advertising via Facebook Pixel&nbsp;Remarketing."
+msgstr ""
+"Sobre la base del ID de cookie seudónimo utilizado por el píxel de Facebook "
+"y de los datos recopilados sobre su comportamiento de uso en nuestro sitio "
+"web, realizamos publicidad personalizada a través del remarketing de píxeles"
+" de Facebook."
+
+#: .\templates\our_company_pages\Privacy_policy.html:145
+msgid ""
+"Via Facebook Pixel&nbsp;Conversions&nbsp;we measure your subsequent usage "
+"behavior for web analytics and event tracking purposes if you have reached "
+"our website via a Facebook Ads ad. The data processing is based on a data "
+"processing agreement with Facebook."
+msgstr ""
+"A través de las Conversiones de píxeles de Facebook, medimos su "
+"comportamiento de uso posterior con fines de análisis web y seguimiento de "
+"eventos si ha llegado a nuestro sitio web a través de un anuncio de Facebook"
+" Ads. El procesamiento de datos se basa en un acuerdo de procesamiento de "
+"datos con Facebook."
+
+#: .\templates\our_company_pages\Privacy_policy.html:146
+msgid "Integration of the Trusted Shops Trustbadge / other widgets"
+msgstr "Integración del Trustbadge de Trusted Shops/otros widgets"
+
+#: .\templates\our_company_pages\Privacy_policy.html:147
+msgid ""
+"Trusted Shops widgets (e.g. Trusted Shops Trustbadge) are integrated in this"
+" website to display Trusted Shops services (e.g. Trustmark, collected "
+"reviews) and to offer Trusted Shops products to buyers after they have "
+"placed an order."
+msgstr ""
+"Los widgets de Trusted Shops (por ejemplo, Trusted Shops Trustbadge) están "
+"integrados en este sitio web para mostrar los servicios de Trusted Shops "
+"(por ejemplo, Trustmark, reseñas recopiladas) y para ofrecer productos de "
+"Trusted Shops a los compradores después de que hayan realizado un pedido."
+
+#: .\templates\our_company_pages\Privacy_policy.html:148
+msgid ""
+"This serves to protect our legitimate interests in optimized marketing by "
+"enabling secure shopping in accordance with Art. 6 (1) (f) GDPR, which "
+"prevail in the context of a balancing of interests. The trust badge and the "
+"services advertised with it are an offer of Trusted Shops GmbH, Subbelrather"
+" Str. 15C, 50823 Cologne (Trusted Shops). We and Trusted Shops are joint "
+"controllers in data protection terms pursuant to Art. 26 GDPR. In the "
+"following section, we inform you about the essential contents of the joint "
+"controllership agreement according to Art. 26 (2) GDPR."
+msgstr ""
+"Esto sirve para proteger nuestros intereses legítimos en un marketing "
+"optimizado al permitir compras seguras de acuerdo con el art. 6 (1) (f) del "
+"RGPD, que prevalecen en el contexto de un equilibrio de intereses. El "
+"distintivo de confianza y los servicios anunciados con él son una oferta de "
+"Trusted Shops GmbH, Subbelrather Str. 15C, 50823 Colonia (Tiendas de "
+"confianza). Nosotros y Trusted Shops somos corresponsables en materia de "
+"protección de datos según el art. 26 RGPD. En el siguiente apartado le "
+"informamos sobre los contenidos esenciales del contrato de "
+"corresponsabilidad según el art. 26 (2) RGPD."
+
+#: .\templates\our_company_pages\Privacy_policy.html:149
+msgid ""
+"The trust badge is provided as part of a joint controllership by a US CDN "
+"provider (content delivery network). An adequate level of data protection is"
+" ensured by standard data protection clauses and other contractual measures."
+" Further information on the privacy policy of Trusted Shops GmbH can be "
+"found&nbsp;"
+msgstr ""
+"La insignia de confianza se proporciona como parte de una control conjunto "
+"por parte de un proveedor de CDN (red de entrega de contenido) de EE. UU. Un"
+" nivel adecuado de protección de datos se garantiza mediante cláusulas "
+"estándar de protección de datos y otras medidas contractuales. Puede "
+"encontrar más información sobre la política de privacidad de Trusted Shops "
+"GmbH."
+
+#: .\templates\our_company_pages\Privacy_policy.html:149
+#: .\templates\our_company_pages\Privacy_policy.html:153
+#: .\templates\our_company_pages\Privacy_policy.html:159
+#: .\templates\our_company_pages\Privacy_policy.html:160
+msgid "here"
+msgstr "Aquí"
+
+#: .\templates\our_company_pages\Privacy_policy.html:150
+msgid ""
+"When the Trustbadge is viewed, the web server automatically saves a so-"
+"called server log file, which also contains your IP address, the date and "
+"time of access, the amount of data transferred and the requesting provider "
+"(access data) and documents the access. The IP address is anonymized "
+"immediately after collection, so that the stored data cannot be assigned to "
+"your person. The server log file is stored in a security database for the "
+"analysis of security anomalies and automatically deleted or anonymized not "
+"later than 90 days after creation. According to Art. 6 (1) (f) GDPR, this "
+"serves the our and Trusted Shops' legitimate interests to prevent cases of "
+"misuse and fraud, to optimize our offers and websites, and to ensure "
+"trouble-free operation of the website, the Trustbadge and other Trusted "
+"Shops widgets."
+msgstr ""
+"Al consultar el Trustbadge, el servidor web guarda automáticamente un "
+"archivo de registro del servidor, que también contiene su dirección IP, la "
+"fecha y hora del acceso, la cantidad de datos transferidos y el proveedor "
+"solicitante (datos de acceso), y documenta el acceso. . La dirección IP se "
+"anonimiza inmediatamente después de su recopilación, de modo que los datos "
+"almacenados no pueden asignarse a su persona. El archivo de registro del "
+"servidor se almacena en una base de datos de seguridad para el análisis de "
+"anomalías de seguridad y se elimina automáticamente o se anonimiza a más "
+"tardar 90 días después de su creación. Según el art. 6 (1) (f) del RGPD, "
+"esto sirve a nuestros intereses legítimos y a los de Trusted Shops para "
+"evitar casos de uso indebido y fraude, optimizar nuestras ofertas y sitios "
+"web y garantizar un funcionamiento sin problemas del sitio web, el "
+"Trustbadge y otros dispositivos de confianza. Widgets de tiendas."
+
+#: .\templates\our_company_pages\Privacy_policy.html:151
+msgid ""
+"Further personal data is transferred to Trusted Shops GmbH if you decide to "
+"use Trusted Shops products after completing an order or if you have already "
+"registered to use them. For this purpose, personal data is automatically "
+"collected from the order data. To check automatically whether you as a buyer"
+" are already registered for product use, a neutral parameter, e.g. the "
+"e-mail address hashed by cryptological one-way function, is used. The e-mail"
+" address is converted into this hash value, which cannot be decrypted by "
+"Trusted Shops, before it is transmitted. After checking for a match, the "
+"parameter is automatically deleted."
+msgstr ""
+"Se transferirán más datos personales a Trusted Shops GmbH si decide utilizar"
+" los productos de Trusted Shops después de completar un pedido o si ya se ha"
+" registrado para utilizarlos. Para ello se recogen automáticamente datos "
+"personales a partir de los datos del pedido. Para comprobar automáticamente "
+"si usted, como comprador, ya está registrado para el uso del producto, se "
+"utiliza un parámetro neutral, p. Se utiliza la dirección de correo "
+"electrónico codificada mediante una función criptológica unidireccional. La "
+"dirección de correo electrónico se convierte en este valor hash, que Trusted"
+" Shops no puede descifrar, antes de su transmisión. Después de comprobar si "
+"hay una coincidencia, el parámetro se elimina automáticamente."
+
+#: .\templates\our_company_pages\Privacy_policy.html:152
+msgid ""
+"This serves to check whether you are already registered for services with "
+"Trusted Shops GmbH and is therefore necessary to safeguard our and Trusted "
+"Shops' prevailing legitimate interests in the fulfillment of the buyer "
+"protection linked to the specific order and the transactional review "
+"services pursuant to Art. 6 (1) (f) GDPR. If this is the case, further "
+"processing will be carried out in accordance with the contractual agreement "
+"between you and Trusted Shops. If you have not yet registered for the "
+"services, you will be given the opportunity to do so for the first time. "
+"Further processing after registration also depends on the contractual "
+"agreement with Trusted Shops. If you do not register, all transmitted data "
+"is automatically deleted by Trusted Shops and a personal reference is then "
+"no longer possible."
+msgstr ""
+"Esto sirve para comprobar si ya está registrado para los servicios de "
+"Trusted Shops GmbH y, por lo tanto, es necesario para salvaguardar nuestros "
+"intereses legítimos prevalecientes y los de Trusted Shops en el cumplimiento"
+" de la protección del comprador vinculada al pedido específico y los "
+"servicios de revisión de transacciones de conformidad con el art. 6 (1) (f) "
+"RGPD. Si este es el caso, el procesamiento posterior se llevará a cabo de "
+"acuerdo con el acuerdo contractual entre usted y Trusted Shops. Si aún no se"
+" ha registrado en los servicios, se le dará la oportunidad de hacerlo por "
+"primera vez. El procesamiento posterior después del registro también depende"
+" del acuerdo contractual con Trusted Shops. Si no se registra, Trusted Shops"
+" eliminará automáticamente todos los datos transmitidos y ya no será posible"
+" realizar ninguna referencia personal."
+
+#: .\templates\our_company_pages\Privacy_policy.html:153
+msgid ""
+"Within the framework of the joint controllership between us and Trusted "
+"Shops GmbH, please contact Trusted Shops GmbH if you have any data "
+"protection questions or wish to assert your rights. You can find their "
+"contact details&nbsp;"
+msgstr ""
+"En el marco de la responsabilidad conjunta entre nosotros y Trusted Shops "
+"GmbH, póngase en contacto con Trusted Shops GmbH si tiene alguna pregunta "
+"sobre protección de datos o desea hacer valer sus derechos. Puedes encontrar"
+" sus datos de contacto."
+
+#: .\templates\our_company_pages\Privacy_policy.html:153
+msgid ""
+"Further information on data protection can be found in the following "
+"link&nbsp;"
+msgstr ""
+"Puede encontrar más información sobre protección de datos en el siguiente "
+"enlace"
+
+#: .\templates\our_company_pages\Privacy_policy.html:153
+msgid ""
+"Regardless of this, you can also always contact us using the contact option "
+"described in this privacy policy. Your request will then, if necessary, be "
+"forwarded to the other party responsible for responding."
+msgstr ""
+"Independientemente de esto, también siempre podrás contactar con nosotros "
+"utilizando la opción de contacto descrita en esta política de privacidad. Su"
+" solicitud se enviará entonces, si es necesario, a la otra parte responsable"
+" de responder."
+
+#: .\templates\our_company_pages\Privacy_policy.html:154
+msgid "Social Media"
+msgstr "Medios de comunicación social"
+
+#: .\templates\our_company_pages\Privacy_policy.html:155
+msgid "Social Plugins by Facebook, Instagram, Pinterest"
+msgstr "Complementos sociales de Facebook, Instagram, Pinterest"
+
+#: .\templates\our_company_pages\Privacy_policy.html:156
+msgid ""
+"Social buttons by social networks are used on our website. These are only "
+"integrated into the page as HTML links, so that no connection to the servers"
+" of the respective provider is established when our website is accessed. If "
+"you click on one of the buttons, the website of the respective social "
+"network will open in a new window of your browser. There you can click e.g. "
+"the Like or Share button."
+msgstr ""
+"En nuestro sitio web se utilizan botones sociales de las redes sociales. "
+"Estos sólo se integran en la página como enlaces HTML, de modo que al "
+"acceder a nuestro sitio web no se establece ninguna conexión con los "
+"servidores del proveedor correspondiente. Si hace clic en uno de los "
+"botones, se abrirá el sitio web de la red social respectiva en una nueva "
+"ventana de su navegador. Allí puede hacer clic, por ejemplo. el botón Me "
+"gusta o Compartir."
+
+#: .\templates\our_company_pages\Privacy_policy.html:157
+msgid ""
+"Our online presence on Facebook, Youtube, Instagram, Pinterest, Xing, "
+"LinkedIn"
+msgstr ""
+"Nuestra presencia online en Facebook, Youtube, Instagram, Pinterest, Xing, "
+"LinkedIn"
+
+#: .\templates\our_company_pages\Privacy_policy.html:158
+msgid ""
+"If you have given your consent to the respective social media provider in "
+"accordance with Art. 6 (1) (a) GDPR, when you visit our online presence on "
+"the social media mentioned above, your data will be automatically collected "
+"and stored for market research and advertising purposes, from which user "
+"profiles are created using pseudonyms. These can be used, for example, to "
+"place advertisements within and outside the platforms that presumably "
+"correspond to your interests. Cookies are usually used for this purpose. For"
+" detailed information on the processing and use of data by the respective "
+"social media provider, as well as a contact option and your rights and "
+"settings options for the protection of your privacy, please refer to the "
+"provider's privacy policies linked below. Should you still require "
+"assistance in this regard, please contact us."
+msgstr ""
+"Si ha dado su consentimiento al respectivo proveedor de redes sociales de "
+"conformidad con el art. 6 (1) (a) GDPR, cuando visita nuestra presencia en "
+"línea en las redes sociales mencionadas anteriormente, sus datos se "
+"recopilarán y almacenarán automáticamente con fines de investigación de "
+"mercado y publicidad, a partir de los cuales se crearán perfiles de usuario "
+"utilizando seudónimos. Estos pueden utilizarse, por ejemplo, para colocar "
+"anuncios dentro y fuera de las plataformas que presumiblemente correspondan "
+"a sus intereses. Habitualmente se utilizan cookies para este fin. Para "
+"obtener información detallada sobre el procesamiento y uso de datos por "
+"parte del respectivo proveedor de redes sociales, así como una opción de "
+"contacto y sus derechos y opciones de configuración para la protección de su"
+" privacidad, consulte las políticas de privacidad del proveedor vinculadas a"
+" continuación. Si aún necesita ayuda a este respecto, comuníquese con "
+"nosotros."
+
+#: .\templates\our_company_pages\Privacy_policy.html:159
+msgid ""
+"The information automatically collected by Facebook Ireland about your use "
+"of our online presence on Facebook is usually transferred to a server of "
+"Facebook, Inc, 1601 Willow Road, Menlo Park, California 94025, USA and "
+"stored there. There is no adequacy decision for the United States by the "
+"European Commission. Our cooperation is based on standard data protection "
+"clauses adopted by the European Commission. Data processing in the context "
+"of a visit to a Facebook fan page is based on an agreement between joint "
+"controllers in accordance with Art. 26 GDPR. Further information "
+"(information on Insights data) can be found&nbsp;"
+msgstr ""
+"La información recopilada automáticamente por Facebook Ireland sobre su uso "
+"de nuestra presencia en línea en Facebook generalmente se transfiere a un "
+"servidor de Facebook, Inc, 1601 Willow Road, Menlo Park, California 94025, "
+"EE. UU. y se almacena allí. No existe ninguna decisión de adecuación para "
+"Estados Unidos por parte de la Comisión Europea. Nuestra cooperación se basa"
+" en cláusulas estándar de protección de datos adoptadas por la Comisión "
+"Europea. El procesamiento de datos en el marco de una visita a una página de"
+" fans de Facebook se basa en un acuerdo entre corresponsables del "
+"tratamiento de conformidad con el art. 26 RGPD. Puede encontrar más "
+"información (información sobre datos de Insights)"
+
+#: .\templates\our_company_pages\Privacy_policy.html:160
+msgid ""
+"The information automatically collected by Facebook Ireland about your use "
+"of our online presence on Instagram is typically transferred to and stored "
+"on a server at Facebook, Inc, 1601 Willow Road, Menlo Park, California "
+"94025, USA. There is no adequacy decision for the United States by the "
+"European Commission. Our cooperation is based on standard data protection "
+"clauses adopted by the European Commission. Data processing in the context "
+"of a visit to an Instagram fan page is based on an agreement between joint "
+"controllers in accordance with art. 26 DSGVO. Further information "
+"(information on Insights data) can be found&nbsp;"
+msgstr ""
+"La información recopilada automáticamente por Facebook Irlanda sobre su uso "
+"de nuestra presencia en línea en Instagram generalmente se transfiere y se "
+"almacena en un servidor ubicado en Facebook, Inc, 1601 Willow Road, Menlo "
+"Park, California 94025, EE. UU. No existe ninguna decisión de adecuación "
+"para Estados Unidos por parte de la Comisión Europea. Nuestra cooperación se"
+" basa en cláusulas estándar de protección de datos adoptadas por la Comisión"
+" Europea. El tratamiento de datos en el marco de una visita a una página de "
+"fans de Instagram se basa en un acuerdo entre corresponsables del "
+"tratamiento de conformidad con el art. 26 DSGVO. Puede encontrar más "
+"información (información sobre datos de Insights)"
+
+#: .\templates\our_company_pages\Privacy_policy.html:161
+msgid ""
+"The information automatically collected by Google about your use of our "
+"online presence on YouTube is generally transferred to a server of Google "
+"LLC, 1600 Amphitheatre Parkway Mountain View, CA 94043, USA and stored "
+"there. There is no adequacy decision for the United States by the European "
+"Commission. Our cooperation is based on standard data protection clauses "
+"adopted by the European Commission."
+msgstr ""
+"La información recopilada automáticamente por Google sobre su uso de nuestra"
+" presencia en línea en YouTube se transfiere generalmente a un servidor de "
+"Google LLC, 1600 Amphitheatre Parkway Mountain View, CA 94043, EE. UU. y se "
+"almacena allí. No existe ninguna decisión de adecuación para Estados Unidos "
+"por parte de la Comisión Europea. Nuestra cooperación se basa en cláusulas "
+"estándar de protección de datos adoptadas por la Comisión Europea."
+
+#: .\templates\our_company_pages\Privacy_policy.html:162
+msgid ""
+"The information automatically collected by Pinterest about your use of our "
+"online presence on Pinterest is usually transferred to and stored on a "
+"server of Pinterest, Inc, 505 Brannan St, San Francisco, CA 94107, USA. "
+"There is no adequacy decision for the United States by the European "
+"Commission. Our cooperation is based on standard data protection clauses "
+"adopted by the European Commission."
+msgstr ""
+"La información que Pinterest recopila automáticamente sobre su uso de "
+"nuestra presencia en línea en Pinterest generalmente se transfiere y se "
+"almacena en un servidor de Pinterest, Inc, 505 Brannan St, San Francisco, CA"
+" 94107, EE. UU. No existe ninguna decisión de adecuación para Estados Unidos"
+" por parte de la Comisión Europea. Nuestra cooperación se basa en cláusulas "
+"estándar de protección de datos adoptadas por la Comisión Europea."
+
+#: .\templates\our_company_pages\Privacy_policy.html:163
+msgid ""
+"The information LinkedIn automatically collects about your use of our online"
+" presence on LinkedIn is generally sent to a server at LinkedIn Corporation,"
+" 1000 W. Maude Avenue, Sunnyvale, CA 94085, USA and stored there. There is "
+"no adequacy decision for the United States by the European Commission. Our "
+"cooperation is based on standard data protection clauses adopted by the "
+"European Commission."
+msgstr ""
+"La información que LinkedIn recopila automáticamente sobre su uso de nuestra"
+" presencia en línea en LinkedIn generalmente se envía a un servidor en "
+"LinkedIn Corporation, 1000 W. Maude Avenue, Sunnyvale, CA 94085, EE. UU. y "
+"se almacena allí. No existe ninguna decisión de adecuación para Estados "
+"Unidos por parte de la Comisión Europea. Nuestra cooperación se basa en "
+"cláusulas estándar de protección de datos adoptadas por la Comisión Europea."
+
+#: .\templates\our_company_pages\Privacy_policy.html:165
+msgid "Contact options and your rights"
+msgstr "Opciones de contacto y tus derechos"
+
+#: .\templates\our_company_pages\Privacy_policy.html:166
+msgid "Your rights"
+msgstr "Tus derechos"
+
+#: .\templates\our_company_pages\Privacy_policy.html:167
+msgid "Being the data subject, you have the following rights according to:"
+msgstr "Siendo el interesado, usted tiene los siguientes derechos según:"
+
+#: .\templates\our_company_pages\Privacy_policy.html:169
+msgid ""
+"the right to obtain information about your personal data which we process, "
+"within the scope described therein;"
+msgstr ""
+"el derecho a obtener información sobre sus datos personales que procesamos, "
+"en el ámbito allí descrito;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:170
+msgid ""
+"the right to immediately demand rectification of incorrect or completion of "
+"your personal data stored by us;"
+msgstr ""
+"el derecho a exigir inmediatamente la rectificación incorrecta o la "
+"finalización de sus datos personales almacenados por nosotros;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:172
+msgid ""
+"the right to request erasure of your personal data stored with us, unless "
+"further processing is required"
+msgstr ""
+"el derecho a solicitar la eliminación de sus datos personales almacenados "
+"con nosotros, a menos que se requiera un procesamiento adicional"
+
+#: .\templates\our_company_pages\Privacy_policy.html:174
+msgid "to exercise the right of freedom of expression and information;"
+msgstr "Ejercer el derecho a la libertad de expresión e información;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:175
+msgid "for compliance with a legal obligation;"
+msgstr "Para el cumplimiento de una obligación legal;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:176
+msgid "for reasons of public interest or"
+msgstr "Por razones de interés público o"
+
+#: .\templates\our_company_pages\Privacy_policy.html:177
+msgid "for establishing, exercising or defending legal claims;"
+msgstr "Para establecer, ejercer o defender reclamaciones legales;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:181
+msgid ""
+"the right to request restriction of processing of your personal data, "
+"insofar as"
+msgstr ""
+"el derecho a solicitar la limitación del tratamiento de sus datos "
+"personales, en la medida en que"
+
+#: .\templates\our_company_pages\Privacy_policy.html:183
+msgid "the accuracy of the data is contested by you;"
+msgstr "Usted impugna la exactitud de los datos;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:184
+msgid "the processing is unlawful, but you refuse their erasure;"
+msgstr "El tratamiento es ilícito, pero usted se niega a su supresión;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:185
+msgid ""
+"we no longer need the data, but you need it to establish, exercise or defend"
+" legal claims, or"
+msgstr ""
+"ya no necesitamos los datos, pero usted los necesita para establecer, "
+"ejercer o defender reclamaciones legales, o"
+
+#: .\templates\our_company_pages\Privacy_policy.html:186
+msgid ""
+"you have lodged an objection to the processing in accordance with art. 21 "
+"GDPR;"
+msgstr ""
+"ha presentado una objeción al procesamiento de conformidad con el art. 21 "
+"RGPD;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:189
+msgid ""
+"the right to receive your personal data that you have provided to us in a "
+"structured, commonly used and machine-readable format or to request its "
+"transmission to another controller;"
+msgstr ""
+"el derecho a recibir sus datos personales que nos haya proporcionado en un "
+"formato estructurado, de uso común y legible por máquina o a solicitar su "
+"transmisión a otro responsable del tratamiento;"
+
+#: .\templates\our_company_pages\Privacy_policy.html:190
+msgid ""
+"the right to complain to a supervisory authority . As a rule, you can "
+"contact the supervisory authority at your habitual place of residence or "
+"workplace or at our company headquarters."
+msgstr ""
+"el derecho a presentar una queja ante una autoridad supervisora. Como regla "
+"general, puede dirigirse a la autoridad de control de su lugar de residencia"
+" o lugar de trabajo habitual o de la sede de nuestra empresa."
+
+#: .\templates\our_company_pages\Privacy_policy.html:192
+msgid ""
+"Right to object<br>If we process personal data as described above to protect"
+" our legitimate interests that are overriding in the process of balancing of"
+" interests, you may object to such data processing with future effect. If "
+"your data are processed for direct marketing purposes, you may exercise this"
+" right at any time as described above. If your data are processed for other "
+"purposes, you have the right to object only on grounds relating to your "
+"particular situation."
+msgstr ""
+"Derecho a oponerse<br>Si procesamos datos personales como se describe "
+"anteriormente para proteger nuestros intereses legítimos que prevalecen en "
+"el proceso de equilibrio de intereses, usted puede oponerse a dicho "
+"procesamiento de datos con efecto futuro. Si sus datos se procesan con fines"
+" de marketing directo, podrá ejercer este derecho en cualquier momento como "
+"se describe anteriormente. Si sus datos se procesan para otros fines, usted "
+"tiene derecho a oponerse únicamente por motivos relacionados con su "
+"situación particular."
+
+#: .\templates\our_company_pages\Privacy_policy.html:193
+msgid ""
+"After you have exercised your right to object, we will no longer process "
+"your personal data for such purposes unless we can demonstrate compelling "
+"legitimate grounds for the processing which override your interests, rights "
+"and freedoms or for the establishment, exercise or defence of legal claims."
+msgstr ""
+"Después de que haya ejercido su derecho a oponerse, ya no procesaremos sus "
+"datos personales para dichos fines a menos que podamos demostrar motivos "
+"legítimos imperiosos para el procesamiento que prevalezcan sobre sus "
+"intereses, derechos y libertades o para el establecimiento, ejercicio o "
+"defensa de reclamos legales."
+
+#: .\templates\our_company_pages\Privacy_policy.html:194
+msgid ""
+"This does not apply to the processing of personal data for direct marketing "
+"purposes. In such a case we will no longer process your personal data for "
+"such purposes."
+msgstr ""
+"Esto no se aplica al procesamiento de datos personales con fines de "
+"marketing directo. En tal caso, ya no procesaremos sus datos personales para"
+" dichos fines."
+
+#: .\templates\our_company_pages\Privacy_policy.html:195
+msgid "Contact options"
+msgstr "Opciones de contacto"
+
+#: .\templates\our_company_pages\Privacy_policy.html:196
+msgid ""
+"If you have any questions about how we collect, process or use your personal"
+" data, want to enquire about, correct, restrict or delete your data, or "
+"withdraw any consents you have given, or opt-out of any particular data use,"
+" please contact us directly using the contact data provided in our supplier "
+"identification."
+msgstr ""
+"Si tiene alguna pregunta sobre cómo recopilamos, procesamos o utilizamos sus"
+" datos personales, desea consultar, corregir, restringir o eliminar sus "
+"datos, o retirar cualquier consentimiento que haya otorgado, o cancelar "
+"cualquier uso de datos en particular, comuníquese con nosotros directamente "
+"utilizando los datos de contacto proporcionados en nuestra identificación de"
+" proveedor."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:28
+#: .\templates\widgets\footer.html:101
+msgid "Terms and Conditions"
+msgstr "Términos y condiciones"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:43
+msgid "SCOPE"
+msgstr "ALCANCE"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:44
+msgid ""
+"The following Terms and Conditions (Terms) apply to all orders placed via "
+"our online shop."
+msgstr ""
+"Los siguientes Términos y condiciones (Términos) se aplican a todos los "
+"pedidos realizados a través de nuestra tienda en línea."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:45
+msgid ""
+"These Terms also apply to businesses for future commercial relations without"
+" the need for any formal expression thereof. Unless expressly approved by us"
+" to the contrary, we cannot accept the contractual validity of any "
+"conflicting or complementary general terms and conditions used by any "
+"business."
+msgstr ""
+"Estos Términos también se aplican a negocios para futuras relaciones "
+"comerciales sin necesidad de expresión formal alguna de los mismos. A menos "
+"que aprobemos expresamente lo contrario, no podemos aceptar la validez "
+"contractual de ningún término y condición general contradictorio o "
+"complementario utilizado por cualquier empresa."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:47
+msgid "CONTRACTUAL PARTNER, FORMATION OF CONTRACT, OPTIONS FOR CORRECTIONS"
+msgstr "SOCIO CONTRACTUAL, FORMACIÓN DEL CONTRATO, OPCIONES DE CORRECCIONES"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:48
+msgid "The contract is concluded with Westa GmbH."
+msgstr "El contrato se celebra con Westa GmbH."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:49
+msgid ""
+"By placing the products in the online shop, we make a binding offer on our "
+"part to enter into a contract regarding those items. You may place our "
+"products in the shopping basket without obligation and amend your entries at"
+" any time prior to submitting your binding order by using the correction "
+"facilities that are provided for this purpose and explained during the "
+"ordering process. The contract is formed by clicking on the order button "
+"which indicates your acceptance of our offer concerning the goods contained "
+"in the shopping basket. Once you have sent your order you will immediately "
+"receive a confirmation via e-mail."
+msgstr ""
+"Al colocar los productos en la tienda online, hacemos una oferta vinculante "
+"por nuestra parte para celebrar un contrato sobre dichos artículos. Puede "
+"colocar nuestros productos en la cesta de la compra sin compromiso y "
+"modificar sus entradas en cualquier momento antes de enviar su pedido "
+"vinculante utilizando las funciones de corrección proporcionadas para este "
+"fin y explicadas durante el proceso de pedido. El contrato se formaliza "
+"haciendo clic en el botón de pedido que indica su aceptación de nuestra "
+"oferta relativa a los productos contenidos en la cesta de la compra. Una vez"
+" que hayas enviado tu pedido recibirás inmediatamente una confirmación vía "
+"correo electrónico."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:51
+msgid "CONTRACT LANGUAGE, SAVING OF&nbsp;THE CONTRACT TEXT"
+msgstr "IDIOMA DEL CONTRATO, ALMACENAMIENTO DEL TEXTO DEL CONTRATO"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:52
+msgid ""
+"The language(s) available for concluding the contract: German, English, "
+"French, Spanish, Italian"
+msgstr ""
+"Idioma(s) disponible(s) para celebrar el contrato: alemán, inglés, francés, "
+"español, italiano"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:53
+msgid ""
+"We save the text of the contract and forward the order data and our Terms "
+"and Conditions to you on a durable medium. You may also view the text of the"
+" contract in our customer login area."
+msgstr ""
+"Guardamos el texto del contrato y le enviamos los datos del pedido y "
+"nuestros Términos y condiciones en un soporte duradero. También puede ver el"
+" texto del contrato en nuestra área de inicio de sesión de clientes."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:55
+msgid "DELIVERY CONDITIONS"
+msgstr "CONDICIONES DE ENTREGA"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:56
+msgid ""
+"Delivery costs are added to the product prices as displayed. Delivery "
+"charges are explained within individual product offers."
+msgstr ""
+"Los costos de envío se agregan a los precios de los productos tal como se "
+"muestran. Los gastos de envío se explican en las ofertas de productos "
+"individuales."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:57
+msgid ""
+"We only dispatch goods en route; pick up by the customer is not possible."
+msgstr ""
+"Sólo enviamos mercancías en ruta; La recogida por parte del cliente no es "
+"posible."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:59
+msgid "PAYMENT"
+msgstr "PAGO"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:60
+msgid ""
+"The following payment methods are basically available in our online shop."
+msgstr ""
+"Los siguientes métodos de pago están básicamente disponibles en nuestra "
+"tienda online."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:61
+msgid "Advance payment"
+msgstr "Pago por adelantado"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:62
+msgid ""
+"If you select advance payment we provide you with our bank details in a "
+"separate e-mail and deliver the goods on receipt of funds."
+msgstr ""
+"Si selecciona el pago por adelantado, le proporcionaremos nuestros datos "
+"bancarios en un correo electrónico separado y le entregaremos la mercancía "
+"al recibir el dinero."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:63
+msgid "Credit Card"
+msgstr "Tarjeta de crédito"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:64
+msgid ""
+"With the submission of the order, you provide your credit card details. "
+"After your identification as the legal cardholder, the payment transaction "
+"is automatically carried out and charged to your card."
+msgstr ""
+"Con el envío del pedido, usted proporciona los datos de su tarjeta de "
+"crédito. Después de su identificación como titular legal de la tarjeta, la "
+"transacción de pago se realiza automáticamente y se carga a su tarjeta."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:65
+msgid "SEPA direct debit"
+msgstr "Débito directo SEPA"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:66
+msgid ""
+"With the placement of the order, you are granting us a direct debit mandate."
+" We will inform you separately about the date of debiting the account in an "
+"advance notification (pre-notification). With the submission of the direct "
+"debit, we request our bank to initiate the payment transaction. The payment "
+"transaction is automatically carried out and your account is debited. "
+"Debiting the account takes place prior to shipping the goods. The time limit"
+" for pre-notification regarding the date for debiting the account (pre-"
+"notification period), is 0 days."
+msgstr ""
+"Con la realización del pedido nos estás otorgando un mandato de "
+"domiciliación bancaria. Le informaremos por separado sobre la fecha de cargo"
+" en la cuenta en una notificación previa (notificación previa). Con la "
+"presentación de la domiciliación bancaria solicitamos a nuestro banco que "
+"inicie la operación de pago. La transacción de pago se realiza "
+"automáticamente y se carga en su cuenta. El cargo en cuenta se realiza antes"
+" del envío de la mercancía. El plazo de preaviso sobre la fecha de cargo en "
+"cuenta (período de preaviso), es de 0 días."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:68
+msgid ""
+"During the ordering process you will be forwarded to PayPal's website. To "
+"pay the invoice amount via PayPal, you must be registered there or register "
+"first, identify yourself with your access data and confirm the payment "
+"instructions to us. After submitting your order in the shop we instruct "
+"PayPal to initiate the payment transaction. Directly afterwards, the payment"
+" transaction is carried out automatically by PayPal. You will receive "
+"additional information during the ordering process."
+msgstr ""
+"Durante el proceso de pedido será redirigido al sitio web de PayPal. Para "
+"pagar el importe de la factura a través de PayPal, deberá estar registrado "
+"allí o registrarse previamente, identificarse con sus datos de acceso y "
+"confirmarnos las instrucciones de pago. Después de enviar su pedido en la "
+"tienda, le indicamos a PayPal que inicie la transacción de pago. "
+"Inmediatamente después, PayPal realiza automáticamente la transacción de "
+"pago. Recibirá información adicional durante el proceso de pedido."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:70
+msgid ""
+"After submitting the order, you will be forwarded to the website of your "
+"bank. In order to pay the invoice amount via Giropay, you must be in "
+"possession of a bank account that is activated for participation in online "
+"banking, must identify yourself accordingly and confirm the payment "
+"instructions to us. You will receive additional information during the order"
+" process. The payment transaction is automatically carried out and your "
+"account is debited."
+msgstr ""
+"Después de enviar el pedido, será redirigido al sitio web de su banco. Para "
+"pagar el importe de la factura a través de Giropay, debe estar en posesión "
+"de una cuenta bancaria activada para participar en la banca en línea, debe "
+"identificarse en consecuencia y confirmarnos las instrucciones de pago. "
+"Recibirá información adicional durante el proceso de pedido. La transacción "
+"de pago se realiza automáticamente y se carga en su cuenta."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:72
+msgid ""
+"In order to pay the invoice amount via Apple Pay, you have to use the "
+"„Safari“ browser, be registered with the service provider Apple, must have "
+"activated the Apple Pay function, identify yourself with your access data "
+"and confirm the payment order. The payment transaction will be carried out "
+"directly after submitting your order. Further information can be found "
+"during the ordering process."
+msgstr ""
+"Para pagar el importe de la factura a través de Apple Pay, debe utilizar el "
+"navegador \"Safari\", estar registrado en el proveedor de servicios Apple, "
+"tener activada la función Apple Pay, identificarse con sus datos de acceso y"
+" confirmar la orden de pago. La transacción de pago se realizará "
+"directamente después de enviar su pedido. Puede encontrar más información "
+"durante el proceso de pedido."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:74
+msgid ""
+"In order to pay the invoice amount via Google Pay, you have to be registered"
+" with the service provider Google, must have activated the Google Pay "
+"function, identify yourself with your access data and confirm the payment "
+"order. The payment transaction will be carried out directly after submission"
+" of your order. Further information can be found during the ordering "
+"process."
+msgstr ""
+"Para poder pagar el importe de la factura a través de Google Pay, debe estar"
+" registrado en el proveedor de servicios Google, haber activado la función "
+"Google Pay, identificarse con sus datos de acceso y confirmar la orden de "
+"pago. La transacción de pago se llevará a cabo directamente después del "
+"envío de su pedido. Puede encontrar más información durante el proceso de "
+"pedido."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:76
+msgid ""
+"During the ordering process you will be forwarded to the online provider "
+"Amazon's website before completing the ordering process in our online shop. "
+"In order to process the ordering process via Amazon and pay the invoice "
+"amount, you must be registered there or register first and identify yourself"
+" with your access data. There, you may confirm the delivery address and "
+"payment method stored with Amazon and confirm the use of your data by Amazon"
+" and the payment instructions to us. After this, you will be returned to our"
+" online shop, where you may complete the ordering process. Directly after "
+"the order, we request Amazon to initiate the payment transaction. The "
+"payment transaction is carried out automatically by Amazon. You will receive"
+" additional information during the ordering process."
+msgstr ""
+"Durante el proceso de pedido será redirigido al sitio web del proveedor en "
+"línea Amazon antes de completar el proceso de pedido en nuestra tienda en "
+"línea. Para poder tramitar el proceso de pedido a través de Amazon y pagar "
+"el importe de la factura deberás estar registrado allí o registrarte "
+"previamente e identificarte con tus datos de acceso. Allí, podrá confirmar "
+"la dirección de entrega y el método de pago almacenados en Amazon y "
+"confirmar el uso de sus datos por parte de Amazon y las instrucciones de "
+"pago para nosotros. Después de esto, regresará a nuestra tienda en línea, "
+"donde podrá completar el proceso de pedido. Inmediatamente después del "
+"pedido, solicitamos a Amazon que inicie la transacción de pago. La "
+"transacción de pago la realiza Amazon automáticamente. Recibirá información "
+"adicional durante el proceso de pedido."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:78
+msgid ""
+"You may pay for your purchase by means of bank transfer after you have "
+"received the goods together with the invoice. We reserve the right to allow "
+"payment by invoice only after we verify your credit rating."
+msgstr ""
+"Podrás pagar tu compra mediante transferencia bancaria una vez hayas "
+"recibido la mercancía junto con la factura. Nos reservamos el derecho de "
+"permitir el pago mediante factura solo después de verificar su calificación "
+"crediticia."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:81
+msgid "RIGHT TO CANCEL"
+msgstr "DERECHO A CANCELAR"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:82
+msgid ""
+"Consumers are entitled to the statutory right to cancel, as described in the"
+" instructions on the right to cancel. Businesses are not granted any "
+"voluntary right to cancel."
+msgstr ""
+"Los consumidores tienen el derecho legal de cancelación, tal como se "
+"describe en las instrucciones sobre el derecho de cancelación. A las "
+"empresas no se les concede ningún derecho voluntario de cancelación."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:85
+msgid "The goods shall remain our property until full payment is made."
+msgstr ""
+"Los productos seguirán siendo de nuestra propiedad hasta que se realice el "
+"pago completo."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:86
+msgid ""
+"For businesses, the following applies additionally: We reserve ownership of "
+"the goods until complete settlement of all claims arising from a current "
+"business relationship. You may resell reserved goods in ordinary business "
+"operations; you shall assign any claims arising from this resale – "
+"irrespective of connecting or mixing of the reserved goods with a new item -"
+" in the amount of the invoice amount to us in advance, and we accept this "
+"assignment. You remain authorised to collect the claims; however, we may "
+"likewise collect the claims ourselves, should you fail to fulfil your "
+"payment obligations."
+msgstr ""
+"Para las empresas se aplica adicionalmente lo siguiente: Nos reservamos la "
+"propiedad de la mercancía hasta la liquidación completa de todas las "
+"reclamaciones derivadas de una relación comercial actual. Podrá revender "
+"bienes reservados en operaciones comerciales ordinarias; Usted nos cederá "
+"por adelantado todos los derechos derivados de esta reventa, "
+"independientemente de si la mercancía reservada se combina o se mezcla con "
+"un artículo nuevo, por el importe de la factura y nosotros aceptamos esta "
+"cesión. Usted sigue autorizado a cobrar las reclamaciones; sin embargo, "
+"también podemos cobrar las reclamaciones nosotros mismos, en caso de que "
+"usted no cumpla con sus obligaciones de pago."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:89
+msgid ""
+"For consumer the following applies: If the goods are delivered with obvious "
+"damage caused during delivery, please report the defect to the carrier and "
+"notify us without delay. Failure to make a complaint or to make contact does"
+" not in any way affect your legal rights or the enforcement of such rights, "
+"notably your warranty rights. However, in doing so you help us to assert our"
+" own claims against the carrier or transport insurer."
+msgstr ""
+"Para el consumidor se aplica lo siguiente: si los productos se entregan con "
+"daños evidentes causados ​​durante la entrega, informe del defecto al "
+"transportista y notifíquenoslo sin demora. No presentar una queja o no "
+"establecer contacto no afecta de ninguna manera sus derechos legales o el "
+"cumplimiento de dichos derechos, en particular sus derechos de garantía. Sin"
+" embargo, al hacerlo, nos ayuda a hacer valer nuestros propios derechos "
+"contra el transportista o la aseguradora de transporte."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:90
+msgid ""
+"Applicable to businesses: The risks of accidental loss or deterioration of "
+"the goods will transfer to you once we have submitted the item to the "
+"haulier, carrier or other contractor for forwarding to the defined person or"
+" establishment. 'Kaufleute' as defined by the German Commercial Code (HGB) "
+"are subject to the inspection and notification requirements set out in § 377"
+" HGB: The purchaser must examine the goods immediately after their delivery "
+"by the vendor, as far as this is practicable in the ordinary course of "
+"business, and upon the discovery of any defect must immediately give notice "
+"thereof to the vendor. Should you fail to comply with the instructions set "
+"out therein; the goods will be deemed to have been approved unless the "
+"defect was not detectable on inspection. This shall not apply if a given "
+"defect has been concealed by us deceitfully."
+msgstr ""
+"Aplicable a empresas: Los riesgos de pérdida accidental o deterioro de la "
+"mercancía se transferirán a usted una vez que hayamos enviado el artículo al"
+" transportista, transportista u otro contratista para su envío a la persona "
+"o establecimiento definido. Los \"Kaufleute\" tal como se definen en el "
+"Código de Comercio alemán (HGB) están sujetos a los requisitos de inspección"
+" y notificación establecidos en el artículo 377 del HGB: el comprador debe "
+"examinar la mercancía inmediatamente después de su entrega por parte del "
+"vendedor, en la medida en que esto sea posible en el curso ordinario del "
+"negocio, y al descubrir cualquier defecto deberá notificarlo inmediatamente "
+"al vendedor. En caso de incumplimiento de las instrucciones allí contenidas;"
+" Se considerará que la mercancía ha sido aprobada a menos que el defecto no "
+"haya sido detectable durante la inspección. Esto no se aplicará si un "
+"determinado defecto ha sido ocultado de forma engañosa."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:93
+msgid ""
+"We are under a legal duty to supply products that are in conformity with "
+"this contract. For consumers, statutory warranty rights governed by the law "
+"of the country where the consumer has his habitual residence apply. "
+"Information on any additional guarantees and their precise conditions that "
+"may apply can be found next to the product and on specific information pages"
+" in the shop, if applicable. Complaints can be submitted by consumers and "
+"businesses to our contact details given in the supplier identification."
+msgstr ""
+"Tenemos la obligación legal de suministrar productos que sean conformes con "
+"este contrato. Para los consumidores, se aplican los derechos de garantía "
+"legales regidos por la ley del país donde el consumidor tiene su residencia "
+"habitual. La información sobre las garantías adicionales y sus condiciones "
+"precisas que pueden aplicarse se puede encontrar junto al producto y en "
+"páginas de información específicas de la tienda, si corresponde. Los "
+"consumidores y las empresas pueden presentar quejas a nuestros datos de "
+"contacto que figuran en la identificación del proveedor."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:94
+msgid ""
+"When you exercise your warranty rights and we deem it necessary to receive "
+"the goods back in order to examine your complaint, you must send back the "
+"goods at our cost to the address given above. We are committed to respond to"
+" any complaint immediately, but no later than within 14 days of its "
+"submission."
+msgstr ""
+"Cuando ejerza sus derechos de garantía y consideremos necesario recibir la "
+"mercancía de vuelta para poder examinar su reclamación, deberá devolver la "
+"mercancía a nuestro coste a la dirección indicada anteriormente. Nos "
+"comprometemos a responder a cualquier queja de inmediato, pero a más tardar "
+"dentro de los 14 días posteriores a su presentación."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:95
+msgid ""
+"Customer service: Our customer service is available for questions, "
+"complaints and claims on weekdays from TO By e-mail at "
+"office@oliverweber.com."
+msgstr ""
+"Servicio de atención al cliente: Nuestro servicio de atención al cliente "
+"está disponible para preguntas, quejas y reclamaciones de lunes a viernes "
+"desde A por correo electrónico a office@oliverweber.com."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:98
+msgid ""
+"We shall in any case be liable without limitation for claims due to damages "
+"that have been caused by us, our legal representatives or legal agents."
+msgstr ""
+"En cualquier caso seremos responsables sin limitación de reclamaciones por "
+"daños que hayan sido causados ​​por nosotros, nuestros representantes "
+"legales o agentes legales."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:100
+msgid "for injury to life, limb or health"
+msgstr "por lesiones a la vida, la integridad física o la salud"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:101
+msgid "for deliberate or grossly negligent breach of duty"
+msgstr "por incumplimiento deliberado o por negligencia grave del deber"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:102
+msgid "for guarantee commitments, where agreed"
+msgstr "para compromisos de garantía, cuando se acuerde"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:103
+msgid "towards consumer."
+msgstr "hacia el consumidor."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:105
+msgid ""
+"Except these cases, our civil law liability is limited to the foreseeable "
+"and direct damages at the time of contract conclusion."
+msgstr ""
+"Excepto en estos casos, nuestra responsabilidad civil se limita a los daños "
+"previsibles y directos en el momento de la celebración del contrato."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:107
+msgid "ONLINE DISPUTE RESOLUTION"
+msgstr "RESOLUCIÓN DE DISPUTAS EN LÍNEA"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:108
+msgid ""
+"The European Commission provides a platform for online dispute resolutions "
+"(ODR) which can be accessed at https://ec.europa.eu/consumers/odr/ "
+"[https://ec.europa.eu/consumers/odr/]. The competent body in this matter is:"
+" Universalschlichtungsstelle des Bundes am Zentrum für Schlichtung e.V., "
+"Straßburger Straße 8, 77694 Kehl am Rhein, www.verbraucher-schlichter.de "
+"[http://www.verbraucher-schlichter.de ]."
+msgstr ""
+"La Comisión Europea proporciona una plataforma para la resolución de "
+"disputas en línea (ODR) a la que se puede acceder en "
+"https://ec.europa.eu/consumers/odr/ [https://ec.europa.eu/consumers/odr/]. "
+"El organismo competente en esta materia es: Universalschlichtungsstelle des "
+"Bundes am Zentrum für Schlichtung e.V., Straßburger Straße 8, 77694 Kehl am "
+"Rhein, www.verbraucher-schlichter.de [http://www.verbraucher-schlichter.de]."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:110
+msgid "PROTECTION OF MINORS"
+msgstr "PROTECCIÓN DE MENORES"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:111
+msgid ""
+"Insofar as your order is comprised of goods, whose sale is subject to age "
+"restrictions, through the use of a reliable procedure, including a personal "
+"identity and age check, we shall ensure that the purchaser has reached the "
+"required minimum age. The deliverer shall only hand over the goods after an "
+"age check and only to the purchaser in person."
+msgstr ""
+"En la medida en que su pedido se compone de productos cuya venta está sujeta"
+" a restricciones de edad, mediante el uso de un procedimiento confiable, que"
+" incluye una verificación de identidad personal y edad, nos aseguraremos de "
+"que el comprador haya alcanzado la edad mínima requerida. El repartidor sólo"
+" entregará la mercancía tras un control de antigüedad y únicamente al "
+"comprador en persona."
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:113
+msgid "FINAL PROVISIONS"
+msgstr "PROVISIONES FINALES"
+
+#: .\templates\our_company_pages\Terms_and_conditions.html:114
+msgid ""
+"If you are a business, German law applies, to the exclusion of the UN Sales "
+"Convention."
+msgstr ""
+"Si usted es una empresa, se aplica la ley alemana, con exclusión de la "
+"Convención de Compraventa de las Naciones Unidas."
+
+#: .\templates\profile\profile_addresses.html:9
+msgid "Your addresses"
+msgstr "Tus direcciones"
+
+#: .\templates\profile\profile_addresses.html:48
+msgid "Create new address"
+msgstr "Crear nueva dirección"
+
+#: .\templates\profile\profile_dashboard.html:7
+msgid "Your account"
+msgstr "Su cuenta"
+
+#: .\templates\profile\profile_dashboard.html:10
+msgid "From your account dashboard you can view your"
+msgstr "Desde el panel de su cuenta puede ver su"
+
+#: .\templates\profile\profile_dashboard.html:12
+msgid "recent orders"
+msgstr "órdenes recientes"
+
+#: .\templates\profile\profile_dashboard.html:14
+msgid "manage your"
+msgstr "administrar su"
+
+#: .\templates\profile\profile_dashboard.html:16
+msgid "shipping and billing addresses"
+msgstr "direcciones de envío y facturación"
+
+#: .\templates\profile\profile_dashboard.html:19
+msgid "and"
+msgstr "y"
+
+#: .\templates\profile\profile_dashboard.html:21
+msgid "edit your password and account details"
+msgstr "editar su contraseña y detalles de cuenta"
+
+#: .\templates\profile\profile_favourites.html:11
+msgid "Favorite products"
+msgstr "Productos favoritos"
+
+#: .\templates\profile\profile_information.html:8
+msgid "Your personal information"
+msgstr "Tu información personal"
+
+#: .\templates\profile\profile_information.html:80
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: .\templates\profile\profile_information.html:130
+msgid ""
+"You may unsubscribe at any moment. For that purpose, please find our contact"
+" info in the legal notice"
+msgstr ""
+"Puedes darte de baja en cualquier momento. Para ello, por favor encuentre "
+"nuestros datos de contacto en el aviso legal."
+
+#: .\templates\profile\profile_information.html:139
+msgid "Save"
+msgstr "Ahorrar"
+
+#: .\templates\profile\profile_information.html:206
+msgid "First name is required"
+msgstr "Se requiere el primer nombre"
+
+#: .\templates\profile\profile_information.html:210
+msgid "Last name is required"
+msgstr "Se requiere apellido"
+
+#: .\templates\profile\profile_information.html:214
+msgid "Email is required"
+msgstr "Correo electronico es requerido"
+
+#: .\templates\profile\profile_information.html:218
+msgid "Password is required"
+msgstr "Se requiere contraseña"
+
+#: .\templates\profile\profile_information.html:226
+msgid ""
+"Invalid birthday. Ensure the date is valid, in YYYY-MM-DD format, and not in"
+" the future"
+msgstr ""
+"Cumpleaños no válido. Asegúrese de que la fecha sea válida, en formato AAAA-"
+"MM-DD y no en el futuro"
+
+#: .\templates\profile\profile_information.html:263
+msgid "The information has been successfully updated!"
+msgstr "¡La información ha sido actualizada exitosamente!"
+
+#: .\templates\profile\profile_orders.html:89
+msgid "Order history"
+msgstr "Historial de pedidos"
+
+#: .\templates\profile\profile_orders.html:90
+msgid "Here are the orders you've placed since your account was created"
+msgstr "Estos son los pedidos que ha realizado desde que se creó su cuenta"
+
+#: .\templates\profile\profile_orders.html:94
+msgid "Order ID"
+msgstr "Solicitar ID"
+
+#: .\templates\profile\profile_orders.html:95
+msgid "Date"
+msgstr "Fecha"
+
+#: .\templates\profile\profile_orders.html:96
+msgid "Total price"
+msgstr "Precio total"
+
+#: .\templates\profile\profile_orders.html:97
+msgid "Payment"
+msgstr "Pago"
+
+#: .\templates\profile\profile_orders.html:98
+msgid "Status"
+msgstr "Estado"
+
+#: .\templates\profile\profile_orders.html:123
+msgid "Download csv"
+msgstr "Descargar archivo csv"
+
+#: .\templates\profile\profile_orders.html:124
+msgid "Download pdf with images"
+msgstr "Descargar pdf con imágenes"
+
+#: .\templates\profile\profile_orders.html:125
+msgid "Download pdf without images"
+msgstr "Descargar pdf sin imagenes"
+
+#: .\templates\profile\profile_orders.html:130
+msgid "File is downloading"
+msgstr "El archivo se está descargando"
+
+#: .\templates\profile\profile_orders.html:131
+msgid "Don't close the page, please!"
+msgstr "¡No cierres la página, por favor!"
+
+#: .\templates\profile\profile_orders.html:200
+msgid "Show details"
+msgstr "Mostrar detalles"
+
+#: .\templates\profile\profile_orders.html:232
+#: .\templates\profile\profile_orders.html:237
+#: .\templates\profile\profile_orders.html:304
+msgid "Hide details"
+msgstr "Ocultar detalles"
+
+#: .\templates\profile\profile_orders.html:254
+msgid "Image"
+msgstr "Imagen"
+
+#: .\templates\profile\profile_orders.html:255
+msgid "Description"
+msgstr "Descripción"
+
+#: .\templates\profile\profile_orders.html:257
+#: .\templates\widgets\navigation_bar.html:314 .\views.py:322
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: .\templates\profile\profile_orders.html:258
+msgid "Summary"
+msgstr "Resumen"
+
+#: .\templates\profile\profile_orders.html:259 .\templates\shop_page.html:54
+#: .\views.py:310
+msgid "In stock"
+msgstr "En stock"
+
+#: .\templates\profile\profile_side_menu.html:15
+#: .\templates\widgets\navigation_bar.html:143
+msgid "Dashboard"
+msgstr "Panel"
+
+#: .\templates\profile\profile_side_menu.html:20
+#: .\templates\widgets\navigation_bar.html:155
+msgid "Orders"
+msgstr "Pedidos"
+
+#: .\templates\profile\profile_side_menu.html:25
+#: .\templates\widgets\navigation_bar.html:161
+msgid "Information"
+msgstr "Información"
+
+#: .\templates\profile\profile_side_menu.html:36
+#: .\templates\widgets\navigation_bar.html:149
+msgid "Favorites"
+msgstr "Favoritos"
+
+#: .\templates\profile\profile_side_menu.html:42
+#: .\templates\widgets\navigation_bar.html:174
+msgid "Sign out"
+msgstr "Desconectar"
+
+#: .\templates\profile\profile_update_address.html:152
+msgid "The address has been successfully updated!"
+msgstr "¡La dirección se ha actualizado correctamente!"
+
+#: .\templates\service_pages\b2b_customers.html:21
+#: .\templates\service_pages\b2b_customers.html:24
+#: .\templates\service_pages\b2b_customers.html:40
+#: .\templates\widgets\footer.html:88
+msgid "B2B Customers"
+msgstr "Clientes B2B"
+
+#: .\templates\service_pages\b2b_customers.html:57
+msgid ""
+"As a registered customer you may find our entire product range, stock "
+"position, and price information on our B2B eCommerce Platform."
+msgstr ""
+"Como cliente registrado, puede encontrar toda nuestra gama de productos, "
+"posición de stock e información de precios en nuestra plataforma de comercio"
+" electrónico B2B."
+
+#: .\templates\service_pages\b2b_customers.html:58
+msgid "Go directly to the B2B Shop"
+msgstr "Ir directamente a la Tienda B2B"
+
+#: .\templates\service_pages\b2b_customers.html:60
+msgid "If you do not have an account yet, please"
+msgstr "Si aún no tienes una cuenta, por favor"
+
+#: .\templates\service_pages\b2b_customers.html:61
+msgid "Contact our Sales Office"
+msgstr "Contacte con nuestra oficina de ventas"
+
+#: .\templates\service_pages\contact_us.html:9
+#: .\templates\service_pages\contact_us.html:12
+#: .\templates\service_pages\contact_us.html:28
+#: .\templates\widgets\footer.html:82
+msgid "Contact us"
+msgstr "Contáctenos"
+
+#: .\templates\service_pages\contact_us.html:54
+msgid "Hours of Operation"
+msgstr "Horas de operación"
+
+#: .\templates\service_pages\contact_us.html:55
+msgid ""
+"Monday to Thursday between 08:00 and 17:00, and Friday between 08:00 and "
+"13:00, with the exception of bank holidays"
+msgstr ""
+"De lunes a jueves de 08:00 a 17:00 horas, y viernes de 08:00 a 13:00 horas, "
+"excepto festivos"
+
+#: .\templates\service_pages\customer_service_and_repair.html:9
+#: .\templates\service_pages\customer_service_and_repair.html:12
+#: .\templates\service_pages\customer_service_and_repair.html:28
+#: .\templates\widgets\footer.html:84
+msgid "Customer service and repair"
+msgstr "Servicio al cliente y reparación."
+
+#: .\templates\service_pages\customer_service_and_repair.html:44
+msgid "CARE FOR YOUR PRODUCT"
+msgstr "CUIDA TU PRODUCTO"
+
+#: .\templates\service_pages\customer_service_and_repair.html:45
+msgid ""
+"Each of our products is subject to high-quality requirements regarding the "
+"quality of production processes, raw materials and manual production. "
+"Nonetheless, each piece should be handled with care."
+msgstr ""
+"Cada uno de nuestros productos está sujeto a altos requisitos en cuanto a la"
+" calidad de los procesos de producción, materias primas y producción manual."
+" No obstante, cada pieza debe manipularse con cuidado."
+
+#: .\templates\service_pages\customer_service_and_repair.html:46
+msgid "DAILY CARE"
+msgstr "CUIDADO DIARIO"
+
+#: .\templates\service_pages\customer_service_and_repair.html:47
+msgid ""
+"Treat your jewelry with love so that you enjoy it for a long time. Avoid "
+"prolonged contact with water; remove the jewelry when washing hands or "
+"swimming, as both salt and water can damage the stones and the metal."
+msgstr ""
+"Trata tus joyas con cariño para que las disfrutes durante mucho tiempo. "
+"Evite el contacto prolongado con el agua; Quítese las joyas cuando se lave "
+"las manos o nade, ya que tanto la sal como el agua pueden dañar las piedras "
+"y el metal."
+
+#: .\templates\service_pages\customer_service_and_repair.html:48
+msgid ""
+"To avoid damage, do not wear jewelry when working in the house or garden, as"
+" cleaning products, chemicals, and hard objects can damage the coating and "
+"leave scratches. Especially cleaning and washing products, perfumes, sprays "
+"and skin creams can damage the rhodium or gold coating and dissolve the glue"
+" that holds the crystals in their socket. Sweat also has a corrosive effect,"
+" so wearing jewelry while exercising is not recommended."
+msgstr ""
+"Para evitar daños, no use joyas cuando trabaje en la casa o el jardín, ya "
+"que los productos de limpieza, los productos químicos y los objetos duros "
+"pueden dañar el revestimiento y dejar rayones. Especialmente los productos "
+"de limpieza y lavado, perfumes, sprays y cremas para la piel pueden dañar el"
+" recubrimiento de rodio u oro y disolver el pegamento que sujeta los "
+"cristales en su cavidad. El sudor también tiene un efecto corrosivo, por lo "
+"que no se recomienda usar joyas mientras se hace ejercicio."
+
+#: .\templates\service_pages\customer_service_and_repair.html:49
+msgid "RULES OF THUMB"
+msgstr "REGLAS DE JUEGO"
+
+#: .\templates\service_pages\customer_service_and_repair.html:50
+msgid ""
+"Keep your jewelry separate in its original packaging if possible or in soft "
+"pouches. This will prevent your favorite pieces from scratching one on "
+"another."
+msgstr ""
+"Mantenga sus joyas separadas en su embalaje original si es posible o en "
+"bolsas blandas. Esto evitará que tus piezas favoritas se rayen unas con "
+"otras."
+
+#: .\templates\service_pages\customer_service_and_repair.html:51
+msgid ""
+"Once in a while polish your jewelry with a soft cloth to maintain its "
+"lustrous shine. Silver pieces might oxidize; there is no reason to panic, "
+"polishing will solve the problem."
+msgstr ""
+"De vez en cuando pule sus joyas con un paño suave para mantener su brillo "
+"lustroso. Las piezas de plata pueden oxidarse; No hay motivo para entrar en "
+"pánico, el pulido solucionará el problema."
+
+#: .\templates\service_pages\customer_service_and_repair.html:52
+msgid ""
+"When donning, be sure to put on your jewelry the last, it helps you to match"
+" it to your outfit, prevent scratches and you will avoid spraying perfume at"
+" your beloved jewelry, unnecessary. When changing, make sure to first take "
+"off your jewelry."
+msgstr ""
+"Al ponértelo, asegúrate de ponerte tus joyas a la última, te ayudará a "
+"combinarlas con tu atuendo, evitarás rayones y evitarás rociar perfume en "
+"tus queridas joyas, algo innecesario. Al cambiarse, asegúrese de quitarse "
+"primero las joyas."
+
+#: .\templates\service_pages\customer_service_and_repair.html:53
+msgid "PRODUCT WARRANTY"
+msgstr "LA GARANTÍA DEL PRODUCTO"
+
+#: .\templates\service_pages\customer_service_and_repair.html:54
+msgid ""
+"Our products are manufactured using carefully selected materials and are "
+"subject to rigorous production standards and quality controls."
+msgstr ""
+"Nuestros productos se fabrican con materiales cuidadosamente seleccionados y"
+" están sujetos a rigurosos estándares de producción y controles de calidad."
+
+#: .\templates\service_pages\customer_service_and_repair.html:55
+msgid ""
+"We want you to be happy with our products, so Westa GmbH offers a 2 years "
+"full statutory warranty covering manufacturing and material issues for "
+"genuine branded Oliver Weber Collection products purchased from us "
+"(including our Online Shop) directly or our business partners. The guarantee"
+" only applies to damage that, in the opinion of Westa GmbH or our partners, "
+"was not caused by accident or improper use, normal wear and tear, "
+"modification, attempted to repair, negligence or failure to observe our care"
+" instructions."
+msgstr ""
+"Queremos que esté satisfecho con nuestros productos, por lo que Westa GmbH "
+"ofrece una garantía legal completa de 2 años que cubre problemas de "
+"fabricación y materiales para productos originales de la marca Oliver Weber "
+"Collection adquiridos a nosotros (incluida nuestra tienda en línea) "
+"directamente o a nuestros socios comerciales. La garantía solo se aplica a "
+"daños que, en opinión de Westa GmbH o de nuestros socios, no fueron causados"
+" ​​por accidente o uso inadecuado, desgaste normal, modificación, intento de"
+" reparación, negligencia o incumplimiento de nuestras instrucciones de "
+"cuidado."
+
+#: .\templates\service_pages\customer_service_and_repair.html:56
+msgid ""
+"In order to use our warranty service, please send us (or to the shop you "
+"purchased our jewelry from) the jewel in question together with its purchase"
+" receipt and warranty card. At our discretion, we will either repair the "
+"item or, depending on the degree of damage and the availability of spare "
+"parts; replace the item with an identical one (if any) or replace it with an"
+" item of comparable value."
+msgstr ""
+"Para utilizar nuestro servicio de garantía, envíenos (o a la tienda donde "
+"compró nuestras joyas) la joya en cuestión junto con su recibo de compra y "
+"su tarjeta de garantía. A nuestra discreción, repararemos el artículo o, "
+"según el grado de daño y la disponibilidad de repuestos; reemplazar el "
+"artículo por uno idéntico (si lo hubiera) o reemplazarlo por un artículo de "
+"valor comparable."
+
+#: .\templates\service_pages\customer_service_and_repair.html:57
+msgid "PRODUCT INFORMATION AND CARE INSTRUCTIONS"
+msgstr "INFORMACIÓN DEL PRODUCTO E INSTRUCCIONES DE CUIDADO"
+
+#: .\templates\service_pages\customer_service_and_repair.html:58
+msgid ""
+"It is our credo and our mission to offer beautiful high-quality jewelry at "
+"an affordable price. In addition to beauty and the latest fashion trends, "
+"the quality of our products is also very important to us."
+msgstr ""
+"Nuestro credo y nuestra misión es ofrecer hermosas joyas de alta calidad a "
+"un precio asequible. Además de la belleza y las últimas tendencias de la "
+"moda, para nosotros también es muy importante la calidad de nuestros "
+"productos."
+
+#: .\templates\service_pages\customer_service_and_repair.html:59
+msgid ""
+"We only use carefully selected and finest quality materials and the "
+"production processes are subject to very strict controls, while all stones "
+"are set by hand."
+msgstr ""
+"Sólo utilizamos materiales cuidadosamente seleccionados y de la mejor "
+"calidad y los procesos de producción están sujetos a controles muy "
+"estrictos, mientras que todas las piedras están engastadas a mano."
+
+#: .\templates\service_pages\customer_service_and_repair.html:60
+msgid ""
+"Although most people wear jewelry on a daily basis, only a few really know "
+"about the products they buy. Unconsciously we only compare the jewelry "
+"quality towards the price. Sometimes this is true, but often it is not. If "
+"you want to know more about our products and jewelry in general, read the "
+"information below."
+msgstr ""
+"Aunque la mayoría de las personas usan joyas a diario, sólo unas pocas "
+"conocen realmente los productos que compran. Inconscientemente sólo "
+"comparamos la calidad de las joyas con el precio. A veces esto es cierto, "
+"pero muchas veces no lo es. Si quieres saber más sobre nuestros productos y "
+"joyería en general, lee la información a continuación."
+
+#: .\templates\service_pages\faq.html:9 .\templates\service_pages\faq.html:12
+#: .\templates\service_pages\faq.html:28 .\templates\widgets\footer.html:83
+msgid "Frequently Asked Questions"
+msgstr "Preguntas frecuentes"
+
+#: .\templates\service_pages\faq.html:43
+msgid "How can I order online?"
+msgstr "¿Cómo puedo realizar un pedido en línea?"
+
+#: .\templates\service_pages\faq.html:44
+msgid ""
+"What can be more relaxing than browsing and shopping from the comfort of "
+"your home? Make yourself a hot tea, take your favorite blanket and get "
+"ready: our online shop is never closed and the buying process has been split"
+" in easy to follow steps. Our extensive offer has been structured into "
+"product categories and sub-groups and has different filters to help you find"
+" the perfect jewels"
+msgstr ""
+"¿Qué puede ser más relajante que navegar y comprar desde la comodidad de tu "
+"hogar? Prepárate un té caliente, coge tu manta favorita y prepárate: nuestra"
+" tienda online nunca cierra y el proceso de compra se ha dividido en "
+"sencillos pasos. Nuestra amplia oferta se ha estructurado en categorías y "
+"subgrupos de productos y cuenta con diferentes filtros para ayudarte a "
+"encontrar las joyas perfectas."
+
+#: .\templates\service_pages\faq.html:45
+msgid ""
+"For example, you can sort according to category (Necklaces, Bracelets etc.) "
+"as well as according to color, price, occasion and so on. Once you find your"
+" desired jewel, you can click on the picture to find out more detailed "
+"information regarding colors, materials, as well as the available sizes."
+msgstr ""
+"Por ejemplo, puede ordenar por categoría (collares, pulseras, etc.), así "
+"como por color, precio, ocasión, etc. Una vez que encuentres la joya que "
+"deseas, puedes hacer clic en la imagen para obtener información más "
+"detallada sobre colores, materiales y tamaños disponibles."
+
+#: .\templates\service_pages\faq.html:46
+msgid ""
+"If you decide to buy an item, place it in your shopping cart by clicking on "
+"the “Add to shopping bag” button. You can go on browsing and adding products"
+" to your bag just like in a regular shop. Adding products to your bag does "
+"not mean you are required to buy them. If you like a product but you aren’t "
+"sure about it yet, you may use the “Add to my wish list” button it will help"
+" you see all the products that you liked while browsing, without needing to "
+"retrace your steps or start searching for them again."
+msgstr ""
+"Si decides comprar un artículo, colócalo en tu carrito de compras haciendo "
+"clic en el botón “Agregar a la bolsa de compras”. Puedes seguir navegando y "
+"añadiendo productos a tu bolso como en una tienda normal. Agregar productos "
+"a su bolsa no significa que deba comprarlos. Si te gusta un producto pero "
+"aún no estás seguro, puedes utilizar el botón “Agregar a mi lista de deseos”"
+" que te ayudará a ver todos los productos que te gustaron mientras navegas, "
+"sin necesidad de volver sobre tus pasos o empezar a buscar. para ellos otra "
+"vez."
+
+#: .\templates\service_pages\faq.html:47
+msgid ""
+"To see the content of your shopping bag so far, click on the “Shopping bag” "
+"button (on the top-right corner of your screen). If you decide you don’t "
+"want a product after all, you can just remove it from the bag by clicking "
+"“Delete”, or you can order it more than once by clicking on the “+” button "
+"until you reach your desired amount."
+msgstr ""
+"Para ver el contenido de su bolsa de compras hasta el momento, haga clic en "
+"el botón \"Bolsa de compras\" (en la esquina superior derecha de su "
+"pantalla). Si después de todo decides que no quieres un producto, puedes "
+"simplemente sacarlo de la bolsa haciendo clic en \"Eliminar\", o puedes "
+"pedirlo más de una vez haciendo clic en el botón \"+\" hasta alcanzar la "
+"cantidad deseada."
+
+#: .\templates\service_pages\faq.html:48
+msgid ""
+"When you have decided, click on the “Check out” button. The paying process "
+"is divided in guided steps."
+msgstr ""
+"Cuando lo hayas decidido, haz clic en el botón “Pagar”. El proceso de pago "
+"se divide en pasos guiados."
+
+#: .\templates\service_pages\faq.html:50
+msgid "How do I know my order has been successfully placed?"
+msgstr "¿Cómo sé que mi pedido se ha realizado correctamente?"
+
+#: .\templates\service_pages\faq.html:51
+msgid ""
+"After receiving your order we will send you an automatic confirmation e-mail"
+" that also contains information about your order number, payment method, "
+"shopping cart, as well as invoicing and delivery address."
+msgstr ""
+"Después de recibir su pedido le enviaremos un correo electrónico de "
+"confirmación automática que también contiene información sobre su número de "
+"pedido, método de pago, carrito de compras, así como dirección de "
+"facturación y entrega."
+
+#: .\templates\service_pages\faq.html:53
+msgid "How do I change/cancel my order?"
+msgstr "¿Cómo cambio/cancelo mi pedido?"
+
+#: .\templates\service_pages\faq.html:54
+msgid ""
+"After completion of an order, it is not possible to cancel it due to our "
+"automated ordering process. You have the option, however, to return your "
+"order to us within 30 days of receipt For the same reason, it is not "
+"possible to make a subsequent change of details to your order, for example, "
+"adding/removing an item or making a subsequent change/correction to the "
+"delivery address. Can I place an order by telephone? At the moment we only "
+"accept online orders."
+msgstr ""
+"Una vez completado un pedido, no es posible cancelarlo debido a nuestro "
+"proceso de pedido automatizado. Sin embargo, tiene la opción de devolvernos "
+"su pedido dentro de los 30 días posteriores a la recepción. Por el mismo "
+"motivo, no es posible realizar un cambio posterior de los detalles de su "
+"pedido, por ejemplo, agregar/eliminar un artículo o realizar un cambio "
+"posterior. cambio/corrección a la dirección de entrega. ¿Puedo hacer un "
+"pedido por teléfono? Por el momento sólo aceptamos pedidos online."
+
+#: .\templates\service_pages\faq.html:56
+msgid "Gift vouchers"
+msgstr "Vales de regalo"
+
+#: .\templates\service_pages\faq.html:57
+msgid ""
+"You aren’t sure about your gift? A voucher is always a good idea. Your "
+"beloved ones can choose for themselves, this way you are sure they will "
+"always wear their jewelry with pleasure."
+msgstr ""
+"¿No estás seguro de tu regalo? Un bono siempre es una buena idea. Tus seres "
+"queridos pueden elegir por sí mismos, de esta manera estarás seguro de que "
+"siempre lucirán sus joyas con gusto."
+
+#: .\templates\service_pages\faq.html:59
+msgid "What are the available payment options?"
+msgstr "¿Cuáles son las opciones de pago disponibles?"
+
+#: .\templates\service_pages\faq.html:60
+msgid ""
+"The prices quoted on the product pages include the legal VAT and other price"
+" components. The legal Austrian VAT will be shown separately."
+msgstr ""
+"Los precios cotizados en las páginas de los productos incluyen el IVA legal "
+"y otros componentes del precio. El IVA austriaco legal se mostrará por "
+"separado."
+
+#: .\templates\service_pages\faq.html:61
+msgid ""
+"Additionally to the stated prices we are invoicing shipping costs. The "
+"shipping costs will be marked separately on the product pages as a link, in "
+"the shopping cart as well as on the order sheet. By transnational deliveries"
+" could result other price components such as other taxes or customs duties. "
+"(intracommunity supply)."
+msgstr ""
+"Además de los precios indicados, facturamos los gastos de envío. Los gastos "
+"de envío se marcarán por separado en las páginas del producto a través de un"
+" enlace, en el carrito de la compra así como en la hoja de pedido. De los "
+"envíos transnacionales podrían derivarse otros componentes del precio, como "
+"otros impuestos o derechos de aduana. (suministro intracomunitario)."
+
+#: .\templates\service_pages\faq.html:62
+msgid ""
+"We accept Credit Card, PayPal, Stripe, Amazon Pay, Online Banking, Bank "
+"Transfer, as well as Oliver Weber gift vouchers."
+msgstr ""
+"Aceptamos tarjetas de crédito, PayPal, Stripe, Amazon Pay, banca en línea, "
+"transferencia bancaria y vales regalo de Oliver Weber."
+
+#: .\templates\service_pages\faq.html:64
+msgid "How high are the shipping costs?"
+msgstr "¿Qué tan altos son los costos de envío?"
+
+#: .\templates\service_pages\faq.html:65
+msgid ""
+"The goods will be delivered to the delivery address as stated by you and "
+"through a delivery service appointed by our company. We will make every "
+"effort to deliver the goods on the date you requested, but this cannot be "
+"guaranteed. The shipping costs may differ from region to region."
+msgstr ""
+"Los productos se entregarán en la dirección de entrega indicada por usted y "
+"a través de un servicio de entrega designado por nuestra empresa. Haremos "
+"todo lo posible para entregar los productos en la fecha solicitada, pero "
+"esto no se puede garantizar. Los costos de envío pueden diferir de una "
+"región a otra."
+
+#: .\templates\service_pages\faq.html:66
+msgid ""
+"Standard Shipping EU countries– 6,90 €, delivery between 4 and 8 days from "
+"the time you place your order. Express shipping – 18.90 €, delivery times "
+"between 2 and 4 days from the time you place your order."
+msgstr ""
+"Envío estándar países UE – 6,90 €, entrega entre 4 y 8 días desde que "
+"realizas tu pedido. Envío exprés – 18,90 €, plazos de entrega entre 2 y 4 "
+"días desde que realizas tu pedido."
+
+#: .\templates\service_pages\faq.html:67
+msgid ""
+"Shipping to United States (except. Alaska, Hawaii) – 18.90 €, delivery times"
+" between 5 and 10 days from the time you place your order."
+msgstr ""
+"Envío a Estados Unidos (excepto Alaska, Hawaii) – 18,90 €, plazos de entrega"
+" entre 5 y 10 días desde que realizas tu pedido."
+
+#: .\templates\service_pages\faq.html:69
+msgid "Are you available 24/7?"
+msgstr "¿Estás disponible las 24 horas, los 7 días de la semana?"
+
+#: .\templates\service_pages\faq.html:70
+msgid ""
+"You can reach us during our office hours: Monday to Thursday between 08:00 "
+"and 17:00, and Friday between 08:00 and 13:00, with the exception of bank "
+"holidays or write an e-mail to "
+msgstr ""
+"Puede comunicarse con nosotros en nuestro horario de oficina: de lunes a "
+"jueves de 08:00 a 17:00 horas, y viernes de 08:00 a 13:00 horas, excepto "
+"festivos o escribirnos un correo electrónico a"
+
+#: .\templates\service_pages\faq.html:72
+msgid "Can I return a product after I received it?"
+msgstr "¿Puedo devolver un producto después de haberlo recibido?"
+
+#: .\templates\service_pages\faq.html:73
+msgid ""
+"We do hope that you are satisfied with our jewels, nevertheless should our "
+"product not meet your expectations just send them back to us. You may cancel"
+" a purchase of the goods up to 14 days after receipt. No reason has to be "
+"stated. If you exercise this right of withdrawal, you are no longer bound to"
+" the agreement and Westa GmbH will refund any payments you have made with "
+"respect to this agreement excuding the return cost, provided that the items "
+"are returned in an unworn, unused, and undamaged condition."
+msgstr ""
+"Esperamos que esté satisfecho con nuestras joyas; sin embargo, si nuestro "
+"producto no cumple con sus expectativas, envíenoslas de vuelta. Puede "
+"cancelar la compra de los productos hasta 14 días después de la recepción. "
+"No es necesario indicar ningún motivo. Si ejerce este derecho de "
+"desistimiento, ya no estará obligado al acuerdo y Westa GmbH le reembolsará "
+"cualquier pago que haya realizado con respecto a este acuerdo, excluyendo el"
+" costo de devolución, siempre que los artículos se devuelvan sin usar, sin "
+"usar y sin daños. condición."
+
+#: .\templates\service_pages\faq.html:74
+msgid ""
+"In order to cancel the agreement, it is sufficient to send a notice in "
+"writing, or on a permanent data carrier, within two weeks to the address "
+"specified above in paragraph two, or to send the goods back to the address "
+"Westa Gmbh, Gewerbepark Süd 24, 6068 Mils, Austria."
+msgstr ""
+"Para cancelar el contrato, basta con enviar una notificación por escrito o "
+"en un soporte de datos permanente en el plazo de dos semanas a la dirección "
+"indicada en el segundo párrafo o devolver la mercancía a la dirección Westa "
+"Gmbh, Gewerbepark Süd. 24, 6068 Mils, Austria."
+
+#: .\templates\service_pages\faq.html:75
+msgid ""
+"If you cancel the purchase agreement, you must return the goods within "
+"thirty days of the cancellation of the order. The returned goods are "
+"dispatched at the expense and risk of the buyer. You must take reasonable "
+"care of the goods until they are dispatched. You can find out how to return "
+"goods to us step by step here: Return, Exchange &amp; Cancellation"
+msgstr ""
+"Si cancela el acuerdo de compra, deberá devolver la mercancía dentro de los "
+"treinta días siguientes a la cancelación del pedido. La mercancía devuelta "
+"se envía por cuenta y riesgo del comprador. Debe cuidar razonablemente los "
+"productos hasta su envío. Puede descubrir cómo devolvernos productos paso a "
+"paso aquí: Devolución, cambio y cancelación"
+
+#: .\templates\service_pages\faq.html:77
+msgid "Chain lengths by Oliver Weber?"
+msgstr "¿Longitudes de cadena de Oliver Weber?"
+
+#: .\templates\service_pages\faq.html:80
+msgid "Which ring size do I need?"
+msgstr "¿Qué talla de anillo necesito?"
+
+#: .\templates\service_pages\faq.html:81
+msgid ""
+"The ring size can be determined by ring diameter or ring circumference."
+msgstr ""
+"El tamaño del anillo se puede determinar por el diámetro o la circunferencia"
+" del anillo."
+
+#: .\templates\service_pages\faq.html:83
+msgid "Ring diameter"
+msgstr "Diámetro del anillo"
+
+#: .\templates\service_pages\faq.html:83
+msgid ""
+"Use a ruler to measure the inside diameter of a matching ring. If you do not"
+" have a ring available, then determine the size with the help of the ring "
+"circumference."
+msgstr ""
+"Utilice una regla para medir el diámetro interior de un anillo "
+"correspondiente. Si no tiene un anillo disponible, determine el tamaño con "
+"la ayuda de la circunferencia del anillo."
+
+#: .\templates\service_pages\faq.html:84
+msgid "Ring circumference"
+msgstr "Circunferencia del anillo"
+
+#: .\templates\service_pages\faq.html:84
+msgid ""
+"Take a piece of thread and wrap this thread around the relevant finger. "
+"After loosening the thread measure the length of the thread. Depending on "
+"the time and temperature, the finger circumference varies."
+msgstr ""
+"Tome un trozo de hilo y envuélvalo alrededor del dedo correspondiente. "
+"Después de aflojar el hilo, mida la longitud del hilo. Dependiendo del "
+"tiempo y la temperatura, la circunferencia del dedo varía."
+
+#: .\templates\service_pages\payment_information.html:9
+#: .\templates\service_pages\payment_information.html:12
+#: .\templates\service_pages\payment_information.html:28
+#: .\templates\widgets\footer.html:87
+msgid "Payment Information"
+msgstr "Información del pago"
+
+#: .\templates\service_pages\payment_information.html:47
+msgid ""
+"If you own a PayPal account you can pay easily and fast selecting PayPal "
+"payment in your ordering process. After submitting your order you will be "
+"redirected to PayPal where you can complete your payment.&nbsp;"
+msgstr ""
+"Si posee una cuenta PayPal, puede pagar fácil y rápidamente seleccionando el"
+" pago PayPal en su proceso de pedido. Después de enviar su pedido, será "
+"redirigido a PayPal donde podrá completar su pago."
+
+#: .\templates\service_pages\payment_information.html:48
+msgid "Payment via PayPal is free."
+msgstr "El pago a través de PayPal es gratuito."
+
+#: .\templates\service_pages\payment_information.html:49
+msgid ""
+"No PayPal account yet: Register for Free with PayPal and create your own "
+"account in just a few steps."
+msgstr ""
+"Aún no tienes una cuenta de PayPal: regístrate gratis con PayPal y crea tu "
+"propia cuenta en tan solo unos pocos pasos."
+
+#: .\templates\service_pages\payment_information.html:56
+msgid ""
+"Stripe - Easy and direct payments using your Online Banking, Debit or Credit"
+" Card."
+msgstr ""
+"Stripe: pagos fáciles y directos mediante su banca en línea, tarjeta de "
+"débito o crédito."
+
+#: .\templates\service_pages\payment_information.html:57
+msgid ""
+"Take advantage of Stripe - a secure and direct money transfer platform. Pay "
+"your purchase after your order has been placed with the method you prefer: "
+"Online Banking, Debit or Credit Card."
+msgstr ""
+"Aproveche Stripe, una plataforma de transferencia de dinero directa y "
+"segura. Paga tu compra luego de realizado tu pedido con el método que "
+"prefieras: Banca en Línea, Tarjeta de Débito o Crédito."
+
+#: .\templates\service_pages\payment_information.html:58
+msgid ""
+"You will receive a receipt for your transaction to confirm your order is "
+"complete."
+msgstr ""
+"Recibirá un recibo de su transacción para confirmar que su pedido se ha "
+"completado."
+
+#: .\templates\service_pages\payment_information.html:59
+msgid "The payment via Stripe is free of charge."
+msgstr "El pago a través de Stripe es gratuito."
+
+#: .\templates\service_pages\payment_information.html:65
+msgid "PAYMENT via Bank transfer"
+msgstr "PAGO mediante transferencia bancaria"
+
+#: .\templates\service_pages\payment_information.html:66
+msgid ""
+"For Bank transfer payments or online banking payments please make sure to "
+"enter your invoice number or customer number so that we can correctly "
+"allocate the payment to your order."
+msgstr ""
+"Para pagos por transferencia bancaria o pagos bancarios en línea, asegúrese "
+"de ingresar su número de factura o número de cliente para que podamos "
+"asignar correctamente el pago a su pedido."
+
+#: .\templates\service_pages\payment_information.html:67
+msgid ""
+"Bank transfers must be made within 10 working days from the order date, "
+"otherwise the order will be deleted automatically from our system."
+msgstr ""
+"Las transferencias bancarias deben realizarse dentro de los 10 días hábiles "
+"a partir de la fecha del pedido; de lo contrario, el pedido se eliminará "
+"automáticamente de nuestro sistema."
+
+#: .\templates\service_pages\payment_information.html:68
+msgid "OUR BANK DETAILS FOR PREPAYMENT"
+msgstr "NUESTROS DATOS BANCARIOS PARA PREPAGO"
+
+#: .\templates\service_pages\payment_information.html:70
+msgid ""
+"For e-banking in the subject 'payment reference', please note your 'order "
+"number', so that we can correctly assign your payment to your order."
+msgstr ""
+"Para la banca electrónica, en el asunto 'referencia de pago', anote su "
+"'número de pedido', para que podamos asignar correctamente su pago a su "
+"pedido."
+
+#: .\templates\service_pages\payment_information.html:77
+msgid ""
+"Amazon Pay makes online shopping even easier by allowing you to use your "
+"existing Amazon account information to pay for your purchase on our website."
+" Amazon Pay is a further way to shop online safely and securely."
+msgstr ""
+"Amazon Pay hace que las compras en línea sean aún más fáciles al permitirle "
+"utilizar la información existente de su cuenta de Amazon para pagar su "
+"compra en nuestro sitio web. Amazon Pay es una forma más de comprar en línea"
+" de forma segura."
+
+#: .\templates\service_pages\returns_and_exchanges.html:9
+msgid "Returns and exchanges "
+msgstr "Devoluciones y cambios"
+
+#: .\templates\service_pages\returns_and_exchanges.html:12
+#: .\templates\service_pages\returns_and_exchanges.html:28
+#: .\templates\widgets\footer.html:86
+msgid "Returns and exchanges"
+msgstr "Devoluciones y cambios"
+
+#: .\templates\service_pages\returns_and_exchanges.html:43
+msgid "Consumers have a 14 days right to cancel."
+msgstr "Los consumidores tienen un derecho de cancelación de 14 días."
+
+#: .\templates\service_pages\returns_and_exchanges.html:44
+msgid "Right to cancel"
+msgstr "Derecho a cancelar"
+
+#: .\templates\service_pages\returns_and_exchanges.html:45
+msgid ""
+"You have the right to cancel this contract within 14 days without giving any"
+" reason. The cancellation period will expire after 14 days from the day on "
+"which you acquire, or a third party other than the carrier and indicated by "
+"you acquires, physical possession of the last good."
+msgstr ""
+"Tiene derecho a cancelar este contrato dentro de los 14 días sin dar ningún "
+"motivo. El plazo de cancelación expirará a los 14 días del día en que usted "
+"adquiera, o un tercero distinto del transportista y por usted indicado, la "
+"posesión física del último bien."
+
+#: .\templates\service_pages\returns_and_exchanges.html:46
+msgid ""
+"To exercise the right to cancel, you must inform us (Westa GmbH, Gewerbepark"
+" 24, 6068 Mils, Austria, office@oliverweber.at, Phone: 43522341881, Fax: "
+"43-5223-41881-30 ) of your decision to cancel this contract by a clear "
+"statement (e.g. a letter sent by post, fax or e-mail). You may use the "
+"attached model cancellation form, but it is not obligatory."
+msgstr ""
+"Para ejercer el derecho de cancelación, debe informarnos (Westa GmbH, "
+"Gewerbepark 24, 6068 Mils, Austria, office@oliverweber.at, teléfono: "
+"43522341881, fax: 43-5223-41881-30) de su decisión de cancelar este "
+"contrato. mediante una declaración clara (por ejemplo, una carta enviada por"
+" correo postal, fax o correo electrónico). Puede utilizar el modelo de "
+"formulario de cancelación adjunto, pero no es obligatorio."
+
+#: .\templates\service_pages\returns_and_exchanges.html:47
+msgid ""
+"To meet the cancellation deadline, it is sufficient for you to send your "
+"communication concerning your exercise of the right of cancel before the "
+"cancellation period has expired."
+msgstr ""
+"Para cumplir el plazo de cancelación, basta con que envíe su comunicación "
+"relativa al ejercicio del derecho de cancelación antes de que expire el "
+"plazo de cancelación."
+
+#: .\templates\service_pages\returns_and_exchanges.html:48
+msgid "Effects of cancellation"
+msgstr "Efectos de la cancelación"
+
+#: .\templates\service_pages\returns_and_exchanges.html:49
+msgid ""
+"If you cancel this contract, we will reimburse to you all payments received "
+"from you, including the costs of delivery (except for the supplementary "
+"costs arising if you chose a type of delivery other than delivery other than"
+" the least expensive type of standard delivery offered by us), without undue"
+" delay and in any event not later than 14 days from the day on which we are "
+"informed about your decision to withdraw from this contract. We will make "
+"the reimbursement using the same means of payment as you used for the "
+"initial transaction, unless you have expressly agreed otherwise; in any "
+"event, you will not incur any fees as a result of such reimbursement. We may"
+" withhold reimbursement until we have received the goods back or you have "
+"supplied evidence of having sent back the goods, whichever is the earliest."
+msgstr ""
+"Si cancela este contrato, le reembolsaremos todos los pagos recibidos de "
+"usted, incluidos los costos de entrega (excepto los costos adicionales que "
+"surjan si elige un tipo de entrega diferente al tipo de entrega estándar "
+"menos costoso ofrecido por nosotros), sin demora indebida y, en cualquier "
+"caso, a más tardar 14 días a partir del día en que se nos informe de su "
+"decisión de desistir del presente contrato. Realizaremos el reembolso "
+"utilizando el mismo medio de pago que usted utilizó para la transacción "
+"inicial, a menos que haya acordado expresamente lo contrario; en cualquier "
+"caso, no incurrirá en ningún cargo como resultado de dicho reembolso. "
+"Podremos retener el reembolso hasta que hayamos recibido los bienes de "
+"vuelta o hasta que usted haya proporcionado evidencia de haberlos devuelto, "
+"lo que ocurra primero."
+
+#: .\templates\service_pages\returns_and_exchanges.html:50
+msgid ""
+"You shall send back the goods or hand them over to us, without undue delay "
+"and in any event not later than 14 days from the day on which you "
+"communicate your cancellation from this contract to us. The deadline is met "
+"if you send back the goods before the period of 14 days has expired. You "
+"will have to bear the direct cost of returning the goods. You are only "
+"liable for any diminished value of the goods resulting from the handling "
+"other than what is necessary to establish the nature, characteristics and "
+"functioning of the goods."
+msgstr ""
+"Deberá devolvernos los bienes o entregárnoslos, sin demoras indebidas y, en "
+"cualquier caso, a más tardar 14 días a partir del día en que nos comunique "
+"su cancelación de este contrato. El plazo se cumplirá si devuelve la "
+"mercancía antes de que expire el plazo de 14 días. Tendrás que asumir el "
+"coste directo de devolución de la mercancía. Usted sólo es responsable de la"
+" disminución de valor de los bienes resultante de una manipulación distinta "
+"a la necesaria para establecer la naturaleza, las características y el "
+"funcionamiento de los bienes."
+
+#: .\templates\service_pages\returns_and_exchanges.html:51
+msgid "Model cancellation form"
+msgstr "Modelo de formulario de cancelación"
+
+#: .\templates\service_pages\returns_and_exchanges.html:52
+msgid ""
+"If you want to cancel the contract, please fill out the form below and send "
+"it back to us.)"
+msgstr ""
+"Si desea cancelar el contrato, complete el siguiente formulario y "
+"envíenoslo)."
+
+#: .\templates\service_pages\returns_and_exchanges.html:53
+msgid ""
+"To Westa GmbH, Gewerbepark Sud 24, 6068 Mils, Austria, "
+"office@oliverweber.at, Fax: 43-5223-41881-30<br> — I / We(*) hereby give "
+"notice that I /We(*) cancel my/our (*) contract of sale of the following "
+"goods (*)/for the supply of the following service(*)<br> — Ordered on (*) / "
+"received on (*)<br> — Name of consumer(s)<br> — Address of consumer(s)<br> —"
+" Signature of consumer(s) (only if this for is notified on paper)<br> — "
+"Date<br> (*) Delete as appropriate"
+msgstr ""
+"A Westa GmbH, Gewerbepark Sud 24, 6068 Mils, Austria, office@oliverweber.at,"
+" Fax: 43-5223-41881-30<br> — Yo/nosotros(*) por la presente notifico que "
+"yo/nosotros(*) cancelamos mi /nuestro (*) contrato de venta de los "
+"siguientes bienes (*)/para el suministro del siguiente servicio(*)<br> — "
+"Pedido el (*) / recibido el (*)<br> — Nombre del consumidor(es) )<br> — "
+"Dirección del(los) consumidor(es)<br> — Firma del(los) consumidor(es) (solo "
+"si se notifica en papel)<br> — Fecha<br> (*) Táchese lo que no corresponda"
+
+#: .\templates\service_pages\shipping_information.html:9
+msgid "Shipping information "
+msgstr "Información de envío"
+
+#: .\templates\service_pages\shipping_information.html:12
+#: .\templates\service_pages\shipping_information.html:28
+#: .\templates\widgets\footer.html:85
+msgid "Shipping information"
+msgstr "Información de envío"
+
+#: .\templates\service_pages\shipping_information.html:43
+msgid "SHIPPING CONDITIONS"
+msgstr "CONDICIONES DE ENVÍO"
+
+#: .\templates\service_pages\shipping_information.html:44
+msgid ""
+"We ship your package with Austrian Post (Austria and Germany) or UPS and "
+"FedEx (EU and International). Packing and insured shipping is included."
+msgstr ""
+"Enviamos su paquete con Austrian Post (Austria y Alemania) o UPS y FedEx (UE"
+" e internacional). Se incluye embalaje y envío asegurado."
+
+#: .\templates\service_pages\shipping_information.html:45
+msgid "Delivery Time:"
+msgstr "El tiempo de entrega:"
+
+#: .\templates\service_pages\shipping_information.html:46
+msgid ""
+"Standard Shipping: 2-10 business days. <br> Express Shipping: 2-4 business "
+"days."
+msgstr ""
+"Envío estándar: 2-10 días hábiles. <br> Envío Express: 2-4 días hábiles."
+
+#: .\templates\service_pages\shipping_information.html:47
+msgid ""
+"Orders received on weekends or public holidays will be processed and shipped"
+" two business days later."
+msgstr ""
+"Los pedidos recibidos los fines de semana o días festivos se procesarán y "
+"enviarán dos días hábiles después."
+
+#: .\templates\service_pages\shipping_information.html:48
+msgid "There will be no deliveries on weekends or public holidays."
+msgstr "No se realizarán entregas los fines de semana ni festivos."
+
+#: .\templates\service_pages\shipping_information.html:49
+msgid "We will automatically send you a link to track your package online."
+msgstr ""
+"Le enviaremos automáticamente un enlace para rastrear su paquete en línea."
+
+#: .\templates\service_pages\shipping_information.html:50
+msgid ""
+"Orders received no later than 17:00 CET on Mondays through Thursdays and "
+"12:00 CET on Fridays will be processed and shipped the following business "
+"day."
+msgstr ""
+"Los pedidos recibidos antes de las 17:00 CET de lunes a jueves y a las 12:00"
+" CET los viernes se procesarán y enviarán el siguiente día hábil."
+
+#: .\templates\service_pages\shipping_information.html:52
+msgid "ITEMS READY FOR IMMEDIATE SHIPMENT, THE DELIVERY TIME"
+msgstr "ARTÍCULOS LISTOS PARA ENVÍO INMEDIATO, EL TIEMPO DE ENTREGA"
+
+#: .\templates\service_pages\shipping_information.html:53
+msgid "COUNTRIES SHIPPING COSTS DELIVERY TIME"
+msgstr "PAÍSES GASTOS DE ENVÍO TIEMPO DE ENTREGA"
+
+#: .\templates\service_pages\shipping_information.html:54
+msgid "Austria / Germany: € 5,70 VAT excl. 2-4 business days"
+msgstr "Austria / Alemania: 5,70 € IVA no incluido. 2-4 días hábiles"
+
+#: .\templates\service_pages\shipping_information.html:55
+msgid "Standard delivery Europe: € 5,70&nbsp;"
+msgstr "Entrega estándar Europa: 5,70€"
+
+#: .\templates\service_pages\shipping_information.html:55
+msgid "VAT excl."
+msgstr "IVA excluido."
+
+#: .\templates\service_pages\shipping_information.html:55
+msgid "&nbsp;2-10 business days"
+msgstr "2-10 días hábiles"
+
+#: .\templates\service_pages\shipping_information.html:56
+msgid "Express delivery: €15,75&nbsp;"
+msgstr "Envío urgente: 15,75€"
+
+#: .\templates\service_pages\shipping_information.html:56
+#: .\templates\service_pages\shipping_information.html:57
+msgid "VAT excl.&nbsp;"
+msgstr "IVA excluido."
+
+#: .\templates\service_pages\shipping_information.html:56
+msgid "for Europe"
+msgstr "para Europa"
+
+#: .\templates\service_pages\shipping_information.html:57
+msgid "Shipping to the United States (except. Alaska, Hawaii): €29,00&nbsp;"
+msgstr "Envío a Estados Unidos (excepto Alaska, Hawaii): 29,00 €"
+
+#: .\templates\service_pages\shipping_information.html:57
+msgid ""
+"delivery times between 5 and 10 business days from the time you place your "
+"order."
+msgstr ""
+"Plazos de entrega entre 5 y 10 días hábiles desde que realizas tu pedido."
+
+#: .\templates\service_pages\shipping_information.html:58
+msgid "Central and South America&nbsp"
+msgstr "Centro y Sudamérica"
+
+#: .\templates\service_pages\shipping_information.html:58
+msgid "and the Rest of the World"
+msgstr "Y el resto del mundo"
+
+#: .\templates\service_pages\shipping_information.html:58
+msgid ""
+"€29 VAT excl. delivery times between 5 and 10 business days from the time "
+"you place your order."
+msgstr ""
+"29€ IVA no incluido. Plazos de entrega entre 5 y 10 días hábiles desde que "
+"realizas tu pedido."
+
+#: .\templates\service_pages\shipping_information.html:59
+msgid "FREE shipping from a purchase value of € 100 to. (AT/ DE and EU only)"
+msgstr ""
+"Envío GRATIS a partir de un valor de compra de 100€ a. (AT/DE y UE "
+"únicamente)"
+
+#: .\templates\service_pages\shipping_information.html:60
+msgid ""
+"If the order is received in time before the last stated delivery date, the "
+"items will normally be delivered on time. However, unforeseen circumstances "
+"at our delivery partners can lead to delays in delivery. In these cases, "
+"Westa GmbH assumes no liability."
+msgstr ""
+"Si el pedido se recibe a tiempo antes de la última fecha de entrega "
+"indicada, los artículos normalmente se entregarán a tiempo. Sin embargo, "
+"circunstancias imprevistas por parte de nuestros socios de entrega pueden "
+"provocar retrasos en la entrega. En estos casos, Westa GmbH no asume ninguna"
+" responsabilidad."
+
+#: .\templates\service_pages\shipping_information.html:61
+msgid ""
+"Orders will not be shipped or delivered on public holidays. Holidays may "
+"cause your delivery to arrive later than expected."
+msgstr ""
+"Los pedidos no se enviarán ni entregarán en días festivos. Los días festivos"
+" pueden hacer que su entrega llegue más tarde de lo esperado."
+
+#: .\templates\service_pages\shipping_information.html:63
+msgid "WHERE IS&nbsp;MY PACKAGE?"
+msgstr "¿DONDE ESTA MI PAQUETE?"
+
+#: .\templates\service_pages\shipping_information.html:64
+msgid ""
+"If tracking a package shows that it has been delivered, please check to see "
+"if it was received by someone else at your address. It is possible that a "
+"neighbor may have accepted it."
+msgstr ""
+"Si el seguimiento de un paquete muestra que ha sido entregado, verifique si "
+"alguien más lo recibió en su dirección. Es posible que algún vecino lo haya "
+"aceptado."
+
+#: .\templates\service_pages\shipping_information.html:65
+msgid ""
+"Check to see if you received a delivery attempt notification card. Please "
+"check your mailbox."
+msgstr ""
+"Verifique si recibió una tarjeta de notificación de intento de entrega. Por "
+"favor, revise su correo."
+
+#: .\templates\service_pages\shipping_information.html:66
+msgid ""
+"If your package cannot be found, please contact our customer service. Please"
+" have your order and tracking number ready."
+msgstr ""
+"Si no se puede encontrar su paquete, comuníquese con nuestro servicio de "
+"atención al cliente. Tenga a mano su pedido y su número de seguimiento."
+
+#: .\templates\shop_page.html:24
+msgid "Product number"
+msgstr "Número de producto"
+
+#: .\templates\shop_page.html:30
+msgid "Search"
+msgstr "Buscar"
+
+#: .\templates\shop_page.html:39
+msgid "Searched Results for"
+msgstr "Resultados buscados para"
+
+#: .\templates\shop_page.html:41
+msgid "Searched Results"
+msgstr "Resultados buscados"
+
+#: .\templates\shop_page.html:76 .\templates\shop_page.html:313
+msgid "Current quantity"
+msgstr "Cantidad actual"
+
+#: .\templates\shop_page.html:88
+msgid "No results to display"
+msgstr "No hay resultados para mostrar"
+
+#: .\templates\shop_page.html:109 .\templates\shop_page.html:111
+#: .\templates\shop_page.html:266
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\shop_page.html:163
+msgid "Do you really want to delete this product from your cart"
+msgstr "¿Realmente deseas eliminar este producto de tu carrito?"
+
+#: .\templates\widgets\footer.html:79
+msgid "Customer Service"
+msgstr "Servicio al Cliente"
+
+#: .\templates\widgets\footer.html:95
+msgid "Our company"
+msgstr "Nuestra compañía"
+
+#: .\templates\widgets\footer.html:99
+msgid "Oliver Weber's World"
+msgstr "El mundo de Oliver Weber"
+
+#: .\templates\widgets\footer.html:102
+msgid "Impressum"
+msgstr "Impresión"
+
+#: .\templates\widgets\footer.html:112
+msgid "Follow us"
+msgstr "Síganos"
+
+#: .\templates\widgets\navigation_bar.html:45
+msgid "Necklaces"
+msgstr "Collares"
+
+#: .\templates\widgets\navigation_bar.html:45
+msgid "NECKLACES"
+msgstr "COLLARES"
+
+#: .\templates\widgets\navigation_bar.html:46
+msgid "Earrings"
+msgstr "Pendientes"
+
+#: .\templates\widgets\navigation_bar.html:46
+msgid "EARRINGS"
+msgstr "PENDIENTES"
+
+#: .\templates\widgets\navigation_bar.html:49
+msgid "Rings"
+msgstr "Anillos"
+
+#: .\templates\widgets\navigation_bar.html:49
+msgid "RINGS"
+msgstr "ANILLOS"
+
+#: .\templates\widgets\navigation_bar.html:50
+msgid "Bracelets"
+msgstr "Esposas"
+
+#: .\templates\widgets\navigation_bar.html:50
+msgid "BRACELETS"
+msgstr "ESPOSAS"
+
+#: .\templates\widgets\navigation_bar.html:51
+msgid "Anklets"
+msgstr "Tobilleras"
+
+#: .\templates\widgets\navigation_bar.html:51
+msgid "ANKLETS"
+msgstr "TOBILLERAS"
+
+#: .\templates\widgets\navigation_bar.html:52
+msgid "Accessories"
+msgstr "Accesorios"
+
+#: .\templates\widgets\navigation_bar.html:52
+msgid "ACCESSORIES"
+msgstr "ACCESORIOS"
+
+#: .\templates\widgets\navigation_bar.html:107
+msgid "Shopping Cart"
+msgstr "Carro de la compra"
+
+#: .\templates\widgets\navigation_bar.html:116
+msgid "Subtotal:"
+msgstr "Total parcial:"
+
+#: .\templates\widgets\navigation_bar.html:119
+msgid "Proceed to Checkout"
+msgstr "Pasar por la caja"
+
+#: .\templates\widgets\navigation_bar.html:125
+msgid "Account"
+msgstr "Cuenta"
+
+#: .\templates\widgets\navigation_bar.html:296
+msgid "Plating"
+msgstr "Enchapado"
+
+#: .\templates\widgets\navigation_bar.html:298
+msgid "Base Material"
+msgstr "Material de base"
+
+#: .\templates\widgets\navigation_bar.html:336
+msgid "Remove from cart"
+msgstr "Quitar del carrito"
+
+#: .\templates\widgets\navigation_bar.html:363
+msgid ""
+"You cant delete items during checkout. Go back to shop pages to change your "
+"cart"
+msgstr ""
+"No puede eliminar elementos durante el pago. Vuelva a las páginas de la "
+"tienda para cambiar su carrito"
+
+#: .\templates\widgets\navigation_bar.html:458
+msgid "Cart is empty"
+msgstr "El carrito esta vacío"
+
+#: .\templates\widgets\navigation_bar.html:475
+msgid "Back to shop"
+msgstr "Volver a la tienda"
+
+#: .\views.py:311
+msgid "Less than 5 pieces left!"
+msgstr "¡Quedan menos de 5 piezas!"
+
+#: .\views.py:312
+msgid "Plating Material"
+msgstr "Material de revestimiento"
+
+#: .\views.py:313
+msgid "Stone color"
+msgstr "Color piedra"
+
+#: .\views.py:316
+msgid ""
+"Quantity number has to be less than or equal to quantity number in stock or "
+"and be greater than 0"
+msgstr ""
+"El número de cantidad debe ser menor o igual que el número de cantidad en "
+"stock o mayor que 0"
+
+#: .\views.py:317
+msgid "Processing"
+msgstr "Procesando"
+
+#: .\views.py:318
+msgid "An error occured"
+msgstr "Ocurrió un error"
+
+#: .\views.py:319
+msgid "Product successfully added to your shopping cart"
+msgstr "Producto agregado exitosamente a su carrito de compras"
+
+#: .\views.py:323
+msgid "Number of items in your cart:"
+msgstr "Número de artículos en su carrito:"
+
+#: .\views.py:324
+msgid "Subtotal"
+msgstr "Total parcial"
+
+#: .\views.py:327
+msgid "Add to cart"
+msgstr "Añadir a la cesta"
+
+#: .\views.py:335
+msgid "Welcome to my site."
+msgstr "Bienvenido a mi sitio."
+
+msgid "Pens"
+msgstr "Bolígrafos"
+
+msgid "Chains"
+msgstr "Cadenas"
+
+msgid "Pearlchains"
+msgstr "Cadenas de perlas"
+
+msgid "Pendants"
+msgstr "Colgantes"
+
+msgid "Colliers"
+msgstr "Collares"
+
+msgid "Post earrings"
+msgstr "Pendientes de poste"
+
+msgid "Clips"
+msgstr "Pinzas"
+
+msgid "Hoops"
+msgstr "Aros"
+
+msgid "Piercings"
+msgstr "Piercings"
+
+msgid "Nailfiles"
+msgstr "Limas de uñas"
+
+msgid "Keys"
+msgstr "Llaves"
+
+msgid "Brooches"
+msgstr "Broches"
+
+msgid "Extensions"
+msgstr "Extensiones"
+
+msgid "Matches"
+msgstr "Fósforos"
+
+msgid "Default"
+msgstr "Predeterminado"
+
+msgid "Rhodium"
+msgstr "Rodio"
+
+msgid "Gold"
+msgstr "Oro"
+
+msgid "Rosegold"
+msgstr "Oro rosa"
+
+msgid "Contains in name"
+msgstr "Contiene en el nombre"
+
+msgid "Without"
+msgstr "Sin"
+
+msgid "Steel"
+msgstr "Acero"
+
+msgid "Brass"
+msgstr "Latón"
+
+msgid "Silver"
+msgstr "Plata"
+
+msgid "Pendant"
+msgstr "Colgante"
+
+msgid "Chain"
+msgstr "Cadena"
+
+msgid "Collier"
+msgstr "Collar"
+
+msgid "Pearlchain"
+msgstr "Cadena de perlas"
+
+msgid "Necklace"
+msgstr "Collar"
+
+msgid "Post Earrings"
+msgstr "Pendientes de poste"
+
+msgid "Hoop"
+msgstr "Aro"
+
+msgid "Creole"
+msgstr "Criolla"
+
+msgid "Clip"
+msgstr "Pinza"
+
+msgid "Piercing"
+msgstr "Piercing"
+
+msgid "Bracelet"
+msgstr "Pulsera"
+
+msgid "Bangle"
+msgstr "Brazalete"
+
+msgid "Anklet"
+msgstr "Tobillera"
+
+msgid "Ring"
+msgstr "Anillo"
+
+msgid "Match"
+msgstr "Fósforo"
+
+msgid "Pen"
+msgstr "Pluma"
+
+msgid "Key"
+msgstr "Llave"
+
+msgid "Brooch"
+msgstr "Broche"
+
+msgid "Nailfile"
+msgstr "Lima de uñas"
+
+msgid "Extension"
+msgstr "Extensión"
+
+msgid "UV"
+msgstr "UV"
+
+msgid "All products"
+msgstr "TODOS LOS PRODUCTOS"

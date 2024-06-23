@@ -1,0 +1,321 @@
+{% load static %}
+{% load i18n %}
+
+<link rel="stylesheet" href="{% static 'css/profile/profile_orders.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Symbols+Outlined" rel="stylesheet">
+<style>
+#wait-please-dialog {
+    border: 1px solid #f2f2f2; /* Light grey border */
+    padding: 20px; /* Padding inside the dialog */
+    width: auto; /* Auto width based on content size */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
+    display: none; /* Keeps the dialog hidden until .showModal() is called */
+    margin: auto; /* Center the dialog horizontally */
+    position: fixed; /* Positioned relative to the viewport */
+    top: 50%; /* Push down from the top to 50% of the viewport height */
+    left: 50%; /* Push right from the left to 50% of the viewport width */
+    transform: translate(-50%, -100%); /* Offset the dialog to truly center it */
+    max-width: 90%; /* Maximum width, ensuring it doesn't touch the viewport edges */
+    box-sizing: border-box; /* Ensures padding and border are included in the width/height */
+}
+
+/* Styles for the h3 element inside the dialog */
+#wait-please-dialog h3 {
+    color: #333; /* Dark grey text color */
+    font-size: 1.5em; /* Slightly larger text */
+    text-align: center; /* Center-align the text */
+    margin-top: 0;
+    margin-bottom: 20px; /* Space below the text */
+}
+
+/* Styles for the button inside the dialog */
+#wait-please-dialog button {
+    background-color: #e2e2e2; /* Light grey background */
+    border: 1px solid #f2f2f2; /* Light grey border */
+    padding: 10px 20px; /* Padding inside the button */
+    cursor: pointer; /* Cursor indicates the element is clickable */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    display: block; /* Block display to take full width available */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+/* Optional: Use Flexbox for vertical centering inside the dialog */
+#wait-please-dialog .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.td-outer:last-child div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+
+}
+    .menus-link{
+        color: black!important;
+    }
+    .menus-link::before{
+        height: 0px;
+        transition: none;
+    }
+    .context-menu {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu ul li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.context-menu ul li:hover {
+    background-color: #f1f1f1;
+}
+
+</style>
+<section class="section-orders">
+<header class="page-header"><h1> {% trans "Order history" %}</h1> </header>
+<h6>{% trans "Here are the orders you've placed since your account was created" %}.</h6>
+    <table class="outer-table table table-striped table-bordered table-labeled hidden-sm-down" id="table-{{ user.email }}" style="border:1px solid" >
+        <thead>
+            <tr>
+                <th> {% trans "Order ID" %} </th>
+                <th> {% trans "Date" %} </th>
+                <th> {% trans "Total price" %} </th>
+                <th> {% trans "Payment" %} </th>
+                <th> {% trans "Status" %} </th>
+                <th>  </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for document in orders %}
+                <tr class="tr-outer" id="content-{{ document.order_id }}">
+                    <th class="td-outer">{{ document.order_id }}</th>
+                    <td class="td-outer">{{ document.date }}</td>
+                    <td class="td-outer">{{ document.currency|default:"€" }}{{ document.sum }}</td>
+                    <td class="td-outer">Bank transfer</td>
+                    <td class="td-outer">{{ document.Status }}</td>
+                    <td class="td-outer">
+                        <div>
+                            <span> <a data-order-id="{{ document.order_id }}" class="show-content" id="show-button-{{ document.order_id }}">Show Details</a></span>
+                            <a style="transition: none" class="menus-link"><i data-order-id="{{ document.order_id }}" class="material-symbols-outlined i-menu-points" style="cursor: pointer">more_vert</i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<div id="contextMenu" class="context-menu" style="display: none;">
+    <ul>
+        <li id="downloadCsv">{% trans "Download csv" %}</li>
+        <li id="downloadPdfWImg">{% trans "Download pdf with images" %}</li>
+        <li id="downloadPdfWithoutImg">{% trans "Download pdf without images" %}</li>
+    </ul>
+</div>
+</section>
+<dialog id="wait-please-dialog">
+    <h3>{% trans "File is downloading" %}</h3>
+    <h3>{% trans "Don't close the page, please!" %}</h3>
+    <button id="closeDialog">Ok</button>
+</dialog>
+<script>
+
+let products = [];
+let currencies =  {{ currencies|safe }};
+document.addEventListener("DOMContentLoaded", function() {
+    var product = "{{ products|safe }}";
+    product = product.replaceAll("True", "true").replaceAll("False", "false");
+    product = product.replaceAll("'", '"');
+    product = product.replace(/(\w+)(?=: )/g, '"$1"');  // Enclose keys in double quotes
+    product = product.replace(/,(\s*})/g, '$1');
+    console.log(product);
+    products = JSON.parse(product);
+    console.log(products)
+});
+
+document.querySelectorAll('.i-menu-points').forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const contextMenu = document.getElementById('contextMenu');
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = `${event.pageX - 100}px`;
+        contextMenu.style.top = `${event.pageY}px`;
+        let orderId = button.getAttribute('data-order-id');
+        // Function to hide the context menu
+        function hideContextMenu() {
+            contextMenu.style.display = 'none';
+        }
+
+        // Close the menu when clicking outside of it
+        document.addEventListener('click', hideContextMenu, { once: true });
+
+        // Set up the menu actions
+        document.getElementById('downloadCsv').onclick = function() {
+            // Replace with the actual function or navigation action
+            window.location.href = `/admin_tools/orders_control/download_csv/${orderId}/`;
+        };
+        document.getElementById('downloadPdfWImg').addEventListener('click', function() {
+                  // get the order ID somehow, maybe from an element or variable
+              // Стартовое сообщение
+              var dialog = document.getElementById('wait-please-dialog');
+              dialog.style.display="block";
+              // Show the dialog
+              dialog.showModal();
+              window.location.href = `/admin_tools/orders_control/download_pdf_with_img/${orderId}/`;
+              // Set a timeout to close the dialog after 3 seconds
+              setTimeout(function() {
+                  dialog.close();// Redirect to the download URL after closing the dialog
+                  dialog.style.display="none";
+              }, 3000);
+
+        });
+        document.getElementById('downloadPdfWithoutImg').onclick = function() {
+                // Replace with the actual function or navigation action
+            window.location.href = `/admin_tools/orders_control/download_pdf_no_img/${orderId}/`;
+        };
+    });
+});
+
+document.querySelectorAll('.show-content').forEach(button => {
+    button.addEventListener('click', () => {
+         let orderId = button.getAttribute('data-order-id');
+         let orderRow = document.getElementById('content-' + orderId);
+         let table = orderRow.closest('table');
+         let rowIndex = orderRow.rowIndex;
+         let nextRow = table.rows[rowIndex + 1];
+         const order_currency = currencies[orderId];
+
+         if (nextRow && nextRow.classList.contains('nested-table-row')) {
+
+            let nestedTableContainer = nextRow.querySelector('.nested-table-container');
+            // Access nestedTable directly from nestedTableContainer if it's already in the DOM
+            if (nestedTableContainer.classList.contains('expanded')) {
+                nestedTableContainer.classList.remove('expanded');
+                document.getElementById('show-button-' + orderId).innerText = "{{ _("Show details")|escapejs }}";
+
+                // Start the collapsing animation by setting max-height to 0
+                nestedTableContainer.style.maxHeight = '0'; // Trigger the collapsing animation
+
+                nestedTableContainer.addEventListener('transitionend', function onCollapse() {
+                    // Remove event listener to avoid memory leaks
+                    nestedTableContainer.removeEventListener('transitionend', onCollapse);
+
+                    let deleteAfterCollapse = function() {
+                        const rowToDelete = table.rows[rowIndex + 1]; // Assuming this is the row you want to delete
+                        rowToDelete.style.transition = 'margin-top 0.05s ease';
+                        rowToDelete.style.marginTop = `-${rowToDelete.offsetHeight}px`; // Animate the row out of view
+
+                        // Wait for the margin-top transition to complete before deleting the row
+                        setTimeout(() => {
+                            requestAnimationFrame(() => {
+                                table.deleteRow(rowIndex + 1);
+                            });
+                        }, 0); // This duration should match the CSS transition duration
+                    };
+
+                    // Execute the deletion with visual transition
+                    deleteAfterCollapse();
+                });
+            } else {
+                nestedTableContainer.classList.add('expanded');
+                // Since nestedTable exists, recalculate contentHeight based on its current state
+                let contentHeight = nestedTableContainer.scrollHeight + 'px';
+                requestAnimationFrame(() => {
+                    nestedTableContainer.style.maxHeight = contentHeight;
+                });
+                document.getElementById('show-button-' + orderId).innerText = "{{ _("Hide details")|escapejs }}";
+            }
+
+        } else {
+            // This is the section where you're adding the nested table for the first time
+            document.getElementById('show-button-' + orderId).innerText = "{{ _("Hide details")|escapejs }}";
+
+            let nestedTableRow = table.insertRow(rowIndex + 1);
+            nestedTableRow.classList.add('nested-table-row');
+
+            let indentCell = nestedTableRow.insertCell(0);
+            indentCell.classList.add('td-outer');
+
+            let nestedTableCell = nestedTableRow.insertCell(1);
+            nestedTableCell.colSpan = 5;
+
+            let nestedTableContainer = document.createElement('div');
+            nestedTableContainer.classList.add('nested-table-container'); // Initially not expanded
+
+            let nestedTable = document.createElement('table');
+            nestedTable.classList.add('nested-table');
+            let Name = "{{ _("Name")|escapejs }}";
+            let Image = "{{ _("Image")|escapejs }}";
+            let Description = "{{ _("Description")|escapejs }}";
+            let Price = "{{ _("Price")|escapejs }}";
+            let Quantity = "{{ _("Quantity")|escapejs }}";
+            let Summary = "{{ _("Summary")|escapejs }}";
+            let In_stock = "{{ _("In stock")|escapejs }}";
+            let nestedTableContent = `
+                <tr>
+                    <th>${Name}</th>
+                    <th>${Image}</th>
+                    <th>${Description}</th>
+                    <th>${Price}</th>
+                    <th>${Quantity}</th>
+                    <th>${Summary}</th>
+                    <th>${In_stock}</th>
+                </tr>`;
+            let intId = parseInt(orderId);
+            products[intId].forEach(function(product) {
+                let mark = `&#10003`;
+                if(product.in_stock === false){
+                    mark = `&#x2717`;
+                }
+                nestedTableContent += `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td style="text-align: center"> <img alt="Product image" src="${product.image_url}" width="50" height="50"> </td>
+                        <td>${product.description}</td>
+                        <td>${order_currency}${product.price}</td>
+                        <td>${product.quantity}</td>
+                        <td>${order_currency}${(product.quantity * product.price).toFixed(1)}</td>
+                        <td style="width: 10%; text-align: center" ><span style="font-size: 20px">${mark};</span></td>
+                    </tr>`;
+            });
+            nestedTable.innerHTML = nestedTableContent;
+            nestedTableContainer.appendChild(nestedTable);
+            nestedTableCell.appendChild(nestedTableContainer);
+
+            // At this point, nestedTable is fully prepared, so we should measure the scrollHeight of nestedTableContainer
+            // Make sure to append nestedTableContainer to the document before measuring
+            let contentHeight = "0px";
+            // Make sure the nestedTableContainer is part of the document
+            if (nestedTableContainer.scrollHeight) {
+                contentHeight = nestedTableContainer.scrollHeight + "px";
+            }
+
+            // Apply the dynamic max-height and trigger the animation
+            requestAnimationFrame(() => {
+                nestedTableContainer.style.maxHeight = "0"; // Reset to start the transition
+                // Allow the browser to register the reset
+                requestAnimationFrame(() => {
+                    nestedTableContainer.style.maxHeight = contentHeight; // Expand
+                    nestedTableContainer.classList.add('expanded'); // Mark as expanded
+                });
+            });
+
+            document.getElementById('show-button-' + orderId).innerText = "{{ _("Hide details")|escapejs }}";
+        }
+    });
+});
+
+</script>

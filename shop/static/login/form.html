@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  <style>
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background-color: gray;
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    form {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      letter-spacing: 1px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+    input[type="submit"]:hover {
+      background-color: #005ca9;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #0077cc;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    a:hover {
+      color: #005ca9;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <form>
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    <input type="submit" value="Login">
+    <a href="#">Forgot password?</a>
+  </form>
+  <div style="text-align:center;margin-top:20px;">
+    <button>Sign up</button>
+  </div>
+</div>
+</body>
+</html>

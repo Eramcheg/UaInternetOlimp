@@ -1,0 +1,822 @@
+{% load static %}
+{% load i18n %}
+<link rel="stylesheet" href="{% static 'css/admin_tools/at_control_tables.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+#wait-please-dialog {
+    border: 1px solid #f2f2f2; /* Light grey border */
+    padding: 20px; /* Padding inside the dialog */
+    width: auto; /* Auto width based on content size */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
+    display: none; /* Keeps the dialog hidden until .showModal() is called */
+    margin: auto; /* Center the dialog horizontally */
+    position: fixed; /* Positioned relative to the viewport */
+    top: 50%; /* Push down from the top to 50% of the viewport height */
+    left: 50%; /* Push right from the left to 50% of the viewport width */
+    transform: translate(-50%, -100%); /* Offset the dialog to truly center it */
+    max-width: 90%; /* Maximum width, ensuring it doesn't touch the viewport edges */
+    box-sizing: border-box; /* Ensures padding and border are included in the width/height */
+}
+
+/* Styles for the h3 element inside the dialog */
+#wait-please-dialog h3 {
+    color: #333; /* Dark grey text color */
+    font-size: 1.5em; /* Slightly larger text */
+    text-align: center; /* Center-align the text */
+    margin-top: 0;
+    margin-bottom: 20px; /* Space below the text */
+}
+
+/* Styles for the button inside the dialog */
+#wait-please-dialog button {
+    background-color: #e2e2e2; /* Light grey background */
+    border: 1px solid #f2f2f2; /* Light grey border */
+    padding: 10px 20px; /* Padding inside the button */
+    cursor: pointer; /* Cursor indicates the element is clickable */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    display: block; /* Block display to take full width available */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+/* Optional: Use Flexbox for vertical centering inside the dialog */
+#wait-please-dialog .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+</style>
+<div class="users-page-container">
+
+    <div class="table-header">
+        <select id="bulk-actions" disabled value="Bulk actions">
+            <option value="" disabled selected>Bulk actions</option>
+            <option value="Change_status">Change order status</option>
+        </select>
+        <button id="remove-filters" style="display: none;">Remove all filters</button>
+    </div>
+
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th> Selecters </th> <!-- First header, no change -->
+                <th><span>Order ID</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th><span>Customer</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th><span>Total</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th><span>Payment</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th><span>Status</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th><span>Date</span> <span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th>Actions</th> <!-- Last header, no change -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+    <div class="table-footer">
+        <div class="pagination">
+            <!-- Pagination controls will be inserted here by JavaScript -->
+        </div>
+        <div class="pgntn-information">
+            <span class="pgntn-info"></span>
+        </div>
+        <div class="pgntn-items-per-page">
+            <span> Items per page: </span>
+            <select id="items-per-page">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div id="contextMenu" class="context-menu" style="display: none;">
+    <ul>
+        <li id="downloadCsv">Download csv</li>
+        <li id="downloadPdfWImg">Download pdf with images</li>
+        <li id="downloadPdfWithoutImg">Download pdf without images</li>
+        <li id="deleteOrder">Delete order</li>
+    </ul>
+</div>
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <label for="statusSelect">Select status to be applied:</label>
+    <select id="statusSelect">
+      <option value="">---please select---</option>
+      <option value="Awaiting">Awaiting</option>
+      <option value="Processing">Processing</option>
+      <option value="Shipping">Shipping</option>
+    </select>
+    <div class="modal-footer">
+      <button id="cancelButton">Cancel</button>
+      <button id="confirmButton">Confirm</button>
+    </div>
+  </div>
+</div>
+<dialog id="wait-please-dialog">
+    <h3>File is downloading</h3>
+    <h3>Don't close the page, please!</h3>
+    <button id="closeDialog">Ok</button>
+</dialog>
+
+
+
+
+{% include "widgets/overlay.html" %}
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyAM0wDc_WO0wP3-_TPRPLENZDIHbezH7U4",
+        authDomain: "flutterapp-fd5c3.firebaseapp.com",
+        projectId: "flutterapp-fd5c3"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let allOrders = [];
+    let currentPage = 1;
+    let ordersPerPage = 10;
+    let totalPages = 0;
+    let sortPriority = [];
+    let filteredOrders = [];
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        showOverlay();
+        allOrders = await fetchAllOrders();
+        console.log(allOrders);
+
+        buildOrdersControlTable(allOrders);
+        addEventListenersToOrders();
+        addFilterInputs(); // Add this after your table is built
+        addEventListenersToFilterInputs();
+        hideOverlay();
+    });
+
+
+    async function fetchAllOrders() {
+        const ordersQuery = query(collection(db, "Orders"));
+        const querySnapshot = await getDocs(ordersQuery);
+        return querySnapshot.docs.map(doc => doc.data());
+    }
+
+
+    function addEventListenersToOrders() {
+        const headers = document.querySelectorAll('.arrow-sorting');
+        headers.forEach((header, index) => {
+            header.addEventListener('click', () => {
+                updateSortPriority(index);
+                adjustSortIcon(index); // Use the updated function here
+                sortOrders(getActualArray());
+            });
+        });
+    }
+
+
+    function updateSortPriority(columnIndex) {
+        const existingPriority = sortPriority.findIndex(sp => sp.columnIndex === columnIndex);
+        if (existingPriority === -1) {
+            // Add new sort priority if not already present
+            sortPriority.push({ columnIndex: columnIndex, direction: 'asc' });
+        } else {
+            // If clicked again, update direction or remove if it's the third click
+            if (sortPriority[existingPriority].direction === 'asc') {
+                sortPriority[existingPriority].direction = 'desc';
+            } else {
+                sortPriority.splice(existingPriority, 1); // Remove this sort priority
+            }
+        }
+    }
+
+
+    function adjustSortIcon(columnIndex) {
+        const arrows = document.querySelectorAll('.sort-arrow');
+        const currentArrow = arrows[columnIndex];
+        const existingPriority = sortPriority.find(sp => sp.columnIndex === columnIndex);
+        const direction = existingPriority ? existingPriority.direction : null;
+
+        // Set current arrow based on direction
+        if (direction === 'asc') {
+            currentArrow.classList.remove('fa-arrow-up','fa-x' );
+            currentArrow.classList.add( "fa-arrow-down"); //= '↓'; // Down arrow indicates ascending sort
+
+        } else if (direction === 'desc') {
+            currentArrow.classList.remove('fa-arrow-down','fa-x' );
+            currentArrow.classList.add("fa-arrow-up");// = '↑'; // Up arrow indicates descending sort
+        } else {
+            currentArrow.classList.remove('fa-arrow-down', 'fa-arrow-up','fa-x' );
+            currentArrow.classList.add("fa-x");
+        }
+    }
+
+
+    function sortOrders(array) {
+        array.sort((a, b) => {
+            for (let i = 0; i < sortPriority.length; i++) {
+                const { columnIndex, direction } = sortPriority[i];
+                let valA, valB;
+                // Switch statement to assign valA and valB based on columnIndex
+                // Similar to the switch case you already have in your sortTable function
+                // For example:
+                switch (columnIndex) {
+                    case 0: // Order ID
+                        valA = a.order_id || a['order-id']; valB = b.order_id || b['order-id'];
+                        break;
+                    case 1: // Customer
+                        valA = a.email; valB = b.email;
+                        break;
+                    case 2: // Total
+                        valA = a.price; valB = b.price;
+                        break;
+                    case 4: // Status
+                        valA = a.Status; valB = b.Status;
+                        break;
+                    case 5: // Date
+                        valA = a.date ? new Date(a.date.seconds * 1000 + a.date.nanoseconds / 1000000) : new Date(0);
+                        valB = b.date ? new Date(b.date.seconds * 1000 + b.date.nanoseconds / 1000000) : new Date(0);
+
+                        break;
+                    // Include other cases as needed...
+                }
+
+                let comparison = 0;
+                if (valA < valB) {
+                    comparison = -1;
+                } else if (valA > valB) {
+                    comparison = 1;
+                }
+
+                if (comparison !== 0) {
+                    return direction === 'asc' ? comparison : -comparison;
+                }
+                // If comparison is 0, continue to next sort priority
+            }
+            return 0; // If all priorities compare equal
+        });
+
+        // Rebuild table with sorted orders
+        buildOrdersControlTable(getActualArray());
+        document.getElementById('remove-filters').style.display = 'inline';
+    }
+
+
+    document.getElementById('remove-filters').addEventListener('click', function() {
+        showOverlay();
+        fetchAllOrders().then(orders => {
+            allOrders = orders;
+            sortPriority = []; // Clear any sort priorities
+
+        // Reset visual indicators for all sortable columns to show no sorting is applied
+            resetSortIcons();
+            buildOrdersControlTable(allOrders); // Rebuild table without sorting
+            hideOverlay();
+        });
+
+        const inputs = document.querySelectorAll('.filter-input');
+        inputs.forEach(input => input.value = '');
+        filteredOrders = [];
+        this.style.display = 'none';
+    });
+    function resetSortIcons() {
+        const arrows = document.querySelectorAll('.sort-arrow');
+        arrows.forEach((arrow) => {
+            // Assuming you're using text content like 'x', '↑', '↓' for sorting indicators
+            arrow.classList.add('fa-x'); // Reset to 'x' to indicate no sorting
+
+        });
+    }
+    function filterOrders() {
+        const inputs = document.querySelectorAll('.filter-input');
+        // Ensure `allOrders` contains your orders data
+        filteredOrders = allOrders.filter(order => {
+            return Array.from(inputs).every((input, index) => {
+                if (!input.value.trim()) return true; // Skip empty inputs
+
+                const columnName = input.getAttribute('data-column');
+                let orderValue = order[input.getAttribute('data-column')]; // Adjust based on your data keys
+                if(columnName==="order_id" && !orderValue){
+                    orderValue = order['order-id'];
+                }
+
+                // Special handling for the "Total" column with comparison operators
+                if (columnName === "price") {
+                    const operatorSelect = input.previousSibling; // Assuming the select is right before the input
+                    const operator = operatorSelect.value;
+                    const value = parseFloat(input.value);
+                    orderValue = parseFloat(orderValue);
+
+                    switch (operator) {
+                        case '>': return orderValue > value;
+                        case '<': return orderValue < value;
+                        case '>=': return orderValue >= value;
+                        case '<=': return orderValue <= value;
+                        case '==': return orderValue === value;
+                        default: return true;
+                    }
+                } else if (columnName === "date" && input.getAttribute('data-range')) {
+                    const orderDate = new Date(orderValue ? (order.date.seconds * 1000 + order.date.nanoseconds / 1000000) : 0);
+                    if (input.getAttribute('data-range') === 'from') {
+                        const fromDate = new Date(input.value);
+                        return fromDate <= orderDate;
+                    } else if (input.getAttribute('data-range') === 'to') {
+                        const toDate = new Date(input.value);
+                        toDate.setHours(23, 59, 59, 999); // Set to the end of the day for 'to' date
+                        return toDate >= orderDate;
+                    }
+                }
+                else { // Textual data
+                    return orderValue.toString().toLowerCase().includes(input.value.toString().toLowerCase());
+                }
+            });
+        });
+
+        buildOrdersControlTable(filteredOrders); // Rebuild the table with the filtered data
+        document.getElementById('remove-filters').style.display = 'inline';
+    }
+    function addEventListenersToFilterInputs() {
+        const filterInputs = document.querySelectorAll('.filter-input');
+        const operatorSelects = document.querySelectorAll('select');
+
+        operatorSelects.forEach(select => {
+            select.addEventListener('change', filterOrders);
+        });
+    }
+    function addFilterInputs() {
+        const table = document.getElementById('usersTable');
+        const headerRow = table.querySelector('thead tr');
+        const filterRow = document.createElement('tr');
+
+        Array.from(headerRow.cells).forEach((cell, index) => {
+            const filterCell = document.createElement('th');
+
+            if (index > 0 && index < headerRow.cells.length - 1) { // Skip first and last columns
+                if (cell.textContent.trim() === "Total") {
+                    filterCell.classList.add('header-total-cell');
+                    const select = document.createElement('select');
+                    ["==", ">", "<", ">=", "<="].forEach(op => {
+                        const option = document.createElement('option');
+                        option.value = op;
+                        option.textContent = op;
+                        select.appendChild(option);
+                    });
+                    filterCell.appendChild(select);
+                }
+
+                let data_column = "";
+                if (cell.textContent.trim() === "Total")
+                {
+                    data_column="price";
+                }
+                else if(cell.textContent.trim() === "Customer"){
+                    data_column="email";
+                }
+                else if(cell.textContent.trim() === "Order ID"){
+                    data_column="order_id";
+                }
+                else if(cell.textContent.trim() === "Payment"){
+                    data_column="payment";
+                }
+                else if(cell.textContent.trim() === "Status"){
+                    data_column="Status";
+                }
+                else if(cell.textContent.trim() === "Date"){
+                    data_column="date";
+                }
+                if (cell.textContent.trim() === "Date") {
+                    // Create "From" date input
+                    const div_input_from = document.createElement('div');
+                    const label_input_from = document.createElement('span');
+                    label_input_from.textContent = "From";
+                    const inputFrom = document.createElement('input');
+                    inputFrom.type = 'date';
+                    inputFrom.className = 'filter-input';
+                    inputFrom.setAttribute('data-column', data_column);
+                    inputFrom.setAttribute('data-range', 'from');
+                    inputFrom.placeholder = "From";
+                    div_input_from.appendChild(label_input_from);
+                    div_input_from.appendChild(inputFrom);
+                    filterCell.appendChild(div_input_from);
+
+                    // Create "To" date input
+                    const div_input_to = document.createElement('div');
+                    const label_input_to = document.createElement('span');
+                    label_input_to.textContent = "To";
+                    const inputTo = document.createElement('input');
+                    inputTo.type = 'date';
+                    inputTo.className = 'filter-input';
+                    inputTo.setAttribute('data-column', data_column);
+                    inputTo.setAttribute('data-range', 'to');
+                    inputTo.placeholder = "To";
+                    div_input_to.appendChild(label_input_to);
+                    div_input_to.appendChild(inputTo);
+                    filterCell.appendChild(div_input_to);
+                }
+
+                else {
+                    // Regular text input for other columns
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'filter-input';
+                    input.setAttribute('data-column', data_column);
+                    input.placeholder = `Search ${cell.textContent}`;
+                    filterCell.appendChild(input);
+                }
+
+            }
+            else if(index===(headerRow.cells.length - 1)){
+                const buttonSearch = document.createElement('button');
+                buttonSearch.textContent = "Search";
+                buttonSearch.addEventListener('click', filterOrders);
+                filterCell.appendChild(buttonSearch);
+            }
+
+            filterRow.appendChild(filterCell);
+        });
+
+        table.querySelector('thead').appendChild(filterRow);
+    }
+    function buildOrdersControlTable(ordersArray) {
+
+        const tableBody = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        // Calculate total pages
+        totalPages = Math.ceil(ordersArray.length / ordersPerPage);
+
+        // Calculate the slice of users to show based on currentPage
+        const start = (currentPage - 1) * ordersPerPage;
+        const end = start + ordersPerPage;
+        const OrdersToShow = ordersArray.slice(start, end);
+
+        OrdersToShow.forEach(order => {
+            const currency = order.currency ? order.currency=="Euro"? "€" :"$" : "€"
+            // Create the row
+            let row = document.createElement('tr');
+
+            // Checkbox cell
+            let checkBoxCell = document.createElement('td');
+            let checkBox = document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.setAttribute('name', 'selectedUser');
+            checkBox.setAttribute('value', order.order_id || order['order-id']);
+            checkBoxCell.appendChild(checkBox);
+            row.appendChild(checkBoxCell);
+
+            // User ID cell
+            let orderIdCell = document.createElement('td');
+            orderIdCell.textContent = order.order_id || order['order-id'];
+            row.appendChild(orderIdCell);
+
+            // Other cells follow a similar pattern
+            let ownerCell = document.createElement('td');
+            ownerCell.textContent = order.email;
+            row.appendChild(ownerCell);
+
+            let totalCell = document.createElement('td');
+            totalCell.textContent = currency + (order.price).toFixed(2);
+            row.appendChild(totalCell);
+
+            let paymentMethodCell = document.createElement('td');
+            paymentMethodCell.textContent = "Bank transfer";
+            row.appendChild(paymentMethodCell);
+
+            let statusCell = document.createElement('td');
+            statusCell.textContent = order.Status;
+            row.appendChild(statusCell);
+
+            let dateCell = document.createElement('td');
+            if(order.date) {
+                let dateMilliseconds = order.date.seconds * 1000 + order.date.nanoseconds / 1000000;
+
+                // Create a Date object
+                let date = new Date(dateMilliseconds);
+
+                // Use toISOString and slice to format the date as YYYY-MM-DD
+                let dateString = date.toISOString().slice(0, 10);
+
+                // Set the formatted date string as the cell's text content
+                dateCell.textContent = dateString;
+            }
+            else{
+                dateCell.textContent = "";
+            }
+            row.appendChild(dateCell);
+
+            // Actions cell
+            let actionsCell = document.createElement('td');
+            // Assuming you have a function to generate these URLs or you set them directly
+            let editLink = document.createElement('a');
+            let editUrl = `/admin_tools/orders_control/view_order/${order.order_id||order['order-id']}/`; // Construct the URL using the user ID
+            editLink.setAttribute('href', editUrl);
+            const editbutton = document.createElement('i');
+            editbutton.classList.add('material-icons');
+            editbutton.textContent = 'edit';
+            editLink.appendChild(editbutton);
+            actionsCell.appendChild(editLink);
+
+            let optionsButton = document.createElement('i');
+            optionsButton.classList.add('material-symbols-outlined');
+            let optionsLink = document.createElement('a');
+            optionsButton.textContent = 'more_vert';
+            optionsButton.style.cursor = 'pointer';
+            optionsLink.appendChild(optionsButton);
+            actionsCell.appendChild(optionsLink);
+            optionsButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent the click from closing the menu immediately
+
+                // Position the menu
+                const contextMenu = document.getElementById('contextMenu');
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = `${event.pageX - 100}px`;
+                contextMenu.style.top = `${event.pageY}px`;
+
+                // Function to hide the context menu
+                function hideContextMenu() {
+                    contextMenu.style.display = 'none';
+                }
+
+                // Close the menu when clicking outside of it
+                document.addEventListener('click', hideContextMenu, { once: true });
+
+                // Set up the menu actions
+                document.getElementById('downloadCsv').onclick = function() {
+                    // Replace with the actual function or navigation action
+                    window.location.href = `/admin_tools/orders_control/download_csv/${order.orderId||order['order-id']}/`;
+                };
+                document.getElementById('downloadPdfWImg').addEventListener('click', function() {
+                      // get the order ID somehow, maybe from an element or variable
+
+                      let orderId = order.orderId||order['order-id']; // Нужно получить настоящий ID заказа
+
+                      // Стартовое сообщение
+                      let dialog = document.getElementById('wait-please-dialog');
+                      dialog.style.display="block";
+                      // Show the dialog
+                      dialog.showModal();
+                      window.location.href = `/admin_tools/orders_control/download_pdf_with_img/${orderId}/`;
+                      // Set a timeout to close the dialog after 3 seconds
+                      setTimeout(function() {
+                          dialog.close();// Redirect to the download URL after closing the dialog
+                          dialog.style.display="none";
+                      }, 3000);
+
+                    });
+
+                document.getElementById('downloadPdfWithoutImg').onclick = function() {
+                    // Replace with the actual function or navigation action
+                    window.location.href = `/admin_tools/orders_control/download_pdf_no_img/${order.orderId||order['order-id']}/`;
+                };
+
+                document.getElementById('deleteOrder').onclick = function() {
+                    // Replace with the actual function or navigation action
+                    let confirmDeletion = confirm("Are you sure you want to delete this order? This action cannot be undone.");
+                    if (confirmDeletion) {
+                        let orderId = order.orderId||order['order-id'];
+                        window.location.href = `/admin_tools/orders_control/delete_order/${orderId}/`;
+
+                        allOrders = allOrders.filter(orderInside => !(orderInside.order_id === orderId || orderInside['order-id'] === orderId));
+                        buildOrdersControlTable(allOrders);
+                    }
+                };
+            });
+
+            row.appendChild(actionsCell);
+
+            // Append the row to the table body
+            tableBody.appendChild(row);
+        });
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateBulkActionsDropdown);
+        });
+        updatePaginationControls();
+    }
+    function changePage(direction) {
+        currentPage += direction;
+        buildOrdersControlTable(getActualArray()); // Assuming allUsers is your global user array
+    }
+
+document.getElementById('closeDialog').onclick = function() {
+    var dialog = document.getElementById('wait-please-dialog');
+    dialog.close();
+    dialog.style.display="none";
+};
+function updatePaginationControls() {
+
+    const paginationContainer = document.querySelector('.pagination');
+    paginationContainer.innerHTML = ''; // Clear existing controls
+
+    // First Page
+    const firstPageContainer = document.createElement('div');
+    firstPageContainer.classList.add('firstPageContainer');
+    const firstPage = document.createElement('span');
+    firstPage.textContent = "1";
+    if (currentPage > 1) {
+        firstPageContainer.classList.add('clickable');
+        firstPageContainer.addEventListener('click', goToFirst);
+    } else {
+        firstPage.classList.add('disabled');
+    }
+    firstPageContainer.appendChild(firstPage);
+    paginationContainer.appendChild(firstPageContainer);
+
+    // Previous Button
+    const previousContainer = document.createElement('div');
+    previousContainer.classList.add('previousContainer');
+    const previous = document.createElement('i');
+    previous.classList.add('fa-solid', 'fa-chevron-left');
+    if (currentPage > 1) {
+        previousContainer.classList.add('clickable');
+        previousContainer.addEventListener('click', () => changePage(-1));
+    } else {
+        previous.classList.add('disabled');
+    }
+    previousContainer.appendChild(previous);
+    paginationContainer.appendChild(previousContainer);
+
+    // Input for current page
+    const inputPage = document.createElement('input');
+    inputPage.type = "number";
+    inputPage.id = "currentPageInput";
+    inputPage.value = `${currentPage}`;
+    inputPage.min = "1";
+    inputPage.max = `${totalPages}`;
+    paginationContainer.appendChild(inputPage);
+    inputPage.addEventListener('change', goToPage);
+
+    // Next Button
+    const nextContainer = document.createElement('div');
+    nextContainer.classList.add('nextContainer');
+    const next = document.createElement('i');
+    next.classList.add('fa-solid', 'fa-chevron-right');
+    if (currentPage < totalPages) {
+        nextContainer.classList.add('clickable');
+        nextContainer.addEventListener('click', () => changePage(1));
+    } else {
+        next.classList.add('disabled');
+    }
+    nextContainer.appendChild(next);
+    paginationContainer.appendChild(nextContainer);
+
+    // Last Page
+    const lastPageContainer = document.createElement('div');
+    lastPageContainer.classList.add('lastPageContainer');
+    const lastPage = document.createElement('span');
+    lastPage.textContent = `${totalPages}`;
+    if (currentPage < totalPages) {
+        lastPageContainer.classList.add('clickable');
+        lastPageContainer.addEventListener('click', goToLast);
+    } else {
+        lastPage.classList.add('disabled');
+    }
+    lastPageContainer.appendChild(lastPage);
+    paginationContainer.appendChild(lastPageContainer);
+    updatePaginationInfo(getActualArray());
+}
+
+function updateBulkActionsDropdown() {
+    const checkboxes = document.querySelectorAll(' input[type="checkbox"]');
+    const bulkActionsDropdown = document.getElementById('bulk-actions');
+    const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    bulkActionsDropdown.disabled = !anyChecked;
+}
+
+// Attach the update function to the change event of each checkbox
+
+document.getElementById('items-per-page').addEventListener('change', function (event) {
+
+    ordersPerPage = parseInt(event.target.value);
+    currentPage = 1;
+    buildOrdersControlTable(getActualArray());
+});
+function updatePaginationInfo(ordersArray){
+     const paginationInfo = document.querySelector('.pgntn-info');
+
+     paginationInfo.textContent = `Viewing ${(currentPage-1) * ordersPerPage + 1}-${(ordersPerPage*currentPage) > ordersArray.length ? ordersArray.length : (ordersPerPage*currentPage)} out of ${ordersArray.length} (page ${currentPage} / ${totalPages})`;
+}
+function goToFirst() {
+    currentPage = 1;
+    buildOrdersControlTable(getActualArray());
+}
+
+function goToLast() {
+    currentPage = totalPages;
+    buildOrdersControlTable(getActualArray());
+}
+function goToPage() {
+    const inputPage = parseInt(document.getElementById('currentPageInput').value);
+    if(inputPage >= 1 && inputPage <= totalPages) {
+        currentPage = inputPage;
+        buildOrdersControlTable(getActualArray());
+    }
+}
+
+document.getElementById('bulk-actions').addEventListener('change', async function() {
+    const action = this.value;
+    // {#this.value = "bulk";#} // Assuming this is commented out for a reason
+    const selectedOrderIds = Array.from(document.querySelectorAll('#usersTable input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+    console.log(action);
+    console.log(selectedOrderIds);
+    if (selectedOrderIds.length === 0) {
+        resetBulkActionsDropdown();
+        return;
+    }
+
+    switch(action) {
+        case 'Change_status':
+            await changeStatus(selectedOrderIds);
+            break;
+        // Add other cases as needed
+    }
+    resetBulkActionsDropdown();
+});
+
+async function changeStatus(selectedOrderIds) {
+
+    // Show the modal
+    document.getElementById('myModal').style.display = 'block';
+
+   // Handle the cancel button: close the modal
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('myModal').style.display = 'none';
+    });
+
+    document.getElementById('confirmButton').onclick = async () => {
+        const status = document.getElementById('statusSelect').value;
+        // Ensure a status is selected
+        if (status === '' ) {
+            alert('Please select a status.');
+            return;
+        }
+        const csrftoken = getCookie('csrftoken'); // Get the CSRF token
+
+        try {
+            const response = await fetch('{% url 'change_few_statuses' %}', { // Use the correct path to your Django view
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken, // Include CSRF token in request headers
+                    // Add any required headers here, like CSRF tokens
+                },
+                body: JSON.stringify({ orderIds: selectedOrderIds, status: status }),
+            });
+
+            if (response.ok) {
+                alert('Information was successfully updated');
+                allOrders.forEach(order => {
+                    let orderData = order;
+                    let orderIdKey = orderData['order-id'] ? 'order-id' : 'order_id';
+                    let orderId = orderData[orderIdKey].toString();
+                    if (selectedOrderIds.includes(orderId)) {
+                        order.Status = status;
+                    }
+                });
+                buildOrdersControlTable(getActualArray()); // Assuming allOrders is available
+                updateBulkActionsDropdown();
+            } else {
+                throw new Error('Failed to update order statuses');
+            }
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            // Hide the modal and reset the dropdown regardless of success or failure
+            document.getElementById('myModal').style.display = 'none';
+            resetBulkActionsDropdown();
+        }
+    };
+}
+
+function resetBulkActionsDropdown() {
+    const bulkActionsDropdown = document.getElementById('bulk-actions');
+    bulkActionsDropdown.value = ""; // Reset to the placeholder value
+    bulkActionsDropdown.disabled = true; // Disable dropdown
+    updateBulkActionsDropdown(); // Call the function to check if it should be re-enabled based on checkboxes
+}
+
+
+function getActualArray(){
+    return filteredOrders.length === 0 ? allOrders: filteredOrders;
+}
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>

@@ -1,0 +1,465 @@
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+<link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Additional styles -->
+</head>
+{#<style>#}
+{#    body {#}
+{#    font-family: 'Redshift Book', serif; /* Add a generic font family as a fallback */#}
+{#    background: #7599b3;#}
+{#    display: flex;#}
+{#    align-items: center;#}
+{#    justify-content: center;#}
+{#    height: 100vh;#}
+{#    margin: 0;#}
+{#}#}
+{##}
+{##}
+{#.login-container {#}
+{#    background-color: #e6e6e6;#}
+{#    box-shadow: 0 4px 8px rgba(0,0,0,0.1);#}
+{#    width: 400px; /* Increased width */#}
+{#}#}
+{##}
+{#        .login-header {#}
+{#    background-color: #003665;#}
+{#    color: white;#}
+{#    padding: 30px; /* Increased padding */#}
+{#    text-align: center;#}
+{#    font-size: 24px; /* Increased font-size */#}
+{#}#}
+{##}
+{#        .login-form {#}
+{#    padding: 30px; /* Increased padding */#}
+{#    position: relative;#}
+{#    box-sizing: border-box;#}
+{#}#}
+{#        .login-form input[type="submit"] {#}
+{#    width: calc(100% + 100px); /* Increase width to maintain the extended effect */#}
+{#    margin-left: -50px; /* Increase margin to maintain the extended effect */#}
+{#    padding: 20px; /* Increased padding */#}
+{#    border: none;#}
+{#    background-color: #003665;#}
+{#    color: white;#}
+{#    cursor: pointer;#}
+{#    position: relative;#}
+{#    z-index: 0;#}
+{#    font-size: 20px; /* Increased font-size */#}
+{#    overflow: visible;#}
+{#}#}
+{##}
+{#        .login-form input[type="submit"]:hover {#}
+{#            background-color: #005f87; /* Change hover color */#}
+{#            opacity: 0.9;#}
+{#        }#}
+{##}
+{#        .login-form a {#}
+{#    display: block;#}
+{#    text-align: center;#}
+{#    margin-top: 15px; /* Increased margin */#}
+{#    color: #003665;#}
+{#    text-decoration: none;#}
+{#    font-size: 16px; /* Increased font-size */#}
+{#}#}
+{##}
+{##}
+{#        .login-form a:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{##}
+{#        .input-container {#}
+{#            position: relative;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            border-bottom: 1px solid #0a5fa9;#}
+{#            margin-bottom: 15px;#}
+{#        }#}
+{##}
+{#        .input-container .fas {#}
+{#            color: #a6abc7;#}
+{#            margin-right: 10px;#}
+{#        }#}
+{##}
+{#        .login-form input[type="text"],#}
+{#.login-form input[type="password"],#}
+{#        .login-form input[type="email"]{#}
+{#    width: calc(100% - 40px); /* Adjust width for larger padding */#}
+{#    padding: 15px 15px 15px 0; /* Increased padding */#}
+{#    border: none;#}
+{#    outline: none;#}
+{#    background-color: transparent;#}
+{#    color: #00427a;#}
+{#    font-size: 18px; /* Increased font-size */#}
+{#}#}
+{##}
+{#        .input-container input::placeholder {#}
+{#            color: #a6abc7;#}
+{#        }#}
+{#        .login-form input[type="submit"]::before,#}
+{#.login-form input[type="submit"]::after {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            top: 50%; /* Position the pseudo-elements in the middle vertically */#}
+{#            width: 20px; /* Width of the extended part */#}
+{#            height: 50%; /* Reduce the height to make the shadow visible below the button */#}
+{#            background: transparent;#}
+{#            z-index: 0;#}
+{#            transform: translateY(50%); /* Move the pseudo-elements down below the button */#}
+{##}
+{#        }#}
+{#        #errorText{#}
+{#            text-align: center;#}
+{#  font-size: 28px;#}
+{#        }#}
+{#        .modal {#}
+{#    display: none;#}
+{#    position: fixed;#}
+{#    z-index: 1;#}
+{#    left: 0;#}
+{#    top: 0;#}
+{#    width: 100%;#}
+{#    height: 100%;#}
+{#    overflow: auto;#}
+{#    background-color: rgb(0,0,0);#}
+{#    background-color: rgba(0,0,0,0.4);#}
+{#}#}
+{##}
+{#.modal-content {#}
+{#    background-color: #fefefe;#}
+{#    margin: 16% auto;#}
+{#    padding: 20px;#}
+{#    border: 1px solid #888;#}
+{#    width: 60%;#}
+{#    border-radius: 10px;#}
+{#    text-align: center;#}
+{#}#}
+{##}
+{#.close-button {#}
+{#    color: #aaa;#}
+{#    float: right;#}
+{#    font-size: 28px;#}
+{#    font-weight: bold;#}
+{#}#}
+{##}
+{#.close-button:hover,#}
+{#.close-button:focus {#}
+{#    color: black;#}
+{#    text-decoration: none;#}
+{#    cursor: pointer;#}
+{#}#}
+{##okButton{#}
+{#    text-align: center;#}
+{#    padding: 10px;#}
+{#    width: 100px;#}
+{#    font-size: 18px;#}
+{#    border-radius: 10px;#}
+{#}#}
+{#</style>#}
+<style>
+    .logininstead a:hover {
+  text-decoration: none;
+        color: black;
+}
+    .logininstead a {
+  color: black;
+}
+    .logininstead{
+        padding: 30px;
+  text-align: center;
+  border: 2px solid #f2f2f2;
+  margin-top: 50px;
+    }
+    #errorText{
+        text-align: center;
+        font-size: 28px;
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 16% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#okButton{
+    text-align: center;
+    padding: 10px;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+</style>
+<body>
+
+<div id="errorModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p id="errorText"></p>
+        <button id="okButton">OK</button>
+    </div>
+</div>
+{% include 'widgets/navigation_bar.html' %}
+<section id="wrapper" class="stick_parent_lb" style="opacity: 1; width: 60%; margin: auto; margin-top: 120px">
+
+    <aside id="notifications">
+        <div class="container"></div>
+    </aside>
+    <div class="container">
+        <div id="content-wrapper">
+            <section id="main">
+                <div class="container">
+                    <header class="page-header" style="text-align: center">
+                        <h1> Create an account</h1>
+                    </header>
+                    <section id="content" class="page-content card card-block">
+                        <section class="sociallogin displayCustomerAccountFormTop authentication hidden-print">
+                            <div class="col-xs-12">
+                            </div>
+                        </section>
+                    <section class="register-form">
+                        <form action="{% url 'register' %}" id="customer-form" class="js-customer-form" method="post">
+                        {% csrf_token %}
+                            <div>
+                                <div class="form-group row ">
+                                    <div class="col-md-12 form-control-valign">
+                                        <label>Social title</label>
+                                        {% for radio in form.social_title %}
+                                            <label class="radio-inline">
+                                                <span class="custom-radio">
+                                                    {{ radio.tag }}
+                                                    <span></span>
+                                                </span> {{ radio.choice_label }}
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-12 form-control-comment"></div>
+                                </div>
+
+                                <div class="form-group row ">
+
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>First name</label>
+                                        {{ form.first_name | add_class:"form-control" | attr:"" }}
+
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Last name</label>
+                                        {{ form.last_name | add_class:"form-control" | attr:"" }}
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Email</label>
+                                        {{ form.email | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
+                                    </div>
+
+                                </div>
+                                <div class="form-group row ">
+
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Password</label>
+                                        <div class="input-group js-parent-focus">
+                                             {{ form.password1 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+{#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                            <span class="input-group-btn" style="position: initial!important; ">
+                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                    <i>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                    </i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+
+                                    <div class="col-md-12 form-control-comment">
+                                        <span class="req">*</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Confirm you password</label>
+                                        <div class="input-group js-parent-focus">
+                                             {{ form.password2 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+{#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                            <span class="input-group-btn" style="position: initial!important; ">
+                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                    <i>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                    </i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-12">
+                                        <label>Birthdate</label>
+                                        {{ form.birthdate | add_class:"form-control" | attr:"" }}
+                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>
+                                    </div>
+                                    <div class="col-md-12 form-control-comment"></div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-12">
+                                        <label></label>
+                                        <span class="custom-checkbox">
+                                            {{ form.offers | add_class:"form-control" | attr:"" }}
+                                            <span>
+                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                                            </span>
+                                            <label>Receive offers from our partners</label>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12 form-control-comment"></div>
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-md-12">
+                                        <label></label>
+                                        <span class="custom-checkbox">
+                                            {{ form.receive_newsletter | add_class:"form-control" | attr:"" }}
+                                            <span>
+                                                <i class="material-icons rtl-no-flip checkbox-checked"></i>
+                                            </span>
+                                            <label>
+                                                Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em>
+                                            </label>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12 form-control-comment"></div>
+                                </div>
+                            </div>
+                            <footer class="form-footer clearfix">
+                                <button style="width: 100%" class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" value="REGISTER"> Save </button>
+                            </footer>
+                        </form>
+                    </section>
+                        <p class="logininstead">Already have an account? <a class="" href="{% url 'login' %}">Log in instead!</a>
+                        </p>
+                    </section>
+                    <footer class="page-footer hidden"> </footer>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+</body>
+{{ form.errors|json_script:"form_errors" }}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+         const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
+
+    // Listen for a click event on the button
+        togglePasswordButtons.forEach(togglePasswordButton =>
+    togglePasswordButton.addEventListener('click', function() {
+        // Select the password input
+        const passwordInput = this.parentElement.parentElement.querySelector('input');
+
+        // Check the current type of the password input and toggle
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text"; // Show the password
+            // Change the SVG to 'eye'
+            togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></i>';
+        } else {
+            passwordInput.type = "password"; // Hide the password
+            // Change the SVG back to 'eye-off'
+            togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></i>';
+        }
+    }));
+    var formErrors = {% if form.errors %}true{% else %}false{% endif %};
+    var errorModal = document.getElementById("errorModal");
+    var errorText = document.getElementById("errorText");
+    var okButton = document.getElementById("okButton");
+    var closeButton = document.querySelector(".close-button");
+
+    if (formErrors) {
+        var errorMessage = "";
+        {% for field in form %}
+            {% for error in field.errors %}
+                errorMessage += "{{ error }}\n";
+            {% endfor %}
+        {% endfor %}
+        errorText.innerText = errorMessage;
+        errorModal.style.display = "block";
+    }
+
+    okButton.onclick = function() {
+        errorModal.style.display = "none";
+    }
+
+    closeButton.onclick = function() {
+        errorModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == errorModal) {
+            errorModal.style.display = "none";
+        }
+    }
+});
+{#   document.addEventListener("DOMContentLoaded", function() {#}
+{#        // Check if there's an email error specifically#}
+       {#console.log("{{ form|safe }}");#}
+{#       var emailError = document.querySelectorAll('.errorMessage1');#}
+{#console.log(emailError);#}
+{#        if (emailError.length !== 0) {#}
+{#            alert("A user with that email already exists.");#}
+{#        }#}
+{#    });#}
+</script>
+</html>
+
+{% endblock %}

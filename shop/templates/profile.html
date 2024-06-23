@@ -1,0 +1,39 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile/profile_main.css' %}">
+    <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
+</head>
+<style>
+</style>
+<body>
+{% include 'widgets/navigation_bar.html' %}
+<div class="cont1-1" style="margin-top: 150px">
+    {% include 'profile/profile_side_menu.html' %}
+    {% if feature_name == 'dashboard' %}
+        {% include 'profile/profile_dashboard.html' %}
+    {% elif feature_name == 'orders' %}
+        {% include 'profile/profile_orders.html' %}
+    {% elif feature_name == 'account' %}
+        {% include 'profile/profile_information.html' %}
+    {% elif feature_name == 'addresses' %}
+        {% include 'profile/profile_addresses.html' %}
+    {% elif feature_name == 'new_address' %}
+        {% include 'profile/profile_create_address.html' %}
+    {% elif feature_name == 'update_address' %}
+        {% include 'profile/profile_update_address.html' %}
+    {% elif feature_name == 'favourites' %}
+        {% include 'profile/profile_favourites.html' %}
+    {% endif %}
+</div>
+{% include "widgets/footer.html" %}
+</body>
+
+</html>
+
+{% endblock %}
+

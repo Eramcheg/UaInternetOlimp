@@ -1,0 +1,13 @@
+.page-addresses .address {
+    border: 2px solid !important;
+    transition: all 0.22s cubic-bezier(.07,.74,.56,.89) !important;
+  margin-bottom: 2rem;
+
+
+}
+.page-addresses .address .address-body {
+  padding: 3rem 3.5rem !important;
+}
+.page-addresses .address, .page-addresses .address .address-footer, .tabs .nav-tabs .nav-link:hover, .tabs .nav-tabs .nav-link.active, .tabs .tab-pane .product-features .h6, .tabs .tab-pane label {
+  border-color: #000 !important;
+}

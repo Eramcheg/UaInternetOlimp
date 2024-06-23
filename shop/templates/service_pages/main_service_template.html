@@ -1,0 +1,31 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="{% static 'css/profile/profile_information.css' %}">
+<body>
+{% include 'widgets/navigation_bar.html' %}
+
+{% if service_page == "contact_us" %}
+    {% include 'service_pages/contact_us.html' %}
+{% elif service_page == "faq" %}
+    {% include 'service_pages/faq.html' %}
+{% elif service_page == "csar" %}
+    {% include 'service_pages/customer_service_and_repair.html' %}
+{% elif service_page == "shipping_info" %}
+    {% include 'service_pages/shipping_information.html' %}
+{% elif service_page == "returns_exchanges" %}
+    {% include 'service_pages/returns_and_exchanges.html' %}
+{% elif service_page == "payment_info" %}
+    {% include 'service_pages/payment_information.html' %}
+{% elif service_page == "b2b" %}
+    {% include 'service_pages/b2b_customers.html' %}
+{% elif service_page == "news_subscription" %}
+
+{% endif %}
+
+{% include "widgets/footer.html" %}
+</body>
+</html>
+
+{%endblock%}
