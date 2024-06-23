@@ -8,6 +8,7 @@
         width: 90px;
     }
 </style>
+
 <div class="users-page-container">
 
     <div class="table-header">
@@ -23,16 +24,16 @@
     <table id="usersTable">
         <thead>
             <tr>
+{#                 TODO: изменить  #}
                 <th></th>
                 <th>ID<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Ім'я<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Прізвище<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>По батькові<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Емейл<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                <th>Sales</th>
+                <th>Школа<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Статус акаунту<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                <th>Newsletter<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                <th>Partners Offer<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th>Паралель<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Дата реєстрації<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Дії</th>
             </tr>
@@ -163,27 +164,28 @@
                         valA = a.userId; valB = b.userId;
                         break;
                     case 1: // Customer
-                        valA = a.social_title || ""; valB = b.social_title || ""; // Corrected typo here
+                       valA = a.first_name || ""; valB = b.first_name || "";
                         break;
                     case 2: // First Name
-                        valA = a.first_name || ""; valB = b.first_name || "";
+                        valA = a.last_name || ""; valB = b.last_name || "";
                         break;
                     case 3: // Last Name
-                        valA = a.last_name || ""; valB = b.last_name || "";
+                        valA = a.third_name || ""; valB = b.third_name || "";
                         break;
                     case 4: // Email
                         valA = a.email; valB = b.email;
                         break;
-                    case 5: // Placeholder for missing case
+                    case 5: // school
+                        valA = a.school || ""; valB = b.school || "";
                         break;
                     case 6: // Enabled
-                         valA = a.receive_newsletter || false ? "Yes" : "No"; valB = b.receive_newsletter || false ? "Yes" : "No";
+                         valA = a.Enabled || false ? "Yes" : "No"; valB = b.Enabled || false ? "Yes" : "No";
                         break;
-                    case 7: // Receive Newsletter
-                        valA = a.receive_offers ? "Yes" : "No"; valB = b.receive_offers ? "Yes" : "No";
+                    case 7: // paralel
+                        valA = a.paralel || ""; valB = b.paralel || "";
                         break;
-                    case 8: // Receive Offers
-                       valA = a.registrationDate ? new Date(a.registrationDate) : new Date(0);
+                    case 8: // RegistrationDate
+                        valA = a.registrationDate ? new Date(a.registrationDate) : new Date(0);
                         valB = b.registrationDate ? new Date(b.registrationDate) : new Date(0);
                         break;
 
@@ -284,26 +286,26 @@
                 {
                     data_column="userId";
                 }
-                else if(cell.textContent.trim() === "Social Title"){
-                    data_column="social_title";
-                }
                 else if(cell.textContent.trim() === "First Name"){
                     data_column="first_name";
                 }
                 else if(cell.textContent.trim() === "Last name"){
                     data_column="last_name";
                 }
+                else if(cell.textContent.trim() === "Third name"){
+                    data_column="third_name";
+                }
                 else if(cell.textContent.trim() === "Email"){
                     data_column="email";
+                }
+                else if(cell.textContent.trim() === "School"){
+                    data_column="school";
                 }
                 else if(cell.textContent.trim() === "Enabled"){
                     data_column="Enabled";
                 }
-                else if(cell.textContent.trim() === "Newsletter"){
-                    data_column="receive_newsletter";
-                }
-                else if(cell.textContent.trim() === "Partners Offer"){
-                    data_column="receive_offers";
+                else if(cell.textContent.trim() === "Paralel"){
+                    data_column="paralel";
                 }
                 else if(cell.textContent.trim() === "Registration Date"){
                     data_column="registrationDate";
@@ -427,11 +429,6 @@
             userIdCell.textContent = user.userId;
             row.appendChild(userIdCell);
 
-            // Other cells follow a similar pattern
-            let socialTitleCell = document.createElement('td');
-            socialTitleCell.textContent = user.social_title;
-            row.appendChild(socialTitleCell);
-
             let firstNameCell = document.createElement('td');
             firstNameCell.textContent = user.first_name;
             row.appendChild(firstNameCell);
@@ -440,6 +437,10 @@
             lastNameCell.textContent = user.last_name;
             row.appendChild(lastNameCell);
 
+            let thirdNameCell = document.createElement('td');
+            thirdNameCell.textContent = user.third_name;
+            row.appendChild(thirdNameCell);
+
             let emailCell = document.createElement('td');
             emailCell.textContent = user.email;
             row.appendChild(emailCell);
@@ -447,22 +448,19 @@
 
             // Repeat for each user property...
             // For cells with static content like '---' for sales
-            let salesCell = document.createElement('td');
-            salesCell.textContent = '---'; // Assuming sales data is not available
-            row.appendChild(salesCell);
+            let schoolCell = document.createElement('td');
+            schoolCell.textContent = user.school || "Жюри"; // Assuming sales data is not available
+            row.appendChild(schoolCell);
 
             let enabledCell = document.createElement('td');
-            enabledCell.textContent = user.Enabled ? "Enabled" : "Disabled"; // Assuming sales data is not available
+            enabledCell.textContent = user.Enabled ? "Активний" : "Неактивний"; // Assuming sales data is not available
             row.appendChild(enabledCell);
 
             // For boolean values, you might want to show a more user-friendly value
-            let newsletterCell = document.createElement('td');
-            newsletterCell.textContent = user.receive_newsletter ? 'Yes' : 'No';
-            row.appendChild(newsletterCell);
+            let paralelCell = document.createElement('td');
+            paralelCell.textContent = user.paralel;
+            row.appendChild(paralelCell);
 
-            let partnersCell = document.createElement('td');
-            partnersCell.textContent = user.receive_offers ? 'Yes' : 'No';
-            row.appendChild(partnersCell);
 
             let registrationDateCell = document.createElement('td');
 

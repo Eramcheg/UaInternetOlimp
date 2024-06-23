@@ -11,14 +11,15 @@ from shop.views import get_user_category, users_ref, is_admin, update_email_in_d
     serialize_firestore_document, get_user_prices
 
 
+# TODO: изменить данную функцию под новые поля юзера, не забыть про правила валидации полей из условия задания
 @login_required
 @user_passes_test(is_admin)
 def edit_user(request, user_id):
     print("Edit user " + user_id)
     email = request.user.email
-    category, currency = get_user_prices(request, email)
-    currency = '€' if currency == 'Euro' else '$'
-    existing_user = users_ref.where('userId', '==', int(user_id)).limit(1).stream()
+
+
+    existing_user = users_ref.where('userId', '==', (user_id)).limit(1).stream()
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -107,7 +108,6 @@ def edit_user(request, user_id):
 
     context = {
         'feature_name': "edit_user",
-        'currency':currency
     }
     for user in existing_user:
         user_ref = users_ref.document(user.id)

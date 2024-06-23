@@ -5,37 +5,18 @@
 <link rel="stylesheet" href="{% static 'css/SeparateWidgets/switch.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="{% static 'css/SeparateWidgets/groupsTable.css' %}">
+
+{# TODO: Добавить на этой странице выбор роли пользователя, изменить страницу под стандартные поля пользователя#}
 <section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
     <header class="page-header">
-        <h1 style=" color: #0a0a0a"> Customer №{{ user_info.userId }} information</h1>
+        <h1 style=" color: #0a0a0a"> Інформація користувача {{ user_info.userId }} </h1>
     </header>
     <form action="" id="customer-form" class="js-customer-form" method="post" autocomplete="off">
         <div>
-            <div class="form-group row ">
-                <div class="col-md-12 form-control-valign">
-                    <label>Social title</label>
-                    <label class="radio-inline">
-                        <span class="custom-radio">
-                            <input name="id_gender" type="radio" value="1" {% if user_info.social_title == "Mr" %}checked{% endif %}>
-                            <span></span>
-                        </span>
-                        Mr.
-                    </label>
-                    <label class="radio-inline">
-                        <span class="custom-radio">
-                            <input name="id_gender" type="radio" value="2" {% if user_info.social_title == "Mrs" %}checked{% endif %}>
-                            <span>
 
-                            </span>
-                        </span> Mrs. </label>
-                </div>
-                <div class="col-md-12 form-control-comment">
-
-                </div>
-            </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>First name</label>
+                    <label>Ім'я</label>
                     <input class="form-control" name="firstname" type="text" value="{{ user_info.first_name }}" required="">
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -44,7 +25,7 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>Last name</label>
+                    <label>Прізвище</label>
                     <input class="form-control" name="lastname" type="text" value="{{ user_info.last_name }}" required=""></div>
                 <div class="col-md-12 form-control-comment">
                     <span class="req">*</span>
@@ -52,7 +33,15 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>Email</label>
+                    <label>По батькові</label>
+                    <input class="form-control" name="lastname" type="text" value="{{ user_info.third_name }}" required=""></div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <div class="col-md-12">
+                    <label>Емейл</label>
                     <input class="form-control" name="email" type="email" value="{{ user_info.email }}" required="">
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -61,8 +50,8 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>Client name</label>
-                    <input class="form-control" name="client-name" type="text" value="{{ user_info.agent_number }}">
+                    <label>Школа</label>
+                    <input class="form-control" name="client-name" type="text" value="{{ user_info.school }}">
                 </div>
                 <div class="col-md-12 form-control-comment">
                     <span class="req"></span>
@@ -70,7 +59,7 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>New User Password</label>
+                    <label>Новий пароль користувачу</label>
                     <div class="input-group js-parent-focus">
                         <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" autocomplete="off">
                         <span class="input-group-btn">
@@ -88,28 +77,18 @@
             </div>
 
             <div class="form-group row ">
-                <div class="col-md-12">
-                    <label>Birthdate</label>
-                    <input class="form-control" name="birthday" type="text" value="{{ user_info.birthday }}" placeholder="YYYY-MM-DD">
-                    <span class="form-control-comment"> (E.g.: 1970-05-31) </span>
-                </div>
-                <div class="col-md-12 form-control-comment">
-
-                </div>
-            </div>
-            <div class="form-group row ">
                 <div class="col-md-12" >
                     <label></label>
                     <span class="custom-checkbox" style="display: flex;flex-direction: row">
                         <div class="fl" style="display: flex; flex-direction: column; margin-right: 20px">
                              <label class="switch">
-                                <input name="enable-user" type="checkbox" value="1"  {%  if user_info.Enabled == True %} checked {% endif %} >
+                                <input name="enable-user" type="checkbox" value="1"  {%  if user_info.Enabled == "True" %} checked {% endif %} >
                                 <span class="slider round"></span>
                              </label>
-                             <label id="label-enabled" style="text-align: center">{% if user_info.Enabled %} Yes{% else %} No{% endif %}</label>
+                             <label id="label-enabled" style="text-align: center">{% if user_info.Enabled == "True" %} Активований {% else %} Деактивований {% endif %}</label>
                         </div>
-                        <label>Enabled<br>
-                            <em>Enable or disable customer login.</em>
+                        <label>Статус акаунту<br>
+                            <em>Акаунт користувача деактивований або активований.</em>
                         </label>
                     </span>
                 </div>
@@ -117,50 +96,11 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label></label>
-                    <span class="custom-checkbox" style="display: flex;flex-direction: row">
-                    <div class="fl" style="display: flex; flex-direction: column; margin-right: 20px">
-                        <label class="switch">
-                           <input name="receive-partners-offers" type="checkbox" value="1"  {% if user_info.receive_offers == True %}checked{% endif %}>
-                            <span class="slider round"></span>
-                        </label>
-                        <label id="label-offers" style="text-align: center">{% if user_info.receive_offers %} Yes{% else %} No{% endif %}</label>
-                    </div>
-                    <label>Partner offers<br>
-                            <em>This customer will receive your ads via email</em>
-                        </label>
-                    </span>
-                </div>
-                <div class="col-md-12 form-control-comment">
-
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-md-12">
-                    <label></label>
-                    <span class="custom-checkbox" style="display: flex;flex-direction: row">
-                    <div class="fl" style="display: flex; flex-direction: column; margin-right: 20px">
-                        <label class="switch">
-                           <input name="show-quantities" type="checkbox" value="1"  {% if user_info.show_quantities == True %}checked{% endif %}>
-                            <span class="slider round"></span>
-                        </label>
-                        <label id="label-show-quantities" style="text-align: center">{% if user_info.show_quantities %} Yes{% else %} No{% endif %}</label>
-                    </div>
-                    <label>Show user full quantities<br>
-                            <em>This user will see detailed quantity values in product cards (e.g. In stock: 5)</em>
-                        </label>
-                    </span>
-                </div>
-                <div class="col-md-12 form-control-comment">
-
-                </div>
-            </div>
-            <div class="form-group row ">
-                <div class="col-md-12">
-                    <label>Currency</label>
-                     <select class="form-control form-control-select js-country" name="id_currency" id="select-currency">
-                        <option value="1">Euro</option>
-                        <option value="2">Dollar</option>
+                    <label>Паралель</label>
+                     <select class="form-control form-control-select js-country" name="id_currency" id="select-paralel">
+                        <option value="1">9</option>
+                        <option value="2">10</option>
+                        <option value="3">11</option>
                     </select>
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -169,33 +109,21 @@
             </div>
             <div class="form-group row ">
                 <div class="col-md-12">
-                    <label>Customer group</label>
-                     <select class="form-control form-control-select js-country" name="id_group" id="select-group" required="">
-                        <option value="" disabled="" selected="">-- please choose --</option>
-                        <option value="1">Default</option>
-                        <option value="2">VK3</option>
-                        <option value="3">GH</option>
-                        <option value="4" style="display:none;">Default_USD</option>
-                        <option value="5" style="display:none;">GH_USD</option>
+                    <label>Роль користувача</label>
+                     <select class="form-control form-control-select js-country" name="id_group" id="select-role" required="">
+                        <option value="User" disabled="" selected="">-- Будь ласка, виберіть --</option>
+                        <option value="1">Студент</option>
+                        <option value="2">Жюри</option>
                     </select>
                 </div>
                 <div class="col-md-12 form-control-comment">
                     <span class="req">*</span>
                 </div>
             </div>
-            <div class="form-group row ">
-                <div class="col-md-12">
-                    <label>Personal sale, %</label>
-                    <input class="form-control" id="sale-input" name="sale" type="text" value="{{ user_info.sale }}" placeholder="Sale without % symbol, 0 <= sale < 100">
-                    <span class="form-control-comment"> (E.g.: 40) </span>
-                </div>
-                <div class="col-md-12 form-control-comment">
 
-                </div>
-            </div>
             <footer class="form-footer clearfix">
                 <input type="hidden" name="submitCreate" value="1">
-                <button class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit"> Save </button>
+                <button class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit"> Зберегти </button>
             </footer>
             </div>
         </form>
@@ -206,31 +134,7 @@
     </aside>
 </section>
 <script>
-    $(document).ready(function() {
-    // Detect when the value of the currency select box changes.
-        $('#select-currency').change(function() {
-            var currency = $(this).val(); // Get the selected currency value
-            var groupSelect = $('#select-group'); // Get the customer group select box
-            groupSelect.val(""); // Reset to "please choose"
-            $('option', groupSelect).hide(); // Hide all options initially
 
-            // Show options based on selected currency
-            if(currency == "1"){ // If Euro is selected
-                groupSelect.find('option[value=""]').show(); // Show the placeholder option
-                groupSelect.find('option[value="1"]').show(); // Default
-                groupSelect.find('option[value="2"]').show(); // Euro_GH
-                groupSelect.find('option[value="3"]').show(); // Euro_VK3
-            } else if(currency == "2"){ // If Dollar is selected
-                groupSelect.find('option[value=""]').show(); // Show the placeholder option
-                groupSelect.find('option[value="4"]').show(); // Default_dollar
-                groupSelect.find('option[value="5"]').show(); // Dollar_GH
-            }
-        });
-
-        // Initially trigger the change event to apply the correct state
-        $('#select-currency').change();
-        setCurrentSelects();
-    });
     document.addEventListener("DOMContentLoaded", function() {
     // Select the button by its data-action attribute
     const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
@@ -256,65 +160,32 @@
     });
 
      function setCurrentSelects(){
-         let currency = "{{user_info.currency}}";  // From your Django template
-         let group = "{{user_info.price_category}}";  // From your Django template
-         let selectCurr = document.getElementById('select-currency');
-         let selectGroup = document.getElementById('select-group');
+         let role = "{{user_info.role}}";  // From your Django template
+         let roles = {"Студент": "Student", "Жюри":"Jury"};
+         let paralel = "{{user_info.paralel}}";  // From your Django template
+         let selectCurr = document.getElementById('select-paralel');
+         let selectGroup = document.getElementById('select-role');
          for (let i = 0; i < selectCurr.length; i++) {
-             if (selectCurr.options[i].text === currency) {
+             if (selectCurr.options[i].text === paralel) {
                  selectCurr.selectedIndex = i;
                  break;
              }
          }
+
          for (let j = 0; j < selectGroup.length; j++) {
-             if (selectGroup.options[j].text === group) {
+             console.log(selectGroup.options[j].text);
+             if (roles[selectGroup.options[j].text] === role) {
+             console.log(roles[selectGroup.options[j].text]);
+
                  selectGroup.selectedIndex = j;
                  break;
              }
          }
-         controlSelectedGroup(group);
      }
 
- document.getElementById('select-group').addEventListener('change',function (){
-     console.log(this.value);
-     let select_index = this.value;
-     if(select_index ==="1"){
-         controlSelectedGroup("Default");
-     }
-     if(select_index ==="2"){
-         controlSelectedGroup("VK3");
-     }
-     if(select_index ==="3"){
-         controlSelectedGroup("GH");
-     }
-     if(select_index ==="4"){
-         controlSelectedGroup("Default_USD");
-     }
-     if(select_index ==="5"){
-         controlSelectedGroup("GH_USD");
-     }
- });
 
- function controlSelectedGroup(group){
-     const saleInput = document.getElementById('sale-input').parentElement.parentElement;
-     if(group==="Default" || group==="Default_USD"){
-         saleInput.style.display = "block";
-     }
-     else{
-         saleInput.style.display = "none";
-     }
- }
 
- document.getElementsByName('receive-partners-offers')[0].addEventListener('change', function(event) {
-     if (event.target.checked) {
-         document.getElementsByName('receive-partners-offers')[0].value = 1;
-         document.getElementById('label-offers').textContent = "Yes";
-     }
-     else{
-         document.getElementsByName('receive-partners-offers')[0].value = 2;
-         document.getElementById('label-offers').textContent = "No";
-     }
- });
+
 
 document.getElementsByName('enable-user')[0].addEventListener('change', function(event) {
     if (event.target.checked) {
@@ -324,16 +195,6 @@ document.getElementsByName('enable-user')[0].addEventListener('change', function
     else{
         document.getElementsByName('enable-user')[0].value = 2;
         document.getElementById('label-enabled').textContent = "No";
-    }
-});
-document.getElementsByName('show-quantities')[0].addEventListener('change', function(event) {
-    if (event.target.checked) {
-        document.getElementsByName('show-quantities')[0].value = 1;
-        document.getElementById('label-show-quantities').textContent = "Yes";
-    }
-    else{
-        document.getElementsByName('show-quantities')[0].value = 2;
-        document.getElementById('label-show-quantities').textContent = "No";
     }
 });
 
