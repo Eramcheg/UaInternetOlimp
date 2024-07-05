@@ -78,7 +78,7 @@ def update_user_enabled_status(user_ids, enable):
 
     for user_id in user_ids:
 
-        docs = users_ref.where('userId', '==', int(user_id)).get()
+        docs = users_ref.where('userId', '==', user_id).get()
 
         for doc in docs:
             doc_ref = users_ref.document(doc.id)

@@ -501,11 +501,11 @@ def deleteProduct(request):
 def update_email_in_db(old_email, new_email):
     # Define a mapping of collections to their respective email fields
     collection_email_fields = {
-        'Cart': 'emailOwner',
-        'Favourites': 'email',
-        'Order': 'emailOwner',
-        'Orders': 'email',
-        'Addresses': 'email',
+        # 'Cart': 'emailOwner',
+        # 'Favourites': 'email',
+        # 'Order': 'emailOwner',
+        # 'Orders': 'email',
+        # 'Addresses': 'email',
     }
 
     # Loop through the mapping

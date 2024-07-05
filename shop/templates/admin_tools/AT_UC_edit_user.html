@@ -34,7 +34,7 @@
             <div class="form-group row ">
                 <div class="col-md-12">
                     <label>По батькові</label>
-                    <input class="form-control" name="lastname" type="text" value="{{ user_info.third_name }}" required=""></div>
+                    <input class="form-control" name="thirdname" type="text" value="{{ user_info.third_name }}" required=""></div>
                 <div class="col-md-12 form-control-comment">
                     <span class="req">*</span>
                 </div>
@@ -51,7 +51,7 @@
             <div class="form-group row ">
                 <div class="col-md-12">
                     <label>Школа</label>
-                    <input class="form-control" name="client-name" type="text" value="{{ user_info.school }}">
+                    <input class="form-control" name="school" type="text" value="{{ user_info.school }}">
                 </div>
                 <div class="col-md-12 form-control-comment">
                     <span class="req"></span>
@@ -97,10 +97,10 @@
             <div class="form-group row ">
                 <div class="col-md-12">
                     <label>Паралель</label>
-                     <select class="form-control form-control-select js-country" name="id_currency" id="select-paralel">
-                        <option value="1">9</option>
-                        <option value="2">10</option>
-                        <option value="3">11</option>
+                     <select class="form-control form-control-select js-country" name="paralel" id="select-paralel">
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
                     </select>
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -112,8 +112,8 @@
                     <label>Роль користувача</label>
                      <select class="form-control form-control-select js-country" name="id_group" id="select-role" required="">
                         <option value="User" disabled="" selected="">-- Будь ласка, виберіть --</option>
-                        <option value="1">Студент</option>
-                        <option value="2">Жюри</option>
+                        <option value="Student">Студент</option>
+                        <option value="Jury">Жюри</option>
                     </select>
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -227,28 +227,19 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     // Example: Check if the first name is filled out
     if (!this.firstname.value) {
         isValid = false;
-        messages.push('First name is required.');
+        messages.push("Поле 'Ім'я' є обов'язковим.");
     }
     if (!this.lastname.value) {
         isValid = false;
-        messages.push('Last name is required.');
+        messages.push("Поле 'Прізвище' є обов'язковим.");
+    }
+    if (!this.thirdname.value) {
+        isValid = false;
+        messages.push("Поле 'По батькові' є обов'язковим.");
     }
     if (!this.email.value) {
         isValid = false;
-        messages.push('Email is required.');
-    }
-    if (isNaN(parseFloat(this.sale.value)) ||parseInt(this.sale.value) > 100 || parseInt(this.sale.value) < 0 ) {
-        isValid = false;
-        messages.push('Sale has to be in correct format.');
-    }
-
-
-    // Example: Check if the birthday is in correct format
-    if(this.birthday.value !== ""){
-        if (!isValidBirthday(this.birthday.value)) {
-            isValid = false;
-            messages.push('Invalid birthday. Ensure the date is valid, in YYYY-MM-DD format, and not in the future.');
-        }
+        messages.push("Поле 'Емейл' є обов'язковим.");
     }
 
     // If not valid, display messages and return
@@ -262,6 +253,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
         old: JSON.stringify({{ user_info_dict|safe }}),
         new: Object.fromEntries(formData.entries())
     };
+    console.log(formData);
     const csrftoken = getCookie('csrftoken');
 
     fetch('{% url 'at_edit_user' user_id=user_info.userId %}', {
@@ -284,7 +276,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     })
     .then(data => {
         console.log(data);
-        alert("The information has been successfully updated!");
+        alert("Інформація була оновлена успішно!");
         window.location.href = "{% url 'admin_tools' feature_name='users_control' %}";
         // Handle success response data
     }).catch(error => {

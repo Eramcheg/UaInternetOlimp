@@ -16,8 +16,6 @@ from shop.views import get_user_category, users_ref, is_admin, update_email_in_d
 @user_passes_test(is_admin)
 def edit_user(request, user_id):
     print("Edit user " + user_id)
-    email = request.user.email
-
 
     existing_user = users_ref.where('userId', '==', (user_id)).limit(1).stream()
     if request.method == 'POST':
@@ -45,7 +43,8 @@ def edit_user(request, user_id):
                 if new_email != old_email:
                     user_instance.email = new_email
                     try:
-                        update_email_in_db(old_email, new_email)
+                        pass
+                        # update_email_in_db(old_email, new_email)  # TODO: не забыть про существование этой функции
                         # Optionally use update_email_in_db_result for further logic
                     except Exception as e:
                         # Log the exception e
@@ -72,35 +71,21 @@ def edit_user(request, user_id):
             except User.DoesNotExist:
                 return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
 
-            social_title = old_user_data['social_title'] if 'id_gender' not in new_user_data else "Mr" if new_user_data[
-                                                                                                    'id_gender'] == "1" else "Mrs"
-            receive_offers = False if 'receive-partners-offers' not in new_user_data else True if new_user_data[
-                                                                                                 'receive-partners-offers'] == "1" else False
             user_enabled = False if 'enable-user' not in new_user_data else True if new_user_data[
-                                                                                                              'enable-user'] == "1" else False
-            show_quantities = False if 'show-quantities' not in new_user_data else True if new_user_data[
-                                                                                                              'show-quantities'] == "1" else False
-
-            customer_currency = currency_dict[new_user_data['id_currency']]
-            customer_group = groups_dict[new_user_data['id_group']]
-            if customer_group!= "Default" and customer_group!= "Default_USD":
-                del new_user_data['sale']
+                                                                                        'enable-user'] == "1" else False
+            paralel = new_user_data['paralel']
             if existing_user:
                 for user in existing_user:
                     user_ref = users_ref.document(user.id)
                     user_ref.update({
                         'Enabled': user_enabled,
-                        'social_title': social_title,
                         'first_name': new_user_data['firstname'],
                         'last_name': new_user_data['lastname'],
+                        'third_name': new_user_data['thirdname'],
                         'email': new_user_data['email'],
-                        'birthday': new_user_data['birthday'],
-                        'agent_number': new_user_data['client-name'],
-                        'currency': customer_currency,
-                        'receive_offers': receive_offers,
-                        'sale': 0 if "sale" not in new_user_data else float(new_user_data['sale']),
-                        'price_category': customer_group,
-                        'show_quantities': show_quantities
+                        'school': new_user_data['school'],
+                        'role': new_user_data['id_group'],
+                        'paralel': paralel
                     })
             return JsonResponse({'status': 'success', 'message': 'Address updated successfully.'})
         except Exception as e:
