@@ -32,11 +32,11 @@ from shop.forms import UserRegisterForm, User
 
 @login_required_or_session
 def materials_view(request):
-    category_catalog = request.GET.get('page') or ""
+    materials_page = request.GET.get('page') or ""
     email = get_user_session_type(request)
     role = "Student"  # TODO: Тут нужно сделать логику взятия роли пользователя
     context = {
-        "category_catalog": category_catalog,
+        "page_name": materials_page,
         "role": role,
     }
     return render(request, 'uaolimpiad/materials.html', context=context)

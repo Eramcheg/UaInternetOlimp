@@ -10,7 +10,19 @@
     <title>Title</title>
 </head>
 <body>
-
+{% include 'widgets/navigation_bar.html' %}
+<div class="container-page" style="margin-top: 150px">
+    {% include 'materials/Materials_side_menu.html' %}
+    {% if page_name == 'terms' %}
+        {% include 'materials/Olimp_terms.html' %}
+    {% elif page_name == 'solutions' %}
+        {% include 'materials/Olimp_solutions.html' %}
+    {% elif page_name == 'results' %}
+        {% include 'materials/Olimp_results.html' %}
+    {% elif page_name == 'other' %}
+        {% include 'materials/Olimp_other.html' %}
+    {% endif %}
+</div>
 </body>
 </html>
 <script>

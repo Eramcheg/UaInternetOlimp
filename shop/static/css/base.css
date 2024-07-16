@@ -7,18 +7,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css');
     .toolbar {
+        background-color: #f9f9f9;
+        padding: 6px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eeeeee;
 
-
-    background-color: #003765;
-    padding: 6px;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;
-
-
-}
+    }
 
 .logo img {
 
@@ -37,46 +35,45 @@
 .toolbar .link, .icon-link {
     /*font-family: 'Poppins', Verdana, sans-serif;*/
     cursor: pointer;
-    color: white !important;
-    font-size: 20px;
+    color: #21211e !important;
+    font-size: 16px;
     text-decoration: none !important;
     padding: 5px;
     margin: 0 5px 0 0px;
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: 'Montserrat-Bold', sans-serif;
     position: relative;
 }
 .icon-link{
     transition: opacity 0.2s;
 }
 .icon-link:hover{
-    color: #ffffff !important;
+    color: #005bbb !important;
     opacity: 50%;
 }
-.link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 5px;
-    width: 0%;
-    height: 1.5px;
-    background-color: #ffffff;
-    transition: width 0.3s ease;
-}
+/*.link::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    bottom: 5px;*/
+/*    width: 0%;*/
+/*    height: 1.5px;*/
+/*    background-color: #ffffff;*/
+/*    transition: width 0.3s ease;*/
+/*}*/
 .link:hover::after {
     width: 100%;
 }
 
 .link:hover {
-    color: #ffffff !important;
+    color: #005bbb !important;
 }
 .toolbar .dropdown-link {
-    font-family: 'Poppins', Verdana, sans-serif;
     cursor: pointer;
     color: black !important;
     font-size: 14px;
     text-decoration: none !important;
     padding: 5px;
-    margin: 0 5px 0 0px;
+    margin: 0 5px 0 0;
     font-family: 'Poppins', Verdana, sans-serif;
     position: relative;
 }
@@ -103,6 +100,21 @@
 
 .users{
     text-align: right;
+}
+.link-auth{
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none !important;
+  padding: 14px 32px 14px 28px;
+  margin: 0 5px 0 0;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  height: 52px;
+  width: 200px;
+  border-radius: 4px;
+  background-color: #005bbb;
+  font-weight: 600;
+  color: #f9f9f9!important;
 }
 .lang-menu {
     width: 100px;
@@ -317,9 +329,6 @@ margin-bottom: 50px;
 }
 .cart-header, .cart-items, .cart-footer {
     padding: 15px; /* Adjust padding as needed */
-}
-img{
-    margin-top: 10px;
 }
 .attrs-container{
     display: flex;
