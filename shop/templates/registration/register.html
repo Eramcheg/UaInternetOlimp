@@ -11,10 +11,14 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
 <link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+<link rel="stylesheet" href="{% static "css/registration.css" %}">
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Additional styles -->
 </head>
 <style>
+    body{
+        font-family: "Montserrat", sans-serif !important;
+    }
     .logininstead a:hover {
   text-decoration: none;
         color: black;
@@ -24,9 +28,9 @@
 }
     .logininstead{
         padding: 30px;
-  text-align: center;
-  border: 2px solid #f2f2f2;
-  margin-top: 50px;
+        text-align: center;
+        border: 2px solid #f2f2f2;
+        margin-top: 50px;
     }
     #errorText{
         text-align: center;
@@ -86,7 +90,7 @@
     </div>
 </div>
 {% include 'widgets/navigation_bar.html' %}
-<section id="wrapper" class="stick_parent_lb" style="opacity: 1; width: 60%; margin: auto; margin-top: 120px">
+<section id="wrapper" class="stick_parent_lb" style="">
 
     <aside id="notifications">
         <div class="container"></div>
@@ -96,144 +100,165 @@
             <section id="main">
                 <div class="container">
                     <header class="page-header" style="text-align: center">
-                        <h1> Створення акаунту</h1>
+                        <h1 style="font-weight: 600"> Реєстрація</h1>
                     </header>
                     <section id="content" class="page-content card card-block">
                         <section class="sociallogin displayCustomerAccountFormTop authentication hidden-print">
                             <div class="col-xs-12">
                             </div>
                         </section>
+                        <ul class="tab-list">
+                            <li class="tab active"></li>
+                            <li class="tab"></li>
+                            <li class="tab"></li>
+                        </ul>
                     <section class="register-form">
+
                         <form action="{% url 'register' %}" id="customer-form" class="js-customer-form" method="post">
                         {% csrf_token %}
                             <div>
-                                <div class="form-group row ">
+                                <div class="tab-content active">
 
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Логін</label>
-                                        {{ form.login | add_class:"form-control" | attr:"" }}
+                                    <div class="form-group row ">
 
-                                    </div>
-                                </div>
-                                <div class="form-group row ">
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Ім'я</label>
+                                            {{ form.first_name | add_class:"form-control" | attr:"" }}
 
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Ім'я</label>
-                                        {{ form.first_name | add_class:"form-control" | attr:"" }}
-
-                                    </div>
-                                </div>
-                                <div class="form-group row ">
-
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Прізвище</label>
-                                        {{ form.last_name | add_class:"form-control" | attr:"" }}
-                                    </div>
-                                </div>
-                                <div class="form-group row ">
-
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>По батькові</label>
-                                        {{ form.third_name | add_class:"form-control" | attr:"" }}
-                                    </div>
-                                </div>
-                                <div class="form-group row ">
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Емейл</label>
-                                        {{ form.email | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
-                                    </div>
-
-                                </div>
-                                <div class="form-group row ">
-
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Пароль</label>
-                                        <div class="input-group js-parent-focus">
-                                             {{ form.password1 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
-{#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
-                                            <span class="input-group-btn" style="position: initial!important; ">
-                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
-                                                    <i>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                                    </i>
-                                                </button>
-                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group row ">
+                                    <div class="form-group row ">
 
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Підтвердження пароля</label>
-                                        <div class="input-group js-parent-focus">
-                                             {{ form.password2 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
-{#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
-                                            <span class="input-group-btn" style="position: initial!important; ">
-                                                <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
-                                                    <i>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                                    </i>
-                                                </button>
-                                            </span>
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Прізвище</label>
+                                            {{ form.last_name | add_class:"form-control" | attr:"" }}
                                         </div>
                                     </div>
+                                    <div class="form-group row ">
+
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>По батькові</label>
+                                            {{ form.third_name | add_class:"form-control" | attr:"" }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Логін</label>
+                                            {{ form.login | add_class:"form-control" | attr:"" }}
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Емейл</label>
+                                            {{ form.email | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Номер телефону</label>
+                                            {{ form.phone_number | add_class:"form-control" | attr:"" }}
+    {#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
+                                        </div>
+                                        <div class="col-md-12 form-control-comment"></div>
+                                    </div>
+                                    <div class="form-group row ">
+
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Пароль</label>
+                                            <div class="input-group js-parent-focus">
+                                                 {{ form.password1 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+    {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                                <span class="input-group-btn" style="position: initial!important; ">
+                                                    <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                        <i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                        </i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Підтвердження пароля</label>
+                                            <div class="input-group js-parent-focus">
+                                                 {{ form.password2 | add_class:"form-control js-child-focus js-visible-password" | attr:""|attr:"autocomplete:new-password" }}
+    {#                                            <input class="form-control js-child-focus js-visible-password" name="password" type="password" value="" pattern=".{5,}" required="">#}
+                                                <span class="input-group-btn" style="position: initial!important; ">
+                                                    <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                        <i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                        </i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="form-group row ">
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
+                                <div class="tab-content">
+                                    <div class="form-group row ">
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Школа</label>
+                                            {{ form.school | add_class:"form-control" | attr:"" }}
+    {#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
+                                        </div>
+                                        <div class="col-md-12 form-control-comment"></div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <label>Школа</label>
-                                        {{ form.school | add_class:"form-control" | attr:"" }}
-{#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
+                                    <div class="form-group row ">
+                                        <div class="col-md-12 form-control-comment">
+                                            <span class="req">*</span>
+                                        </div>
+                                        <div class="col-md-12 form-control-valign">
+                                            <label>Паралель</label>
+                                            {{ form.paralel_number | add_class:"form-control" | attr:""  }}
+                                        </div>
+                                        <div class="col-md-12 form-control-comment"></div>
                                     </div>
-                                    <div class="col-md-12 form-control-comment"></div>
                                 </div>
-                                <div class="form-group row ">
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12 form-control-valign">
-                                        <label>Паралель</label>
-                                        {{ form.paralel_number | add_class:"form-control" | attr:""  }}
-                                    </div>
-                                    <div class="col-md-12 form-control-comment"></div>
-                                </div>
-                                <div class="form-group row ">
-                                    <div class="col-md-12 form-control-comment">
-                                        <span class="req">*</span>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Номер телефону</label>
-                                        {{ form.phone_number | add_class:"form-control" | attr:"" }}
-{#                                        <span class="form-control-comment"> (E.g.: 1970-05-31) </span>#}
-                                    </div>
-                                    <div class="col-md-12 form-control-comment"></div>
+                                <div class="tab-content">
+                                    <h3 style="font-weight: 600"> Вітаємо! Ви майже зареєструвались!</h3>
+                                    <h4> Натисніть "Звершити"</h4>
                                 </div>
                             </div>
                             <footer class="form-footer clearfix">
-                                <button style="width: 100%" class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" value="REGISTER">  Зареєструватись </button>
+                                <button class="forward-btn btn btn-primary wide form-control-submit float-xs-right" type="button" >  Далі </button>
+
+                                <button class="back-btn btn btn-primary wide form-control-submit float-xs-right" type="button" >  Назад  </button>
+
+                                <button class="submit-btn btn btn-primary wide form-control-submit float-xs-right" type="submit" >  Завершити  </button>
+
                             </footer>
                         </form>
                     </section>
@@ -249,7 +274,10 @@
 </body>
 {{ form.errors|json_script:"form_errors" }}
 <script>
+let currentTab = 0;
     document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('.submit-btn').style.display='none';
+        showTab(currentTab);
          const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
 
     // Listen for a click event on the button
@@ -300,15 +328,53 @@
         }
     }
 });
-{#   document.addEventListener("DOMContentLoaded", function() {#}
-{#        // Check if there's an email error specifically#}
-       {#console.log("{{ form|safe }}");#}
-{#       var emailError = document.querySelectorAll('.errorMessage1');#}
-{#console.log(emailError);#}
-{#        if (emailError.length !== 0) {#}
-{#            alert("A user with that email already exists.");#}
-{#        }#}
-{#    });#}
+
+    document.querySelector('.back-btn').addEventListener('click', function() { if(currentTab > 0 && currentTab !== 2) previousStep();   });
+    document.querySelector('.forward-btn').addEventListener('click', function() { if( currentTab !== 2) nextStep();  });
+
+    function showTab(n) {
+        console.log(n);
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        tabs[n].classList.add('active');
+        contents[n].classList.add('active');
+        if (currentTab===2) {
+            document.querySelector('.back-btn').style.display = 'none';
+            document.querySelector('.forward-btn').style.display = 'none';
+            document.querySelector('.submit-btn').style.display='block';
+        }
+    }
+
+    function nextStep() {
+        if (!validateForm()) return false;
+        currentTab++;
+        if (currentTab >= document.querySelectorAll('.tab-content').length) {
+            currentTab = 0;
+        }
+        showTab(currentTab);
+    }
+    function previousStep() {
+        currentTab--;
+        if (currentTab < 0) {
+            currentTab = 0;
+        }
+        showTab(currentTab);
+    }
+    function validateForm() {
+        let valid = true;
+        const currentInputs = document.querySelectorAll('.tab-content.active input[required]');
+        currentInputs.forEach(input => {
+            if (input.value === "") {
+                input.style.borderColor = "red";
+                valid = false;
+            } else {
+                input.style.borderColor = "";
+            }
+        });
+        return valid;
+    }
 </script>
 </html>
 

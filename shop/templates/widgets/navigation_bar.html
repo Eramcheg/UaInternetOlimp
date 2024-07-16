@@ -14,40 +14,18 @@
     <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
 </head>
 <style>
-    .language-dropdown{
-        align-content: center;
-        margin-right: 10px;
-    }
-    .selected-language {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-size: 40px 40px; /* Размер флага */
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 40px; /* Ширина, достаточная для отображения флага */
-    height: 40px; /* Высота, соответствующая флагу */
-    padding-left: 10px;
-    border-radius: 50px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    text-indent: 100%; /* Смещаем текст за пределы видимой области */
-    white-space: nowrap; /* Запрещаем перенос текста */
-    overflow: hidden; /* Скрываем всё, что не помещается */
-}
 .toolbar {
     position: fixed; /* Make it stick to the top */
     top: 0;
     left: 0;
     width: 100%;
-    {#background-color: #fff; /* Assuming a white background */#}
     z-index: 10; /* Ensure it's above other content */
     transition: height 0.2s ease-in-out; /* Smooth transition for height change */
     margin-bottom: 100px;
 }
 
 /* Initial and expanded height */
-.toolbar.large { height: 110px; }
+.toolbar.large { height: 100px; }
 .toolbar.small { height: 90px; }
 
 .dropdown-container {
@@ -79,24 +57,24 @@
 }
 </style>
 
-<body class="this-page">
+<div class="this-page" >
     <div class="toolbar large">
+     <a></a>
+        <a></a>
+        <a></a>
+        <a></a>
+        <a></a>
         <div class="logo" >
-{#            <a href="{% url "home" %}">#}
-{#                <img class = "imag" src="{% static "logonormal.webp" %}" style="cursor:pointer" height="70px"/>#}
-{#            </a>#}
+            <img class = "imag" src="{% static "LogoOlimp.png" %}" style="width: 177px; height: 52px" height="70px"/>
+
         </div>
-        <a></a>
-        <a></a>
-        <a></a>
-        <a></a>
-        <a></a>
+
         <a></a>
         <a></a>
 {#        <a href="{% url "catalog" %}?page=terms" class="link" title="Умови олімпіади" style="font-size: 12px;font-weight: 600;">Умови</a>#}
-
+        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Головна </a>
         <div class="dropdown-container">
-            <a class="link other_categories" style="font-size: 16px">Матеріали олімпіади</a>
+            <a class="link other_categories" style="font-size: 16px">Матеріали</a>
             <div id="dropdownMenu" class="menu">
                 <ul>
                     <li><a href="{% url "materials" %}?page=terms" class="dropdown-link" title="Умови" style="font-size: 15px;font-weight: 600;color: black!important;">Умови</a></li>
@@ -106,30 +84,39 @@
                 </ul>
             </div>
         </div>
+        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Новини </a>
+        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Контакти </a>
         {% if user.email == "uainternetolimp@gmail.com" %}
-            <a></a>
-            <a></a>
-            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Інструменти адміна </a>
+
+{#            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Адмін </a>#}
         {% endif %}
-        {% if role == "Student" %}
-            <a href="{% url 'student_tools' feature_name='home' %}" class="link"> Меню учасника олімпіади </a>
-        {% elif role == "Jury" %}
-            <a href="{% url 'jury_tools' feature_name='home' %}" class="link"> Меню члена жюри </a>
-        {% endif %}
+{#        {% if role == "Student" %}#}
+{#            <a href="{% url 'student_tools' feature_name='home' %}" class="link"> Меню учасника олімпіади </a>#}
+{#        {% elif role == "Jury" %}#}
+{#            <a href="{% url 'jury_tools' feature_name='home' %}" class="link"> Меню члена жюри </a>#}
+{#        {% endif %}#}
             <a></a>
-            <a></a>
-            <a></a>
+
         {% if user.is_authenticated %}
+            <a></a>
         {% else %}
+            <a href="{% url 'login'%}" class="link-auth"><img src="{% static "icons/Vector.png" %}"> Авторизація</a>
             <a></a>
-            <a href="{% url 'login'%}" class="link">Вхід</a>
-            <a></a>
-            <a href="{% url 'register'%}" class="link">Реєстрація</a>
+{#            <a href="{% url 'register'%}" class="link">Реєстрація</a>#}
             <a></a>
         {% endif %}
+
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
         <span class="icons-container">
             <span class="icon-link" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
-                <a id="account-icon" style="display: flex" ><i class="rts" data-size="28" data-color="#000000" style="width: 28px; height: 28px; margin-right: 4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 28px; height: 28px; "><path d="M23.67,25V22.65A4.67,4.67,0,0,0,19,18H9.67A4.67,4.67,0,0,0,5,22.65V25" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></path><circle cx="14.33" cy="8.65" r="4.67" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></circle></svg></i>
+                <a id="account-icon" style="display: flex" >
+{#                    <i class="rts" data-size="28" data-color="#000000" style="width: 28px; height: 28px; margin-right: 4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 28px; height: 28px; "><path d="M23.67,25V22.65A4.67,4.67,0,0,0,19,18H9.67A4.67,4.67,0,0,0,5,22.65V25" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></path><circle cx="14.33" cy="8.65" r="4.67" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></circle></svg></i>#}
+                    <div style="width: 34px; height: 34px; background-color: #e6eff8; color: #005bbb; border-radius: 100px; align-items: center; justify-content: center; display: flex; font-size: 18px; font-weight: 700">
+                       <span>  </span>
+                    </div>
                     <span style="margin-top: 6px">
                         {% if user.is_authenticated %}
                             {% if user.username %}
@@ -237,7 +224,7 @@
         </div>
     </div>
     <div id="overlay" class="overlay"></div>
-</body>
+</div>
 <script>
 
     document.querySelector('.other_categories').addEventListener('click', function(event) {

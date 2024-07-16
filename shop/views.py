@@ -361,20 +361,22 @@ def home_page(request):
 
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
+    print(get_user_role(email))
+    context['role'] = get_user_role(email)
 
-    context['role'] = "anonym"
     context['hello'] = test_text
     context['vocabulary_dialog'] = get_vocabulary_product_card()
     print(context['hello'])
     return render(request, 'home.html', context)
 
-
 def get_user_category(email):
+    pass
+def get_user_role(email):
     user = users_ref.where('email', '==', email).limit(1).get()
     if user:
         for user_info in user:
             user_dict = user_info.to_dict()
-            return user_dict['price_category'], user_dict['currency'] if 'currency' in user_dict else "Euro"
+            return user_dict['role']
     else:
         return "Default", "Euro"
 def get_user_info(email):
