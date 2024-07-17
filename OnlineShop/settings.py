@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-av+bzqy62h9m=9%^%c11v16=7h(aq(e*j2zn9-vk6r20wpn%_n
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['*']
 AUTH_USER_MODEL = 'shop.User'
 GEOIP_PATH = os.path.join(BASE_DIR, 'shop/static/GEOIP'),
 
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'shop.middleware.ensure_anon_session_middleware.EnsureAnonymousSessionMiddleware',
+    # 'shop.middleware.ensure_anon_session_middleware.EnsureAnonymousSessionMiddleware',
     # 'django.middleware.cache.UpdateCacheMiddleware',
     # 'django.middleware.common.CommonMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware',
