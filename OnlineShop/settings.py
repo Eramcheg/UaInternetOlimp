@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-av+bzqy62h9m=9%^%c11v16=7h(aq(e*j2zn9-vk6r20wpn%_n
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://uainternetolimp.pythonanywhere.com']
 AUTH_USER_MODEL = 'shop.User'
 GEOIP_PATH = os.path.join(BASE_DIR, 'shop/static/GEOIP'),
 
