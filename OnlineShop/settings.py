@@ -65,7 +65,7 @@ MIDDLEWARE = [
 # CACHE_MIDDLEWARE_SECONDS = 600  # Cache for 10 minutes
 # CACHE_MIDDLEWARE_KEY_PREFIX = ''
 ROOT_URLCONF = 'OnlineShop.urls'
-CSRF_COOKIE_HTTPONLY = False  # Убедитесь, что JavaScript может читать cookie
+CSRF_COOKIE_HTTPONLY = True  # Убедитесь, что JavaScript может читать cookie
 CSRF_COOKIE_SECURE = True     # Только если используется HTTPS
 TEMPLATES = [
     {
