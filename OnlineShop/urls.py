@@ -41,7 +41,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-# from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
@@ -110,10 +110,10 @@ urlpatterns = i18n_patterns(
     path('move-up/<int:banner_id>/', move_up, name='move_up'),
     path('move-down/<int:banner_id>/', move_down, name='move_down'),
 
-    # path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
-    # path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    # path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 )
 
 if settings.DEBUG:
