@@ -1,6 +1,7 @@
-.myaccount{
-    font-family: 'Poppins',Verdana,sans-serif;
-}
+
+/*.myaccount{*/
+/*    font-family: 'Montserrat',sans-serif;*/
+/*}*/
 .myaccount{
 
 }
@@ -10,9 +11,8 @@
 
 .this-table {
 
-     padding: 32px;
+    padding: 32px;
     float:left;
-    border: 2px solid #f2f2f2;
 
 }
 .this-table .myacc_name{
@@ -26,7 +26,7 @@
 .links{
 
   align-items: start;
-    margin-top: 40px;
+    /*margin-top: 40px;*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -59,17 +59,18 @@
 }
 
 .myaccount .links a:hover {
-  background: #05335a;
+  background: #005bbb;
   color: #fff !important;
   padding: 15px;
   border-radius: 4px;
 }
 .myaccount .links a {
-  text-decoration: none!important;
-  font-family: 'Poppins',Oswald,Verdana,sans-serif !important;
-  font-size: 15px !important;
-  font-weight: 500;
-  color: #777777 !important;
+
+    text-decoration: none!important;
+    font-family: 'Montserrat-Bold',sans-serif!important;
+    font-size: 16px !important;
+    font-weight: 500;
+    line-height: 24px;
 }
  .links a i {
   display: inline-block;
@@ -87,4 +88,10 @@
 }
  .myaccount .links a:hover i svg * {
   stroke: #fff !important;
+}
+.active{
+    border-left: 2px solid #005bbb;
+}
+.links a span{
+    margin-left: 20px;
 }
