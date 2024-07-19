@@ -11,26 +11,30 @@
 <style>
 </style>
 <body>
+<div class="page-wrapper" >
 {% include 'widgets/navigation_bar.html' %}
-<div class="cont1-1" style="margin-top: 150px">
-    {% include 'profile/profile_side_menu.html' %}
-    {% if feature_name == 'dashboard' %}
-        {% include 'profile/profile_dashboard.html' %}
-    {% elif feature_name == 'orders' %}
-        {% include 'profile/profile_orders.html' %}
-    {% elif feature_name == 'account' %}
-        {% include 'profile/profile_information.html' %}
-    {% elif feature_name == 'addresses' %}
-        {% include 'profile/profile_addresses.html' %}
-    {% elif feature_name == 'new_address' %}
-        {% include 'profile/profile_create_address.html' %}
-    {% elif feature_name == 'update_address' %}
-        {% include 'profile/profile_update_address.html' %}
-    {% elif feature_name == 'favourites' %}
-        {% include 'profile/profile_favourites.html' %}
-    {% endif %}
-</div>
+    <div class="content">
+        <div class="cont1-1" style="margin-top: 150px; min-height: 100vh">
+            {% include 'profile/profile_side_menu.html' %}
+            {% if feature_name == 'dashboard' %}
+                {% include 'profile/profile_dashboard.html' %}
+            {% elif feature_name == 'orders' %}
+                {% include 'profile/profile_orders.html' %}
+            {% elif feature_name == 'account' %}
+                {% include 'profile/profile_information.html' %}
+            {% elif feature_name == 'addresses' %}
+                {% include 'profile/profile_addresses.html' %}
+            {% elif feature_name == 'new_address' %}
+                {% include 'profile/profile_create_address.html' %}
+            {% elif feature_name == 'update_address' %}
+                {% include 'profile/profile_update_address.html' %}
+            {% elif feature_name == 'favourites' %}
+                {% include 'profile/profile_favourites.html' %}
+            {% endif %}
+        </div>
+    </div>
 {% include "widgets/footer.html" %}
+</div>
 </body>
 
 <script>

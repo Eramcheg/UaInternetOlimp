@@ -72,7 +72,7 @@
         <a></a>
         <a></a>
 {#        <a href="{% url "catalog" %}?page=terms" class="link" title="Умови олімпіади" style="font-size: 12px;font-weight: 600;">Умови</a>#}
-        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Головна </a>
+        <a href="{% url 'home' %}" class="link"> Головна </a>
         <div class="dropdown-container">
             <a class="link other_categories" style="font-size: 16px">Матеріали</a>
             <div id="dropdownMenu" class="menu">
@@ -84,8 +84,8 @@
                 </ul>
             </div>
         </div>
-        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Новини </a>
-        <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Контакти </a>
+        <a href="{% url 'home' %}" class="link"> Новини </a>
+        <a href="{% url 'home' %}" class="link"> Контакти </a>
         {% if user.email == "uainternetolimp@gmail.com" %}
 
 {#            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Адмін </a>#}
