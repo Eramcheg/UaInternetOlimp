@@ -358,7 +358,9 @@ def get_vocabulary_product_card():
 def home_page(request):
     context = {
     }
-
+    all_users = User.objects.all()
+    for user in all_users:
+        print(user)
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
     print(get_user_role(email))

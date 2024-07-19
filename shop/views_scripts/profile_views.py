@@ -27,7 +27,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 
 from shop.forms import UserRegisterForm, User
-
+from firebase_admin import storage
 @login_required
 def profile(request, feature_name):
     email = request.user.email
@@ -143,18 +143,35 @@ def get_user_addresses(email):
     addresses_dict = json.dumps(addresses)
     return addresses, addresses_dict
 
-
+def upload_to_firebase(file_stream, file_path):
+    # Get the bucket
+    bucket = storage.bucket('uainternetolimp-41dd1.appspot.com')
+    blob = bucket.blob(file_path)
+    blob.upload_from_file(file_stream)
+    blob.make_public()  # If you want the file to be publicly accessible
+    return blob
 @csrf_exempt
 @login_required
 def update_user_account(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            old_data = data.get('old')
-            new_data = data.get('new')
+            # data = json.loads(request.body)
+            old_data = json.loads(request.POST.get('old'))
+            new_data = json.loads(request.POST.get('new'))
 
             old_email = old_data['email']
             new_email = new_data['email']
+
+            user_image = request.FILES.get('profile_picture')
+            photo_url = ""
+            if user_image:
+                file_path = os.path.join('profile_pics', user_image.name)
+                blob = upload_to_firebase(user_image, file_path)
+
+                # Now you can save `blob.public_url` to your user profile model
+                print(blob.public_url)
+                photo_url = blob.public_url
+
 
             # Check for existing user by email
             existing_users = users_ref.where('email', '==', old_email).limit(1).get()
@@ -168,22 +185,30 @@ def update_user_account(request):
                 except User.DoesNotExist:
                     return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
 
-            if new_data['email'] != old_email:
-                existing_user_with_new_email = users_ref.where('email', '==', new_email).limit(1).get()
-                if len(existing_user_with_new_email) > 0:
-                    return JsonResponse({'status': 'error', 'message': 'User with this email exists.'}, status=400)
+            if new_data['email'] != old_email or new_data['login']!=old_data['login']:
+                if(new_email!= old_email):
+                    existing_user_with_new_email = users_ref.where('email', '==', new_email).limit(1).get()
+                    if len(existing_user_with_new_email) > 0:
+                        return JsonResponse({'status': 'error', 'message': 'User with this email exists.'}, status=400)
                 User = get_user_model()
                 try:
                     user_instance = User.objects.get(email=old_email)
-                    user_instance.email = new_email  # Update the email
-                    user_instance.username = new_email  # Update the email
+                    if new_email != old_email:
+                        user_instance.email = new_email  # Update the email
+                    if new_data['login'] != old_data['login']:
+                        if User.objects.filter(username=new_data['login']).exists():
+                            return JsonResponse({'status': 'error', 'message': 'User with this email exists.'},
+                                                status=400)
+                        user_instance.username = new_data['login']  # Update the email
+
                     user_instance.save()
                 except User.DoesNotExist:
                     return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
 
                 try:
-                    update_email_in_db(old_email, new_email)
+                    # update_email_in_db(old_email, new_email) # TODO: не забыть что тут будет обновление емейла во всех бд
                     # Optionally use update_email_in_db_result for further logic
+                    pass
                 except Exception as e:
                     # Log the exception e
                     return JsonResponse(
@@ -197,36 +222,32 @@ def update_user_account(request):
                 except User.DoesNotExist:
                     return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
 
-            social_title = old_data['social_title'] if 'id_gender' not in new_data else "Mr" if new_data[
-                                                                                                    'id_gender'] == "1" else "Mrs"
-            receive_newsletter = old_data['receive_newsletter'] if 'newsletter' not in new_data else True if new_data[
-                                                                                                                 'newsletter'] == "1" else False
-            receive_offers = old_data['receive_offers'] if 'optin' not in new_data else True if new_data[
-                                                                                                    'optin'] == "1" else False
             password = new_data['password']
-
+            second_password = new_data.get('new_password', '')
             # Check if the provided password matches the user's password
-            if not user_instance.check_password(password):
+            if not user_instance.check_password(password) or not user_instance.check_password(second_password):
                 return JsonResponse({'status': 'error', 'message': 'Incorrect password.'}, status=400)
 
-            new_password = new_data.get('new_password', '')
-            if new_password:  # This checks if the new_password string is not empty
-                user_instance.set_password(new_password)
-                user_instance.save()  # Don't forget to save the user object after setting the new password
-                update_session_auth_hash(request, user_instance)
+            # new_password = new_data.get('new_password', '')
+            # if new_password:  # This checks if the new_password string is not empty
+            #     user_instance.set_password(new_password)
+            #     user_instance.save()  # Don't forget to save the user object after setting the new password
+            #     update_session_auth_hash(request, user_instance)
 
             user_instance.save()
 
             for user in existing_users:
                 user_ref = users_ref.document(user.id)
                 user_ref.update({
-                    'social_title': social_title,
                     'first_name': new_data['firstname'],
                     'last_name': new_data['lastname'],
+                    'third_name': new_data['thirdname'],
                     'email': new_data['email'],
-                    'birthday': new_data['birthday'],
-                    'receive_newsletter': receive_newsletter,
-                    'receive_offers': receive_offers,
+                    'login': new_data['login'],
+                    'phone': new_data['phone_number'],
+                    'school': new_data['school'],
+                    'paralel': new_data['paralel'],
+                    'photo_url': photo_url
                 })
                 return JsonResponse({'status': 'success', 'message': 'User updated successfully.'})
 
