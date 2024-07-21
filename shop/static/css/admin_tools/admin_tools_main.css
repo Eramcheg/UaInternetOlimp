@@ -1,8 +1,13 @@
-
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vH
+}
 .container-page {
    width: 1450px;
    max-width: 100%;
-    display: flex;
+   display: flex;
+   margin-top: 150px;
 }
 .container-page{
    margin-left: auto;

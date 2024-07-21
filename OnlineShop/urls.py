@@ -19,6 +19,8 @@ from django.urls import path
 from shop import views
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
+from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
+    move_down_article
 from shop.views_scripts.manage_banners.banners_managing import move_down, move_up, delete_banner
 from shop.views_scripts.orders_control.bulk_change_statuses import change_statuses
 from shop.views_scripts.orders_control.download_order import download_csv_order, download_pdf_w_img, \
@@ -44,6 +46,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 urlpatterns = i18n_patterns(
+path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
     path('login/', login_view, name='login'),
@@ -107,13 +110,21 @@ urlpatterns = i18n_patterns(
     path('service_pages/<str:service_page>/', service_pages_view, name='services'),
     path('our_company/<str:company_info_page>/', company_info_pages, name='company_info'),
     path('delete-banner/<int:banner_id>/', delete_banner, name='delete_banner'),
-    path('move-up/<int:banner_id>/', move_up, name='move_up'),
-    path('move-down/<int:banner_id>/', move_down, name='move_down'),
+    path('move-up/<int:article_id>/', move_up, name='move_up'),
+    path('move-down/<int:article_id>/', move_down, name='move_down'),
+
+    path('create-article/', create_article, name='create_article'),
+    path('delete-article/<int:article_id>/', delete_article, name='delete_article'),
+    path('move-up-article/<int:article_id>/', move_up_article, name='move_up_article'),
+    path('move-down-article/<int:article_id>/', move_down_article, name='move_down_article'),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # path('articles/create/', create_article, name='create_article'),
+
 )
 
 if settings.DEBUG:

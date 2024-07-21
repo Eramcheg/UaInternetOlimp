@@ -8,6 +8,7 @@ import concurrent.futures
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 import os
@@ -21,10 +22,10 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 
-from shop.forms import UserRegisterForm, User, BannerForm
+from shop.forms import UserRegisterForm, User, BannerForm, ArticleForm
 from django.utils.translation import gettext as _
 
-from shop.models import Banner
+from shop.models import Banner, Article
 
 json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json")
 GEOIP_path = os.path.join(settings.BASE_DIR, "shop", "static", "GEOIP", "GeoLite2-Country.mmdb")
@@ -359,6 +360,10 @@ def home_page(request):
     context = {
     }
     all_users = User.objects.all()
+    articles = Article.objects.all()
+    articles_json = serialize('json', articles, fields=('article_name', 'mini_article_photo', 'mini_article_text'))
+
+    context['articles'] = articles
     for user in all_users:
         print(user)
     test_text = _("Welcome to my site.")
@@ -547,25 +552,21 @@ def is_admin(user):
 @login_required
 @user_passes_test(is_admin)
 def admin_tools(request, feature_name):
-    if feature_name=="manage_banners":
-        if request.method == "POST":
-            form = BannerForm(request.POST, request.FILES)
-            if form.is_valid():
-                new_banner = form.save(commit=False)
-                new_banner.priority = Banner.objects.count()
-                new_banner.save()
-                return redirect('admin_tools', feature_name='manage_banners')
-    # Banner.objects.all().delete()
-    email = request.user.email
+    if feature_name == "manage_articles":
+        from shop.views_scripts.manage_articles.create_article import create_article
+        create_article(request)
 
 
-    print(Banner.objects.all())
+    # Banner.objects.all().delete() # Функция чтобы удалять из бд данные
+    # print(Banner.objects.all())
+    articles = Article.objects.all()
     context = {
         "feature_name": feature_name,
-
-        # 'currency':currency
+        "form": ArticleForm() if feature_name == "manage_articles" else "",
+        "articles": articles
     }
     return render(request, 'admin_tools.html', context)
+
 
 
 @login_required

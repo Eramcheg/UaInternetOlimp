@@ -1,10 +1,3 @@
-
-/*.myaccount{*/
-/*    font-family: 'Montserrat',sans-serif;*/
-/*}*/
-.myaccount{
-
-}
 .container-menu{
     width: 25%;
 }
@@ -26,7 +19,6 @@
 .links{
 
   align-items: start;
-    /*margin-top: 40px;*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -85,7 +77,10 @@
 }
  .links a::before {
   display: none !important;
-}
+ }
+  .myaccount .links a{
+      color: #000;
+  }
  .myaccount .links a:hover i svg * {
   stroke: #fff !important;
 }

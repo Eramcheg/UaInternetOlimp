@@ -1,0 +1,115 @@
+{% load static %}
+{% load i18n %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static "css/admin_tools/manage_articles.css" %}">
+<section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
+    <h1>Тут ви можете додавати новини</h1>
+    {% if articles %}
+        <ul id="banners-list">
+            {% for article in articles %}
+                <li id="banner-{{ article.id }}" data-priority="{{ article.priority }}">
+                    <div style="border: 1px solid black; display: flex; flex-direction: column; align-items: center">
+                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" height="120" width="300">
+                        <div style="display: flex; flex-direction: column; align-items: center">
+                            <h1>{{ article.mini_article_name }}</h1>
+                            <span>{{ article.mini_article_text }}</span>
+                        </div>
+                    </div>
+                    <div style="display: flex;flex-direction: column; margin: auto 10px; align-items: center">
+                        <button class="up-button" onclick="moveUp(this, '{{ article.id }}')" data-url="{% url 'move_up_article' article_id=article.id %}"><i class="fa-solid fa-arrow-up"></i></button>
+                        <button class="down-button" onclick="moveDown(this, '{{ article.id }}')" data-url="{% url 'move_down_article' article_id=article.id %}"><i class="fa-solid fa-arrow-down"></i></button>
+                        <button class="delete-button" onclick="deleteBanner(this, '{{ article.id }}')" data-url="{% url 'delete_article' article_id=article.id %}" style="margin-top: 15px">Delete</button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p><h1>Тут ще немає жодних новин.</h1></p>
+    {% endif %}
+<div class="banners-footer">
+    <button class="add-new-banner" id="add-banner-btn">Add new banner</button>
+</div>
+<div id="banner-form" style="display:none;">
+    <form method="post" action="{% url 'create_article' %}" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <h2>Додати статтю</h2>
+        {% for field in form %}
+            <p class="form-wrapper">
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div style="color: red">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </p>
+            <hr>
+        {% endfor %}
+        <button class="submit" type="submit">Submit</button>
+        <button class="cancel" type="button" onclick="cancelForm()">Cancel</button>
+    </form>
+</div>
+</section>
+<script>
+    document.getElementById('add-banner-btn').addEventListener('click', function() {
+        document.getElementById('banner-form').style.display = 'block';
+                    console.log("{{ articles }}");
+    });
+
+function cancelForm() {
+    document.getElementById('banner-form').style.display = 'none';
+    document.getElementById('banner-form').reset();
+}
+function deleteBanner(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            'banner_id': bannerId
+        },
+        success: function() {
+            $(`#banner-${bannerId}`).remove();  // Удаление элемента из DOM
+        }
+    });
+}
+
+// Функции moveUp и moveDown должны быть определены для изменения приоритета
+function moveUp(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function() {
+            let item = $(`#banner-${bannerId}`);
+            if (item.prev().length) {  // Проверяем, есть ли элемент перед текущим
+                item.insertBefore(item.prev());
+            }
+        }
+    });
+}
+
+function moveDown(element, bannerId) {
+    var url = $(element).data('url');  // Получаем URL из атрибута данных
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function() {
+            let item = $(`#banner-${bannerId}`);
+            if (item.next().length) {  // Проверяем, есть ли элемент после текущего
+                item.insertAfter(item.next());
+            }
+        }
+    });
+}
+</script>
