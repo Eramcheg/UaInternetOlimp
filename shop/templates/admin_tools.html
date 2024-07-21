@@ -1,16 +1,20 @@
+<!DOCTYPE html>
+{% block header %}
+    {{ form.media }}
+{% endblock %}
 {% block content %}
     {% load static %}
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Admin tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
-    <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
 </head>
 <body>
     {% include 'widgets/navigation_bar.html' %}
-    <div class="container-page" style="margin-top: 150px">
+    <div class="container-page">
         {% include 'admin_tools/AT_side_menu.html' %}
         {% if feature_name == 'dashboard' %}
             {% include 'admin_tools/AT_dashboard.html' %}
@@ -24,11 +28,22 @@
             {% include 'admin_tools/AT_UC_view_user.html' %}
         {% elif feature_name == 'view_order' %}
             {% include 'admin_tools/AT_OC_view_order.html' %}
-        {% elif feature_name == 'manage_banners' %}
-            {% include 'admin_tools/AT_manage_banners.html' %}
+        {% elif feature_name == 'manage_articles' %}
+            {% include 'admin_tools/AT_manage_articles.html' %}
         {% endif %}
     </div>
 {% include "widgets/footer.html" %}
+
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.active-page').forEach(element => {
+            element.classList.remove('active');
+        });
+        let queryclass= '.page-at-'+  '{{ feature_name }}';
+        document.querySelector(queryclass).classList.add('active');
+
+    })
+</script>
 </html>
 {%endblock%}

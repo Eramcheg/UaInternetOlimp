@@ -1,0 +1,37 @@
+.down-button, .up-button{
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid #e2e2e2;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+section h1{
+    font-weight: 600;
+}
+ul li{
+    display: flex;margin: 50px 0 0;
+}
+.up-button:hover, .down-button:hover, .delete-button:hover, .submit:hover, .cancel:hover{
+    background-color: #d8d8d8;
+}
+.delete-button, .submit, .cancel{
+    width: 100px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid #e2e2e2;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.add-new-banner{
+    margin-top: 20px;
+    font-size: 20px;
+    background-color: transparent;
+    width: 500px;
+    border: 3px solid #e2e2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}

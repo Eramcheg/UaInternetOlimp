@@ -3,8 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from django_ckeditor_5.fields import CKEditor5Widget
 
-from shop.models import Banner
+from shop.models import Banner, Article
 
 User = get_user_model()
 
@@ -57,3 +58,11 @@ class UserRegisterForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(self.error_messages['password_mismatch'], code='password_mismatch')
         return password2
+
+class ArticleForm(forms.ModelForm):
+    article_content = forms.CharField(
+        widget=CKEditor5Widget(config_name='extends'))  # Ensure this is correctly referenced
+
+    class Meta:
+        model = Article
+        fields = ['article_name', 'article_content', 'mini_article_photo', 'mini_article_name', 'mini_article_text']

@@ -60,52 +60,35 @@
 {# TODO: вторая это Лист по проведению олимпиады  #}
 
 {#      <h1 style="font-weight: 650">Welcome to the home page, {% if user.first_name %} {{ user.first_name }} {% elif user.email %} {{ user.email }} {% else %}  {% endif %} {{ user.last_name|default:"" }}!</h1>#}
-    <div class="cl">
-        <div id="carousel" class="carousel">
-            {% for banner in banners %}
-                <div class="carousel-item active" style="opacity: 0"><img src="{{ banner.image.url }}" alt="Image {{ banner.priority }}" width="1240" height="500" ></div>
-            {% endfor %}
-        </div>
+
+    <div class="containerr">
+        <h3>Новини олімпіади з фізики</h3>
     </div>
-    <div id="roycontent_home" class="roycontent">
-        <div class="row">
-            <div class="container">
-                <ul class="clearfix">
-                    <li class="htmlcontent-item-1 col-md-12 bview сbview-first ">
-                        <div class="li-cont">
-                            <div class="html_inside ">
-                                <div class="home-title">
-                                    <div class="home-title">
-                                        <h1>{% trans "ELEGANT JEWELRY AND ACCESSORIES" %}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+    <div class="containerr">
+        <div class="carousel-view">
+            <button id="prev-btn" class="prev-btn">
+                <svg viewBox="0 0 512 512" width="20" title="chevron-circle-left">
+                    <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
+                </svg>
+            </button>
+            <div id="item-list" class="item-list">
+               {% for article in articles %}
+                <div class="product-container">
+                    <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
+                    <h3>{{ article.article_name }}</h3>
+                    <p>{{ article.mini_article_text }}</p>
+                </div>
+                {% empty %}
+                <p>No articles found.</p>
+                {% endfor %}
             </div>
+            <button id="next-btn" class="next-btn">
+                <svg viewBox="0 0 512 512" width="20" title="chevron-circle-right">
+                    <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
+                </svg>
+            </button>
         </div>
     </div>
-    <div class="containerr">
-        <h3>{% trans "BEST SELLERS" %}</h3>
-    </div>
-    <div class="containerr">
-    <div class="carousel-view">
-        <button id="prev-btn" class="prev-btn">
-            <svg viewBox="0 0 512 512" width="20" title="chevron-circle-left">
-                <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
-            </svg>
-        </button>
-        <div id="item-list" class="item-list">
-            <!-- Items will be generated here -->
-        </div>
-        <button id="next-btn" class="next-btn">
-            <svg viewBox="0 0 512 512" width="20" title="chevron-circle-right">
-                <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
-            </svg>
-        </button>
-    </div>
-</div>
 
 </div>
 <dialog id="product-card">
@@ -116,49 +99,64 @@
 </dialog>
 {% include "widgets/footer.html" %}
 </body>
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-
-    import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+<script>
 
 
+    function setupItemsCarousel(){
+        const prev = document.getElementById('prev-btn');
+        const next = document.getElementById('next-btn');
+        const list = document.getElementById('item-list');
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    let favouriteitems = [ ];
+        const itemWidth = 250;
+        let autoScroll = setInterval(function () {
+            list.scrollLeft += itemWidth;
+            // Reset to the beginning if it reaches the end
+            if (list.scrollWidth - list.clientWidth === list.scrollLeft) {
+                list.scrollLeft = 0;
+            }
+        }, 6000); // Scroll every 9000 milliseconds
 
+        prev.addEventListener('click', () => {
+            list.scrollLeft -= itemWidth;  // Adjusted to include gap
+            resetAutoScroll();
+        });
+        next.addEventListener('click', () => {
+            list.scrollLeft += itemWidth;  // Adjusted to include gap
+            resetAutoScroll();
+        });
 
-    let sale = {{ sale|safe }};
-    const price_category = "{{ category|safe }}";
-
-    async function fetchFavouriteItems(userEmail) {
-        const favouritesQuery = query(collection(db, "Favourites"), where("email", "==", userEmail));
-        const querySnapshot = await getDocs(favouritesQuery);
-        return querySnapshot.docs.map(doc => doc.data());
-    }
-    async function fetchItemsWithQuantityGreaterThan30() {
-        const maxElementsPerQuery = 10;
-        let items = [];
-
-        for (let i = 0; i < elements.length; i += maxElementsPerQuery) {
-            const chunk = elements.slice(i, i + maxElementsPerQuery);
-            const itemsQuery = query(collection(db, "item"),
-                where("quantity", ">", 30),
-                where("name", "in", chunk)
-            );
-            const querySnapshot = await getDocs(itemsQuery);
-
-            querySnapshot.forEach(doc => {
-                items.push(doc.data());
-            });
+        function resetAutoScroll() {
+            clearInterval(autoScroll);
+            autoScroll = setInterval(function () {
+                list.scrollLeft += itemWidth;
+                // Reset to the beginning if it reaches the end
+                if (list.scrollWidth - list.clientWidth === list.scrollLeft) {
+                    list.scrollLeft = 0;
+                }
+            }, 6000);
         }
-
-        return items;
     }
 
     document.addEventListener("DOMContentLoaded", async function () {
-
-        let email = "{{ user.email }}"
+        {#console.log(articles);#}
+        {#const list = document.getElementById('item-list');#}
+        {#// Clear existing items#}
+        {#list.innerHTML = '';#}
+        {##}
+        {#// Generate new items from the articles data#}
+        {#articles.forEach(article => {#}
+        {#    const item = document.createElement('div');#}
+        {#    item.className = 'product-container';#}
+        {#    console.log(article);#}
+        {#    item.innerHTML = `#}
+        {#        <img src="{{ article.mini_article_photo.url }}" alt="description">#}
+        {#        <h3>${article.fields.article_name}</h3>#}
+        {#        <p>${article.fields.mini_article_text}</p>#}
+        {#    `;#}
+        {#        console.log("{{ article.mini_article_photo.url }}");#}
+        {#    list.appendChild(item);#}
+        {#);#}
+        setupItemsCarousel();
 
     });
 

@@ -14,6 +14,10 @@
     <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
 </head>
 <style>
+    body{
+        display: flex!important;
+        flex-direction: column!important;
+    }
 .toolbar {
     position: fixed; /* Make it stick to the top */
     top: 0;
@@ -88,7 +92,7 @@
         <a href="{% url 'home' %}" class="link"> Контакти </a>
         {% if user.email == "uainternetolimp@gmail.com" %}
 
-{#            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Адмін </a>#}
+            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Адмін </a>
         {% endif %}
 {#        {% if role == "Student" %}#}
 {#            <a href="{% url 'student_tools' feature_name='home' %}" class="link"> Меню учасника олімпіади </a>#}
