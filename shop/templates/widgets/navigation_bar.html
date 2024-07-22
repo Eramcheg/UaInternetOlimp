@@ -19,47 +19,62 @@
         flex-direction: column!important;
         min-height: 100vh;
     }
-.toolbar {
-    position: fixed; /* Make it stick to the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10; /* Ensure it's above other content */
-    transition: height 0.2s ease-in-out; /* Smooth transition for height change */
-    margin-bottom: 100px;
-}
+    .toolbar {
+        position: fixed; /* Make it stick to the top */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10; /* Ensure it's above other content */
+        transition: height 0.2s ease-in-out; /* Smooth transition for height change */
+        margin-bottom: 100px;
+    }
 
-/* Initial and expanded height */
-.toolbar.large { height: 100px; }
-.toolbar.small { height: 90px; }
+    /* Initial and expanded height */
+    .toolbar.large { height: 100px; }
+    .toolbar.small { height: 90px; }
 
-.dropdown-container {
-    position: relative;
-    display: inline-block; /* Keeps the icon and the menu aligned nicely */
-}
+    .dropdown-container {
+        position: relative;
+        display: inline-block; /* Keeps the icon and the menu aligned nicely */
+    }
 
+    .menu {
+        position: absolute;
+        background-color: white;
+        border-radius: 6px;
+        {#border: 1px solid #ccc;#}
 
-.menu {
-    display: none;
-    position: absolute;
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    list-style: none;
-    width: 150px; /* or any desired width */
-}
+        list-style: none;
+        width: 180px; /* or any desired width */
+        max-height: 00px;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+        box-shadow: 0 6px 6px rgba(0,0,0,0.2);;
+    }
+    .menu.open{
+        max-height: 1000px;
 
-.menu ul {
-    padding: 0;
-    margin: 0;
-}
+    }
 
-.menu li {
-    padding: 8px;
-    margin: 0;
-    cursor: pointer;
-}
+    .menu ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu li {
+        padding: 8px;
+        margin: 0;
+        font-weight: 600;
+        color: black!important;
+    }
+    #accountDropdownMenu ul li:not(:last-child){
+        border-bottom: 1px solid #e9e9e9;
+    }
+    #accountDropdownMenu ul li{
+        padding: 12px 18px;
+        text-align: left!important;
+        font-size: 12px!important;
+    }
 </style>
 
 <div class="this-page" >
@@ -71,15 +86,12 @@
         <a></a>
         <div class="logo" >
             <img class = "imag" src="{% static "LogoOlimp.png" %}" style="width: 177px; height: 52px" height="70px"/>
-
         </div>
-
         <a></a>
         <a></a>
-{#        <a href="{% url "catalog" %}?page=terms" class="link" title="Умови олімпіади" style="font-size: 12px;font-weight: 600;">Умови</a>#}
         <a href="{% url 'home' %}" class="link"> Головна </a>
         <div class="dropdown-container">
-            <a class="link other_categories" style="font-size: 16px">Матеріали</a>
+            <a class="link materials-dropdown-trigger" style="font-size: 16px">Матеріали</a>
             <div id="dropdownMenu" class="menu">
                 <ul>
                     <li><a href="{% url "materials" %}?page=terms" class="dropdown-link" title="Умови" style="font-size: 15px;font-weight: 600;color: black!important;">Умови</a></li>
@@ -114,64 +126,47 @@
             <a></a>
             <a></a>
             <a></a>
-            <a></a>
         <span class="icons-container">
-            <span class="icon-link" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
-                <a id="account-icon" style="display: flex" >
-{#                    <i class="rts" data-size="28" data-color="#000000" style="width: 28px; height: 28px; margin-right: 4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 28px; height: 28px; "><path d="M23.67,25V22.65A4.67,4.67,0,0,0,19,18H9.67A4.67,4.67,0,0,0,5,22.65V25" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></path><circle cx="14.33" cy="8.65" r="4.67" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8px"></circle></svg></i>#}
-                    <div style="width: 34px; height: 34px; background-color: #e6eff8; color: #005bbb; border-radius: 100px; align-items: center; justify-content: center; display: flex; font-size: 18px; font-weight: 700">
-                       <span>  </span>
-                    </div>
-                    <span style="margin-top: 6px">
-                        {% if user.is_authenticated %}
-                            {% if user.username %}
-                                {{ user.username }}
-                            {% elif user.email %}
-                                {{ user.email }}
-                            {% else %}
+            <div class="dropdown-container-account">
+                <span class="icon-link account-dropdown-trigger" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
+                    <a id="account-icon" style="display: flex" >
+                        <div style="width: 34px; height: 34px; background-color: #e6eff8; color: #005bbb; border-radius: 100px; align-items: center; justify-content: center; display: flex; font-size: 18px; font-weight: 700">
+                           <span>  </span>
+                        </div>
+                        <span style="margin-top: 6px">
+                            {% if user.is_authenticated %}
+                                {% if user.username %}
+                                    {{ user.username }}
+                                {% elif user.email %}
+                                    {{ user.email }}
+                                {% else %}
+
+                                {% endif %}
 
                             {% endif %}
-
-                        {% endif %}
-                    </span>
-                </a>
-            </span>
-{#            <a class="icon-link" id="searchBtn" href="{% url "shop_page"%}">#}
-{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 28px; height: 28px; margin-top: 9px">#}
-{#                    <circle cx="13.41" cy="12.91" r="9.41" style="fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:2px"></circle>#}
-{#                    <line x1="25.18" y1="23.5" x2="21.65" y2="19.97" style="fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:2px"></line>#}
-{#                </svg>#}
-{#            </a>#}
-{#            <a class="icon-link" id="cartBtn">#}
-{#                <svg width="28px" height="28px" style="margin-top: 5px" xmlns="http://www.w3.org/2000/svg">#}
-{#                  <path d="M21.46,26H6.54C4,26,4,23.86,4,22.46V2H24V22.46C24,23.86,24,26,21.46,26Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>#}
-{#                  <path d="M10,8v.78c0,2.68,1.8,4.88,4,4.88s4-2.19,4-4.88V8" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>#}
-{#                </svg>#}
-{#            </a>#}
+                        </span>
+                    </a>
+                </span>
+                <div id="accountDropdownMenu" class="menu">
+                    <ul>
+                        <li><a href="{% url "profile" feature_name="account" %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
+                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Список задач" >Список задач</a></li>
+                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Завантажити" >Завантажити</a></li>
+                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Розв’язки" >Розв’язки</a></li>
+                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Чат з питаннями" >Чат з питаннями</a></li>
+                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Персональні дані" >Персональні дані</a></li>
+                        <li><a href="{% url "logout" %}" class="dropdown-link" title="Вийти" >Вийти</a></li>
+                    </ul>
+                </div>
+            </div>
         </span>
+
+            <a></a>
         <a></a>
     </div>
     <a></a>
     <a></a>
 
-    <div id="cartPanel" class="cart-panel">
-        <!-- Cart content will be loaded here dynamically -->
-        <div class="cart-header">
-            <span class="shopping-cart-span">{% trans "Shopping Cart"%}</span>
-            <span id="closeCartBtn"><i class="fa-solid fa-close"></i></span>
-        </div>
-          <div class="cart-items">
-            <!-- Cart items will be dynamically inserted here -->
-        </div>
-        <div class="cart-footer">
-            <hr>
-            <div class="subtotal">
-                <span>{% trans "Subtotal:"%}</span>
-                <span id="subtotalValue">{{ currency }}0.00</span>
-            </div><br>
-            <button onclick="location.href='{% url 'cart' %}'"  class="checkout-btn">{% trans "Proceed to Checkout"%}</button>
-        </div>
-    </div>
     <div id="side_acc_wrap" class="accPanel">
         <div class="account-header">
             <h4 class="side_title">
@@ -232,100 +227,57 @@
 </div>
 <script>
 
-    document.querySelector('.other_categories').addEventListener('click', function(event) {
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-        event.stopPropagation();
-    });
-    document.addEventListener('click', function() {
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownMenu.style.display = 'none';
+document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    event.stopPropagation();
+});
 
-    });
+document.querySelector('.account-dropdown-trigger').addEventListener('click', function(event) {
+    const dropdownMenu = document.getElementById('accountDropdownMenu');
+    dropdownMenu.classList.toggle('open');
+    event.stopPropagation();
+});
 
-function updateBackgroundImage(selectElement) {
-    let imageUrl = '';
-    switch (selectElement.value) {
-        case 'en':
-            imageUrl = '{% static "images/flags/uk.gif" %}'; // Путь к флагу Великобритании
-            break;
-        case 'de':
-            imageUrl = '{% static "images/flags/gm-flag.gif" %}'; // Путь к флагу Германии
-            break;
-        case 'it':
-            imageUrl = '{% static "images/flags/it-flag.gif" %}'; // Путь к флагу Великобритании
-            break;
-        case 'es':
-            imageUrl = '{% static "images/flags/sp-flag.gif" %}'; // Путь к флагу Германии
-            break;
-    }
-    selectElement.style.backgroundImage = `url('${imageUrl}')`;
-}
+document.addEventListener('click', function() {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const accountDropdownMenu = document.getElementById('accountDropdownMenu');
+    dropdownMenu.style.display = 'none';
+    accountDropdownMenu.style.display = 'none';
+});
 
-// Функция для изменения URL
-function changeLanguageURL(selectedLang) {
-    const newPathname = window.location.pathname.replace(/^\/[a-z]{2}/, '');
-    const newUrl = window.location.origin + '/' + selectedLang + newPathname + window.location.search;
-    window.location.href = newUrl;
-}
-
-// Функция для установки начального языка на основе URL
-function setCurrentLanguage() {
-    const path = window.location.pathname;
-    const langMatch = path.match(/^\/(en|de|it|es)/);
-    const currentLang = langMatch ? langMatch[1] : 'en'; // По умолчанию 'en'
-    const selectElement = document.getElementById('languageSelect');
-    selectElement.value = currentLang; // Установка текущего языка в select
-    updateBackgroundImage(selectElement); // Обновление фона
-}
-
-// Инициализация при загрузке страницы
-{#window.onload = function() {#}
-{#    setCurrentLanguage();#}
-{#;#}
-
-{#document.getElementById('languageSelect').addEventListener('change', function(event) {#}
-{#    updateBackgroundImage(this);#}
-{#    if (event.isTrusted) {#}
-{#        changeLanguageURL(this.value);#}
-{#    }#}
-
-// Инициализация фона с начальным выбором
-{#document.getElementById('languageSelect').dispatchEvent(new Event('change'));#}
-
-    let isCheckout = false;
-    let key = "{{ session.session_key }}";
+let isCheckout = false;
+let key = "{{ session.session_key }}";
 
 
-    window.addEventListener('scroll', function() {
-        let toolbar = document.querySelector('.toolbar');
-        // Check if the page is scrolled more than 50 pixels
-        if(window.pageYOffset > 50) {
-            // User has scrolled down, shrink the toolbar
-            toolbar.classList.remove('large');
-            toolbar.classList.add('small');
-        } else {
-            // User is near the top of the page, expand the toolbar
-            toolbar.classList.remove('small');
-            toolbar.classList.add('large');
-        }
-    });
-
-document.getElementById('account-icon').addEventListener('click',function() {
-    console.log("ssss");
-    let accPanel = document.getElementById('side_acc_wrap');
-    let overlay = document.getElementById('overlay');
-
-    if (accPanel.classList.contains('open')) {
-        accPanel.classList.remove('open');
-        overlay.style.display = 'none'; // Hide the overlay when the account panel is closed
+window.addEventListener('scroll', function() {
+    let toolbar = document.querySelector('.toolbar');
+    // Check if the page is scrolled more than 50 pixels
+    if(window.pageYOffset > 50) {
+        // User has scrolled down, shrink the toolbar
+        toolbar.classList.remove('large');
+        toolbar.classList.add('small');
     } else {
-        // Unlike the cart, we don't need to load data here since we're not populating with dynamic content
-        // Open the account panel and overlay
-        accPanel.classList.add('open');
-        overlay.style.display = 'block';
+        // User is near the top of the page, expand the toolbar
+        toolbar.classList.remove('small');
+        toolbar.classList.add('large');
     }
 });
+
+{#document.getElementById('account-icon').addEventListener('click',function() {#}
+{#    let accPanel = document.getElementById('side_acc_wrap');#}
+{#    let overlay = document.getElementById('overlay');#}
+{##}
+{#    if (accPanel.classList.contains('open')) {#}
+{#        accPanel.classList.remove('open');#}
+{#        overlay.style.display = 'none'; // Hide the overlay when the account panel is closed#}
+{#    } else {#}
+{#        // Unlike the cart, we don't need to load data here since we're not populating with dynamic content#}
+{#        // Open the account panel and overlay#}
+{#        accPanel.classList.add('open');#}
+{#        overlay.style.display = 'block';#}
+{#    }#}
+{#);#}
 
 // Additionally, you'll need to manage closing the panel.
 // If you have a close button similar to the cartPanel's close button, you can add an event listener to it:
@@ -350,110 +302,12 @@ function confirmLogout(event) {
     return true;
 }
 
-function showCartIsEmpty(cartItemsContainer){
-    cartItemsContainer.classList.add('cart-items-container');
-    let emptyCartContainer = document.querySelector('.empty-cart-container');
-    if (!emptyCartContainer) {
-        emptyCartContainer = document.createElement('div');
-        emptyCartContainer.classList.add('empty-cart-container');
-
-        // Create an SVG element
-        const svgNS = "http://www.w3.org/2000/svg";
-        const noItemsSvg = document.createElementNS(svgNS, 'svg');
-        noItemsSvg.setAttribute('width', '150px');
-        noItemsSvg.setAttribute('height', '150px');
-        noItemsSvg.setAttribute('style', 'margin-top: 5px');
-        noItemsSvg.setAttributeNS(null, 'viewBox', '0 0 28 28'); // Optionally add viewBox if needed
-
-        // Create the first path element
-        const path1 = document.createElementNS(svgNS, 'path');
-        path1.setAttribute('d', 'M21.46,26H6.54C4,26,4,23.86,4,22.46V2H24V22.46C24,23.86,24,26,21.46,26Z');
-        path1.setAttribute('fill', 'none');
-        path1.setAttribute('stroke', '#c1c1c1');
-        path1.setAttribute('stroke-miterlimit', '10');
-        path1.setAttribute('stroke-width', '2');
-
-        // Create the second path element
-        const path2 = document.createElementNS(svgNS, 'path');
-        path2.setAttribute('d', 'M10,8v.78c0,2.68,1.8,4.88,4,4.88s4-2.19,4-4.88V8');
-        path2.setAttribute('fill', 'none');
-        path2.setAttribute('stroke', '#c1c1c1');
-        path2.setAttribute('stroke-miterlimit', '10');
-        path2.setAttribute('stroke-width', '2');
-
-        // Append paths to the SVG element
-        noItemsSvg.appendChild(path1);
-        noItemsSvg.appendChild(path2);
-
-        // Append SVG to the empty cart container
-
-
-        const emptyMessage = document.createElement('div');
-        emptyMessage.textContent = "{{ _("Cart is empty")|escapejs }}";
-        emptyMessage.classList.add("empty-message");
-
-        emptyCartContainer.appendChild(emptyMessage);
-        emptyCartContainer.appendChild(noItemsSvg);
-        cartItemsContainer.appendChild(emptyCartContainer);
-    }
-
-    // Show the container with a smooth transition
-    requestAnimationFrame(() => {
-        emptyCartContainer.style.display = 'block';
-        requestAnimationFrame(() => {
-            emptyCartContainer.classList.add('show-empty-cart');
-        });
-    });
-
-    const checkoutBtn = document.querySelector('.checkout-btn');
-    checkoutBtn.textContent = "{{ _("Back to shop")|escapejs }}";
-    checkoutBtn.onclick = closeCart;
-}
-
-function deleteFromCart(documentId) {
-    fetch('{% url "delete_document" %}', { // Replace with the actual URL as needed
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken'),
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ document_id: documentId })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.status === 'success') {
-            console.log('Document deleted successfully');
-            // Optionally, update UI here
-        } else {
-            console.error('Error in deletion');
-            // Optionally, provide user feedback here
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, provide user feedback here
-    });
-}
-
 document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('cartPanel').classList.remove('open');
     document.getElementById('side_acc_wrap').classList.remove('open');
     this.style.display = 'none'; // Hide the overlay
 });
 
-document.getElementById('closeCartBtn').onclick = closeCart;
-
-function closeCart(){
-    let cartPanel = document.getElementById('cartPanel');
-    let overlay = document.getElementById('overlay');
-    cartPanel.classList.remove('open');
-    overlay.style.display = 'none';
-}
 
 function getCookie(name) {
     let cookieValue = null;

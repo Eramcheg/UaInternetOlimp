@@ -1,25 +1,15 @@
-/*body{*/
-/*    font-family: 'Poppins', Verdana, sans-serif;*/
-/*}*/
-.cart-panel{
-    font-family: 'Poppins', Verdana, sans-serif;
+.toolbar {
+    background-color: #f9f9f9;
+    padding: 6px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eeeeee;
 }
-@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css');
-    .toolbar {
-        background-color: #f9f9f9;
-        padding: 6px;
-        display: flex;
-        width: 100%;
-        align-items: center;
-        text-align: center;
-        justify-content: space-between;
-        border-bottom: 1px solid #eeeeee;
-
-    }
 
 .logo img {
-
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -31,9 +21,7 @@
     align-items: center;
 }
 
-
 .toolbar .link, .icon-link {
-    /*font-family: 'Poppins', Verdana, sans-serif;*/
     cursor: pointer;
     color: #21211e !important;
     font-size: 16px;
@@ -50,19 +38,12 @@
     color: #005bbb !important;
     opacity: 50%;
 }
-/*.link::after {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    bottom: 5px;*/
-/*    width: 0%;*/
-/*    height: 1.5px;*/
-/*    background-color: #ffffff;*/
-/*    transition: width 0.3s ease;*/
-/*}*/
+
 .link:hover::after {
     width: 100%;
 }
+
+
 
 .link:hover {
     color: #005bbb !important;
@@ -74,7 +55,7 @@
     text-decoration: none !important;
     padding: 5px;
     margin: 0 5px 0 0;
-    font-family: 'Poppins', Verdana, sans-serif;
+    font-family: 'Montserrat-Bold', sans-serif;
     position: relative;
 }
 .dropdown-link::after {
@@ -82,25 +63,31 @@
     position: absolute;
     left: 0;
     bottom: 5px;
-    width: 0%;
+    width: 0;
     height: 1.5px;
     background-color: #000000;
-    transition: width 0.3s ease;
-}
-.dropdown-link:hover::after {
-    width: 100%;
+    transition: all 0.3s ease;
 }
 
+.dropdown-link{
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-link:hover {
+    opacity: 40%;
+}
+ul,li {
+    list-style-type: none;
+}
 .dropdown-link:hover {
     color: #000000 !important;
 }
 
-
-
-
 .users{
     text-align: right;
 }
+
 .link-auth{
   cursor: pointer;
   font-size: 16px;
@@ -116,108 +103,8 @@
   font-weight: 600;
   color: #f9f9f9!important;
 }
-.lang-menu {
-    width: 100px;
-    text-align: right;
-    font-weight: bold;
-    margin-top: 0px;
-    position: relative;
-}
-.selected-lang{
-    font-weight: normal;
-}
-.lang-menu .selected-lang:before {
-  content: '';
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  margin-right: 10px;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
 
-.lang-menu .selected-lang {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  line-height: 2;
-  cursor: pointer;
-  color: white;
-  font-family: poppins, Verdana, sans-serif;
-  background-color: #003765;
-}
-
-
-.lang-menu ul {
-    margin: 0;
-    padding: 0;
-    display: none;
-    background-color: #fff;
-    border: 1px solid #f8f8f8;
-    position: absolute;
-    top: 30px;
-    right: 0px;
-    width: 125px;
-    border-radius: 5px;
-    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
-}
-
-
-.lang-menu ul li {
-    list-style: none;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-}
-
-.lang-menu ul li a {
-    text-decoration: none;
-    width: 125px;
-    padding: 5px 10px;
-    display: block;
-}
-
-.lang-menu ul li:hover {
-    background-color: #f2f2f2;
-}
-
-.lang-menu ul li a:before {
-    content: '';
-    display: inline-block;
-    width: 25px;
-    text-align: center;
-    height: 25px;
-    vertical-align: middle;
-    margin-right: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-.selected-lang::before{
-    background-image: url(https://www.worldometers.info/img/flags/gm-flag.gif);
-}
-.gm:before {
-    background-image: url(https://www.worldometers.info/img/flags/gm-flag.gif);
-}
-
-.uk:before {
-    background-image: url(https://www.worldometers.info/img/flags/uk-flag.gif);
-}
-.fr:before {
-    background-image: url(https://www.worldometers.info/img/flags/fr-flag.gif);
-}
-
-.sp:before {
-    background-image: url(https://www.worldometers.info/img/flags/sp-flag.gif);
-}
-.it:before {
-    background-image: url(https://www.worldometers.info/img/flags/it-flag.gif);
-}
-
-.lang-menu:hover ul {
-    display: block;
-}
-
- .circular-select {
+.circular-select {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -232,10 +119,10 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 
-  }
- .circular-select{
+}
+.circular-select{
      color: transparent;
- }
+}
  .circular-select option{
      color: black;
  }
@@ -318,14 +205,14 @@
 
 .checkout-btn {
     width: 90%;
-    margin: 10px 5%; /* Centers the button and ensures 90% width */
+    /* Centers the button and ensures 90% width */
     padding: 22px 32px;
     background-color: #003765; /* Example color */
     border-radius: 7px;
     color: white;
     border: none;
     cursor: pointer;
-margin-bottom: 50px;
+    margin: 10px 5% 50px;
 }
 .cart-header, .cart-items, .cart-footer {
     padding: 15px; /* Adjust padding as needed */
