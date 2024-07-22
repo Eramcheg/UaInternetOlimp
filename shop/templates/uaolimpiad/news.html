@@ -1,0 +1,23 @@
+<!-- article_detail.html -->
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/pages/news.css' %}">
+    <body>
+        {% include "widgets/navigation_bar.html" %}
+        <div class="centered-container">
+            <span class="pre-title">Новини</span>
+            <h1 class="title">Новини</h1>
+            <div class="articles-grid">
+                {% for article in articles %}
+                    <div class="article-container">
+                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
+                        <p class="article-mini-text">{{ article.mini_article_text }}</p>
+                        <a class="absolute-link" href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                {% endfor %}
+                 <!-- Use the 'safe' filter if content includes HTML from CKEditor -->
+            </div>
+        </div>
+        {% include "widgets/footer.html" %}
+    </body>
+{% endblock %}

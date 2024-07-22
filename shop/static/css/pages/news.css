@@ -1,0 +1,52 @@
+.centered-container{
+    font-family: Montserrat-Bold, sans-serif;
+    margin-top: 140px;
+    margin-left: 360px;
+    margin-right: 360px;
+}
+.pre-title{
+    font-size: 16px;
+    color: #005bbb;
+    font-weight: 600;
+}
+.title{
+    font-size: 52px;
+    font-weight: 600;
+}
+.article-content{
+    word-wrap: break-word;
+}
+.articles-grid{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 30px;
+}
+.article-mini-text{
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 24px;
+}
+.article-container{
+    text-align: center;
+}
+.article-container img{
+    width: 250px;
+    height: 120px;
+
+}
+
+.absolute-link{
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: #005bbb;
+}
+.absolute-link:hover{
+    text-decoration: none;
+}
+.absolute-link i {
+
+}
