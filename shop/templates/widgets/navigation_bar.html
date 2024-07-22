@@ -127,6 +127,7 @@
             <a></a>
             <a></a>
         <span class="icons-container">
+        {% if user.is_authenticated %}
             <div class="dropdown-container-account">
                 <span class="icon-link account-dropdown-trigger" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
                     <a id="account-icon" style="display: flex" >
@@ -134,7 +135,7 @@
                            <span>  </span>
                         </div>
                         <span style="margin-top: 6px">
-                            {% if user.is_authenticated %}
+
                                 {% if user.username %}
                                     {{ user.username }}
                                 {% elif user.email %}
@@ -142,8 +143,6 @@
                                 {% else %}
 
                                 {% endif %}
-
-                            {% endif %}
                         </span>
                     </a>
                 </span>
@@ -160,6 +159,7 @@
                 </div>
             </div>
         </span>
+    {% endif %}
 
             <a></a>
         <a></a>
