@@ -17,6 +17,7 @@
     body{
         display: flex!important;
         flex-direction: column!important;
+        min-height: 100vh;
     }
 .toolbar {
     position: fixed; /* Make it stick to the top */
@@ -88,7 +89,7 @@
                 </ul>
             </div>
         </div>
-        <a href="{% url 'home' %}" class="link"> Новини </a>
+        <a href="{% url 'news_main' %}" class="link"> Новини </a>
         <a href="{% url 'home' %}" class="link"> Контакти </a>
         {% if user.email == "uainternetolimp@gmail.com" %}
 

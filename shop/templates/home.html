@@ -72,11 +72,14 @@
                 </svg>
             </button>
             <div id="item-list" class="item-list">
+
                {% for article in articles %}
                 <div class="product-container">
-                    <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
-                    <h3>{{ article.article_name }}</h3>
-                    <p>{{ article.mini_article_text }}</p>
+                    <a href="{{ article.get_absolute_url }}">
+                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
+                        <h3>{{ article.article_name }}</h3>
+                        <p>{{ article.mini_article_text }}</p>
+                    </a>
                 </div>
                 {% empty %}
                 <p>No articles found.</p>

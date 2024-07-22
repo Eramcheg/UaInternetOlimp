@@ -15,6 +15,7 @@ import os
 import json
 import firebase_admin
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import DetailView
 from firebase_admin import credentials, firestore
 from django.conf import settings
 from django.contrib import messages
@@ -360,7 +361,7 @@ def home_page(request):
     context = {
     }
     all_users = User.objects.all()
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('priority')
     articles_json = serialize('json', articles, fields=('article_name', 'mini_article_photo', 'mini_article_text'))
 
     context['articles'] = articles
@@ -375,6 +376,17 @@ def home_page(request):
     context['vocabulary_dialog'] = get_vocabulary_product_card()
     print(context['hello'])
     return render(request, 'home.html', context)
+
+def news_main_view(request):
+
+    articles = Article.objects.all()
+
+    context = {
+
+        'articles': articles
+
+    }
+    return render(request, 'uaolimpiad/news.html', context)
 
 def get_user_category(email):
     pass
@@ -559,7 +571,7 @@ def admin_tools(request, feature_name):
 
     # Banner.objects.all().delete() # Функция чтобы удалять из бд данные
     # print(Banner.objects.all())
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('priority')
     context = {
         "feature_name": feature_name,
         "form": ArticleForm() if feature_name == "manage_articles" else "",
@@ -703,3 +715,8 @@ def get_order_items(order_id):
         except Exception as e:
             print(f"Unhandled exception: {e}")
     return order_items
+
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'widgets/article_detail.html'
+    context_object_name = 'article'

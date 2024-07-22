@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shop import views
+from shop.views import ArticleDetailView, news_main_view
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
@@ -54,6 +55,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('register/', register, name='register'),
     path('shop/', form_page, name='shop_page'),
     path('materials/', materials_view, name='materials'),
+    path('news/', news_main_view, name='news_main'),
     path('cart/', cart_page, name='cart'),
     path('order/anonymous/info', anonym_cart_info, name='cart_anonymous'),
     path('checkout/addresses', checkout_addresses, name='checkout_addresses'),
@@ -113,6 +115,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('move-up/<int:article_id>/', move_up, name='move_up'),
     path('move-down/<int:article_id>/', move_down, name='move_down'),
 
+    path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article_detail'),
     path('create-article/', create_article, name='create_article'),
     path('delete-article/<int:article_id>/', delete_article, name='delete_article'),
     path('move-up-article/<int:article_id>/', move_up_article, name='move_up_article'),
