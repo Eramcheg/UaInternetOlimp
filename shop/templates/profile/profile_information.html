@@ -1,19 +1,26 @@
 {% load static %}
 {% load i18n %}
 <link rel="stylesheet"  href="{% static 'css/profile/profile_information.css' %}">
+<link rel="stylesheet"  href="{% static 'css/profile/account_info.css' %}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
     <header class="page-header">
-        <h1 style=" color: #0a0a0a"> {% trans "Your personal information" %}</h1>
     </header>
     <form action="" id="customer-form" class="js-customer-form" method="post" autocomplete="off">
         <div>
             <div class="form-group row">
                 <div class="col-md-12">
-                    <img src="{{ user_info.photo_url }}" alt="Profile Picture" id="currentProfilePicture" style="width: 140px; height: 140px; border-radius: 16px">
-                    <label for="profilePicture"> Фото профіля </label>
-                    <input type="file" class="form-control" id="profilePicture" name="profile_picture">
+                    <div class="profile-image">
+                        <img src="{{ user_info.photo_url }}" alt="Profile Picture" id="currentProfilePicture">
+                        <div class="profile-image-text">
+                            <label class="label-profilePicture" for="profilePicture">Формат JPG або PNG, максимум 5 MB</label>
+                            <div class="upload-btn-wrapper">
+                                <button class="btn-upload">Завантажити фото</button>
+                                <input type="file" name="myfile" id="fileInput">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group row ">
@@ -41,7 +48,7 @@
                     <span class="req"></span>
                 </div>
             </div>
-            <hr style="margin: 52px 0 52px 0">
+            <hr>
             <div class="form-group row ">
                 <div class="col-md-12">
                     <label>Логін</label>
@@ -103,7 +110,7 @@
                 </div>
                 <div class="col-md-12 form-control-comment"></div>
             </div>
-            <hr style="margin: 52px 0 52px 0">
+            <hr>
             <div class="form-group row ">
                 <div class="col-md-12 form-control-comment">
                     <span class="req"></span>
@@ -131,7 +138,7 @@
         </div>
         <footer class="form-footer clearfix">
             <input type="hidden" name="submitCreate" value="1">
-            <button class="btn btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit" style="border-radius: 6px; background-color: #005bbb; border: none!important;"> Зберегти </button>
+            <button class="btn btn-submit-form btn-primary wide form-control-submit float-xs-right" data-link-action="save-customer" type="submit"> Зберегти </button>
         </footer>
     </form>
     <aside id="notifications">
@@ -141,6 +148,11 @@
     </aside>
 </section>
 <script>
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    if (event.target.files.length > 0) {
+        document.getElementById('currentProfilePicture').src = URL.createObjectURL(event.target.files[0]);
+    }
+});
 document.addEventListener("DOMContentLoaded", function() {
     // Select the button by its data-action attribute
     setCurrentSelects();
