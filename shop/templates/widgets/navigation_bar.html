@@ -62,7 +62,7 @@
         <span class="icons-container">
             {% if user.is_authenticated %}
                 <div class="dropdown-container-account">
-                    <span class="icon-link account-link-wrapper account-dropdown-trigger">
+                    <span class="icon-link account-link-wrapper account-dropdown-trigger" onclick="dropdownTrigger()">
                         <a id="account-icon">
                             <div id="account-icon-photo">
                                <span>  </span>
@@ -110,18 +110,20 @@ document.querySelector('.materials-dropdown-trigger').addEventListener('click', 
     dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     event.stopPropagation();
 });
-
-document.querySelector('.account-dropdown-trigger').addEventListener('click', function(event) {
+function dropdownTrigger(){
+{#document.querySelector('.account-dropdown-trigger').addEventListener('click', function(event) {#}
     const dropdownMenu = document.getElementById('accountDropdownMenu');
     dropdownMenu.classList.toggle('open');
     event.stopPropagation();
-});
+}
 
 document.addEventListener('click', function() {
     const dropdownMenu = document.getElementById('dropdownMenu');
-    const accountDropdownMenu = document.getElementById('accountDropdownMenu');
-    dropdownMenu.style.display = 'none';
-    accountDropdownMenu.classList.remove('open');
+    if(document.getElementById('accountDropdownMenu')) {
+        const accountDropdownMenu = document.getElementById('accountDropdownMenu');
+        dropdownMenu.style.display = 'none';
+        accountDropdownMenu.classList.remove('open');
+    }
 });
 
 let isCheckout = false;
