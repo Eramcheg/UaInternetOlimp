@@ -4,65 +4,27 @@
 {% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
     <link rel="stylesheet" href="{% static 'css/profile/profile_information.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile/profile_favourites.css' %}">
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
-{#    <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">#}
     <script src="{% static "js/product_cards.js" %}"></script>
     <script src="{% static "js/productsTransmutation.js" %}"></script>
     {% include 'widgets/navigation_bar.html' %}
 </head>
 <body>
-<style>
-    .centered-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+<div class="centered-container">
 
-}
-.carousel {
-    overflow: hidden;
-    position: relative;
-    width: 1240px; /* Match the width of your images */
-    height: 500px; /* Match the height of your images */
-}
-
-.carousel-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;  // Ensures a smooth transition
-    text-align: center;
-}
-
-.carousel-item.active {
-    opacity: 1;
-}
-
-.carousel-item img {
-    width: 100%; /* Adjust based on your needs */
-    vertical-align: middle;
-}
-
-</style>
-{# TODO: добавить логотипы и название олимпиады  #}
-<div class="centered-container" style="margin-top: 120px">
-
-{# TODO: на главной странице тут нужно сделать разделение на 2 части:  #}
-{# TODO: первая это информационная часть для всех студентов с прикрепленным сверху важным сообщением #}
-{# TODO: вторая это Лист по проведению олимпиады  #}
-
-{#      <h1 style="font-weight: 650">Welcome to the home page, {% if user.first_name %} {{ user.first_name }} {% elif user.email %} {{ user.email }} {% else %}  {% endif %} {{ user.last_name|default:"" }}!</h1>#}
-
-    <div class="containerr">
-        <h3>Новини олімпіади з фізики</h3>
+    <div class="news-text-container">
+        <div class="left-news-text">
+            <span class="small-text-news"> НОВИНИ </span>
+            <h3> Новини олімпіади з фізики </h3>
+        </div>
+        <div class="right-news-text">
+            <a class="small-text-next-news" href="{% url "news_main" %}"> Всі новини <i class="fa-solid fa-arrow-right"></i> </a>
+        </div>
     </div>
     <div class="containerr">
         <div class="carousel-view">
@@ -72,14 +34,12 @@
                 </svg>
             </button>
             <div id="item-list" class="item-list">
-
                {% for article in articles %}
                 <div class="product-container">
-                    <a href="{{ article.get_absolute_url }}">
-                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
-                        <h3>{{ article.article_name }}</h3>
-                        <p>{{ article.mini_article_text }}</p>
-                    </a>
+                    <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
+{#                    <h3>{{ article.article_name }}</h3>#}
+                    <p>{{ article.mini_article_text }}</p>
+                    <a href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 {% empty %}
                 <p>No articles found.</p>
@@ -141,24 +101,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", async function () {
-        {#console.log(articles);#}
-        {#const list = document.getElementById('item-list');#}
-        {#// Clear existing items#}
-        {#list.innerHTML = '';#}
-        {##}
-        {#// Generate new items from the articles data#}
-        {#articles.forEach(article => {#}
-        {#    const item = document.createElement('div');#}
-        {#    item.className = 'product-container';#}
-        {#    console.log(article);#}
-        {#    item.innerHTML = `#}
-        {#        <img src="{{ article.mini_article_photo.url }}" alt="description">#}
-        {#        <h3>${article.fields.article_name}</h3>#}
-        {#        <p>${article.fields.mini_article_text}</p>#}
-        {#    `;#}
-        {#        console.log("{{ article.mini_article_photo.url }}");#}
-        {#    list.appendChild(item);#}
-        {#);#}
+
         setupItemsCarousel();
 
     });
