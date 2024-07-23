@@ -1,0 +1,58 @@
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+}
+.label-profilePicture{
+
+  font-size: 16px!important;
+
+}
+
+.btn-upload {
+  border: none;
+  background-color: #e6eff8;
+  color: #005bbb;
+  cursor: pointer;
+  padding: 16px 42px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#currentProfilePicture{
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.profile-image-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  padding: 20px 10px 10px 10px;
+}
+.profile-image{
+  display: flex;
+}
+hr{
+  margin: 52px 0 52px 0!important;
+}
+.btn-submit-form{
+  border-radius: 6px!important;
+  background-color: #005bbb!important;
+  border: none!important;
+}
