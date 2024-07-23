@@ -2,7 +2,7 @@
 
 {% load static %}
 {% load i18n %}
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>User Auth</title>
@@ -11,93 +11,28 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-    <link rel="icon" href="{% static "images/icons/web-icon.png" %}" type="image/x-icon">
 </head>
-<style>
-    body{
-        display: flex!important;
-        flex-direction: column!important;
-        min-height: 100vh;
-    }
-    .toolbar {
-        position: fixed; /* Make it stick to the top */
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 10; /* Ensure it's above other content */
-        transition: height 0.2s ease-in-out; /* Smooth transition for height change */
-        margin-bottom: 100px;
-    }
-
-    /* Initial and expanded height */
-    .toolbar.large { height: 100px; }
-    .toolbar.small { height: 90px; }
-
-    .dropdown-container {
-        position: relative;
-        display: inline-block; /* Keeps the icon and the menu aligned nicely */
-    }
-
-    .menu {
-        position: absolute;
-        background-color: white;
-        border-radius: 6px;
-        {#border: 1px solid #ccc;#}
-
-        list-style: none;
-        width: 180px; /* or any desired width */
-        max-height: 00px;
-        overflow: hidden;
-        transition: max-height 0.5s ease;
-        box-shadow: 0 6px 6px rgba(0,0,0,0.2);;
-    }
-    .menu.open{
-        max-height: 1000px;
-
-    }
-
-    .menu ul {
-        padding: 0;
-        margin: 0;
-    }
-
-    .menu li {
-        padding: 8px;
-        margin: 0;
-        font-weight: 600;
-        color: black!important;
-    }
-    #accountDropdownMenu ul li:not(:last-child){
-        border-bottom: 1px solid #e9e9e9;
-    }
-    #accountDropdownMenu ul li{
-        padding: 12px 18px;
-        text-align: left!important;
-        font-size: 12px!important;
-    }
-</style>
-
 <div class="this-page" >
     <div class="toolbar large">
-     <a></a>
+        <a></a>
         <a></a>
         <a></a>
         <a></a>
         <a></a>
         <div class="logo" >
-            <img class = "imag" src="{% static "LogoOlimp.png" %}" style="width: 177px; height: 52px" height="70px"/>
+            <img class="imag" src="{% static "LogoOlimp.png" %}"/>
         </div>
         <a></a>
         <a></a>
         <a href="{% url 'home' %}" class="link"> Головна </a>
         <div class="dropdown-container">
-            <a class="link materials-dropdown-trigger" style="font-size: 16px">Матеріали</a>
+            <a class="link materials-dropdown-trigger">Матеріали</a>
             <div id="dropdownMenu" class="menu">
                 <ul>
-                    <li><a href="{% url "materials" %}?page=terms" class="dropdown-link" title="Умови" style="font-size: 15px;font-weight: 600;color: black!important;">Умови</a></li>
-                    <li><a href="{% url "materials" %}?page=solutions" class="dropdown-link" title="Рішення" style="font-size: 15px;font-weight: 600;color: black!important;">Рішення</a></li>
-                    <li><a href="{% url "materials" %}?page=results" class="dropdown-link" title="Результати" style="font-size: 15px;font-weight: 600;color: black!important;">Результати</a></li>
-                    <li><a href="{% url "materials" %}?page=other" class="dropdown-link" title="Інше" style="font-size: 15px;font-weight: 600;color: black!important;">Інше</a></li>
+                    <li><a href="{% url "materials" %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
+                    <li><a href="{% url "materials" %}?page=solutions" class="dropdown-link" title="Рішення">Рішення</a></li>
+                    <li><a href="{% url "materials" %}?page=results" class="dropdown-link" title="Результати">Результати</a></li>
+                    <li><a href="{% url "materials" %}?page=other" class="dropdown-link" title="Інше">Інше</a></li>
                 </ul>
             </div>
         </div>
@@ -119,23 +54,20 @@
         {% else %}
             <a href="{% url 'login'%}" class="link-auth"><img src="{% static "icons/Vector.png" %}"> Авторизація</a>
             <a></a>
-{#            <a href="{% url 'register'%}" class="link">Реєстрація</a>#}
             <a></a>
         {% endif %}
-
             <a></a>
             <a></a>
             <a></a>
         <span class="icons-container">
-        {% if user.is_authenticated %}
-            <div class="dropdown-container-account">
-                <span class="icon-link account-dropdown-trigger" style="font-style: italic; font-size: 14px; margin-top: 8px; color: white;font-family: poppins,Verdana,sans-serif;">
-                    <a id="account-icon" style="display: flex" >
-                        <div style="width: 34px; height: 34px; background-color: #e6eff8; color: #005bbb; border-radius: 100px; align-items: center; justify-content: center; display: flex; font-size: 18px; font-weight: 700">
-                           <span>  </span>
-                        </div>
-                        <span style="margin-top: 6px">
-
+            {% if user.is_authenticated %}
+                <div class="dropdown-container-account">
+                    <span class="icon-link account-link-wrapper account-dropdown-trigger">
+                        <a id="account-icon">
+                            <div id="account-icon-photo">
+                               <span>  </span>
+                            </div>
+                            <span style="margin-top: 6px">
                                 {% if user.username %}
                                     {{ user.username }}
                                 {% elif user.email %}
@@ -143,89 +75,35 @@
                                 {% else %}
 
                                 {% endif %}
-                        </span>
-                    </a>
-                </span>
-                <div id="accountDropdownMenu" class="menu">
-                    <ul>
-                        <li><a href="{% url "profile" feature_name="account" %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
-                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Список задач" >Список задач</a></li>
-                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Завантажити" >Завантажити</a></li>
-                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Розв’язки" >Розв’язки</a></li>
-                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Чат з питаннями" >Чат з питаннями</a></li>
-                        <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Персональні дані" >Персональні дані</a></li>
-                        <li><a href="{% url "logout" %}" class="dropdown-link" title="Вийти" >Вийти</a></li>
-                    </ul>
+                            </span>
+                        </a>
+                    </span>
+                    <div id="accountDropdownMenu" class="menu">
+                        <ul>
+                            <li><a href="{% url "profile" feature_name="account" %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
+                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Список задач" >Список задач</a></li>
+                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Завантажити" >Завантажити</a></li>
+                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Розв’язки" >Розв’язки</a></li>
+                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Чат з питаннями" >Чат з питаннями</a></li>
+                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Персональні дані" >Персональні дані</a></li>
+                            <li><a href="{% url "logout" %}" class="dropdown-link" title="Вийти">Вийти</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </span>
-    {% endif %}
-
-            <a></a>
+        <a></a>
         <a></a>
     </div>
     <a></a>
     <a></a>
-
-    <div id="side_acc_wrap" class="accPanel">
-        <div class="account-header">
-            <h4 class="side_title">
-               {% trans "Account"%}
-            </h4>
-            <span class="close_cross" >
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </i>
-            </span>
-        </div>
-        <div class="acc_ul acc_links">
-            <span class="name show">
-                <a href="{% url 'profile' feature_name="dashboard" %}" title="View my customer account" rel="nofollow">
-                    <span>{% if user.first_name %} {{ user.first_name }} {% elif user.email %} {{ user.email }} {% else %}  {% endif %}{{ user.last_name|default:"" }}</span>
-                </a>
-            </span>
-            <a href="{% url 'profile' feature_name="dashboard" %}" class="show">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                </i>
-                {% trans "Dashboard"%}
-            </a>
-            <a href="{% url 'profile' feature_name="favourites" %}" class="show">
-                <i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg>
-                </i>
-                {% trans "Favorites"%}
-            </a>
-            <a id="history-link" href="{% url 'profile' feature_name="orders" %}" class="show">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 28 28"><path d="M15,2.28l8.8,4.43a2.22,2.22,0,0,1,1.22,2V19.24a2.22,2.22,0,0,1-1.22,2L15,25.66a2.19,2.19,0,0,1-2,0l-8.8-4.43a2.22,2.22,0,0,1-1.21-2V8.69a2.22,2.22,0,0,1,1.22-2L13,2.28A2.19,2.19,0,0,1,15,2.28Z" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path><polyline points="3.45 7.51 14.08 12.86 24.7 7.51" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></polyline><line x1="14" y1="26" x2="14" y2="13" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></line><line x1="8.59" y1="4.57" x2="19.57" y2="10.09" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></line></svg>
-                </i>
-                {% trans "Orders" %}
-            </a>
-            <a id="identity-link" href="{% url 'profile' feature_name="account" %}" class="show">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 28 28"><path d="M16.26,15.7A4,4,0,0,0,14,15H7a4,4,0,0,0-4,4v2l1,2h7" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path><circle cx="10.5" cy="7" r="4" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></circle><polygon points="22.96 14.85 26.15 18.04 18.18 26 15 26 15 22.82 22.96 14.85" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></polygon></svg>
-                </i>
-                {% trans "Information"%}
-            </a>
-            <a id="addresses-link" href="{% url 'profile' feature_name="addresses" %}" class="show">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </i>
-                {% trans "Addresses"%}
-            </a>
-
-            <a class="logout show" href="{% url 'logout'%}" rel="nofollow">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
-                </i>
-                {% trans "Sign out" %}
-            </a>
-        </div>
-    </div>
     <div id="overlay" class="overlay"></div>
 </div>
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const photo= document.getElementById('account-icon-photo');
+});
 
 document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
@@ -243,7 +121,7 @@ document.addEventListener('click', function() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     const accountDropdownMenu = document.getElementById('accountDropdownMenu');
     dropdownMenu.style.display = 'none';
-    accountDropdownMenu.style.display = 'none';
+    accountDropdownMenu.classList.remove('open');
 });
 
 let isCheckout = false;
@@ -262,31 +140,6 @@ window.addEventListener('scroll', function() {
         toolbar.classList.remove('small');
         toolbar.classList.add('large');
     }
-});
-
-{#document.getElementById('account-icon').addEventListener('click',function() {#}
-{#    let accPanel = document.getElementById('side_acc_wrap');#}
-{#    let overlay = document.getElementById('overlay');#}
-{##}
-{#    if (accPanel.classList.contains('open')) {#}
-{#        accPanel.classList.remove('open');#}
-{#        overlay.style.display = 'none'; // Hide the overlay when the account panel is closed#}
-{#    } else {#}
-{#        // Unlike the cart, we don't need to load data here since we're not populating with dynamic content#}
-{#        // Open the account panel and overlay#}
-{#        accPanel.classList.add('open');#}
-{#        overlay.style.display = 'block';#}
-{#    }#}
-{#);#}
-
-// Additionally, you'll need to manage closing the panel.
-// If you have a close button similar to the cartPanel's close button, you can add an event listener to it:
-document.querySelector('.close_cross').addEventListener('click', function() {
-    let accPanel = document.getElementById('side_acc_wrap');
-    let overlay = document.getElementById('overlay');
-
-    accPanel.classList.remove('open');
-    overlay.style.display = 'none'; // Hide the overlay when the account panel is closed
 });
 
 function confirmLogout(event) {
