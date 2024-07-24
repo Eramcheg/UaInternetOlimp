@@ -1,7 +1,9 @@
 {% load static %}
 {% load i18n %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{#    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>#}
 <link rel="stylesheet" href="{% static "css/admin_tools/manage_articles.css" %}">
+
 <section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
     <h1>Тут ви можете додавати новини</h1>
     {% if articles %}
@@ -19,6 +21,7 @@
                         <button class="up-button" onclick="moveUp(this, '{{ article.id }}')" data-url="{% url 'move_up_article' article_id=article.id %}"><i class="fa-solid fa-arrow-up"></i></button>
                         <button class="down-button" onclick="moveDown(this, '{{ article.id }}')" data-url="{% url 'move_down_article' article_id=article.id %}"><i class="fa-solid fa-arrow-down"></i></button>
                         <button class="delete-button" onclick="deleteBanner(this, '{{ article.id }}')" data-url="{% url 'delete_article' article_id=article.id %}" style="margin-top: 15px">Delete</button>
+                        <button class="edit-button" onclick="editBanner(this,'{{ article.id }}')" data-url="{% url 'edit_article' article_id=article.id %}" style="margin-top: 15px">Edit</button>
                     </div>
                 </li>
             {% endfor %}
@@ -29,6 +32,7 @@
 <div class="banners-footer">
     <button class="add-new-banner" id="add-banner-btn">Add new banner</button>
 </div>
+
 <div id="banner-form" style="display:none;">
     <form method="post" action="{% url 'create_article' %}" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
@@ -52,8 +56,51 @@
         <button class="cancel" type="button" onclick="cancelForm()">Cancel</button>
     </form>
 </div>
+<div id="edit-banner-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Article</h2>
+        <form id="edit-banner-form" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <p class="form-wrapper">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.name == 'mini_article_photo' %}
+                        <img id="current-photo" src="" alt="Current Photo" style="max-width: 200px; max-height: 200px;">
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div style="color: red">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </p>
+                <hr>
+            {% endfor %}
+            <button class="submit" type="button" onclick="submitEditForm()">Submit</button>
+            <button class="cancel" type="button" onclick="closeEditModal()">Cancel</button>
+        </form>
+    </div>
+</div>
 </section>
 <script>
+let editorInstance;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById('edit-banner-form');
+        const editorContainer = form.querySelector('.ck-editor-container');
+        ClassicEditor
+            .create(editorContainer)
+            .then(editor => {
+                editorInstance = editor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
     document.getElementById('add-banner-btn').addEventListener('click', function() {
         document.getElementById('banner-form').style.display = 'block';
                     console.log("{{ articles }}");
@@ -112,4 +159,54 @@ function moveDown(element, bannerId) {
         }
     });
 }
+function editBanner(element, bannerId) {
+    var url = $(element).data('url');
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(data) {
+            console.log(data.mini_article_photo.toString());
+            // Assuming data contains the article fields to be edited
+            if (editorInstance) {
+                editorInstance.setData(data.article_content);
+            }
+            $('#edit-banner-form input[name="article_name"]').val(data.article_name);
+            $('#edit-banner-form input[name="mini_article_name"]').val(data.mini_article_name);
+            $('#edit-banner-form textarea[name="mini_article_text"]').val(data.mini_article_text);
+            $('#edit-banner-form img').attr('src', data.mini_article_photo.toString());
+            $('#edit-banner-form').attr('action', url);
+            document.getElementById('edit-banner-modal').style.display = 'block';
+
+            document.body.classList.add('modal-open');
+        }
+    });
+}
+
+function closeEditModal() {
+    document.getElementById('edit-banner-modal').style.display = 'none';
+    document.body.classList.remove('modal-open');
+}
+function submitEditForm() {
+    var form = $('#edit-banner-form');
+    console.log(new FormData(form[0]));
+    var formData = new FormData(form[0]);
+    formData.append('article_content', editorInstance.getData());
+    $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function() {
+            closeEditModal();
+            location.reload();  // Reload the page to reflect changes
+        }
+    });
+}
+document.getElementById('id_mini_article_photo').addEventListener('change', function(event) {
+    if (event.target.files.length > 0) {
+        document.getElementById('current-photo').src = URL.createObjectURL(event.target.files[0]);
+    }
+});
 </script>
