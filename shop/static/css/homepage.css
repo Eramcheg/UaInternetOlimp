@@ -59,14 +59,17 @@ body{
 
 .product-container p{
     color: black;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     font-family: 'Montserrat-Bold', sans-serif;
     font-weight: 700;
-    margin: 0;
-
+    margin: 15px 0 18px 0;
 }
 
+.product-container img{
+
+    border-radius: 6px;
+}
 
 .img-section{
     width: 200px!important;
