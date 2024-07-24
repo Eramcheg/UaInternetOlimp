@@ -21,7 +21,7 @@ from shop.views import ArticleDetailView, news_main_view
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
-    move_down_article
+    move_down_article, edit_article
 from shop.views_scripts.manage_banners.banners_managing import move_down, move_up, delete_banner
 from shop.views_scripts.orders_control.bulk_change_statuses import change_statuses
 from shop.views_scripts.orders_control.download_order import download_csv_order, download_pdf_w_img, \
@@ -117,6 +117,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article_detail'),
     path('create-article/', create_article, name='create_article'),
+    path('edit_article/<int:article_id>/', edit_article, name='edit_article'),
     path('delete-article/<int:article_id>/', delete_article, name='delete_article'),
     path('move-up-article/<int:article_id>/', move_up_article, name='move_up_article'),
     path('move-down-article/<int:article_id>/', move_down_article, name='move_down_article'),

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from shop.forms import ArticleForm
 from shop.models import Article
@@ -23,6 +23,31 @@ def create_article(request):
     articles = Article.objects.all().order_by('priority')
     print(articles)
     return render(request, 'admin_tools/AT_manage_articles.html', {'feature_name': "manage_articles", 'form': form, "articles": articles})
+
+def edit_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == 'GET':
+        # Serialize the article data for the edit form
+        data = {
+            'article_name': article.article_name,
+            'article_content': article.article_content,
+            'mini_article_name': article.mini_article_name,
+            'mini_article_text': article.mini_article_text,
+            'mini_article_photo': article.mini_article_photo.url
+        }
+        return JsonResponse(data)
+    elif request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            # Save the form without committing to the database
+            article = form.save(commit=False)
+            # Set the article_content field explicitly
+            article.article_content = request.POST.get('article_content')
+            article.save()  # Now save the article to the database
+            return JsonResponse({'success': True})
+        else:
+            print(form.errors.as_data())
+            return JsonResponse({'errors': form.errors}, status=400)
 
 @login_required
 @user_passes_test(is_admin)
