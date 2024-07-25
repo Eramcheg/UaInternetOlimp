@@ -52,6 +52,62 @@ ul li{
     display: flex;
 }
 
+#id_article_name, #id_mini_article_name{
+    height: 30px;
+    width: 500px;
+
+    padding: 20px 20px;
+}
+#id_mini_article_text{
+    height: 100px;
+
+    padding: 10px 6px;
+}
+#id_article_name, #id_mini_article_name, #id_mini_article_text{
+    border-radius: 4px;
+    border: 2px solid #d5d5d5;
+}
+label{
+    font-size: 22px;
+    font-family: 'Montserrat-Bold', sans-serif;
+    font-weight: 600;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 50px;
+  position: absolute;
+    left: 0;
+    bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.profile-image-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  padding: 20px 10px 10px 10px;
+}
+.btn-upload {
+  border: none;
+  background-color: #e6eff8;
+  color: #005bbb;
+  cursor: pointer;
+  padding: 16px 42px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+}
+.profile-image{
+  display: flex;
+}
+
 /* Modal content */
 .modal-content {
     background-color: #fefefe;

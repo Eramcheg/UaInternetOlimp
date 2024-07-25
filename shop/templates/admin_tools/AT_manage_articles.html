@@ -1,7 +1,13 @@
 {% load static %}
 {% load i18n %}
+{% block header %}
+    {{ form.media }}
+{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {#    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>#}
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/theme-lark.css">
+{#<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>#}
+
 <link rel="stylesheet" href="{% static "css/admin_tools/manage_articles.css" %}">
 
 <section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
@@ -10,18 +16,18 @@
         <ul id="banners-list">
             {% for article in articles %}
                 <li id="banner-{{ article.id }}" data-priority="{{ article.priority }}">
-                    <div style="border: 1px solid black; display: flex; flex-direction: column; align-items: center">
+                    <div style="border: 2px solid #e3e3e3;border-radius: 5px; display: flex; flex-direction: column; align-items: center; max-width: 500px; padding: 10px 10px">
                         <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" height="120" width="300">
                         <div style="display: flex; flex-direction: column; align-items: center">
-                            <h1>{{ article.mini_article_name }}</h1>
+                            <h2>{{ article.mini_article_name }}</h2>
                             <span>{{ article.mini_article_text }}</span>
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column; margin: auto 10px; align-items: center">
                         <button class="up-button" onclick="moveUp(this, '{{ article.id }}')" data-url="{% url 'move_up_article' article_id=article.id %}"><i class="fa-solid fa-arrow-up"></i></button>
                         <button class="down-button" onclick="moveDown(this, '{{ article.id }}')" data-url="{% url 'move_down_article' article_id=article.id %}"><i class="fa-solid fa-arrow-down"></i></button>
-                        <button class="delete-button" onclick="deleteBanner(this, '{{ article.id }}')" data-url="{% url 'delete_article' article_id=article.id %}" style="margin-top: 15px">Delete</button>
-                        <button class="edit-button" onclick="editBanner(this,'{{ article.id }}')" data-url="{% url 'edit_article' article_id=article.id %}" style="margin-top: 15px">Edit</button>
+                        <button class="delete-button" onclick="deleteBanner(this, '{{ article.id }}')" data-url="{% url 'delete_article' article_id=article.id %}" style="margin-top: 15px">Видалити</button>
+                        <button class="edit-button" onclick="editBanner(this,'{{ article.id }}')" data-url="{% url 'edit_article' article_id=article.id %}" style="margin-top: 15px">Редагувати</button>
                     </div>
                 </li>
             {% endfor %}
@@ -30,45 +36,33 @@
         <p><h1>Тут ще немає жодних новин.</h1></p>
     {% endif %}
 <div class="banners-footer">
-    <button class="add-new-banner" id="add-banner-btn">Add new banner</button>
-</div>
-
-<div id="banner-form" style="display:none;">
-    <form method="post" action="{% url 'create_article' %}" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        <h2>Додати статтю</h2>
-        {% for field in form %}
-            <p class="form-wrapper">
-                {{ field.label_tag }}<br>
-                {{ field }}
-                {% if field.help_text %}
-                    <small style="color: grey">{{ field.help_text }}</small>
-                {% endif %}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <div style="color: red">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </p>
-            <hr>
-        {% endfor %}
-        <button class="submit" type="submit">Submit</button>
-        <button class="cancel" type="button" onclick="cancelForm()">Cancel</button>
-    </form>
+    <button class="add-new-banner" id="add-banner-btn" onclick="createBanner(this)" data-url="{% url 'create_article' %}">Створити нову статтю</button>
 </div>
 <div id="edit-banner-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="close" onclick="closeEditModal()">&times;</span>
-        <h2>Edit Article</h2>
+        <h2 id="modal-header-main">Edit Article</h2>
         <form id="edit-banner-form" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             {% for field in form %}
                 <p class="form-wrapper">
                     {{ field.label_tag }}<br>
-                    {{ field }}
                     {% if field.name == 'mini_article_photo' %}
-                        <img id="current-photo" src="" alt="Current Photo" style="max-width: 200px; max-height: 200px;">
+                        <div class="profile-image">
+                            <img id="current-photo" src="" alt="Current Photo" style="max-width: 200px; max-height: 200px;">
+                            <div class="profile-image-text">
+                                <label class="label-profilePicture" for="profilePicture">Формат JPG або PNG, максимум 5 MB</label>
+                                <div class="upload-btn-wrapper">
+                                    <button class="btn-upload">Завантажити фото</button>
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                    {{ field }}
                     {% endif %}
+
+
                     {% if field.help_text %}
                         <small style="color: grey">{{ field.help_text }}</small>
                     {% endif %}
@@ -80,8 +74,8 @@
                 </p>
                 <hr>
             {% endfor %}
-            <button class="submit" type="button" onclick="submitEditForm()">Submit</button>
-            <button class="cancel" type="button" onclick="closeEditModal()">Cancel</button>
+            <button class="submit" type="button" onclick="submitEditForm()">Закінчити</button>
+            <button class="cancel" type="button" onclick="closeEditModal()">Відмінити</button>
         </form>
     </div>
 </div>
@@ -91,19 +85,9 @@ let editorInstance;
 
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById('edit-banner-form');
-        const editorContainer = form.querySelector('.ck-editor-container');
-        ClassicEditor
-            .create(editorContainer)
-            .then(editor => {
-                editorInstance = editor;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    });
-    document.getElementById('add-banner-btn').addEventListener('click', function() {
-        document.getElementById('banner-form').style.display = 'block';
-                    console.log("{{ articles }}");
+        const editorContainer = form.querySelector('.ck-editor-container textarea');
+        editorInstance = window.editors[editorContainer.id];
+
     });
 
 function cancelForm() {
@@ -160,6 +144,7 @@ function moveDown(element, bannerId) {
     });
 }
 function editBanner(element, bannerId) {
+    document.getElementById('modal-header-main').textContent= "Редагування статті";
     var url = $(element).data('url');
 
     $.ajax({
@@ -177,10 +162,23 @@ function editBanner(element, bannerId) {
             $('#edit-banner-form img').attr('src', data.mini_article_photo.toString());
             $('#edit-banner-form').attr('action', url);
             document.getElementById('edit-banner-modal').style.display = 'block';
-
             document.body.classList.add('modal-open');
         }
     });
+}
+function createBanner(element){
+    document.getElementById('modal-header-main').textContent= "Створення статті";
+    var url = $(element).data('url');
+    $('#edit-banner-form').attr('action', url);
+    if (editorInstance) {
+                editorInstance.setData('');
+            }
+    $('#edit-banner-form input[name="article_name"]').val('');
+    $('#edit-banner-form input[name="mini_article_name"]').val('');
+    $('#edit-banner-form textarea[name="mini_article_text"]').val('');
+    $('#edit-banner-form img').attr('src', '');
+    document.getElementById('edit-banner-modal').style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 function closeEditModal() {
