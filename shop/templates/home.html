@@ -14,52 +14,187 @@
     <script src="{% static "js/productsTransmutation.js" %}"></script>
     {% include 'widgets/navigation_bar.html' %}
 </head>
-<body>
-<div class="centered-container">
+<style>
+    *{
+        font-family:{% static "fonts/montserrat/dir1/Montserrat-Regular.ttf" %}!important;
+    }
+</style>
+<body style="">
+<div>
+    <div class="higher-container" >
+        <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
+        </div>
+        <div class="center-high">
 
-    <div class="news-text-container">
-        <div class="left-news-text">
-            <span class="small-text-news"> НОВИНИ </span>
-            <h3> Новини олімпіади з фізики </h3>
-        </div>
-        <div class="right-news-text">
-            <a class="small-text-next-news" href="{% url "news_main" %}"> Всі новини <i class="fa-solid fa-arrow-right"></i> </a>
-        </div>
-    </div>
-    <div class="containerr">
-        <div class="carousel-view">
-            <button id="prev-btn" class="prev-btn">
-                <svg viewBox="0 0 512 512" width="20" title="chevron-circle-left">
-                    <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
-                </svg>
-            </button>
-            <div id="item-list" class="item-list">
-               {% for article in articles %}
-                <div class="news-container">
-                    <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" >
-{#                    <h3>{{ article.article_name }}</h3>#}
-                    <p>{{ article.mini_article_text }}</p>
-                    <a href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                {% empty %}
-                <p>No articles found.</p>
-                {% endfor %}
+            <div class="container-for-texts">
+                <h1>
+                    Ласкаво просимо на <bluetext>Міжнародну олімпіаду з фізики </bluetext>
+                </h1>
+
+                <span>
+                    Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою!
+                    Відбірковий конкурс на Міжнародну фізичну олімпіаду, фізичну олімпіаду в Німеччині, кидає виклик.
+                </span>
             </div>
-            <button id="next-btn" class="next-btn">
-                <svg viewBox="0 0 512 512" width="20" title="chevron-circle-right">
-                    <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
-                </svg>
-            </button>
+
+
+        </div>
+        <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
+            <div class="text-frame">
+                <div class="main-text">
+                    <span class="header5">Тепер почніть 1-й раунд</span>
+                    <span class="text">Ви перевертаєтесь до фізики? Тоді отримайте завдання та приєднуйтесь.…</span>
+                </div>
+                <div>
+                    <a class="frame-link" href="{% url "home" %}"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>  {# TODO: добавить в ссылку href #}
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="date-container" style="background-image: url('{% static "images/home/imgs/dateBox.svg" %}')">
+        <div class="timeline">
+            <div class="progress"></div>
+            <div class="milestone" data-date="2024-03-14"><span>14.03</span></div>
+            <div class="milestone" data-date="2024-05-18"><span>18.05</span></div>
+            <div class="milestone" data-date="2024-07-16"><span>16.07</span></div>
+            <div class="milestone" data-date="2024-07-29"><span>07.29</span></div>
+            <div class="milestone" data-date="2024-09-26"><span>26.09</span></div>
+            <div class="milestone" data-date="2024-11-11"><span>11.11</span></div>
+        </div>
+        <div class="current-date" style="display: none">
+            Today is <span id="currentDate"></span>
+        </div>
+    </div>
+
+    <div class="sub-news-container">
+        <div class="inner-sub-news">
+            <img src="{% static "images/home/imgs/01 2.svg" %}" alt="">
+            <div class="main-body">
+                <div class="main-text">
+                    <h1>
+                        Вогонь і полум'я для фізики?
+                    </h1>
+                    <span class="text">
+                        Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою!
+                        Відбірковий конкурс на Міжнародну фізичну олімпіаду, фізичну олімпіаду в Німеччині,
+                        кидає виклик і підтримує студентів, які люблять фізику, захоплюючими завданнями,
+                        привабливими призами та багатьма додатковими пропозиціями – вже з першого туру.
+                        Зрештою, бути там (майже) все.
+                    </span>
+                </div>
+
+                <div>
+                    <button class="blue-button">Детальніше <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="centered-container">
+        <div class="news-text-container">
+            <div class="left-news-text">
+                <span class="small-text-news"> НОВИНИ </span>
+                <h3> Новини олімпіади з фізики </h3>
+            </div>
+            <div class="right-news-text">
+                <a class="small-text-next-news" href="{% url "news_main" %}"> Всі новини <i class="fa-solid fa-arrow-right"></i> </a>
+            </div>
+        </div>
+        <div class="containerr">
+            <div class="carousel-view">
+                <button id="prev-btn" class="prev-btn">
+                    <svg viewBox="0 0 512 512" width="20" title="chevron-circle-left">
+                        <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
+                    </svg>
+                </button>
+                <div id="item-list" class="item-list">
+                   {% for article in articles %}
+                    <div class="news-container">
+                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" >
+    {#                    <h3>{{ article.article_name }}</h3>#}
+                        <p>{{ article.mini_article_text }}</p>
+                        <a href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    {% empty %}
+                    <p>No articles found.</p>
+                    {% endfor %}
+                </div>
+                <button id="next-btn" class="next-btn">
+                    <svg viewBox="0 0 512 512" width="20" title="chevron-circle-right">
+                        <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-post-news">
+        <div class="background-purposes-1" style="background-image: url('{% static "images/home/imgs/purposes1.svg" %}')"></div>
+        <div class="background-purposes-2" style="background:linear-gradient(to bottom, white, rgba(255, 255, 255, 0)), url('{% static "images/home/imgs/purposes2.svg" %}')"></div>
+        <div class="post-news-wrapper">
+            <div class="purpose-container">
+                <div class="text-header">
+                    <h1>Олімпіада з фізики для...</h1>
+                </div>
+                <div class="purposes">
+                    <div class="purpose">
+                        <img src="{% static "images/home/imgs/profile-2user.svg" %}" width="48" height="48">
+                        <h3>Учнів</h3>
+                        <span class="text">Олімпіада з фізики пропонує вам різноманітні можливості для інтенсивної роботи з питаннями фізики, відчути фізику як захоплюючу наукову дисципліну, перевірити власні межі та, що не менш важливо, познайомитися з цікавими людьми.</span>
+                        <span class="text">До турів конкурсу додаються матеріали та завдання , які допоможуть поглибити знання та навички розв’язування задач. На семінарах ви зустрінете інших молодих людей, які захоплюються фізикою.</span>
+                        <span class="text">Участь однозначно варта того, незалежно від того, чи потрапите ви до вищих раундів. Участь у першому турі вже є особливим досягненням. Програти можуть лише ті, хто не бере участь.</span>
+                    </div>
+                    <div class="purpose">
+                        <img src="{% static "images/home/imgs/briefcase.svg" %}" width="48" height="48">
+                        <h3>Вчителів</h3>
+                        <span class="text">Олімпіада з фізики пропонує вам різноманітні можливості для інтенсивної роботи з питаннями фізики, відчути фізику як захоплюючу наукову дисципліну, перевірити власні межі та, що не менш важливо, познайомитися з цікавими людьми.</span>
+                        <span class="text">До турів конкурсу додаються матеріали та завдання , які допоможуть поглибити знання та навички розв’язування задач. На семінарах ви зустрінете інших молодих людей, які захоплюються фізикою.</span>
+                        <span class="text">Участь однозначно варта того, незалежно від того, чи потрапите ви до вищих раундів. Участь у першому турі вже є особливим досягненням. Програти можуть лише ті, хто не бере участь.</span>
+                    </div>
+                    <div class="purpose">
+                        <img src="{% static "images/home/imgs/buildings.svg" %}" width="48" height="48">
+                        <h3>Шкіл</h3>
+                        <span class="text">Олімпіада з фізики пропонує вам різноманітні можливості для інтенсивної роботи з питаннями фізики, відчути фізику як захоплюючу наукову дисципліну, перевірити власні межі та, що не менш важливо, познайомитися з цікавими людьми.</span>
+                        <span class="text">До турів конкурсу додаються матеріали та завдання , які допоможуть поглибити знання та навички розв’язування задач. На семінарах ви зустрінете інших молодих людей, які захоплюються фізикою.</span>
+                        <span class="text">Участь однозначно варта того, незалежно від того, чи потрапите ви до вищих раундів. Участь у першому турі вже є особливим досягненням. Програти можуть лише ті, хто не бере участь.</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="etaps-container">
+                <div class="titles">
+                    <h3>ЕТАПИ</h3>
+                    <h1>Почніть змагання негайно</h1>
+                </div>
+                <div class="etaps">
+                    <div class="first-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                        <span class="poznachka">1 ТУР</span>
+                        <span class="title-1">Інформація та матеріали до 1-го туру</span>
+                        <span class="text">
+                            Олімпіада з фізики пропонує вам різноманітні можливості для
+                            інтенсивної роботи з питаннями фізики, відчути фізику як
+                            захоплюючу наукову дисципліну, перевірити власні межі та,
+                            що не менш важливо, познайомитися з цікавими людьми.
+                        </span>
+                        <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
+                    </div>
+                    <div class="online-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                        <span class="poznachka">Онлайн портал</span>
+                        <span class="title-1">Реєстрація на олімпіаду з фізики та онлайн-портал ScienceOlympiad</span>
+                        <span class="text">
+                            Олімпіада з фізики пропонує вам різноманітні можливості для
+                            інтенсивної роботи з питаннями фізики, відчути фізику як
+                            захоплюючу наукову дисципліну, перевірити власні межі та,
+                            що не менш важливо, познайомитися з цікавими людьми.
+                        </span>
+                        <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important; "> На сторінку порталу <i class="fas fa-arrow-right"></i> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<dialog id="product-card">
-
-</dialog>
-<dialog id="product-card-success" >
-
-</dialog>
 {% include "widgets/footer.html" %}
 </body>
 <script>
@@ -100,13 +235,48 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", async function () {
 
+
+    document.addEventListener("DOMContentLoaded", function() {
         setupItemsCarousel();
+        const milestones = document.querySelectorAll(".milestone");
+            const progressBar = document.querySelector(".progress");
+            const currentDateElem = document.getElementById("currentDate");
 
-    });
+            const currentDate = new Date();
+            currentDateElem.textContent = currentDate.toLocaleDateString();
 
+            let startDate = new Date(milestones[0].dataset.date);
+            let endDate = new Date(milestones[milestones.length - 1].dataset.date);
 
+            milestones.forEach((milestone, index) => {
+                let milestoneDate = new Date(milestone.dataset.date);
+
+                // Рассчитываем позицию контрольной точки в процентах от начала
+                let milestonePercent = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
+                milestone.style.left = `${milestonePercent}%`;
+
+                // Если текущая дата больше или равна дате контрольной точки, активируем её
+                if (currentDate >= milestoneDate) {
+                    milestone.classList.add("active");
+
+                    if (index < milestones.length - 1) {
+                        let nextMilestoneDate = new Date(milestones[index + 1].dataset.date);
+                        let nextMilestonePercent = ((nextMilestoneDate - startDate) / (endDate - startDate)) * 100;
+
+                        let progressPercent = milestonePercent + ((nextMilestonePercent - milestonePercent) * (currentDate - milestoneDate) / (nextMilestoneDate - milestoneDate));
+                        progressBar.style.width = `${progressPercent}%`;
+                    } else {
+                        progressBar.style.width = `${milestonePercent}%`;
+                    }
+                }
+            });
+
+            // Если текущая дата больше конечной даты, заполняем прогресс полностью
+            if (currentDate >= endDate) {
+                progressBar.style.width = "100%";
+            }
+        });
 </script>
 </html>
 {%endblock%}
