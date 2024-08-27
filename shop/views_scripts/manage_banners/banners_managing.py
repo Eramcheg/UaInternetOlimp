@@ -2,8 +2,6 @@ import ast
 import random
 from datetime import datetime
 from random import randint
-import geoip2.database
-
 import concurrent.futures
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
