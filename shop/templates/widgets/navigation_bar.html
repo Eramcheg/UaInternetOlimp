@@ -10,90 +10,97 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<div class="this-page" >
+<div class="this-page">
     <div class="toolbar large">
-        <a></a>
-        <a></a>
-        <a></a>
-        <a></a>
-        <a></a>
-        <div class="logo" >
-            <img class="imag" src="{% static "LogoOlimp.png" %}"/>
+        <div class="pc-view">
+            <div class="logo">
+                <img class="imag" src="{% static 'LogoOlimp.png' %}"/>
+            </div>
+            <a href="{% url 'home' %}" class="link">Головна</a>
+            <div class="dropdown-container">
+                <a class="link materials-dropdown-trigger">Матеріали</a>
+                <div id="dropdownMenu" class="menu">
+                    <ul>
+                        <li><a href="{% url 'materials' %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
+                        <li><a href="{% url 'materials' %}?page=solutions" class="dropdown-link" title="Рішення">Рішення</a></li>
+                        <li><a href="{% url 'materials' %}?page=results" class="dropdown-link" title="Результати">Результати</a></li>
+                        <li><a href="{% url 'materials' %}?page=other" class="dropdown-link" title="Інше">Інше</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a href="{% url 'news_main' %}" class="link">Новини</a>
+            <a href="{% url 'home' %}" class="link">Контакти</a>
+            {% if user.email == "uainternetolimp@gmail.com" %}
+                <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Адмін</a>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <a href="{% url 'login'%}" class="link-auth"><img src="{% static 'icons/Vector.png' %}"> Авторизація</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <span class="icons-container">
+                    <div class="dropdown-container-account">
+                        <span class="icon-link account-link-wrapper account-dropdown-trigger" onclick="dropdownTrigger()">
+                            <a id="account-icon">
+                                <div id="account-icon-photo">
+                                    <span></span>
+                                </div>
+                                <span style="margin-top: 6px">
+                                    {% if user.username %}
+                                        {{ user.username }}
+                                    {% elif user.email %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                </span>
+                            </a>
+                        </span>
+                        <div id="accountDropdownMenu" class="menu">
+                            <ul>
+                                <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
+                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
+                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Завантажити">Завантажити</a></li>
+                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Розв’язки">Розв’язки</a></li>
+                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
+                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Персональні дані">Персональні дані</a></li>
+                                <li><a href="{% url 'logout' %}" class="dropdown-link" title="Вийти">Вийти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </span>
+            {% endif %}
         </div>
-        <a></a>
-        <a></a>
-        <a href="{% url 'home' %}" class="link"> Головна </a>
-        <div class="dropdown-container">
-            <a class="link materials-dropdown-trigger">Матеріали</a>
-            <div id="dropdownMenu" class="menu">
+        <div class="mobile-view">
+            <div class="logo">
+                <img class="imag" src="{% static 'LogoOlimp.png' %}"/>
+            </div>
+
+            <div class="right-links-container">
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'login'%}" class="link-auth"><img src="{% static 'icons/Vector.png' %}"> </a>
+                {% endif %}
+                <div class="dropdown-links" id="dropdownTrigger">
+                    <img id="menuIcon" src="{% static 'icons/Menu.png' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay-mobile" class="overlay-mobile hidden">
+        <div class="mobile-dropdown-container">
+            <div id="dropdownMenu" class="menu-mobile">
                 <ul>
-                    <li><a href="{% url "materials" %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
-                    <li><a href="{% url "materials" %}?page=solutions" class="dropdown-link" title="Рішення">Рішення</a></li>
-                    <li><a href="{% url "materials" %}?page=results" class="dropdown-link" title="Результати">Результати</a></li>
-                    <li><a href="{% url "materials" %}?page=other" class="dropdown-link" title="Інше">Інше</a></li>
+                    <li><a href="{% url 'home' %}" class="dropdown-link-mobile" title="Головна">Головна</a></li>
+                    <hr class="hr-link">
+
+                    <li><a href="{% url 'news_main' %}" class="dropdown-link-mobile" title="Новини">Новини</a></li>
+                    <hr class="hr-link">
+                    <li><a href="{% url 'home' %}" class="dropdown-link-mobile" title="Контакти">Контакти</a></li>
+{#                    <hr class="hr-link">#}
+{#                    <li><a href="{% url 'materials' %}?page=other" class="dropdown-link-mobile" title="Інше">Інше</a></li>#}
+                    <hr class="hr-link">
                 </ul>
             </div>
         </div>
-        <a href="{% url 'news_main' %}" class="link"> Новини </a>
-        <a href="{% url 'home' %}" class="link"> Контакти </a>
-        {% if user.email == "uainternetolimp@gmail.com" %}
-
-            <a href="{% url 'admin_tools' feature_name='home' %}" class="link"> Адмін </a>
-        {% endif %}
-{#        {% if role == "Student" %}#}
-{#            <a href="{% url 'student_tools' feature_name='home' %}" class="link"> Меню учасника олімпіади </a>#}
-{#        {% elif role == "Jury" %}#}
-{#            <a href="{% url 'jury_tools' feature_name='home' %}" class="link"> Меню члена жюри </a>#}
-{#        {% endif %}#}
-            <a></a>
-
-        {% if user.is_authenticated %}
-            <a></a>
-        {% else %}
-            <a href="{% url 'login'%}" class="link-auth"><img src="{% static "icons/Vector.png" %}"> Авторизація</a>
-            <a></a>
-            <a></a>
-        {% endif %}
-            <a></a>
-            <a></a>
-            <a></a>
-        <span class="icons-container">
-            {% if user.is_authenticated %}
-                <div class="dropdown-container-account">
-                    <span class="icon-link account-link-wrapper account-dropdown-trigger" onclick="dropdownTrigger()">
-                        <a id="account-icon">
-                            <div id="account-icon-photo">
-                               <span>  </span>
-                            </div>
-                            <span style="margin-top: 6px">
-                                {% if user.username %}
-                                    {{ user.username }}
-                                {% elif user.email %}
-                                    {{ user.email }}
-                                {% else %}
-
-                                {% endif %}
-                            </span>
-                        </a>
-                    </span>
-                    <div id="accountDropdownMenu" class="menu">
-                        <ul>
-                            <li><a href="{% url "profile" feature_name="account" %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
-                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Список задач" >Список задач</a></li>
-                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Завантажити" >Завантажити</a></li>
-                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Розв’язки" >Розв’язки</a></li>
-                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Чат з питаннями" >Чат з питаннями</a></li>
-                            <li><a href="{% url "profile" feature_name="account"%}" class="dropdown-link" title="Персональні дані" >Персональні дані</a></li>
-                            <li><a href="{% url "logout" %}" class="dropdown-link" title="Вийти">Вийти</a></li>
-                        </ul>
-                    </div>
-                </div>
-            {% endif %}
-        </span>
-        <a></a>
-        <a></a>
     </div>
     <a></a>
     <a></a>
@@ -102,12 +109,31 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", () => {
-    const photo= document.getElementById('account-icon-photo');
+    var dropdownTrigger = document.getElementById("dropdownTrigger");
+    var overlay = document.getElementById("overlay-mobile");
+    var menuIcon = document.getElementById("menuIcon");
+
+    dropdownTrigger.addEventListener("click", function() {
+        overlay.classList.toggle("visible");
+        overlay.classList.toggle("hidden");
+        menuIcon.src = overlay.classList.contains("visible")
+            ? "{% static 'icons/Cross.png' %}"
+            : "{% static 'icons/Menu.png' %}";
+    });
+
+    // Закрываем оверлей при клике на любую ссылку или на сам оверлей
+    overlay.addEventListener("click", function(e) {
+        if (e.target === overlay || e.target.tagName === "A") {
+            overlay.classList.remove("visible");
+            overlay.classList.add("hidden");
+            menuIcon.src = "{% static 'icons/Menu.png' %}";
+        }
+    });
 });
 
 document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
-    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    dropdownMenu.classList.toggle('open');
     event.stopPropagation();
 });
 function dropdownTrigger(){
@@ -126,7 +152,6 @@ document.addEventListener('click', function() {
     }
 });
 
-let isCheckout = false;
 let key = "{{ session.session_key }}";
 
 

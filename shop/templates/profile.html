@@ -17,18 +17,16 @@
             {% include 'profile/profile_side_menu.html' %}
             {% if feature_name == 'dashboard' %}
                 {% include 'profile/profile_dashboard.html' %}
-            {% elif feature_name == 'orders' %}
-                {% include 'profile/profile_orders.html' %}
+            {% elif feature_name == 'tasks' %}
+                {% include 'uaolimpiad/tools/profile_tasks.html' %}
             {% elif feature_name == 'account' %}
                 {% include 'profile/profile_information.html' %}
-            {% elif feature_name == 'addresses' %}
-                {% include 'profile/profile_addresses.html' %}
-            {% elif feature_name == 'new_address' %}
-                {% include 'profile/profile_create_address.html' %}
-            {% elif feature_name == 'update_address' %}
-                {% include 'profile/profile_update_address.html' %}
-            {% elif feature_name == 'favourites' %}
-                {% include 'profile/profile_favourites.html' %}
+            {% elif feature_name == 'upload' %}
+                {% include 'uaolimpiad/tools/profile_upload.html' %}
+            {% elif feature_name == 'solutions' %}
+                {% include 'uaolimpiad/tools/profile_solutions.html' %}
+            {% elif feature_name == 'chat' %}
+                {% include 'uaolimpiad/tools/profile_chat.html' %}
             {% endif %}
         </div>
 {% include "widgets/footer.html" %}
