@@ -20,7 +20,7 @@
             </div>
             <a href="{% url 'home' %}" class="link">Головна</a>
             <div class="dropdown-container">
-                <a class="link materials-dropdown-trigger">Матеріали</a>
+                <a class="link" href="{% url 'materials' %}">Матеріали</a> {# class="link materials-dropdown-trigger" #}
                 <div id="dropdownMenu" class="menu">
                     <ul>
                         <li><a href="{% url 'materials' %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
@@ -131,11 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    dropdownMenu.classList.toggle('open');
-    event.stopPropagation();
-});
+{#document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {#}
+{#    const dropdownMenu = document.getElementById('dropdownMenu');#}
+{#    dropdownMenu.classList.toggle('open');#}
+{#    event.stopPropagation();#}
+{#);#}
 function dropdownTrigger(){
 {#document.querySelector('.account-dropdown-trigger').addEventListener('click', function(event) {#}
     const dropdownMenu = document.getElementById('accountDropdownMenu');

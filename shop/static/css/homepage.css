@@ -85,16 +85,6 @@ bluetext{
     color: #4D4D4B;
 }
 
-.frame-link{
-    text-decoration: none;
-    color: #005bbb!important;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-}
-.frame-link:hover{
-    text-decoration: none;
-}
 .date-container{
     height: 220px;
     display: flex;
@@ -186,16 +176,7 @@ bluetext{
     font-size: 14px;
     color: #4D4D4B;
 }
-.blue-button{
-    color: white!important;
-    background-color: #005bbb;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 14px 30px 14px 26px;
-    border-radius: 4px;
-    border: none;
-}
+
 
 .centered-container {
     margin-top: 20px;
@@ -364,17 +345,7 @@ bluetext{
     gap: 32px;
 }
 
-.poznachka{
-    color: #005BBB;
-    background-color: #F9F9F9;
-    padding: 5px 16px;
-    border-radius: 100px;
-}
-.title-1{
-    font-weight: 600;
-    font-size: 24px;
-    color: #f9f9f9;
-}
+
 .first-tour-info .text, .online-tour-info .text{
     font-size: 14px;
     text-align: center;
