@@ -1,14 +1,50 @@
+* {
+    box-sizing: border-box;
+    max-width: 100vw;
+    /*overflow-x: hidden;*/
+}
+body{
+    overflow-x: hidden;
+}
+
 .toolbar {
     background-color: #f9f9f9;
     padding: 6px;
-    display: flex;
+    position: fixed; /* Закрепляем элемент вверху */
+    top: 0;
+    left: 0;
     width: 100%;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;
+    max-width: 100vw;
+    z-index: 10; /* Поверх другого контента */
+    transition: height 0.2s ease-in-out; /* Плавный переход высоты */
+    margin-bottom: 100px;
     border-bottom: 1px solid #eeeeee;
 }
 
+@media only screen and (min-width: 769px)  {
+    .pc-view {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: space-between;
+    }
+    .mobile-view{
+        display: none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .pc-view{
+        display: none;
+    }
+    .mobile-view {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: space-between;
+    }
+}
 .logo img {
     margin-left: 10px;
     margin-right: 10px;
@@ -66,8 +102,6 @@
 .link:hover::after {
     width: 100%;
 }
-
-
 
 .link:hover {
     color: #005bbb !important;
@@ -157,30 +191,8 @@ ul,li {
  #logout-icon{
      margin-top: 10px;
  }
- #cartBtn{
-      margin-right: 10px;
-     margin-top: 5px;
-     cursor: pointer;
- }
-.cart-panel, .accPanel{
-    height: 100%;
-    position: fixed;
-    z-index: 1111;
-    top: 0;
-    right: -420px; /* Ensure this matches the panel width to start off-screen */
-    width: 420px; /* Fixed width */
-    transition: right 0.4s; /* Animate the right property */
-    background-color: white;
-    overflow: hidden; /* Prevents overflow content from being visible */
-    padding-top: 60px;
-    /* Add box shadow or other styles as needed */
-}
 
-.cart-panel.open , .accPanel.open{
-    /*right: 0;!* Or any other width *!*/
-    right: 0;
-    display: "";
-}
+
 .overlay {
     display: none; /* Hidden by default */
     position: fixed;
@@ -191,305 +203,17 @@ ul,li {
     background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
     z-index: 1100; /* Ensure it's below the cart panel but above other content */
 }
-.cart-panel, .accPanel {
-    /* Other styles remain the same */
-    display: flex;
-    flex-direction: column;
-}
-
-.cart-header, .cart-footer {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.cart-footer{
-    flex-direction: column;
-}
-.cart-header{
-}
-.shopping-cart-span{
-    font-size: 22px;
-    color:#1c1c1c !important;
-}
-#closeCartBtn{
-    cursor: pointer;
-    font-size: 22px;
-    transition: 0.3s;
-    margin-right: 20px;
-}
-#closeCartBtn:hover{
-    color: #919191;
-
-}
-.cart-items {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.checkout-btn {
-    width: 90%;
-    /* Centers the button and ensures 90% width */
-    padding: 22px 32px;
-    background-color: #003765; /* Example color */
-    border-radius: 7px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin: 10px 5% 50px;
-}
-.cart-header, .cart-items, .cart-footer {
-    padding: 15px; /* Adjust padding as needed */
-}
-.attrs-container{
-    display: flex;
-    width:100%;
-    justify-content: space-between;
-}
-.cart-first-attrs-column{
-    display: flex;
-    flex-direction: column;
-    margin-left: 15px;
-}
-.cart-first-attrs-column span{
-    font-size: 12px;
-    color: #8d8d8d
-}
-
-
-.cart-product-name{
-    font-size: 14px!important;
-    color: #1c1c1c !important;
-}
-
-.mini-cart-product{
-    display: flex;
-}
-
-.cart-second-attrs-column{
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
-    text-align: center;
-    color: #1c1c1c !important;
-}
-
-.mini-cart-product-price{
-    margin-top: 20px;
-    font-size: 14px;
-}
-.mini-cart-product-quantity{
-    margin-top: 15px;
-    font-size: 13px;
-}
-
-.subtotal{
-  color:#1c1c1c !important;
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 20px 0 20px;
-  font-size: 18px;
-}
-.cart-footer hr {
-    background-color: #1c1c1c; /* Color of the hr line */
-    height: 3px; /* Thickness of the hr line */
-    width: 100%;
-    border: none; /* Removes the default border */
-    opacity: 1; /* Ensure it's fully opaque */
-    margin-top: 0;
-}
-.mini-cart-product {
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-  max-height: 200px; /* Adjust based on your item's actual height */
-}
-
-.delete-panel {
-  display: flex;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0; /* Initial width is 0 */
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  overflow: hidden; /* Ensures content is clipped during transition */
-  transition: width 0.3s ease; /* Smooth transition for width */
-}
-
-.mini-cart-product:hover .delete-panel {
-  width: 30px; /* Expand width on hover */
-}
-
-.delete-icon {
-  color: white;
-  cursor: pointer;
-  visibility: hidden; /* Initially hide the delete icon */
-    padding: 10px 5px 10px 5px;
-}
-
-.mini-cart-product:hover .delete-icon {
-  visibility: visible; /* Only show icon when panel is fully visible */
-}
-.delete-icon-tooltip {
-  position: fixed; /* Use fixed positioning relative to the viewport */
-  transform: translate(-50%, 0); /* Adjust if necessary for your design */
-  background-color: black;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
-}
-
-.delete-icon:hover + .delete-icon-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transition-delay: 0s; /* Remove delay when showing tooltip */
-}
-
-
-.item-deleting {
-  opacity: 0;
-  transform: translateX(-100%);
-  max-height: 0; /* Triggers the transition */
-}
-.empty-cart-container {
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s ease-out;
-    display: none; /* Initially hidden */
-}
 
 /* Style to make the container visible and fade in */
-.show-empty-cart {
-    display: block;
-    opacity: 1;
-}
-.empty-message{
-    margin-top: 20px;
-    color:#1c1c1c;
-    font-size: 16px;
-
-}
-.cart-items-container {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Set to 100% of the viewport height, or the height you want */
-}
-
-
-.close_cross{
-    cursor: pointer;
-    transition: opacity 0.3s;
-}
-.close_cross:hover{
-    opacity: 0.5;
-}
-.accPanel{
-    padding: 50px 24px 0 24px;
-}
-.accPanel *{
-    font-family: 'Poppins',Verdana,sans-serif;
-}
-.account-header{
-    padding-bottom: 50px ;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.acc_ul.acc_links{
-    display: flex;
-    flex-direction: column;
-    /*justify-content: space-between;*/
-    /*width: 100%;*/
-    /*margin-bottom: 20px;*/
-}
-.acc_ul.acc_links a {
-    color: #000000;
-    font-size: 18px;
-    margin-bottom: 18px;
-    display: flex !important;
-    align-items: center !important; /* This ensures vertical alignment */
-    text-decoration: none !important;
-}
-.acc_ul.acc_links i{
-    opacity: .3;
-    margin-right: 10px;
-}
-.acc_ul.acc_links a {
-    color: #000000;
-    font-size: 18px;
-    margin-bottom: 18px;
-    align-items: center;
-    display: flex;
-    text-decoration: none!important;
-    transition: color 0.3s ease, transform 0.3s ease; /* Add transition for color and transform */
-}
-
-/* Base styles for icons */
-.acc_ul.acc_links i {
-    opacity: .3;
-    margin: 0 10px 0 0;
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Add transition for opacity and transform */
-}
-
-/* Hover styles for link */
-.acc_ul.acc_links a:hover {
-    /*color: #003665; !* Change text color on hover *!*/
-}
-
-/* Hover styles for icons within a link */
-.acc_ul.acc_links a:hover i {
-    opacity: 1; /* Change icon opacity on hover */
-    transform: translateX(3px); /* Move icon to the right by 3px */
-}
-.acc_links .logout{
-
-    margin-top: 30px;
-}
-.acc_links .name a span{
-    font-size: 24px!important;
-    margin-bottom: 10px;
-}
-
-
-.acc_ul.acc_links svg {
-    /* If needed, ensure there is no extra space inside the SVG that could affect alignment */
-    display: block;
-}
-.acc_ul.acc_links a {
-    /* Other styles... */
-    line-height: 22px; /* Set this to the height of your SVG icon */
-}
-
 body{
     display: flex!important;
     flex-direction: column!important;
     min-height: 100vh;
-}
-.toolbar {
-    position: fixed; /* Make it stick to the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10; /* Ensure it's above other content */
-    transition: height 0.2s ease-in-out; /* Smooth transition for height change */
-    margin-bottom: 100px;
+    max-width: 100vw!important;
 }
 
 /* Initial and expanded height */
-.toolbar.large { height: 100px; }
+.toolbar.large { height: 80px; }
 .toolbar.small { height: 90px; }
 
 .dropdown-container {
@@ -503,7 +227,7 @@ body{
     border-radius: 6px;
     list-style: none;
     width: 180px; /* or any desired width */
-    max-height: 00px;
+    max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
     box-shadow: 0 6px 6px rgba(0,0,0,0.2);;
@@ -531,4 +255,107 @@ body{
     padding: 12px 18px;
     text-align: left!important;
     font-size: 12px!important;
+}
+
+.dropdown-links{
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    background-color: #E9E9E9;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdown-links img{
+
+}
+.right-links-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    transition: all 0.5s;
+    max-height: 0;
+    pointer-events: none;
+}
+
+.overlay-mobile.visible {
+    max-height: 100%;
+    pointer-events: all;
+}
+.hidden {
+    max-height: 0;
+}
+
+.menu-mobile {
+    background-color: white;
+    width: 100%;
+    margin-top: 80px;
+    padding: 10px 0 0 0;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    /*height:100%;*/
+}
+
+.overlay-mobile.visible .menu-mobile {
+    transform: translateY(0);
+}
+
+.menu-mobile ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-mobile ul li {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.menu-mobile ul li a {
+    text-decoration: none;
+    font-size: 17px;
+    font-family: "Montserrat-Bold", sans-serif;
+    color: #21211E;
+    transition: all 0.3s ease;-moz-transition: background-color 300ms linear, color 1s linear;
+}
+.menu-mobile ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 0;
+    height: 1.5px;
+    background-color: #000000;
+    transition: all 0.3s ease;
+}
+
+.menu-mobile ul li a{
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-mobile ul li a:hover {
+    color: #005bbb;
+}
+
+.mobile-dropdown-container{
+    width: 100%;
+    /*height: 100%;*/
+}
+
+.hr-link{
+    margin: 0;
 }

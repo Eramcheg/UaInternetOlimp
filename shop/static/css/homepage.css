@@ -44,20 +44,23 @@ body{
 .right-news-text a:hover{
     text-decoration: none;
 }
-.product-container{
+.news-container{
     cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.product-container a{
+.news-container a{
     text-decoration: none;
     color: #005bbb;
     font-weight: 600;
 
 }
-.product-container a:hover{
+.news-container a:hover{
     text-decoration: none;
 }
 
-.product-container p{
+.news-container p{
     color: black;
     font-size: 15px;
     text-align: center;
@@ -66,10 +69,26 @@ body{
     margin: 15px 0 18px 0;
 }
 
-.product-container img{
 
-    border-radius: 6px;
+@media only screen and (min-width: 769px) {
+    .news-container img{
+        border-radius: 6px;
+        width: 250px;
+        height: 100px;
+    }
 }
+@media only screen and (max-width: 768px) {
+    .news-container img{
+        border-radius: 6px;
+        width: 200px;
+        height: 80px;
+    }
+    .news-text-container{
+        padding: 20px;
+    }
+
+}
+
 
 .img-section{
     width: 200px!important;
