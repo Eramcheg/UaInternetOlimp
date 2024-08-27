@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from shop.decorators import login_required_or_session
 from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, cart_ref, get_cart, favourites_ref, \
-    get_user_category, get_user_info, get_user_session_type, get_vocabulary_product_card, get_user_prices
+    get_user_category, get_user_info, get_user_session_type, get_vocabulary_product_card
 import ast
 import random
 from datetime import datetime
@@ -50,7 +50,7 @@ def add_to_cart_from_catalog(request):
         new_quantity = data.get('quantity')
 
         email = get_user_session_type(request)
-        category, currency = get_user_prices(request, email)
+        category, currency = 0,1
         currency = '€' if currency == 'Euro' else '$'
         email = get_user_session_type(request)
         info = get_user_info(email) or {}

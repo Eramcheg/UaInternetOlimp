@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from shop.views import addresses_ref, country_dict, users_ref, get_user_category, get_user_prices
+from shop.views import addresses_ref, country_dict, users_ref
 
 
 @login_required
@@ -77,7 +77,7 @@ def create_address(request):
         for user in existing_users:
             ref = users_ref.document(user.id)
     email = request.user.email
-    category, currency = get_user_prices(request, email)
+    category, currency = 0,1
     currency = '€' if currency == 'Euro' else '$'
     context = {
         'feature_name': 'new_address',

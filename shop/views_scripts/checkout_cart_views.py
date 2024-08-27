@@ -7,7 +7,7 @@ from background_task import background
 
 from shop.decorators import login_required_or_session, logout_required
 from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, get_cart, cart_ref, single_order_ref, \
-    get_user_category, get_user_session_type, metadata_ref, users_ref, update_email_in_db, get_user_prices
+    get_user_category, get_user_session_type, metadata_ref, users_ref, update_email_in_db
 import ast
 import random
 from datetime import datetime
@@ -70,7 +70,7 @@ vats = {'Afghanistan': 0, 'Åland Islands': 0, 'Albania': 0, 'Algeria': 0, 'Amer
 @login_required_or_session
 def cart_page(request):
     email = get_user_session_type(request)
-    category, currency = get_user_prices(request, email)
+    category, currency = 0,1
     if currency == "Euro":
         currency = "€"
     elif currency == "Dollar":

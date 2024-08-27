@@ -3,7 +3,7 @@ import string
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, get_cart, cart_ref, single_order_ref, \
-    is_admin, users_ref, metadata_ref, get_user_prices
+    is_admin, users_ref, metadata_ref
 import ast
 import random
 from datetime import datetime
