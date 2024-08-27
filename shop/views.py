@@ -2,7 +2,6 @@ import ast
 import random
 from datetime import datetime
 from random import randint
-import geoip2.database
 
 import concurrent.futures
 from django.contrib.auth.forms import AuthenticationForm
@@ -29,7 +28,6 @@ from django.utils.translation import gettext as _
 from shop.models import Banner, Article
 
 json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json")
-GEOIP_path = os.path.join(settings.BASE_DIR, "shop", "static", "GEOIP", "GeoLite2-Country.mmdb")
 cred = credentials.Certificate(json_file_path)
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
@@ -43,7 +41,6 @@ metadata_ref = db.collection('metadata')
 favourites_ref = db.collection('Favourites')
 single_order_ref = db.collection("Order")
 
-READER = geoip2.database.Reader(GEOIP_path)
 
 
 currency_dict = {
@@ -307,24 +304,6 @@ country_dict = {
     "229": "Zimbabwe"
 }
 
-def get_user_prices(request, email):
-    if request.user.is_authenticated:
-        return get_user_category(email) or ("Default", "Euro")
-
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]  # В случае нескольких прокси, берем первый IP
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    try:
-        response = READER.country(ip)
-        country_code = response.country.iso_code
-        print(country_code)
-        if country_code in ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK']:
-            return "Default", 'Euro'
-    except geoip2.errors.AddressNotFoundError:
-        pass
-    return "Default_USD", 'Dollar'
 
 
 

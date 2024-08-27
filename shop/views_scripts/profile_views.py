@@ -3,7 +3,7 @@ import concurrent
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, users_ref, addresses_ref, update_email_in_db, \
-    get_user_category, get_user_info, get_vocabulary_product_card, get_user_prices
+    get_user_category, get_user_info, get_vocabulary_product_card
 import ast
 import random
 from datetime import datetime
@@ -34,7 +34,7 @@ def profile(request, feature_name):
     orders = get_orders_for_user(email)
     order_details = get_order_details(orders)
     email = request.user.email
-    category, currency = get_user_prices(request,email)
+    category, currency = 0,1
     info = get_user_info(email) or {}
     show_quantities = info['show_quantities'] if 'show_quantities' in info else False
     if currency == "Euro":

@@ -29,8 +29,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['http://uainternetolimp.pythonanywhere.com']
 AUTH_USER_MODEL = 'shop.User'
-GEOIP_PATH = os.path.join(BASE_DIR, 'shop/static/GEOIP'),
-
 # Application definition
 
 INSTALLED_APPS = [

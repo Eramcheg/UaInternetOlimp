@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document, get_user_prices
+    serialize_firestore_document
 
 
 # TODO: изменить данную функцию под новые поля юзера, не забыть про правила валидации полей из условия задания
