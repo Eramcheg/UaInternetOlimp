@@ -1,0 +1,24 @@
+<svg width="1920" height="1267" viewBox="0 0 1920 1267" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2366 110.5C2366 111.997 2365.02 114.475 2360.66 117.839C2356.4 121.121 2349.76 124.575 2340.55 128.1C2322.18 135.128 2294.82 142.002 2259.21 148.595C2188.06 161.768 2084.95 173.657 1957.34 183.651C1702.16 203.634 1349.55 216 960 216C570.451 216 217.837 203.634 -37.3373 183.651C-164.949 173.657 -268.063 161.768 -339.206 148.595C-374.817 142.002 -402.181 135.128 -420.546 128.1C-429.757 124.575 -436.405 121.121 -440.662 117.839C-445.024 114.475 -446 111.997 -446 110.5C-446 109.003 -445.024 106.525 -440.662 103.161C-436.405 99.8787 -429.757 96.4249 -420.546 92.9001C-402.181 85.8717 -374.817 78.9982 -339.206 72.4049C-268.063 59.2325 -164.949 47.3431 -37.3373 37.3494C217.837 17.3659 570.451 5 960 5C1349.55 5 1702.16 17.3659 1957.34 37.3494C2084.95 47.3431 2188.06 59.2325 2259.21 72.4049C2294.82 78.9982 2322.18 85.8717 2340.55 92.9001C2349.76 96.4249 2356.4 99.8787 2360.66 103.161C2365.02 106.525 2366 109.003 2366 110.5Z" fill="#005BBB" stroke="#FFDD33" style="fill:#005BBB;fill:color(display-p3 0.0000 0.3569 0.7333);fill-opacity:1;stroke:#FFDD33;stroke:color(display-p3 1.0000 0.8667 0.2000);stroke-opacity:1;" stroke-width="10"/>
+<rect y="98" width="1920" height="1030" fill="#005BBB" style="fill:#005BBB;fill:color(display-p3 0.0000 0.3569 0.7333);fill-opacity:1;"/>
+<mask id="mask0_2012_2103" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="498" y="-149" width="1712" height="1712">
+<circle opacity="0.3" cx="1354" cy="707" r="856" fill="url(#paint0_radial_2012_2103)" style=""/>
+</mask>
+<g mask="url(#mask0_2012_2103)">
+<circle cx="1354" cy="707" r="214.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="132.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="312.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="431.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="590.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="698.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+<circle cx="1354" cy="707" r="855.5" stroke="#F9F9F9" style="stroke:#F9F9F9;stroke:color(display-p3 0.9750 0.9750 0.9750);stroke-opacity:1;"/>
+</g>
+<path d="M2366 1156.5C2366 1158 2365.02 1160.48 2360.66 1163.84C2356.4 1167.12 2349.76 1170.58 2340.55 1174.1C2322.18 1181.13 2294.82 1188 2259.21 1194.6C2188.06 1207.77 2084.95 1219.66 1957.34 1229.65C1702.16 1249.63 1349.55 1262 960 1262C570.451 1262 217.837 1249.63 -37.3373 1229.65C-164.949 1219.66 -268.063 1207.77 -339.206 1194.6C-374.817 1188 -402.181 1181.13 -420.546 1174.1C-429.757 1170.58 -436.405 1167.12 -440.662 1163.84C-445.024 1160.48 -446 1158 -446 1156.5C-446 1155 -445.024 1152.52 -440.662 1149.16C-436.405 1145.88 -429.757 1142.42 -420.546 1138.9C-402.181 1131.87 -374.817 1125 -339.206 1118.4C-268.063 1105.23 -164.949 1093.34 -37.3373 1083.35C217.837 1063.37 570.451 1051 960 1051C1349.55 1051 1702.16 1063.37 1957.34 1083.35C2084.95 1093.34 2188.06 1105.23 2259.21 1118.4C2294.82 1125 2322.18 1131.87 2340.55 1138.9C2349.76 1142.42 2356.4 1145.88 2360.66 1149.16C2365.02 1152.52 2366 1155 2366 1156.5Z" fill="#F9F9F9" stroke="#FFD500" style="fill:#F9F9F9;fill:color(display-p3 0.9750 0.9750 0.9750);fill-opacity:1;stroke:#FFD500;stroke:color(display-p3 1.0000 0.8353 0.0000);stroke-opacity:1;" stroke-width="10"/>
+<rect x="-451" y="1157" width="2822" height="110" fill="#F9F9F9" style="fill:#F9F9F9;fill:color(display-p3 0.9750 0.9750 0.9750);fill-opacity:1;"/>
+<defs>
+<radialGradient id="paint0_radial_2012_2103" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1354 707) rotate(90) scale(856)">
+<stop stop-color="#D9D9D9" style="stop-color:#D9D9D9;stop-color:color(display-p3 0.8510 0.8510 0.8510);stop-opacity:1;"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0" style="stop-color:none;stop-opacity:0;"/>
+</radialGradient>
+</defs>
+</svg>

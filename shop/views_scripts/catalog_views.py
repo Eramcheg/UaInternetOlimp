@@ -30,7 +30,7 @@ from django.core.mail import send_mail
 from shop.forms import UserRegisterForm, User
 
 
-@login_required_or_session
+
 def materials_view(request):
     materials_page = request.GET.get('page') or ""
     email = get_user_session_type(request)
@@ -39,7 +39,7 @@ def materials_view(request):
         "page_name": materials_page,
         "role": role,
     }
-    return render(request, 'uaolimpiad/materials.html', context=context)
+    return render(request, 'uaolimpiad/materialsMain.html', context=context)
 
 @csrf_exempt
 @login_required_or_session

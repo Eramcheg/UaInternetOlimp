@@ -1,0 +1,197 @@
+{% block content %}
+{% load static %}
+{% load i18n  %}
+{# TODO: этот хтмл файл служит отображением материалов олимпиады (Решения, условия и т.д) в зависимости от выбранного #}
+{# TODO: сделать подобное тому что есть в admin tools (тоесть страничка и слева будут функции на выбор) #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Materials</title>
+    <link rel="stylesheet" href="{% static 'css/materialsMain.css' %}">
+</head>
+<body>
+{% include 'widgets/navigation_bar.html' %}
+<div>
+    <div class="main-container">
+        <div class="higher-container">
+            <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')"></div>
+            <div class="center-high">
+                <div class="container-for-texts">
+                    <h1>Олімпіада з фізики</h1>
+                    <span>Отримайте повне розуміння фізики</span>
+                    <button class="blue-button" ><a href="{% url "home" %}">Дізнатись більше</a></button>
+                </div>
+            </div>
+            <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
+            </div>
+        </div>
+        <div class="rectangles-wrapper">
+            <div class="image">
+                <img src="{% static "images/materials/imgs/testMainImage.jpg" %}" width="850" height="400">
+            </div>
+            <div class="text-information">
+                <div class="main-text">
+                    <h1 class="big-text white-t">Міжнародна олімпіада з фізики</h1>
+                    <span class="small-text white-t">
+                        Міжнародна олімпіада з фізики ( скорочено IPhO )
+                        — це змагання для студентів, які люблять фізику, у якому
+                        щороку молоді люди з приблизно 90 країн оцінюють свої
+                        результати в теоретичних та експериментальних завданнях
+                        і прагнуть отримати дорогоцінний олімпійський метал. На
+                        додаток до завдань, існує широка допоміжна програма і,
+                        звичайно, багато можливостей для встановлення контактів
+                        з людьми з усього світу. У найближчі роки, наприклад,
+                        Японія, Іран і Франція плануються як приймаючі країни.
+                    </span>
+                    <div><button class="white-button" ><a href="{% url "home" %}">Дізнатись більше <i class="fas fa-arrow-right"></i></a></button></div>
+                </div>
+                <div class="first-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                    <span class="poznachka">1 ТУР</span>
+                    <span class="title-1">Інформація та матеріали до 1-го туру</span>
+                    <span class="text">
+                        Олімпіада з фізики пропонує вам різноманітні можливості для
+                        інтенсивної роботи з питаннями фізики, відчути фізику як
+                        захоплюючу наукову дисципліну, перевірити власні межі та,
+                        що не менш важливо, познайомитися з цікавими людьми.
+                    </span>
+                    <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
+                </div>
+            </div>
+        </div>
+        <div class="centered-container" style="background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) calc(100% - 30px), white 100%),
+    url('{% static "images/home/imgs/MaterialsBackgroundMain.svg" %}')">
+
+        </div>
+    </div>
+    <div class="lower-container">
+        <div class="text">
+            <h1 class="big-text"> Олімпіада з фізики в Україні</h1>
+            <span>
+                Кожна країна-учасниця надсилає на IPhO до п’яти студентів,
+                які змагаються індивідуально. Німецька команда складається
+                з найкращих учасників загальнонаціонального відбіркового
+                конкурсу, Олімпіади з фізики в Німеччині, яка проводиться
+                за підтримки Федерального міністерства освіти та досліджень
+                та Конференції міністрів освіти та культури.
+            </span>
+            <span>
+                Олімпіада з фізики в Німеччині складається з чотирьох турів
+                і відкрита для всіх, хто відвідує загальноосвітню або
+                професійно-технічну школу в Німеччині в рік проведення міжнародної
+                олімпіади, ще не зарахований до університету на момент IPhO і
+                зарахований після червня 30-й. року проведення конкурсу мінус 20 років.
+            </span>
+        </div>
+        <div class="photos">
+            <div class="column-1">
+                <img src="{% static "images/materials/imgs/exp_1.png" %}" width="276" height="276">
+                <div>
+                    <span class="big-text">
+                        Експериментування на олімпіаді з фізики.
+                    </span><br>
+                    <span class="gray-text">
+                        © IPhO - IPN
+                    </span>
+                </div>
+            </div>
+            <div class="column-2">
+                <img src="{% static "images/materials/imgs/exp_2.png" %}" width="686" height="460">
+            </div>
+        </div>
+    </div>
+    <div class="down-container" style="background-color: #fffbe6">
+
+        <div class="text">
+            <h1 class="big-text">Враження від олімпіади з фізики</h1>
+            <span class="gray-text">
+                Якщо вам подобається фізика та складні головоломки,
+                ви прийшли за адресою! Олімпіада з фізики в Німеччині
+                кидає виклик і підтримує студентів, які люблять фізику,
+                захоплюючими завданнями, привабливими призами та багатьма
+                додатковими пропозиціями – вже з першого туру. Зрештою,
+                бути там (майже) все.
+            </span>
+        </div>
+        <img src="{% static "images/materials/imgs/Photo.svg" %}">
+
+    </div>
+    <div class="deep-container">
+        <div class="inside-container">
+            <div class="column-1">
+                <div class="card" style="background-image: url( {% static "images/materials/imgs/cards.png" %})">
+                    <span class="big-text white-t header">Короткий огляд процесу олімпіади з фізики</span>
+                    <span class="white-t small-text">
+                        Олімпіада з фізики пропонує вам різноманітні
+                        можливості для інтенсивної роботи з питаннями
+                        фізики, відчути фізику як захоплюючу наукову
+                        дисципліну, перевірити власні межі та, що не
+                        менш важливо.
+                    </span>
+                    <span class="white-t big-text">
+                        Переглянути <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <div class="card" style="background-image: url({% static "images/materials/imgs/cards.png" %})">
+                    <span class="big-text white-t header">Короткий огляд процесу олімпіади з фізики</span>
+                    <span class="white-t small-text text">
+                        Олімпіада з фізики пропонує вам різноманітні
+                        можливості для інтенсивної роботи з питаннями
+                        фізики, відчути фізику як захоплюючу наукову
+                        дисципліну, перевірити власні межі та, що не
+                        менш важливо.
+                    </span>
+                    <span class="white-t big-text form-link">
+                        Переглянути <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="column-2">
+                <h1 class="big-text">Цифри, дані, факти про олімпіаду з фізики</h1>
+                <div class="text">
+                    <span>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            IPhO вперше відбувся в Польщі в 1967 році і проводився понад 50 разів
+                        </span>
+                    </span>
+                    <span>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            Чотирьохетапний німецький процес відбору для п’яти членів німецької команди був запроваджений у 1980 році
+                        </span>
+                    </span>
+                    <span>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            З 1981 року олімпійці Федеративної Республіки Німеччина завоювали 31 золоту, 78 срібних і 70 бронзових медалей, а також 23 нагороди визнання.
+                        </span>
+                    </span>
+                    <span>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            На 20-му IPhO у Варшаві в 1989 році Німеччина навіть стала найкращою командою і, отже, чемпіоном світу
+                        </span>
+                    </span>
+                    <span>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            Багато колишніх учасників залишилися вірними конкурсу та активно підтримують олімпіаду з фізики в Німеччині
+                        </span>
+                    </span>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include "widgets/footer.html" %}
+</body>
+</html>
+<script>
+
+</script>
+{% endblock %}
