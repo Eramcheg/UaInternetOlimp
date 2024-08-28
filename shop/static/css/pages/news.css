@@ -1,8 +1,9 @@
+
 .centered-container{
     font-family: Montserrat-Bold, sans-serif;
     margin-top: 140px;
-    margin-left: 360px;
-    margin-right: 360px;
+    margin-left: 320px;
+    margin-right: 320px;
 }
 .pre-title{
     font-size: 16px;
@@ -34,7 +35,7 @@
 }
 .article-container img{
     width: 250px;
-    height: 120px;
+    height: 180px;
     border-radius: 6px;
 }
 

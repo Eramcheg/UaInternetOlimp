@@ -2,15 +2,31 @@
 {% load static %}
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/pages/news.css' %}">
-    <body>
+    <head>
+        <title>Новини</title>
+    </head>
+    <body style="background-image: url('{% static "images/general/backgroundPattern.png" %}');">
+    <div class="white-mask"></div>
         {% include "widgets/navigation_bar.html" %}
         <div class="centered-container">
             <span class="pre-title">Новини</span>
             <h1 class="title">Новини</h1>
             <div class="articles-grid">
                 {% for article in articles %}
+                    {% if forloop.counter == 3 or forloop.counter == 6 %}
+                        <div class="first-tour-info-type-2" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                            <span class="poznachka">1 ТУР</span>
+                            <span class="title-2">Інформація та матеріали до 1-го туру</span>
+                            <span class="text">
+                                Олімпіада з фізики пропонує вам різноманітні можливості для
+                                інтенсивної роботи з питаннями фізики, відчути фізику як
+                                захоплюючу наукову дисципліну.
+                            </span>
+                            <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
+                        </div>
+                    {% endif %}
                     <div class="article-container">
-                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="250" height="100">
+                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" width="370" height="240">
                         <p class="article-mini-text">{{ article.mini_article_text }}</p>
                         <a class="absolute-link" href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
