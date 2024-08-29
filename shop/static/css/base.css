@@ -250,6 +250,7 @@ body{
 }
 .menu.open{
     max-height: 1000px;
+    margin-top: -15px;
 
 }
 
