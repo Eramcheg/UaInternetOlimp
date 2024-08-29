@@ -18,6 +18,7 @@
             <div class="logo">
                 <img class="imag" src="{% static 'LogoOlimp.png' %}"/>
             </div>
+            <div class="all-links">
             <a href="{% url 'home' %}" class="link">Головна</a>
             <div class="dropdown-container">
                 <a class="link" href="{% url 'materials' %}">Матеріали</a> {# class="link materials-dropdown-trigger" #}
@@ -35,6 +36,7 @@
             {% if user.email == "uainternetolimp@gmail.com" %}
                 <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Адмін</a>
             {% endif %}
+            </div>
             {% if not user.is_authenticated %}
                 <a href="{% url 'login'%}" class="link-auth"><img src="{% static 'icons/Vector.png' %}"> Авторизація</a>
             {% endif %}
