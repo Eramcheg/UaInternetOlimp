@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shop import views
-from shop.views import ArticleDetailView, news_main_view
+from shop.views import ArticleDetailView, news_main_view, open_news
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
@@ -121,6 +121,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('delete-article/<int:article_id>/', delete_article, name='delete_article'),
     path('move-up-article/<int:article_id>/', move_up_article, name='move_up_article'),
     path('move-down-article/<int:article_id>/', move_down_article, name='move_down_article'),
+    path('news/<str:news_number>/', open_news, name='open_news'),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),

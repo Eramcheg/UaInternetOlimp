@@ -108,15 +108,12 @@
                     </svg>
                 </button>
                 <div id="item-list" class="item-list">
-                   {% for article in articles %}
+                   {% for i in "123" %}
                     <div class="news-container">
-                        <img src="{{ article.mini_article_photo.url }}" alt="{{ article.mini_article_name }}" >
-    {#                    <h3>{{ article.article_name }}</h3>#}
-                        <p>{{ article.mini_article_text }}</p>
-                        <a href="{{ article.get_absolute_url }}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                        <img src="/static/images/home/news/mini_article_{{ i }}.png" alt="News {{ i }}">
+                        <p>{{ i }}</p>
+                        <a href="{% url "open_news" news_number=i %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                    {% empty %}
-                    <p>No articles found.</p>
                     {% endfor %}
                 </div>
                 <button id="next-btn" class="next-btn">
