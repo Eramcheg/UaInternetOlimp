@@ -1,0 +1,89 @@
+{% block content %}
+{% load static %}
+{% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+    <script src="https://kit.fontawesome.com/ba99d1b9b2.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/pages/account_features/list_tasks.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+    <div class="centered-container">
+        <div class="task">
+            <h1 class="big-text"> Задача 1 </h1>
+            <span class="">
+                Спортсмени біжать з
+                однаковими швидкостями v колоною
+                довжини l0. Назустріч їм біжить тренер з швидкістю u (u < v).
+                Спортсмен, порівнявшись з тренером, біжить назад з тією ж швидкістю v.
+                Яка буде довжина колони, коли всі спортсмени розвернуться?
+            </span>
+            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+        <div class="task">
+            <h1 class="big-text"> Задача 2 </h1>
+            <span class="">
+                Спостерігаючи за потягом, що рівномірно рухається, хлопчик
+                встановив, що повз початок залізничної платформи потяг рухався 24
+                секунди, повз всю платформу пройшов за 40 секунд. Помірявши довжину
+                платформи, яка дорівнювала 140 м, хлопчик визначив швидкість і
+                довжину потяга. Які числові значення цих фізичних величин хлопчик
+                одержав?
+            </span>
+
+            <a href="{% url "download_file" filename="task_2.docx" %}" class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+    <div class="task">
+            <h1 class="big-text"> Задача 3 </h1>
+            <span class="">
+                Відстань між кінцевими зупинками трамваю дорівнює 5 км. На
+                маршруті рівномірно курсують 10 трамваїв. Пасажир трамваю визначив,
+                що зустрічні трамваї проїжджають повз нього через кожні дві хвилини.
+                Визначте швидкість трамваю.
+            </span>
+            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+    <div class="task">
+            <h1 class="big-text"> Задача 4</h1>
+            <span class="">
+                Теплохід на підводних крилах рухався по Дніпру з пункту А до
+                пункту В, потім повернувся з В до пункту А. На його шляху було
+                водосховище. Швидкість течії Дніпра v
+                0
+                , швидкість течії у водосховищі
+                мізерно мала, швидкість теплохода у стоячій воді v
+                1
+                . Більше чи менше
+                часу затратив би на ту ж саму дорогу теплохід, коли б водосховища не
+                було, і річка скрізь текла б зі швидкістю v
+                0
+                ?
+            </span>
+            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+        <div class="task">
+            <h1 class="big-text"> Задача 5</h1>
+            <span class="">
+                Співробітники астрономічної обсерваторії виявили космічний
+                об’єкт, що рухався прямо на Землю. Виміряли у момент відкриття віддаль
+                до об’єкта – вона дорівнювала 10 астрономічних одиниць (1 а.о.=150
+                000 000 км).Через 40 хвилин об’єкт було виявлено на відстані 5 а. о. Від
+                Землі. Визначити, з якою швидкістю об’єкт наближався до Землі.
+            </span>
+            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

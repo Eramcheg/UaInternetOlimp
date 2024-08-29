@@ -34,7 +34,7 @@ from shop.views_scripts.catalog_views import add_to_cart_from_catalog, materials
     materials_view
 from shop.views_scripts.checkout_cart_views import sort_documents, send_email, cart_page, anonym_cart_info, \
     register_anonym_cart_info, login_anonym_cart_info, checkout_addresses
-from shop.views_scripts.profile_views import update_user_account
+from shop.views_scripts.profile_views import update_user_account, download_file
 from shop.views_scripts.shop_views import fetch_numbers, form_page
 from shop.views_scripts.users_control.edit_user import edit_user
 from shop.views_scripts.users_control.view_user import view_user
@@ -69,6 +69,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path('profile/<str:feature_name>/', profile_views.profile, name='profile'),
     path('update_user_account/', update_user_account, name='update_user_account'),
+    path('download/<str:filename>/', download_file, name='download_file'),
 
     path('fetch-numbers/', fetch_numbers, name='fetch_numbers'),
 
