@@ -699,3 +699,6 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'uaolimpiad/news_prototype.html'
     context_object_name = 'article'
+
+def open_news(request, news_number):
+   return render(request, f'uaolimpiad/news/new_{news_number}.html')
