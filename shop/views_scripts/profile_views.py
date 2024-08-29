@@ -22,7 +22,7 @@ from django.views.decorators.csrf import csrf_exempt
 from firebase_admin import credentials, firestore
 from django.conf import settings
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 
@@ -256,3 +256,12 @@ def update_user_account(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+
+def download_file(request, filename):
+    file_path = os.path.join(settings.MEDIA_ROOT, 'tasks', filename)
+
+    if os.path.exists(file_path):
+        return FileResponse(open(file_path, 'rb'), as_attachment=True)
+    else:
+        raise Http404("File not found")

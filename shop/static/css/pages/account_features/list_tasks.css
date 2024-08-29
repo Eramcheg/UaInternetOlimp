@@ -1,0 +1,31 @@
+.centered-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 60px;
+    max-width: 900px;
+}
+
+.centered-container .task{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.centered-container .task .download-task{
+    width: 200px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #04a96d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.centered-container .task .download-task i{
+    font-size:24px;
+    color: #e9e9e9;
+
+}
