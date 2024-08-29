@@ -1,11 +1,106 @@
 {% block content %}
 {% load static %}
 {% load i18n  %}
+<head>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+    <script src="https://kit.fontawesome.com/ba99d1b9b2.js" crossorigin="anonymous"></script>
 
-<section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
+    <link rel="stylesheet" href="{% static 'css/pages/account_features/uploading.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<div class="centered-container">
 
+    <div class="upload-box" id="box1">
+        <h1>Задача 1</h1>
+        <label for="fileInput1">Натисніть щоб завантажити розвязок</label>
+         <h5>Завантажений файл: {{ task_1 }}</h5>
+        <input type="file" id="fileInput1" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box1')">
 
+        <span class="file-name" id="fileName1"></span>
+    </div>
+    <div class="upload-box" id="box2">
+        <h1>Задача 2</h1>
+        <label for="fileInput2">Натисніть щоб завантажити розвязок</label>
+        <input type="file" id="fileInput2" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box2')">
+        <span class="file-name" id="fileName2"></span>
+    </div>
+    <div class="upload-box" id="box3">
+        <h1>Задача 3</h1>
+        <label for="fileInput3">Натисніть щоб завантажити розвязок</label>
+        <input type="file" id="fileInput3" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box3')">
+        <span class="file-name" id="fileName3"></span>
+    </div>
+    <div class="upload-box" id="box4">
+        <h1>Задача 4</h1>
+        <label for="fileInput4">Натисніть щоб завантажити розвязок</label>
+        <h3>{{ task_4 }}</h3>
+        <input type="file" id="fileInput4" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box4')">
+        <span class="file-name" id="fileName4"></span>
+    </div>
+    <div class="upload-box" id="box5">
+        <h1>Задача 5</h1>
+        <label for="fileInput5">Натисніть щоб завантажити розвязок</label>
+        <input type="file" id="fileInput5" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box5')">
+        <span class="file-name" id="fileName5"></span>
+    </div>
 
-</section>
+</div>
+<script>
+    function uploadFile(input, boxId) {
+        const file = input.files[0];
+        if (file) {
+            document.getElementById(boxId).querySelector('.file-name').textContent = file.name;
 
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('box_id', boxId);
+
+            fetch('{% url "upload_file" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: formData
+            })
+            .then(response => {
+                // Логгирование для проверки содержимого ответа
+                console.log(response);
+
+                // Проверка типа содержимого
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                } else {
+                    throw new Error("Response is not JSON");
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    console.log('File uploaded successfully:', data.file_url);
+                    window.location.reload();
+                } else {
+                    console.error('File upload failed:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import concurrent
+import string
 
 from django.contrib.auth.decorators import login_required
 
@@ -44,6 +45,11 @@ def profile(request, feature_name):
     context = build_context(feature_name, email, orders, order_details)
     context['currency'] = currency
     context['show_quantities'] = show_quantities
+    context['task_1'] = info['task_1_name'] if "task_1_name" in info else ""
+    context['task_2'] = info['task_2_name'] if "task_2_name" in info else ""
+    context['task_3'] = info['task_3_name'] if "task_3_name" in info else ""
+    context['task_4'] = info['task_4_name'] if "task_4_name" in info else ""
+    context['task_5'] = info['task_5_name'] if "task_5_name" in info else ""
     return render(request, 'profile.html', context=context)
 
 def get_orders_for_user(email):
@@ -256,7 +262,12 @@ def update_user_account(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
-
+def generate_random_string(length=6):
+    # Объединяем цифры и буквы в один набор символов
+    characters = string.ascii_lowercase + string.digits
+    # Генерируем случайную строку
+    random_string = ''.join(random.choice(characters) for _ in range(length))
+    return random_string
 
 def download_file(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, 'tasks', filename)
@@ -265,3 +276,40 @@ def download_file(request, filename):
         return FileResponse(open(file_path, 'rb'), as_attachment=True)
     else:
         raise Http404("File not found")
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        box_id = request.POST.get('box_id')
+        user_email = request.user.email  # Assuming user is authenticated
+
+        if not file:
+            return JsonResponse({'success': False, 'error': 'No file provided'}, status=400)
+
+        # Generate file path in Firebase Storage
+        file_path = f'{user_email}/{box_id}/{file.name}'
+
+        code_file = generate_random_string()
+
+        # Upload to Firebase Storage
+        file_path = os.path.join('users_files', f"{user_email}_Task_{box_id}_{file.name}_{code_file}")
+        blob = upload_to_firebase(file, file_path)
+        # Generate the file URL
+        file_url = blob.public_url
+
+        # Update user's document in Firestore
+        users_ref = db.collection('users')
+        user_ref = users_ref.where('email', '==', user_email).limit(1).get()
+
+        if user_ref:
+            user_doc = user_ref[0]
+            field_name = f'task_{box_id[-1]}'  # file_1, file_2, ...
+            name_field_name = f'task_{box_id[-1]}_name'  # file_1, file_2, ...
+            user_doc.reference.update({field_name: file_url})
+            user_doc.reference.update({name_field_name: file.name})
+
+
+        return JsonResponse({'success': True, 'file_url': file_url})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
