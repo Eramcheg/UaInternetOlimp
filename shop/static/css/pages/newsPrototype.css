@@ -8,10 +8,12 @@
     background-size: cover;
     background-position: center;
     flex-grow: 1;
+    gap: 32px;
     min-height: 540px;
 }
 .hat-container img{
     border-radius: 16px;
+
 }
 .title-container{
     display: flex;
