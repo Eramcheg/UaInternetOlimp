@@ -365,6 +365,8 @@ def news_main_view(request):
         'articles': articles
 
     }
+
+    context['news_info'] = ["Олімпіада 2022", "Олімпіада 2023", "Олімпіада 2024"]
     return render(request, 'uaolimpiad/news.html', context)
 
 def get_user_category(email):
