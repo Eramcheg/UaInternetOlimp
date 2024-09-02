@@ -12,7 +12,7 @@
             <span class="pre-title">Новини</span>
             <h1 class="title">Новини</h1>
             <div class="articles-grid">
-                {% for i in "123" %}
+                {% for new_info in news_info %}
                     {% if forloop.counter == 3 or forloop.counter == 6 %}
                         <div class="first-tour-info-type-2" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
                             <span class="poznachka">1 ТУР</span>
@@ -26,11 +26,11 @@
                         </div>
                     {% endif %}
                     <div class="article-container">
-                        <img src="/static/images/home/news/mini_article_{{ i }}.png" alt="News {{ i }}" width="370" height="240">
-                        <p class="article-mini-text">{{ i }}</p>
-                        <a class="absolute-link" href="{% url "open_news" news_number=i %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                        <img src="/static/images/home/news/mini_article_{{ forloop.counter }}.jpg" alt="News {{ forloop.counter }}" width="370" height="240">
+                        <p class="article-mini-text">{{ new_info }}</p>
+                        <a class="absolute-link" href="{% url "open_news" news_number=forloop.counter %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                    {% endfor %}
+                {% endfor %}
 
 
                  <!-- Use the 'safe' filter if content includes HTML from CKEditor -->
