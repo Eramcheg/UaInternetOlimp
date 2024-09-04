@@ -10,3 +10,67 @@
    padding-left: 15px;
    padding-right: 15px;
 }
+    .chat-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.chat-icon img {
+    width: 80px;
+    height: 80px;
+}
+
+/* Стили для контейнера чата */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 90px; /* Отступ от иконки чата */
+    width: 400px;
+    height: 500px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: none; /* Изначально скрыто */
+}
+
+/* Класс для скрытия чата */
+.hidden {
+    animation: slideOutDown 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    border: none; /* Убираем границу, когда элемент скрыт */
+    overflow: hidden;
+}
+
+
+/* Анимация появления чата */
+.chat-container.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    border: 1px solid #ccc; /* Добавляем границу при показе */
+    animation: slideIn 0.1s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}

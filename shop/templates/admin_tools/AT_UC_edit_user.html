@@ -110,10 +110,23 @@
             <div class="form-group row ">
                 <div class="col-md-12">
                     <label>Роль користувача</label>
-                     <select class="form-control form-control-select js-country" name="id_group" id="select-role" required="">
+                    <select class="form-control form-control-select js-country" name="id_group" id="select-role" required="">
                         <option value="User" disabled="" selected="">-- Будь ласка, виберіть --</option>
                         <option value="Student">Студент</option>
                         <option value="Jury">Жюри</option>
+                    </select>
+                </div>
+                <div class="col-md-12 form-control-comment">
+                    <span class="req">*</span>
+                </div>
+            </div>
+
+            <div class="form-group row " id="admin-access-group" style="display: none;">
+                <div class="col-md-12">
+                    <label> Доступ адміна до чату </label>
+                    <select class="form-control form-control-select js-country" name="id_rights" id="select-rights" required="">
+                        <option value="" selected="">Ні</option>
+                        <option value="Chat_Admin">Так</option>
                     </select>
                 </div>
                 <div class="col-md-12 form-control-comment">
@@ -136,6 +149,7 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function() {
+
     // Select the button by its data-action attribute
     const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
     // Listen for a click event on the button
@@ -157,10 +171,12 @@
             })
         );
         setCurrentSelects();
+
     });
 
      function setCurrentSelects(){
          let role = "{{user_info.role}}";  // From your Django template
+         let rights = "{{user_info.rights}}" || "";  // From your Django template
          let roles = {"Студент": "Student", "Жюри":"Jury"};
          let paralel = "{{user_info.paralel}}";  // From your Django template
          let selectCurr = document.getElementById('select-paralel');
@@ -181,6 +197,19 @@
                  break;
              }
          }
+
+        const select_rights = document.getElementById('select-rights');
+        console.log(rights==="Chat_Admin" ? 1 : 0)
+        select_rights.value = rights === "Chat_Admin" ? "Chat_Admin" : "";
+        const role_value = document.getElementById('select-role').value;
+        const adminAccessGroup = document.getElementById('admin-access-group');
+        console.log(role_value);
+        // Показываем поле доступа, если выбрано "Jury", и скрываем в других случаях
+        if (role_value === 'Jury') {
+            adminAccessGroup.style.display = 'block';
+        } else {
+            adminAccessGroup.style.display = 'none';
+        }
      }
 
 
@@ -300,4 +329,15 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+document.getElementById('select-role').addEventListener('change', function() {
+        var role = this.value;
+        var adminAccessGroup = document.getElementById('admin-access-group');
+
+        // Показываем поле доступа, если выбрано "Jury", и скрываем в других случаях
+        if (role === 'Jury') {
+            adminAccessGroup.style.display = 'block';
+        } else {
+            adminAccessGroup.style.display = 'none';
+        }
+    });
 </script>

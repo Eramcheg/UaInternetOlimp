@@ -43,13 +43,19 @@ def profile(request, feature_name):
     elif currency == "Dollar":
         currency = "$"
     context = build_context(feature_name, email, orders, order_details)
+
+
     context['currency'] = currency
+    context['role'] = info['role']
+    context['userId'] = info['userId']
+    context['username'] = info['first_name'] + " " + info["last_name"]
     context['show_quantities'] = show_quantities
     context['task_1'] = info['task_1_name'] if "task_1_name" in info else ""
     context['task_2'] = info['task_2_name'] if "task_2_name" in info else ""
     context['task_3'] = info['task_3_name'] if "task_3_name" in info else ""
     context['task_4'] = info['task_4_name'] if "task_4_name" in info else ""
     context['task_5'] = info['task_5_name'] if "task_5_name" in info else ""
+    context['rights'] = info['rights'] if "rights" in info else ""
     return render(request, 'profile.html', context=context)
 
 def get_orders_for_user(email):
