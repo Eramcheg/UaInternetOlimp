@@ -1,0 +1,216 @@
+{% block content %}
+{% load static %}
+{% load i18n  %}
+<link rel="stylesheet" href="{% static 'css/SeparateWidgets/chat.css' %}">
+{#<div class="chat-container">#}
+
+    {% if role == "Student" %}
+        <!-- Интерфейс для пользователя -->
+        <div class="user-chat-widget">
+            <div class="chat-list">
+                <ul>
+                    <li onclick="selectChat('1')">Задача 1</li>
+                    <li onclick="selectChat('2')">Задача 2</li>
+                    <li onclick="selectChat('3')">Задача 3</li>
+                    <li onclick="selectChat('4')">Задача 4</li>
+                    <li onclick="selectChat('5')">Задача 5</li>
+                </ul>
+            </div>
+            <div class="chat-window">
+                <div id="chat-log" class="chat-messages">
+                    Выберите чат
+                </div>
+                <div class="chat-input">
+                    <textarea id="chat-message-input" placeholder="Напишите сообщение..."></textarea>
+                    <button id="chat-message-submit" type="button">Отправить</button>
+                </div>
+            </div>
+        </div>
+    {% elif role == "Admin" %}
+        <!-- Интерфейс для админа -->
+        <div class="admin-chat-widget">
+            <div class="chat-list">
+                <!-- Здесь можно отобразить список всех пользователей и их чатов -->
+                <ul>
+                    <!-- И так далее -->
+                </ul>
+            </div>
+            <div class="chat-window">
+                <div id="chat-log" class="chat-messages">
+                    <!-- Здесь будут отображаться сообщения текущего чата -->Выберите чат
+                </div>
+                <div class="chat-input">
+                    <textarea id="chat-message-input" placeholder="Напишите сообщение..."></textarea>
+                    <button id="chat-message-submit" type="button">Отправить</button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Обработка для случая, если роль неизвестна -->
+        <p>Неизвестная роль пользователя.</p>
+    {% endif %}
+
+{#</div>#}
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getFirestore, collection, query, onSnapshot, doc, getDoc, setDoc, serverTimestamp, addDoc,updateDoc, where, orderBy } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAzV7CPVJJbgteozTbjdlIcyt85Kbuxd90",
+    authDomain: "uainternetolimp-41dd1.firebaseapp.com",
+    projectId: "uainternetolimp-41dd1",
+    storageBucket: "uainternetolimp-41dd1.appspot.com",
+    messagingSenderId: "545486624571",
+    appId: "1:545486624571:web:4a543063a04b43e5bb091e",
+    measurementId: "G-MJBJXCE1SJ"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let currentChatId = null;
+let userId = "{{ user }}";
+let role = "{{ role }}";
+let username = "{{ username }}";
+const chatMessagesRef = collection(db, "messages");
+const q = query(chatMessagesRef, where("chat_id", "==", currentChatId), orderBy("timestamp"));
+const chatMessagesRef2 = collection(db, "messages");
+const q2 = query(chatMessagesRef2, orderBy("activity"));
+document.addEventListener("DOMContentLoaded", async function () {
+    console.log(userId);
+    if(role !== "Student"){
+        setUpChats();
+    }
+});
+
+onSnapshot(q, (querySnapshot) => {
+    const messages = [];
+    querySnapshot.forEach((doc) => {
+        messages.push(doc.data());
+    });
+    // Обновление интерфейса
+    updateChatUI(messages);
+});
+
+onSnapshot(q2, (chatsRef) => {
+    if (role !== "Student"){
+        const chats = [];
+        chatsRef.forEach((doc) => {
+            chats.push(doc.data());
+        });
+        const list = document.querySelector('.chat-list');
+        list.innerHTML = '';
+        chats.forEach((chat) => {
+            const messageElement = document.createElement('li');
+
+            if(role === "Student"){
+                messageElement.setAttribute('onclick', "selectChat('"+chat.task_name+"')")
+            }
+            if(chat.chat_id === currentChatId ){
+                messageElement.classList.add('selected');
+            }
+            messageElement.textContent = chat.chatName;
+
+            list.appendChild(messageElement);
+        });
+
+    }
+});
+
+
+async function selectChat(task) {
+    if (role==="Student"){
+        currentChatId = userId+"_"+"task"+task;
+    }
+    else{
+        currentChatId = task;
+    }
+
+
+    // Проверяем, существует ли чат в Firestore
+    const chatRef = doc(db, "chats", currentChatId);
+    const chatDoc = await getDoc(chatRef);
+
+    if (!chatDoc.exists()) {
+        // Если чат не существует, создаем его
+        await setDoc(chatRef, {
+            task_name: task,
+            chat_id: currentChatId,
+            userId: userId,
+            chatName: username + " " + "Задача " + task,
+            activity: serverTimestamp()
+        });
+    }
+
+    // Загружаем сообщения для выбранного чата
+    const chatMessagesRef = collection(db, "messages");
+    const q = query(chatMessagesRef, where("chat_id", "==", currentChatId), orderBy("timestamp"));
+
+    onSnapshot(q, (querySnapshot) => {
+        const messages = [];
+        querySnapshot.forEach((doc) => {
+            messages.push(doc.data());
+        });
+        updateChatUI(messages);
+    });
+
+    // Обновляем интерфейс для выбора чата
+    document.querySelectorAll('.chat-list li').forEach(item => {
+        item.classList.remove('selected');
+    });
+    document.querySelector(`[onclick="selectChat('${task}')"]`).classList.add('selected');
+}
+function updateChatUI(messages) {
+    const chatLog = document.querySelector('#chat-log');
+    chatLog.innerHTML = '';  // Очистка предыдущих сообщений
+    messages.forEach((message) => {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message.sender_name + ": " + message.message_text;
+        chatLog.appendChild(messageElement);
+    });
+}
+
+function setUpChats() {
+    const chatsRef = collection(db, "chats");
+    const queryChats = query(chatsRef, orderBy("activity", "desc"));
+
+    onSnapshot(queryChats, (chatsRef) => {
+        const list = document.querySelector('.chat-list');
+        list.innerHTML = '';
+        const chats = [];
+        chatsRef.forEach((doc) => {
+            chats.push(doc.data());
+        });
+        chats.forEach((chat) => {
+            const messageElement = document.createElement('li');
+            messageElement.setAttribute('onclick', "selectChat('"+chat.chat_id+"')")
+            messageElement.textContent = chat.chatName;
+            if(chat.chat_id === currentChatId ){
+                messageElement.classList.add('selected');
+            }
+            list.appendChild(messageElement);
+        });
+    });
+}
+
+async function sendMessage(senderId, senderName, messageText) {
+    await addDoc(collection(db, "messages"), {
+        chat_id: currentChatId,
+        sender_id: senderId,
+        sender_name: senderName,
+        message_text: messageText,
+        timestamp: serverTimestamp()
+    });
+    const chatRef = doc(db, "chats", currentChatId); // Получаем ссылку на документ чата
+    await updateDoc(chatRef, {
+       activity: serverTimestamp()
+    });
+}
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    sendMessage(userId, username, message);
+    messageInputDom.value = '';
+};
+window.selectChat = selectChat;
+</script>
+{% endblock %}

@@ -85,6 +85,7 @@ def edit_user(request, user_id):
                         'email': new_user_data['email'],
                         'school': new_user_data['school'],
                         'role': new_user_data['id_group'],
+                        'rights': new_user_data['id_rights'],
                         'paralel': paralel
                     })
             return JsonResponse({'status': 'success', 'message': 'Address updated successfully.'})

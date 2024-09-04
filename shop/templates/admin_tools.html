@@ -35,11 +35,11 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.active-page').forEach(element => {
-            element.classList.remove('active');
-        });
-        let queryclass= '.page-at-'+  '{{ feature_name }}';
-        document.querySelector(queryclass).classList.add('active');
+        {#document.querySelectorAll('.active-page').forEach(element => {#}
+        {#    element.classList.remove('active');#}
+        {#);#}
+        {#let queryclass= '.page-at-'+  '{{ feature_name }}';#}
+        {#document.querySelector(queryclass).classList.add('active');#}
 
     })
 </script>
