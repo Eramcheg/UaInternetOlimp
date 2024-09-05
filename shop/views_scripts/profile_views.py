@@ -48,6 +48,7 @@ def profile(request, feature_name):
     context['currency'] = currency
     context['role'] = info['role']
     context['userId'] = info['userId']
+    context['user_class'] = info['paralel'] if "paralel" in info else ""
     context['username'] = info['first_name'] + " " + info["last_name"]
     context['show_quantities'] = show_quantities
     context['task_1'] = info['task_1_name'] if "task_1_name" in info else ""
