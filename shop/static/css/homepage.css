@@ -7,19 +7,66 @@ h1, h3{
 .higher-container{
     display: flex;
     /*flex-direction: column;*/
-    height: 422px;
-    margin-top: 80px;
+    min-height: 500px;
+}
+@media (max-width: 576px) {
+  /* Стили для средних телефонов */
+
 }
 
-.left-high {
-    flex: 0 0 10%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 20% */
-    height: 100%; /* Make it take full height of the parent */
+.left-high { /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 20% */
     background-size: cover; /* Ensure background covers the entire area */
 }
+@media (min-width: 576px) {
+    .higher-container{
+        height: 422px;
+        margin-top: 80px;
+    }
+    .left-high, .center-high, .right-high {
+        height: 100%;
 
+    }
+    .left-high {
+       flex: 0 0 10%;
+    }
+    .center-high {
+       flex: 0 0 40%;
+    }
+    .right-high {
+       flex: 0 0 50%;
+    }
+}
+@media (max-width: 576px) {
+    .higher-container{
+        flex-direction: column;
+    }
+    .left-high {
+         /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 20% */
+        height: 100px;
+    }
+  /* Стили для средних телефонов */
+    .left-high, .center-high, .right-high {
+        width: 100%;flex-grow: 1;
+
+    }
+    .center-high .container-for-texts h1 {
+        font-size: 32px;
+
+    }
+    .center-high .container-for-texts {
+        text-align: center;
+        padding: 0 10px!important;
+    }
+    .right-high .text-frame{
+        width: 80% !important;
+        margin: 20px 0
+    }
+    .right-high {
+        align-items: center;
+    }
+}
 .center-high {
-    flex: 0 0 40%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 40% */
-    height: 100%; /* Make it take full height of the parent */
+  /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 40% */
     background-size: cover; /* Ensure background covers the entire area */
     display: flex;
     align-items: center;
@@ -49,9 +96,7 @@ bluetext{
     font-weight: 400;
 }
 
-.right-high {
-    flex: 0 0 50%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 40% */
-    height: 100%; /* Make it take full height of the parent */
+.right-high {/* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 40% */
     background-size: cover; /* Ensure background covers the entire area */
     display: flex;
     flex-direction: column;
@@ -175,6 +220,15 @@ bluetext{
 .sub-news-container .main-body .main-text span{
     font-size: 14px;
     color: #4D4D4B;
+}
+@media (max-width: 576px) {
+    .sub-news-container .inner-sub-news{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .sub-news-container .inner-sub-news .main-body{
+        padding: 8px;
+    }
 }
 
 
@@ -356,8 +410,8 @@ bluetext{
 @media only screen and (min-width: 769px) {
     .news-container img{
         border-radius: 6px;
-        width: 250px;
-        height: 100px;
+        width: 360px;
+        height: 230px;
     }
 }
 @media only screen and (max-width: 768px) {
