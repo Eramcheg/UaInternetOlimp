@@ -28,7 +28,7 @@
 
             <div class="container-for-texts">
                 <h1>
-                    Ласкаво просимо на сайт <bluetext>Всеукраїнської олімпіади з фізики </bluetext>
+                    Ласкаво просимо на сайт <bluetext>Всеукраїнської інтернет-олімпіади з фізики </bluetext>
                 </h1>
 
                 <span>
@@ -43,10 +43,10 @@
             <div class="text-frame">
                 <div class="main-text">
                     <span class="header5">Тепер почніть 1-й раунд</span>
-                    <span class="text">Ви перевертаєтесь до фізики? Тоді отримайте завдання та приєднуйтесь.…</span>
+                    <span class="text">Вам подобається фізика?? Тоді отримайте завдання та приєднуйтесь.…</span>
                 </div>
                 <div>
-                    <a class="frame-link" href="{% url "home" %}"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>  {# TODO: добавить в ссылку href #}
+                    <a class="frame-link" href="{% url "materials" %}"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>  {# TODO: добавить в ссылку href #}
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                         Вогонь і полум'я для фізики?
                     </h1>
                     <span class="text">
-                        Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою! Заочні та очні тури Всеукраїнської інтернет-олімпіади кидають виклик! Ми підтримуємо учнів, які люблять фізику, захоплюючими завданнями, навчання в **безкоштовній онлайн-школі з фізики та багатьма додатковими активностями.
+                        Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою! Заочні та очні тури Всеукраїнської інтернет-олімпіади кидають виклик! Ми підтримуємо учнів, які люблять фізику, захоплюючими завданнями, навчання в <span style="font-weight: 600">безкоштовній онлайн-школі з фізики</span> та багатьма додатковими активностями.
                     </span>
                 </div>
 
@@ -104,11 +104,11 @@
                     </svg>
                 </button>
                 <div id="item-list" class="item-list">
-                   {% for i in "123" %}
+                   {% for new_info in news_info %}
                     <div class="news-container">
-                        <img src="/static/images/home/news/mini_article_{{ i }}.png" alt="News {{ i }}">
-                        <p>{{ i }}</p>
-                        <a href="{% url "open_news" news_number=i %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                        <img src="/static/images/home/news/mini_article_{{ forloop.counter }}.jpg" alt="News {{ forloop.counter }}" width="370" height="240">
+                        <p>{{ new_info }}</p>
+                        <a href="{% url "open_news" news_number=forloop.counter %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -170,7 +170,7 @@
                             захоплюючу наукову дисципліну, перевірити власні межі та,
                             що не менш важливо, познайомитися з цікавими людьми.
                         </span>
-                        <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
+                        <a class="frame-link" href="{% url "materials" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
                     </div>
                     <div class="online-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
                         <span class="poznachka">Онлайн школа</span>
@@ -179,7 +179,7 @@
                            Онлайн школа з фізики цілком безкоштовна і дозволяє учням з різних міст України та світу отримати шкільні знання на високому олімпіадному та шкільному рівні.
 Працює 8 груп(по 2 кожному класі з 8 по 11): базові  - за рівнем стандарту з доповненням від нас, поглиблена – за рівнем поглибленого та олімпіадного курсу.
                         </span>
-                        <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important; "> На сторінку порталу <i class="fas fa-arrow-right"></i> </a>
+                        <a class="frame-link" href="https://uaphysonline.com/" style="color: #f9f9f9!important; "> На сторінку школи <i class="fas fa-arrow-right"></i> </a>
                     </div>
                 </div>
             </div>
