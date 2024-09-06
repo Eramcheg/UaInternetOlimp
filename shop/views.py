@@ -304,7 +304,7 @@ country_dict = {
     "229": "Zimbabwe"
 }
 
-
+news_info = ["Олімпіада 2022", "Олімпіада 2023"]
 
 
 def get_user_session_type(request):
@@ -342,7 +342,7 @@ def home_page(request):
     all_users = User.objects.all()
     articles = Article.objects.all().order_by('priority')
     articles_json = serialize('json', articles, fields=('article_name', 'mini_article_photo', 'mini_article_text'))
-
+    context['news_info'] = news_info
     context['articles'] = articles
     for user in all_users:
         print(user)
@@ -366,7 +366,7 @@ def news_main_view(request):
 
     }
 
-    context['news_info'] = ["Олімпіада 2022", "Олімпіада 2023", "Олімпіада 2024"]
+    context['news_info'] = news_info
     return render(request, 'uaolimpiad/news.html', context)
 
 def get_user_category(email):

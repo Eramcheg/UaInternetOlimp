@@ -39,6 +39,7 @@ body{
         text-align: center;
         justify-content: center;
         gap: 128px;
+        height: 100%;
     }
     .mobile-view{
         display: none;
@@ -60,7 +61,7 @@ body{
     margin-left: 10px;
     margin-right: 10px;
     width: 177px;
-    height: 52px;
+    height: 102px;
 }
 .all-links{
     display: flex;
