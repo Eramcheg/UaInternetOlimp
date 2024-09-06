@@ -20,7 +20,7 @@
                 Спортсмен, порівнявшись з тренером, біжить назад з тією ж швидкістю v.
                 Яка буде довжина колони, коли всі спортсмени розвернуться?
             </span>
-            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+            <a id="1"  class="download-task">
                 <i class="fa-solid fa-download"></i>
             </a>
         </div>
@@ -35,7 +35,7 @@
                 одержав?
             </span>
 
-            <a href="{% url "download_file" filename="task_2.docx" %}" class="download-task">
+            <a id="2"  class="download-task">
                 <i class="fa-solid fa-download"></i>
             </a>
         </div>
@@ -47,7 +47,7 @@
                 що зустрічні трамваї проїжджають повз нього через кожні дві хвилини.
                 Визначте швидкість трамваю.
             </span>
-            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+            <a id="3"  class="download-task">
                 <i class="fa-solid fa-download"></i>
             </a>
         </div>
@@ -67,7 +67,7 @@
                 0
                 ?
             </span>
-            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+            <a id="4"  class="download-task">
                 <i class="fa-solid fa-download"></i>
             </a>
         </div>
@@ -80,10 +80,28 @@
                 000 000 км).Через 40 хвилин об’єкт було виявлено на відстані 5 а. о. Від
                 Землі. Визначити, з якою швидкістю об’єкт наближався до Землі.
             </span>
-            <a href="{% url "download_file" filename="task_1.docx" %}" class="download-task">
+            <a id="5"  class="download-task">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+        <div class="task">
+            <h1 class="big-text"> Всі задачі в одному файлі</h1>
+            <span class="">
+
+            </span>
+            <a id="all"  class="download-task">
                 <i class="fa-solid fa-download"></i>
             </a>
         </div>
     </div>
-
+<script>
+    let user_class = "{{ user_class|safe }}";
+    document.addEventListener("DOMContentLoaded", function() {
+        const downloadTasks = document.querySelectorAll('.download-task');
+        downloadTasks.forEach(task => {
+            let id = task.getAttribute('id');
+            task.setAttribute('href', '/uk/download/'+id+"_"+user_class+" клас.docx")
+        });
+    });
+</script>
 {% endblock %}
