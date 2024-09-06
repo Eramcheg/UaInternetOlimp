@@ -28,7 +28,24 @@
         </div>
         <div class="rectangles-wrapper">
             <div class="image">
-                <img src="{% static "images/materials/imgs/testMainImage.jpg" %}" width="850" height="400">
+                <div class="container-downloads">
+                    <div class="task-box">
+                        <span class="task-name">Завдання 9 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="all_9 клас.pdf" %}">Задачі в .pdf<br><i class="fa-solid fa-download"></i></a>
+                        <a class="button-download" href="{% url "download_file" filename="all_9 клас.docx" %}">Задачі в .docx<br> <i class="fa-solid fa-download"></i></a>
+                    </div>
+                    <div class="task-box">
+                        <span class="task-name">Завдання 10 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="all_10 клас.pdf" %}">Задачі в .pdf<br> <i class="fa-solid fa-download"></i></a>
+                        <a class="button-download" href="{% url "download_file" filename="all_10 клас.docx" %}">Задачі в .docx<br> <i class="fa-solid fa-download"></i></a>
+                    </div>
+                    <div class="task-box">
+                        <span class="task-name">Завдання 11 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="all_11 клас.pdf" %}">Задачі в .pdf <br><i class="fa-solid fa-download"></i></a>
+                        <a class="button-download" href="{% url "download_file" filename="all_11 клас.docx" %}">Задачі в .docx <br><i class="fa-solid fa-download"></i></a>
+
+                    </div>
+                </div>
             </div>
             <div class="text-information">
                 <div class="main-text">
