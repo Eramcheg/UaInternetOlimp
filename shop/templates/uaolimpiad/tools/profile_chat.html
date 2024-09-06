@@ -9,11 +9,11 @@
         <div class="user-chat-widget">
             <div class="chat-list">
                 <ul>
-                    <li onclick="selectChat('1')">Задача 1</li>
-                    <li onclick="selectChat('2')">Задача 2</li>
-                    <li onclick="selectChat('3')">Задача 3</li>
-                    <li onclick="selectChat('4')">Задача 4</li>
-                    <li onclick="selectChat('5')">Задача 5</li>
+                    <li class="li-select" id="1">Задача 1</li>
+                    <li class="li-select" id="2">Задача 2</li>
+                    <li class="li-select" id="3">Задача 3</li>
+                    <li class="li-select" id="4">Задача 4</li>
+                    <li class="li-select" id="5">Задача 5</li>
                 </ul>
             </div>
             <div class="chat-window">
@@ -110,7 +110,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const button_file = document.getElementById('chat-file-upload');
         button_file.disabled = false;
         button_file.style.backgroundColor = "#007bff";
-    }});
+    }
+});
 
 onSnapshot(q, (querySnapshot) => {
     const messages = [];
@@ -148,6 +149,13 @@ onSnapshot(q2, (chatsRef) => {
 
 let unsubscribeChatMessages = null;  // Global variable to store the unsubscribe function for chat messages
 
+
+document.addEventListener('click', function(event) {
+    // Check if the clicked element matches the selector '.li-select'
+    if (event.target && event.target.classList.contains('li-select')) {
+        selectChat(event.target.id);
+    }
+});
 async function selectChat(task) {
     if (role === "Student") {
         currentChatId = userId + "_" + "task" + task;
@@ -232,7 +240,13 @@ async function selectChat(task) {
     document.querySelectorAll('.chat-list li').forEach(item => {
         item.classList.remove('selected');
     });
-    document.querySelector(`[onclick="selectChat('${task}')"]`).classList.add('selected');}
+    if(role === "Student") {
+        document.querySelectorAll(`.li-select`)[parseInt(task) - 1].classList.add('selected');
+    }
+    else {
+        document.querySelector(`#`+task).classList.add('selected');
+    }
+}
 
 async function sendMessage(senderId, senderName, messageText) {
     const chatRef = doc(db, "chats", currentChatId); // Получаем ссылку на документ чата
@@ -307,7 +321,7 @@ function updateChatUI(messages) {
         } else {
             // Otherwise, it's a text message
             messageElementText.textContent = message.message_text;
-            console.log(message.timestamp);
+
             messageElementHighTime.textContent = formatTimestamp(message.timestamp.seconds, message.timestamp.nanoseconds);
             messageElementHighName.textContent = message.sender_name;
             messageElement.textContent = message.sender_name + ": " + message.message_text;
@@ -330,28 +344,30 @@ async function setUpChats() {
 
             chatsSnapshot.forEach((doc) => {
                 const chat = doc.data();
-                const messageElement = document.createElement('li');
-                messageElement.setAttribute('onclick', "selectChat('" + chat.chat_id + "')");
-                messageElement.textContent = chat.chatName;
+                const chatElement = document.createElement('li');
+                chatElement.classList.add('li-select');
+                {#chatElement.setAttribute('onclick', "selectChat('" + chat.chat_id + "')");#}
+                chatElement.setAttribute('id', chat.chat_id);
+                chatElement.textContent = chat.chatName;
 
                 // Apply the correct border color based on the chat state
                 switch (chat.chat_state) {
                     case 'sent':
-                        messageElement.classList.add('chat-sent');
+                        chatElement.classList.add('chat-sent');
                         break;
                     case 'viewed':
-                        messageElement.classList.add('chat-viewed');
+                        chatElement.classList.add('chat-viewed');
                         break;
                     case 'answered':
-                        messageElement.classList.add('chat-answered');
+                        chatElement.classList.add('chat-answered');
                         break;
                 }
 
                 if (chat.chat_id === currentChatId) {
-                    messageElement.classList.add('selected');
+                    chatElement.classList.add('selected');
                 }
 
-                list.appendChild(messageElement);
+                list.appendChild(chatElement);
             });
         });
     }}
