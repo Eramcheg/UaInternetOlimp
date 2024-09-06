@@ -87,7 +87,7 @@ bluetext{
 
 .rectangles-wrapper {
     position: absolute;
-    top: calc(470px); /* Помещаем на стык фонов */
+    top: calc(520px); /* Помещаем на стык фонов */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -127,7 +127,7 @@ bluetext{
 }
 .image {
     width: 1050px;
-    height: 460px;
+    height: 350px;
     text-align: center;
 }
 .image img{
