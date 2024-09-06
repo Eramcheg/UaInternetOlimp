@@ -35,14 +35,21 @@ bluetext{
 }
 .center-high .container-for-texts h1{
     font-weight: 600;
-
+    text-align: center;
 }
 .center-high .container-for-texts span{
     color: #4D4D4B;
     font-size: 16px;
     font-weight: 400;
 }
-
+.center-high .container-for-texts span a{
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 20px;
+}
+.center-high .container-for-texts span a:hover{
+    text-decoration: none;
+}
 .right-high {
     flex: 0 0 30%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 40% */
     height: 100%; /* Make it take full height of the parent */
@@ -80,7 +87,7 @@ bluetext{
 
 .rectangles-wrapper {
     position: absolute;
-    top: calc(380px); /* Помещаем на стык фонов */
+    top: calc(470px); /* Помещаем на стык фонов */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
