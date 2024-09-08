@@ -308,6 +308,24 @@ bluetext{
     flex-direction: column;
     align-items: center;
 }
+@media only screen and (max-width: 768px) {
+    .container-post-news{
+        height:3000px;
+    }
+    .purposes{
+        flex-direction: column;
+        margin: 0 20px;
+    }
+    .etaps{
+        flex-direction: column;
+        margin: 0 20px;
+    }
+}
+@media only screen and (min-width: 769px) {
+    .purpose{
+        width: 380px;
+    }
+}
 .background-purposes-1,
 .background-purposes-2 {
     position: absolute;
@@ -361,7 +379,6 @@ bluetext{
     background-color: #f9f9f9;
     padding: 32px;
     border-radius: 12px;
-    width: 380px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
     gap:10px;
 }
