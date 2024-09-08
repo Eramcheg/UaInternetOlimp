@@ -181,7 +181,8 @@ async function selectChat(task) {
             chatName: username + " " +user_class+" клас "+ "Задача " + task,
             class: user_class,
             activity: serverTimestamp(),
-            chat_state: "sent"
+            chat_state: "sent",
+            chat_started: false
         });
     }
     if (role !== "Student") {
@@ -250,12 +251,17 @@ async function selectChat(task) {
 
 async function sendMessage(senderId, senderName, messageText) {
     const chatRef = doc(db, "chats", currentChatId); // Получаем ссылку на документ чата
-
+    const chatDoc = await getDoc(chatRef);
     if (role === "Student") {
         await updateDoc(chatRef, {
             activity: serverTimestamp(),
             chat_state: "sent" // Если сообщение отправляет студент, флаг viewed становится false
         });
+        if(chatDoc.data().chat_started === false){
+            await updateDoc(chatRef, {
+                chat_started: true,
+            });
+        }
     } else {
         await updateDoc(chatRef, {
             activity: serverTimestamp(),
@@ -344,6 +350,9 @@ async function setUpChats() {
 
             chatsSnapshot.forEach((doc) => {
                 const chat = doc.data();
+                if(chat.chat_started === false){
+                    return;
+                }
                 const chatElement = document.createElement('li');
                 chatElement.classList.add('li-select');
                 {#chatElement.setAttribute('onclick', "selectChat('" + chat.chat_id + "')");#}
@@ -427,12 +436,20 @@ document.getElementById('chat-file-input').onchange = async function(e) {
     }};
 
 async function sendFileMessage(senderId, senderName, fileName, fileURL) {
+
+
     const chatRef = doc(db, "chats", currentChatId); // Get reference to the chat
+    const chatDoc = await getDoc(chatRef);
     if (role === "Student") {
         await updateDoc(chatRef, {
             activity: serverTimestamp(),
             chat_state: "sent" // Если сообщение отправляет студент, флаг viewed становится false
         });
+        if(chatDoc.data().chat_started === false){
+            await updateDoc(chatRef, {
+                chat_started: true,
+            });
+        }
     } else {
         await updateDoc(chatRef, {
             activity: serverTimestamp(),
