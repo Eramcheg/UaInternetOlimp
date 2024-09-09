@@ -34,7 +34,7 @@
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
             <a href="{% url 'home' %}" class="link">Контакти</a>
-            {% if user.email == "uainternetolimp@gmail.com" %}
+            {% if role == "Admin" %}
                 <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Адмін</a>
             {% endif %}
             </div>
@@ -64,7 +64,7 @@
                                 {% if role == "Student" or role == "Admin" %}
                                     <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
                                     <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link" title="Завантажити">Завантажити</a></li>
-                                    <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
+
                                 {% endif %}
                                 {% if role == "Simple_Jury" or role == "Main_Jury" %}
                                     <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
@@ -74,7 +74,9 @@
                                     <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Перевірка">Перевірка</a></li>
                                     <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
                                 {% endif %}
-                                <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Розв’язки">Розв’язки</a></li>
+                            {% if rights == "Chat_Admin" or role == "Student" %}
+                                        <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
+                                    {% endif %}
                                 <li><a href="{% url 'logout' %}" class="dropdown-link" title="Вийти">Вийти</a></li>
                             </ul>
                         </div>

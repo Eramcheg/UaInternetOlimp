@@ -12,7 +12,10 @@
 <div class="centered-container">
 
     <div class="upload-box" id="box1">
-        <h1>Задача 1</h1>
+        <h1>{% if user_class == "9" %} «Закільцьовані»
+                {% elif user_class == "10" %} «І знов середня швидкість»
+                {% elif user_class == "11" %} «Оптика циліндру»
+                {% endif %}</h1>
         <label for="fileInput1">Натисніть щоб завантажити розвязок</label>
         {% if task_1 %}
         <h5>Завантажений файл: {{ task_1 }}</h5>
@@ -22,7 +25,10 @@
         <span class="file-name" id="fileName1"></span>
     </div>
     <div class="upload-box" id="box2">
-        <h1>Задача 2</h1>
+        <h1>{% if user_class == "9" %} «І знов середня швидкість»
+                {% elif user_class == "10" %} «Як вимірюють період напіврозпаду»
+                {% elif user_class == "11" %} «Молекула водню»
+                {% endif %}</h1>
         <label for="fileInput2">Натисніть щоб завантажити розвязок</label>
         {% if task_2 %}
             <h5>Завантажений файл: {{ task_2 }}</h5>
@@ -31,7 +37,10 @@
         <span class="file-name" id="fileName2"></span>
     </div>
     <div class="upload-box" id="box3">
-        <h1>Задача 3</h1>
+        <h1>{% if user_class == "9" %} «Тиснемо-перетиснемо»
+                {% elif user_class == "10" %} «Вода»
+                {% elif user_class == "11" %} «Безпечні перевезення»
+                {% endif %}</h1>
         <label for="fileInput3">Натисніть щоб завантажити розвязок</label>
         {% if task_3 %}
             <h5>Завантажений файл: {{ task_3 }}</h5>
@@ -40,7 +49,10 @@
         <span class="file-name" id="fileName3"></span>
     </div>
     <div class="upload-box" id="box4">
-        <h1>Задача 4</h1>
+        <h1>{% if user_class == "9" %} «Дрова і вода»
+                {% elif user_class == "10" %} «Мерефо-Херсонський міст»
+                {% elif user_class == "11" %} «Котимося вгору»
+                {% endif %}</h1>
         <label for="fileInput4">Натисніть щоб завантажити розвязок</label>
         {% if task_4 %}
             <h5>Завантажений файл: {{ task_4 }}</h5>
@@ -49,7 +61,10 @@
         <span class="file-name" id="fileName4"></span>
     </div>
     <div class="upload-box" id="box5">
-        <h1>Задача 5</h1>
+        <h1>{% if user_class == "9" %} «Циліндр в акваріумі»
+                {% elif user_class == "10" %} «Лабораторна комашка»
+                {% elif user_class == "11" %} «Сферичний обігрівач»
+                {% endif %}</h1>
         <label for="fileInput5">Натисніть щоб завантажити розвязок</label>
         {% if task_5 %}
             <h5>Завантажений файл: {{ task_5 }}</h5>

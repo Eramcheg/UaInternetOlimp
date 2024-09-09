@@ -27,13 +27,16 @@ from django.utils.translation import gettext as _
 
 from shop.models import Banner, Article
 
-json_file_path = os.path.join(settings.BASE_DIR, "shop", "static", "uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json")
+json_file_path = os.path.join(settings.BASE_DIR, "shop", "static",
+                              "uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json")
 cred = credentials.Certificate(json_file_path)
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 db = firestore.client()
 orders_ref = db.collection("Orders")
 users_ref = db.collection('users')
+chats_ref = db.collection('chats')
+messages_ref = db.collection('messages')
 itemsRef = db.collection('item')
 cart_ref = db.collection("Cart")
 addresses_ref = db.collection('Addresses')
@@ -41,18 +44,16 @@ metadata_ref = db.collection('metadata')
 favourites_ref = db.collection('Favourites')
 single_order_ref = db.collection("Order")
 
-
-
 currency_dict = {
-    "1":"Euro",
-    "2":"Dollar"
+    "1": "Euro",
+    "2": "Dollar"
 }
 
 groups_dict = {
-    "1":"Default",
-    "2":"VK3",
-    "3":"GH",
-    "4":"Default_USD",
+    "1": "Default",
+    "2": "VK3",
+    "3": "GH",
+    "4": "Default_USD",
     "5": "GH_USD",
 }
 
@@ -313,6 +314,7 @@ def get_user_session_type(request):
     else:
         return request.session.session_key
 
+
 def get_vocabulary_product_card():
     return {
         "In stock": _("In stock"),
@@ -350,14 +352,14 @@ def home_page(request):
     email = get_user_session_type(request)
     print(get_user_role(email))
     context['role'] = get_user_role(email)
-
+    context['rights'] = get_user_info(email)['rights']
     context['hello'] = test_text
     context['vocabulary_dialog'] = get_vocabulary_product_card()
     print(context['hello'])
     return render(request, 'home.html', context)
 
-def news_main_view(request):
 
+def news_main_view(request):
     articles = Article.objects.all()
 
     context = {
@@ -365,12 +367,17 @@ def news_main_view(request):
         'articles': articles
 
     }
-
+    email = get_user_session_type(request)
+    context['role'] = get_user_role(email)
+    context['rights'] = get_user_info(email)['rights']
     context['news_info'] = news_info
     return render(request, 'uaolimpiad/news.html', context)
 
+
 def get_user_category(email):
     pass
+
+
 def get_user_role(email):
     user = users_ref.where('email', '==', email).limit(1).get()
     if user:
@@ -379,6 +386,8 @@ def get_user_role(email):
             return user_dict['role']
     else:
         return "Default", "Euro"
+
+
 def get_user_info(email):
     user = users_ref.where('email', '==', email).limit(1).get()
     for user_info in user:
@@ -402,7 +411,8 @@ def get_cart(email):
             'name': doc_dict.get('name'),
             'product_name': doc_dict.get('product_name'),
             'quantity': doc_dict.get('quantity'),
-            'category': _(doc_dict.get('category')) if _(doc_dict.get('category')) is not None else doc_dict.get('category'),
+            'category': _(doc_dict.get('category')) if _(doc_dict.get('category')) is not None else doc_dict.get(
+                'category'),
             'number': doc_dict.get('number'),
             'image_url': doc_dict.get('image_url'),
             'description': safe_description,
@@ -499,7 +509,6 @@ def deleteProduct(request):
     return JsonResponse({'status': 'error'}, status=400)
 
 
-
 def update_email_in_db(old_email, new_email):
     # Define a mapping of collections to their respective email fields
     collection_email_fields = {
@@ -537,9 +546,12 @@ def serialize_firestore_document(doc):
             doc_dict[key] = value.isoformat()
     return doc_dict
 
+
 # Test on is user an admin
 def is_admin(user):
-    return user.is_authenticated and user.is_staff
+    email = user.email
+    info = get_user_info(email) or {}
+    return user.is_authenticated and (user.is_staff or info['role'] == 'Admin')
 
 
 @login_required
@@ -548,7 +560,6 @@ def admin_tools(request, feature_name):
     if feature_name == "manage_articles":
         from shop.views_scripts.manage_articles.create_article import create_article
         create_article(request)
-
 
     # Banner.objects.all().delete() # Функция чтобы удалять из бд данные
     # print(Banner.objects.all())
@@ -559,7 +570,6 @@ def admin_tools(request, feature_name):
         "articles": articles
     }
     return render(request, 'admin_tools.html', context)
-
 
 
 @login_required
@@ -584,7 +594,6 @@ def delete_users(request):
                 # Query for documents with matching userId field
 
                 docs = users_ref.where('userId', '==', int(user_id)).get()
-
 
                 for doc in docs:
                     user_data = doc.to_dict()  # Convert document to dictionary
@@ -633,6 +642,8 @@ def fetch_document_name(item):
         item_ref = item  # Assuming it's a document reference already
     doc = item_ref.get()
     return doc.to_dict() if doc.exists else None
+
+
 def parallel_fetch_names(item_list):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         order_items_dict = list(executor.map(fetch_document_name, item_list))
@@ -697,10 +708,60 @@ def get_order_items(order_id):
             print(f"Unhandled exception: {e}")
     return order_items
 
+
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'uaolimpiad/news_prototype.html'
     context_object_name = 'article'
 
+
 def open_news(request, news_number):
-   return render(request, f'uaolimpiad/news/new_{news_number}.html')
+    context = {}
+    email = get_user_session_type(request)
+    context['role'] = get_user_role(email)
+    context['rights'] = get_user_info(email)['rights']
+    return render(request, f'uaolimpiad/news/new_{news_number}.html', context)
+
+
+def updateChatInfo(old_data, new_data):
+    chats_query = chats_ref.where('userId', '==', old_data['userId']).get()
+
+    all_tasks = {
+        "9": {
+            "1": "«Закільцьовані»",
+            "2": "«І знов середня швидкість»",
+            "3": "«Тиснемо-перетиснемо»",
+            "4": "«Дрова і вода»",
+            "5": "«Циліндр в акваріумі»",
+        },
+        "10": {
+            "1": "«І знов середня швидкість»",
+            "2": "«Як вимірюють період напіврозпаду»",
+            "3": "«Вода»",
+            "4": "«Мерефо-Херсонський міст»",
+            "5": "«Лабораторна комашка»",
+        },
+        "11": {
+            "1": "«Оптика циліндру»",
+            "2": "«Молекула водню»",
+            "3": "«Безпечні перевезення»",
+            "4": "«Котимося вгору»",
+            "5": "«Сферичний обігрівач»",
+        }
+    }
+    for chat_doc in chats_query:
+        this_chat = chat_doc.to_dict()  # Получаем содержимое документа
+        chat_name = f"{new_data['firstname']} {new_data['lastname']} {new_data['paralel']} клас {all_tasks[new_data['paralel']][this_chat['task_name']]}"
+        paralel_class = int(new_data['paralel'])
+        # Обновляем документ с новым значением поля chat_name
+        chats_ref.document(chat_doc.id).update({
+            'chatName': chat_name,
+            'class': paralel_class  # Добавляем поле class с числовым значением
+        })
+    messages_query = messages_ref.where('sender_id', '==', old_data['userId']).get()
+    for message_doc in messages_query:
+        message = message_doc.to_dict()
+        message_sender_name = f"{new_data['firstname']} {new_data['lastname']}"
+        messages_ref.document(message_doc.id).update({
+            'sender_name': message_sender_name,
+        })

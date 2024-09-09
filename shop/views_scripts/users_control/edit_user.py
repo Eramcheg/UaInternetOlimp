@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document
+    serialize_firestore_document, updateChatInfo
 
 
 # TODO: изменить данную функцию под новые поля юзера, не забыть про правила валидации полей из условия задания
@@ -74,6 +74,10 @@ def edit_user(request, user_id):
             user_enabled = False if 'enable-user' not in new_user_data else True if new_user_data[
                                                                                         'enable-user'] == "1" else False
             paralel = new_user_data['paralel']
+            if (old_user_data['paralel'] != new_user_data['paralel'] or
+                    old_user_data['first_name'] != new_user_data['firstname'] or
+                    old_user_data['last_name'] != new_user_data['lastname']):
+                updateChatInfo(old_user_data, new_user_data)
             if existing_user:
                 for user in existing_user:
                     user_ref = users_ref.document(user.id)

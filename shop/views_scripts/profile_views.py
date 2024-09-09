@@ -4,7 +4,7 @@ import string
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, users_ref, addresses_ref, update_email_in_db, \
-    get_user_category, get_user_info, get_vocabulary_product_card
+    get_user_category, get_user_info, get_vocabulary_product_card, chats_ref, messages_ref, updateChatInfo
 import ast
 import random
 from datetime import datetime
@@ -29,13 +29,15 @@ from django.core.mail import send_mail
 
 from shop.forms import UserRegisterForm, User
 from firebase_admin import storage
+
+
 @login_required
 def profile(request, feature_name):
     email = request.user.email
     orders = get_orders_for_user(email)
     order_details = get_order_details(orders)
     email = request.user.email
-    category, currency = 0,1
+    category, currency = 0, 1
     info = get_user_info(email) or {}
     show_quantities = info['show_quantities'] if 'show_quantities' in info else False
     if currency == "Euro":
@@ -43,7 +45,6 @@ def profile(request, feature_name):
     elif currency == "Dollar":
         currency = "$"
     context = build_context(feature_name, email, orders, order_details)
-
 
     context['currency'] = currency
     context['role'] = info['role']
@@ -58,6 +59,7 @@ def profile(request, feature_name):
     context['task_5'] = info['task_5_name'] if "task_5_name" in info else ""
     context['rights'] = info['rights'] if "rights" in info else ""
     return render(request, 'profile.html', context=context)
+
 
 def get_orders_for_user(email):
     orders = []
@@ -77,8 +79,10 @@ def get_orders_for_user(email):
         })
     return orders
 
+
 def format_date(date_obj):
     return date_obj.strftime("%Y-%m-%d") if date_obj else None
+
 
 def get_order_details(orders):
     order_details = {order['order_id']: [] for order in orders}
@@ -93,6 +97,7 @@ def get_order_details(orders):
 
     return order_details
 
+
 def schedule_order_detail_fetching(executor, orders, order_details):
     future_to_order = {}
     for order in orders:
@@ -101,6 +106,7 @@ def schedule_order_detail_fetching(executor, orders, order_details):
             future = executor.submit(fetch_order_detail, order_doc_path)
             future_to_order[future] = order['order_id']
     return future_to_order
+
 
 def fetch_order_detail(order_doc_path):
     path_parts = order_doc_path.split('/')
@@ -112,10 +118,12 @@ def fetch_order_detail(order_doc_path):
             return order_doc.to_dict()
     return None
 
+
 def build_context(feature_name, email, orders, order_details):
-    currencies_dict ={}
+    currencies_dict = {}
     for order in orders:
-        currencies_dict[order['order_id'] if 'order_id' in order.keys() else order['order-id']] = "€" if (order['currency'] if 'currency' in order else "Euro")=="Euro" else "$"
+        currencies_dict[order['order_id'] if 'order_id' in order.keys() else order['order-id']] = "€" if (order[
+                                                                                                              'currency'] if 'currency' in order else "Euro") == "Euro" else "$"
 
     context = {
         'currencies': currencies_dict,
@@ -135,6 +143,7 @@ def build_context(feature_name, email, orders, order_details):
 
     return context
 
+
 def get_user_info_dicts(email):
     existing_users = users_ref.where('email', '==', email).limit(1).get()
     if existing_users:
@@ -146,6 +155,7 @@ def get_user_info_dicts(email):
             return information2, information
     return None, None
 
+
 def get_user_addresses(email):
     addresses = []
     existing_addresses = addresses_ref.where('email', '==', email).get()
@@ -156,6 +166,7 @@ def get_user_addresses(email):
     addresses_dict = json.dumps(addresses)
     return addresses, addresses_dict
 
+
 def upload_to_firebase(file_stream, file_path):
     # Get the bucket
     bucket = storage.bucket('uainternetolimp-41dd1.appspot.com')
@@ -163,6 +174,8 @@ def upload_to_firebase(file_stream, file_path):
     blob.upload_from_file(file_stream)
     blob.make_public()  # If you want the file to be publicly accessible
     return blob
+
+
 @csrf_exempt
 @login_required
 def update_user_account(request):
@@ -174,17 +187,6 @@ def update_user_account(request):
 
             old_email = old_data['email']
             new_email = new_data['email']
-
-            user_image = request.FILES.get('profile_picture')
-            photo_url = ""
-            if user_image:
-                file_path = os.path.join('profile_pics', user_image.name)
-                blob = upload_to_firebase(user_image, file_path)
-
-                # Now you can save `blob.public_url` to your user profile model
-                print(blob.public_url)
-                photo_url = blob.public_url
-
 
             # Check for existing user by email
             existing_users = users_ref.where('email', '==', old_email).limit(1).get()
@@ -198,8 +200,8 @@ def update_user_account(request):
                 except User.DoesNotExist:
                     return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
 
-            if new_data['email'] != old_email or new_data['login']!=old_data['login']:
-                if(new_email!= old_email):
+            if new_data['email'] != old_email or new_data['login'] != old_data['login']:
+                if (new_email != old_email):
                     existing_user_with_new_email = users_ref.where('email', '==', new_email).limit(1).get()
                     if len(existing_user_with_new_email) > 0:
                         return JsonResponse({'status': 'error', 'message': 'User with this email exists.'}, status=400)
@@ -241,13 +243,21 @@ def update_user_account(request):
             if not user_instance.check_password(password) or not user_instance.check_password(second_password):
                 return JsonResponse({'status': 'error', 'message': 'Incorrect password.'}, status=400)
 
-            # new_password = new_data.get('new_password', '')
-            # if new_password:  # This checks if the new_password string is not empty
-            #     user_instance.set_password(new_password)
-            #     user_instance.save()  # Don't forget to save the user object after setting the new password
-            #     update_session_auth_hash(request, user_instance)
+            user_image = request.FILES.get('profile_picture')
+            photo_url = ""
+            if user_image:
+                file_path = os.path.join('profile_pics', user_image.name)
+                blob = upload_to_firebase(user_image, file_path)
+
+                # Now you can save `blob.public_url` to your user profile model
+                print(blob.public_url)
+                photo_url = blob.public_url
 
             user_instance.save()
+            if (old_data['paralel'] != new_data['paralel'] or
+                    old_data['first_name'] != new_data['firstname'] or
+                    old_data['last_name'] != new_data['lastname']):
+                updateChatInfo(old_data, new_data)
 
             for user in existing_users:
                 user_ref = users_ref.document(user.id)
@@ -269,12 +279,15 @@ def update_user_account(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+
 def generate_random_string(length=6):
     # Объединяем цифры и буквы в один набор символов
     characters = string.ascii_lowercase + string.digits
     # Генерируем случайную строку
     random_string = ''.join(random.choice(characters) for _ in range(length))
     return random_string
+
 
 def download_file(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, 'tasks', filename)
@@ -315,7 +328,6 @@ def upload_file(request):
             name_field_name = f'task_{box_id[-1]}_name'  # file_1, file_2, ...
             user_doc.reference.update({field_name: file_url})
             user_doc.reference.update({name_field_name: file.name})
-
 
         return JsonResponse({'success': True, 'file_url': file_url})
     else:

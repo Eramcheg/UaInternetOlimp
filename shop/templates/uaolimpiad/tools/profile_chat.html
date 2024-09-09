@@ -9,11 +9,26 @@
         <div class="user-chat-widget">
             <div class="chat-list">
                 <ul>
-                    <li class="li-select" id="1">Задача 1</li>
-                    <li class="li-select" id="2">Задача 2</li>
-                    <li class="li-select" id="3">Задача 3</li>
-                    <li class="li-select" id="4">Задача 4</li>
-                    <li class="li-select" id="5">Задача 5</li>
+                    <li class="li-select" id="1">{% if user_class == "9" %} «Закільцьовані»
+                {% elif user_class == "10" %} «І знов середня швидкість»
+                {% elif user_class == "11" %} «Оптика циліндру»
+                {% endif %}</li>
+                    <li class="li-select" id="2">{% if user_class == "9" %} «І знов середня швидкість»
+                {% elif user_class == "10" %} «Як вимірюють період напіврозпаду»
+                {% elif user_class == "11" %} «Молекула водню»
+                {% endif %}</li>
+                    <li class="li-select" id="3">{% if user_class == "9" %} «Тиснемо-перетиснемо»
+                {% elif user_class == "10" %} «Вода»
+                {% elif user_class == "11" %} «Безпечні перевезення»
+                {% endif %}</li>
+                    <li class="li-select" id="4">{% if user_class == "9" %} «Дрова і вода»
+                {% elif user_class == "10" %} «Мерефо-Херсонський міст»
+                {% elif user_class == "11" %} «Котимося вгору»
+                {% endif %}</li>
+                    <li class="li-select" id="5">{% if user_class == "9" %} «Циліндр в акваріумі»
+                {% elif user_class == "10" %} «Лабораторна комашка»
+                {% elif user_class == "11" %} «Сферичний обігрівач»
+                {% endif %}</li>
                 </ul>
             </div>
             <div class="chat-window">
@@ -171,14 +186,37 @@ async function selectChat(task) {
     // Проверяем, существует ли чат в Firestore
     const chatRef = doc(db, "chats", currentChatId);
     const chatDoc = await getDoc(chatRef);
-
+    let task_class_name = "";
+   const tasks = {
+    "9": {
+        "1": "«Закільцьовані»",
+        "2": "«І знов середня швидкість»",
+        "3": "«Тиснемо-перетиснемо»",
+        "4": "«Дрова і вода»",
+        "5": "«Циліндр в акваріумі»",
+    },
+    "10": {
+        "1": "«І знов середня швидкість»",
+        "2": "«Як вимірюють період напіврозпаду»",
+        "3": "«Вода»",
+        "4": "«Мерефо-Херсонський міст»",
+        "5": "«Лабораторна комашка»",
+    },
+    "11": {
+        "1": "«Оптика циліндру»",
+        "2": "«Молекула водню»",
+        "3": "«Безпечні перевезення»",
+        "4": "«Котимося вгору»",
+        "5": "«Сферичний обігрівач»",
+    }
+};
     if (!chatDoc.exists()) {
         // Если чат не существует, создаем его
         await setDoc(chatRef, {
             task_name: task,
             chat_id: currentChatId,
             userId: userId,
-            chatName: username + " " +user_class+" клас "+ "Задача " + task,
+            chatName: username + " " + user_class + " клас " + tasks[user_class][task],
             class: user_class,
             activity: serverTimestamp(),
             chat_state: "sent",
