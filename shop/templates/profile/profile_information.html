@@ -7,17 +7,17 @@
 <section id="content" class="page-content col-md-12 col-lg-9 myacc_content">
     <header class="page-header">
     </header>
-    <form action="" id="customer-form" class="js-customer-form" method="post" autocomplete="off">
+    <form action="" id="customer-form" class="js-customer-form" method="post" autocomplete="off" enctype="multipart/form-data">
         <div>
             <div class="form-group row">
                 <div class="col-md-12">
                     <div class="profile-image">
                         <img src="{{ user_info.photo_url }}" alt="Profile Picture" id="currentProfilePicture">
                         <div class="profile-image-text">
-                            <label class="label-profilePicture" for="profilePicture">Формат JPG або PNG, максимум 5 MB</label>
+                            <label class="label-profilePicture" for="profile_picture">Формат JPG або PNG, максимум 5 MB</label>
                             <div class="upload-btn-wrapper">
                                 <button class="btn-upload">Завантажити фото</button>
-                                <input type="file" name="myfile" id="fileInput">
+                                <input type="file" name="profile_picture" id="fileInput">
                             </div>
                         </div>
                     </div>
@@ -211,19 +211,19 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     // Example: Check if the first name is filled out
     if (!this.firstname.value) {
         isValid = false;
-        messages.push('{{ _("First name is required")|escapejs }}.');
+        messages.push("Ім'я є обов'язковим до заповнення");
     }
     if (!this.lastname.value) {
         isValid = false;
-        messages.push('{{ _("Last name is required")|escapejs }}.');
+        messages.push("Прізвише є обов'язковим до заповнення");
     }
     if (!this.email.value) {
         isValid = false;
-        messages.push('{{ _("Email is required")|escapejs }}.');
+        messages.push("Емейл є обов'язковим до заповнення");
     }
     if (!this.password.value) {
         isValid = false;
-        messages.push('{{ _("Password is required")|escapejs }}.');
+        messages.push("Пароль є обов'язковим до заповнення");
     }
     const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -237,10 +237,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     const formData = new FormData(document.getElementById('customer-form'));
     formData.append('old', JSON.stringify({{ user_info_dict|safe }}));
     formData.append('new', JSON.stringify(Object.fromEntries(formData.entries())));
-    {#const jsonObject = {#}
-    {#    old: {{ user_info_dict|safe }},#}
-    {#    new: Object.fromEntries(formData.entries())#}
-    {#;#}
+
     console.log(new FormData(this));
     const csrftoken = getCookie('csrftoken');
 
@@ -256,15 +253,15 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
             // If response is not ok, parse the JSON to get the error message
             // and throw it to be caught by the catch block
             return response.json().then(json => {
-                throw new Error(json.message || "Something went wrong");
+                throw new Error(json.message || "Щось пішло не так...");
             });
         }
         return response.json();
     })
     .then(data => {
         console.log(data);
-        alert("{{ _("The information has been successfully updated!")|escapejs }}");
-        window.location.href = "{% url 'profile' feature_name='dashboard' %}";
+        alert("Інформацію було оновлено!");
+        window.location.href = "{% url 'profile' feature_name='account' %}";
         // Handle success response data
     }).catch(error => {
         console.error('Error:', error);
