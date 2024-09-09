@@ -352,7 +352,12 @@ def home_page(request):
     email = get_user_session_type(request)
     print(get_user_role(email))
     context['role'] = get_user_role(email)
-    context['rights'] = get_user_info(email)['rights'] if "rights" in get_user_info(email) else None
+    user_info = get_user_info(email)
+
+    if user_info is not None and "rights" in user_info:
+        context['rights'] = user_info['rights']
+    else:
+        context['rights'] = None
     context['hello'] = test_text
     context['vocabulary_dialog'] = get_vocabulary_product_card()
     print(context['hello'])
@@ -369,7 +374,12 @@ def news_main_view(request):
     }
     email = get_user_session_type(request)
     context['role'] = get_user_role(email)
-    context['rights'] = get_user_info(email)['rights'] if "rights" in get_user_info(email) else None
+    user_info = get_user_info(email)
+
+    if user_info is not None and "rights" in user_info:
+        context['rights'] = user_info['rights']
+    else:
+        context['rights'] = None
     context['news_info'] = news_info
     return render(request, 'uaolimpiad/news.html', context)
 
@@ -719,7 +729,12 @@ def open_news(request, news_number):
     context = {}
     email = get_user_session_type(request)
     context['role'] = get_user_role(email)
-    context['rights'] = get_user_info(email)['rights'] if "rights" in get_user_info(email) else None
+    user_info = get_user_info(email)
+
+    if user_info is not None and "rights" in user_info:
+        context['rights'] = user_info['rights']
+    else:
+        context['rights'] = None
     return render(request, f'uaolimpiad/news/new_{news_number}.html', context)
 
 
