@@ -57,6 +57,9 @@ body{
         justify-content: space-between;
     }
 }
+.logo{
+    display: flex;
+}
 .logo img {
     margin-left: 10px;
     margin-right: 10px;
