@@ -186,6 +186,8 @@ ul,li {
   background-color: #005bbb;
   font-weight: 600;
   color: #f9f9f9!important;
+  display: flex;
+  gap: 10px;
 }
 
 .circular-select {
