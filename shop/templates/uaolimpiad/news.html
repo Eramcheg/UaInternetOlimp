@@ -13,7 +13,13 @@
             <h1 class="title">Новини</h1>
             <div class="articles-grid">
                 {% for new_info in news_info %}
-                    {% if forloop.counter == 3 or forloop.counter == 6 %}
+
+                    <div class="article-container">
+                        <img src="/static/images/home/news/mini_article_{{ forloop.counter }}.jpg" alt="News {{ forloop.counter }}" width="370" height="240">
+                        <p class="article-mini-text">{{ new_info }}</p>
+                        <a class="absolute-link" href="{% url "open_news" news_number=forloop.counter %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    {% if forloop.counter == 2 or forloop.counter == 5 %}
                         <div class="first-tour-info-type-2" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
                             <span class="poznachka">1 ТУР</span>
                             <span class="title-2">Інформація та матеріали до 1-го туру</span>
@@ -25,11 +31,6 @@
                             <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>
                         </div>
                     {% endif %}
-                    <div class="article-container">
-                        <img src="/static/images/home/news/mini_article_{{ forloop.counter }}.jpg" alt="News {{ forloop.counter }}" width="370" height="240">
-                        <p class="article-mini-text">{{ new_info }}</p>
-                        <a class="absolute-link" href="{% url "open_news" news_number=forloop.counter %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
                 {% endfor %}
 
 
