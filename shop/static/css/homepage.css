@@ -17,7 +17,7 @@ h1, h3{
 .left-high { /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 20% */
     background-size: cover; /* Ensure background covers the entire area */
 }
-@media (min-width: 576px) {
+@media (min-width: 769px) {
     .higher-container{
         height: 422px;
         margin-top: 80px;
@@ -36,7 +36,7 @@ h1, h3{
        flex: 0 0 50%;
     }
 }
-@media (max-width: 576px) {
+@media (max-width: 769px) {
     .higher-container{
         flex-direction: column;
     }
@@ -221,7 +221,7 @@ bluetext{
     font-size: 14px;
     color: #4D4D4B;
 }
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .sub-news-container .inner-sub-news{
         flex-direction: column;
         gap: 10px;
@@ -308,19 +308,35 @@ bluetext{
     flex-direction: column;
     align-items: center;
 }
-@media only screen and (max-width: 768px) {
-    .container-post-news{
-        height:3000px;
+@media only screen and (max-width: 420px) {
+    .container-post-news {
+        height: 3000px;
     }
+}
+@media only screen and (max-width: 768px) {
     .purposes{
         flex-direction: column;
-        margin: 0 20px;
+        
     }
     .etaps{
         flex-direction: column;
-        margin: 0 20px;
+
     }
 }
+@media only screen and (max-width: 540px) and (min-width: 421px){
+    .container-post-news{
+        height:2700px;
+    }
+}
+@media only screen and (max-width: 768px) and (min-width: 541px){
+    .container-post-news{
+        height:2400px;
+    }
+}
+     .sub-news-container .inner-sub-news, .centered-container, .purpose-container, .etaps-container{
+        padding: 20px;
+    }
+
 @media only screen and (min-width: 769px) {
     .purpose{
         width: 380px;
