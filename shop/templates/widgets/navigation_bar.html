@@ -75,9 +75,9 @@
                                     <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Перевірка">Перевірка</a></li>
                                     <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
                                 {% endif %}
-                            {% if rights == "Chat_Admin" or role == "Student" %}
-                                        <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
-                                    {% endif %}
+                                {% if rights == "Chat_Admin" or role == "Student" %}
+                                    <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
+                                {% endif %}
                                 <li><a href="{% url 'logout' %}" class="dropdown-link" title="Вийти">Вийти</a></li>
                             </ul>
                         </div>
@@ -112,9 +112,21 @@
                     <li><a href="{% url 'news_main' %}" class="dropdown-link-mobile" title="Новини">Новини</a></li>
                     <hr class="hr-link">
                     <li><a href="{% url 'home' %}" class="dropdown-link-mobile" title="Контакти">Контакти</a></li>
-{#                    <hr class="hr-link">#}
-{#                    <li><a href="{% url 'materials' %}?page=other" class="dropdown-link-mobile" title="Інше">Інше</a></li>#}
                     <hr class="hr-link">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link-mobile" title="Аккаунт">Аккаунт</a></li>
+                        <hr class="hr-link">
+                        {% if role == "Student" or role == "Admin" %}
+                            <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link-mobile" title="Список задач">Список задач</a></li>
+                            <hr class="hr-link">
+                            <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link-mobile" title="Завантажити">Завантажити</a></li>
+                            <hr class="hr-link">
+                        {% endif %}
+                        {% if rights == "Chat_Admin" or role == "Student" %}
+                            <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link-mobile" title="Чат з питаннями">Чат з питаннями</a></li>
+                            <hr class="hr-link">
+                        {% endif %}
+                    {% endif %}
                 </ul>
             </div>
         </div>
