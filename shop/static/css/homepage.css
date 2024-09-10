@@ -186,6 +186,11 @@ bluetext{
     margin-top: 30px;
 }
 
+.container-info{
+    text-align: center;
+    padding: 0 0 20px 0;
+}
+
 .sub-news-container {
     display: flex;
     flex-direction: column;

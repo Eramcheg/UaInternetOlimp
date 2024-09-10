@@ -34,7 +34,7 @@
                 </div>
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
-            <a href="{% url 'home' %}" class="link">Контакти</a>
+            <a href="{% url 'contact_us' %}" class="link">Контакти</a>
             {% if role == "Admin" %}
                 <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Адмін</a>
             {% endif %}
