@@ -1,7 +1,11 @@
 .container-menu{
     width: 25%;
 }
-
+@media screen and (max-width: 768px) {
+    .container-menu {
+        display: none;
+    }
+}
 .this-table {
 
     padding: 32px;
