@@ -6,7 +6,11 @@
     gap: 60px;
     max-width: 900px;
 }
-
+@media screen and (max-width: 768px){
+    .task{
+        text-align: center;
+    }
+}
 .centered-container .task{
     display: flex;
     flex-direction: column;
