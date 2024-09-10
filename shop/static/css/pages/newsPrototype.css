@@ -11,6 +11,39 @@
     gap: 32px;
     min-height: 540px;
 }
+@media screen and (max-width: 768px) {
+    .hat-container{
+        flex-direction: column;
+    }
+    .hat-container .hat{
+        width: 90vw;
+        height: 250px;
+    }
+    .text-paragraph{
+        flex-direction: column;
+    }
+    .hat-container, .text, .text-paragraph, .text-vertical-paragraph{
+        padding: 0 5vw;
+    }
+    .text-paragraph img{
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+    .text-vertical-paragraph img{
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 10px;
+        overflow: hidden;
+
+    }
+}
 .hat-container img{
     border-radius: 16px;
 
