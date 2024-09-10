@@ -67,7 +67,11 @@
             Today is <span id="currentDate"></span>
         </div>
     </div>
-
+    <div class="container-info">
+        <button class="blue-button">
+            <a href="{% url "download_file" filename="Інформація.pdf"%}">Завантажити інформаційний лист</a>
+        </button>
+    </div>
     <div class="sub-news-container">
         <div class="inner-sub-news">
             <img src="{% static "images/home/imgs/01 2.svg" %}" alt="">
