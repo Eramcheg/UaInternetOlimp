@@ -399,7 +399,7 @@ body{
 }
 
 .hr-link{
-    margin: 0;
+    margin: 0!important;
 }
 .blue-button{
     color: white!important;

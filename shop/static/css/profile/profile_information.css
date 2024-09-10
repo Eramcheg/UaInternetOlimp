@@ -39296,12 +39296,7 @@ section.sociallogin.displayCustomerLoginFormAfter {
   color:#fff;
   height:40px
 }
-.visible-xs,
-.visible-sm,
-.visible-md,
-.visible-lg {
-  display:none!important
-}
+
 footer .mobile-collapse_title {
   font-size:16px;
   padding:0 0 10px 0;
@@ -52893,9 +52888,7 @@ html:not([class*=ce-ie]) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
   backdrop-filter:blur(5px);
   z-index:99
 }
-.hidden {
-  display:none
-}
+
 .text h2 {
   font-size:unset
 }
