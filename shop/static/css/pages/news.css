@@ -2,8 +2,7 @@
 .centered-container{
     font-family: Montserrat-Bold, sans-serif;
     margin-top: 140px;
-    margin-left: 320px;
-    margin-right: 320px;
+
 }
 .pre-title{
     font-size: 16px;
@@ -20,8 +19,34 @@
 .articles-grid{
     margin-top: 50px;
     display: grid;
-    grid-template-columns: auto auto auto;
     gap: 30px;
+    justify-content: center;
+}
+@media only screen and (min-width: 769px) {
+    .articles-grid {
+        grid-template-columns: auto auto auto;
+    }
+    .centered-container{
+        margin-left: 320px;
+        margin-right: 320px;
+    }
+}
+@media only screen and (max-width: 768px) and (min-width: 561px) {
+   .articles-grid {
+       grid-template-columns: auto auto;
+   }
+    .centered-container{
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+   .articles-grid {
+       grid-template-columns:  auto;
+   }
+    .centered-container{
+        padding: 20px;
+    }
 }
 .article-mini-text{
     font-weight: 600;
