@@ -9,11 +9,22 @@
 
 .centered-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
+     /* Две колонки одинаковой ширины */
     gap: 20px; /* Расстояние между квадратами */
     max-width: 640px;
     margin: 0 auto; /* Центрирование контейнера */
     padding: 20px;
+}
+@media screen and (min-width: 769px){
+    .centered-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 768px){
+    .centered-container{
+        grid-template-columns: repeat(1, 1fr);
+    }
+
 }
 .upload-box {
     width: 100%;
@@ -25,7 +36,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    cursor: pointer;
     text-align: center;
 }
 
@@ -38,6 +48,15 @@
     text-align: center;
     padding: 10px;
 }
+.upload-box label{
+        border-radius: 6px;
+        border: 1px solid #08447c;
+
+    cursor: pointer;
+    }
+    .upload-box{
+        padding: 0 20px;
+    }
 
 .file-name {
     position: absolute;
