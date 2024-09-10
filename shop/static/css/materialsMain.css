@@ -87,7 +87,7 @@ bluetext{
 
 .rectangles-wrapper {
     position: absolute;
-    top: calc(520px); /* Помещаем на стык фонов */
+    top: 520px; /* Помещаем на стык фонов */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -100,6 +100,68 @@ bluetext{
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+.image, .text-information{
+        padding: 0 20px;
+    }
+@media only screen and (min-width: 769px) and (max-width: 1152px) {
+    
+}
+@media only screen and (max-width: 768px) {
+    
+    .container-downloads{
+        flex-direction: column;
+    }
+    .text-information{
+        flex-direction: column;
+        text-align: center;
+    }
+    .rectangles-wrapper{
+    }
+    .rectangles-wrapper .text-information .main-text{
+        background-color: #00428a;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .rectangles-wrapper .text-information .main-text h1{
+        font-size: 32px;
+    }
+    .image, .text-information{
+        padding: 0 20px;
+    }
+    .rectangles-wrapper .image{
+        height: 700px;
+    }
+
+    .higher-container{
+        flex-direction: column;
+    }
+    .right-high{
+        flex: 0 0 0;
+    }
+    .left-high{
+        flex: 0 0 10%;
+    }
+    .center-high{
+        flex: 0 0 90%;
+    }
+    .higher-container{
+        height: 470px;
+    }
+    .rectangles-wrapper{
+        top: 600px;
+    }
+}
+
+@media only screen and (max-width: 400px)  {
+    .centered-container {
+        height: 260vh;
+    }
+}@media only screen and (max-width: 768px) and (min-width: 401px)  {
+    .centered-container {
+        height: 215vh;
+    }
 }
 .task-box{
     padding: 32px;
