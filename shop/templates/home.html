@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="date-container" style="background-image: url('{% static "images/home/imgs/dateBox.svg" %}')">
+    <div class="date-container" style="">
         <div class="timeline">
             <div class="progress"></div>
             <div class="milestone" data-date="2024-09-09">
@@ -65,7 +65,7 @@
 
             <div class="milestone" data-date="2024-10-13">
                 <span class="down">13.10-14.10</span>
-                <div class="milestone-info-up">
+                <div class="milestone-info-up down-milestone">
                     <span class="mini-date">09.09.2024 - 13.10.2024</span>
                     <span>Завершення І туру</span>
                 </div>
@@ -73,7 +73,7 @@
 
             <div class="milestone" data-date="2024-10-14">
                 <span class="up"></span>
-                <div class="milestone-info-down">
+                <div class="milestone-info-down up-milestone">
                     <span class="mini-date">14.10.2024 - 24.11.2024</span>
                     <span>Початок ІІ туру</span>
                 </div>
@@ -273,46 +273,68 @@
 
 
 
-    document.addEventListener("DOMContentLoaded", function() {
-        setupItemsCarousel();
-        const milestones = document.querySelectorAll(".milestone");
-            const progressBar = document.querySelector(".progress");
-            const currentDateElem = document.getElementById("currentDate");
+   document.addEventListener("DOMContentLoaded", function() {
+    setupItemsCarousel();
+    const milestones = document.querySelectorAll(".milestone");
+    const progressBar = document.querySelector(".progress");
+    const currentDateElem = document.getElementById("currentDate");
 
-            const currentDate = new Date();
-            currentDateElem.textContent = currentDate.toLocaleDateString();
+    const currentDate = new Date();
+    currentDateElem.textContent = currentDate.toLocaleDateString();
 
-            let startDate = new Date(milestones[0].dataset.date);
-            let endDate = new Date(milestones[milestones.length - 1].dataset.date);
+    let startDate = new Date(milestones[0].dataset.date);
+    let endDate = new Date(milestones[milestones.length - 1].dataset.date);
 
-            milestones.forEach((milestone, index) => {
-                let milestoneDate = new Date(milestone.dataset.date);
+    milestones.forEach((milestone, index) => {
+        let milestoneDate = new Date(milestone.dataset.date);
 
-                // Рассчитываем позицию контрольной точки в процентах от начала
-                let milestonePercent = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
-                milestone.style.left = `${milestonePercent}%`;
+        // Рассчитываем позицию контрольной точки в процентах от начала
+        let milestonePercent = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
 
-                // Если текущая дата больше или равна дате контрольной точки, активируем её
-                if (currentDate >= milestoneDate) {
-                    milestone.classList.add("active");
+        if (window.innerWidth <= 768) {
+            // Если это мобильное устройство, позиционируем по top
+            milestone.style.top = `${milestonePercent}%`;
+        } else {
+            // Для десктопов позиционируем по left
+            milestone.style.left = `${milestonePercent}%`;
+        }
 
-                    if (index < milestones.length - 1) {
-                        let nextMilestoneDate = new Date(milestones[index + 1].dataset.date);
-                        let nextMilestonePercent = ((nextMilestoneDate - startDate) / (endDate - startDate)) * 100;
+        // Если текущая дата больше или равна дате контрольной точки, активируем её
+        if (currentDate >= milestoneDate) {
+            milestone.classList.add("active");
 
-                        let progressPercent = milestonePercent + ((nextMilestonePercent - milestonePercent) * (currentDate - milestoneDate) / (nextMilestoneDate - milestoneDate));
-                        progressBar.style.width = `${progressPercent}%`;
-                    } else {
-                        progressBar.style.width = `${milestonePercent}%`;
-                    }
+            if (index < milestones.length - 1) {
+                let nextMilestoneDate = new Date(milestones[index + 1].dataset.date);
+                let nextMilestonePercent = ((nextMilestoneDate - startDate) / (endDate - startDate)) * 100;
+
+                let progressPercent = milestonePercent + ((nextMilestonePercent - milestonePercent) * (currentDate - milestoneDate) / (nextMilestoneDate - milestoneDate));
+
+                if (window.innerWidth <= 768) {
+                    // Для мобильных устройств прогресс измеряем по высоте
+                    progressBar.style.height = `${progressPercent}%`;
+                } else {
+                    // Для десктопов измеряем по ширине
+                    progressBar.style.width = `${progressPercent}%`;
                 }
-            });
-
-            // Если текущая дата больше конечной даты, заполняем прогресс полностью
-            if (currentDate >= endDate) {
-                progressBar.style.width = "100%";
+            } else {
+                if (window.innerWidth <= 768) {
+                    progressBar.style.height = `${milestonePercent}%`;
+                } else {
+                    progressBar.style.width = `${milestonePercent}%`;
+                }
             }
-        });
+        }
+    });
+
+    // Если текущая дата больше конечной даты, заполняем прогресс полностью
+    if (currentDate >= endDate) {
+        if (window.innerWidth <= 768) {
+            progressBar.style.height = "100%";
+        } else {
+            progressBar.style.width = "100%";
+        }
+    }
+});
 </script>
 </html>
 {%endblock%}
