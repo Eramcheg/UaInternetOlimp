@@ -12,6 +12,7 @@
     background-position: center; /* Центрируем */
     background-repeat: no-repeat; /* Изображение не повторяется */
     flex-grow: 1; /* Растягиваем контейнер по мере необходимости */
+    padding: 0 20px;
 }
 @media screen and (min-width: 769px) {
     .main-block-login{
@@ -110,6 +111,9 @@
   text-decoration: none;
         color: black;
 }
-    .logininstead a {
+.logininstead a {
   color: black;
+}
+a[data-link-action='display-register-form']{
+    text-decoration: underline!important;
 }
