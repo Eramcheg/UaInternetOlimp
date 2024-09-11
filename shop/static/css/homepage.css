@@ -135,96 +135,217 @@ bluetext{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-}
 
-.timeline {
-    position: relative;
-    margin: 50px auto;
-    width: 90%;
-    max-width: 800px;
-    height: 4px;
-    background: #5C6F92;
+    background-color: #0053AA;
+    border-bottom: 5px solid #FFD500;
 }
+@media screen and (min-width: 768px) {
+    .date-container {
+        align-items: center;
+    }
+    .timeline {
+        position: relative;
+        margin: 50px auto;
+        width: 90%;
+        max-width: 800px;
+        height: 4px;
+        background: #5C6F92;
+    }
 
-.timeline .progress {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: white;
-    z-index: 2;
-    transition: width 0.3s ease-in-out;
-}
+    .timeline .progress {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: white;
+        z-index: 2;
+        transition: width 0.3s ease-in-out;
+    }
 
-.milestone {
-    position: absolute;
-    top: -11px;
-    width: 8px;
-    height: 25px;
-    background: #5C6F92;
-    z-index: 3;
-}
+    .milestone {
+        position: absolute;
+        top: -11px;
+        width: 8px;
+        height: 25px;
+        background: #5C6F92;
+        z-index: 3;
+    }
 
-.milestone.active {
-    background: white;
-}
+    .milestone.active {
+        background: white;
+    }
 
-.milestone > span {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    color: white;
-}
+    .milestone > span {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: white;
+    }
 
-.milestone .up {
-    top: -35px;
-}
+    .milestone .up {
+        top: -35px;
+    }
 
-.milestone .down {
-    top: 35px;
-}
+    .milestone .down {
+        top: 35px;
+    }
 
-.milestone-info-up,.milestone-info-down {
-    position: absolute;
-    background-color: #004185;
-    color: #f9f9f9;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 14px;
-    width: 220px; /* Ограничение максимальной ширины */
-    text-align: left; /* Выравнивание текста по центру */
-    overflow-wrap: break-word; /* Перенос слов */
-    word-wrap: break-word; /* Альтернативный вариант для поддержки старых браузеров */
-    white-space: normal; /* Разрешаем перенос строк */
-    transform: translateX(-50%);
-    left: 50%;
-    display: flex;
-    flex-direction: column;
-    gap:5px;
+    .milestone-info-up,.milestone-info-down {
+        position: absolute;
+        background-color: #004185;
+        color: #f9f9f9;
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        width: 220px; /* Ограничение максимальной ширины */
+        text-align: left; /* Выравнивание текста по центру */
+        overflow-wrap: break-word; /* Перенос слов */
+        word-wrap: break-word; /* Альтернативный вариант для поддержки старых браузеров */
+        white-space: normal; /* Разрешаем перенос строк */
+        transform: translateX(-50%);
+        left: 50%;
+        display: flex;
+        flex-direction: column;
+        gap:5px;
+    }
+    .mini-date{
+        font-size: 12px;
+    }
+    .milestone-info-up{
+        top: -80px;
+    }
+    .upper{
+        top: 50px!important;
+    }
+    .milestone-info-down{
+        top: 70px;
+    }
 }
-.mini-date{
-    font-size: 12px;
-}
-.milestone-info-up{
-    top: -80px;
-}
-.upper{
-    top: 50px!important;
-}
-.milestone-info-down{
-    top: 70px;
-}
-.current-date {
-    display: inline-block;
-    margin-top: 30px;
-}
-
 .container-info{
     text-align: center;
     padding: 40px 0 20px 0;
+}
+
+@media screen and (max-width: 768px) {
+    .date-container {
+        align-items: end;
+        height: 560px;
+    }
+    .timeline {
+        position: relative;
+        margin: 50px 10%;
+        width: 90%;
+        max-width: 800px;
+        height: 4px;
+        background: #5C6F92;
+    }
+
+    .progress {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: white;
+        z-index: 2;
+        transition: height 0.3s ease-in-out; /* Изменение с ширины на высоту */
+    }
+
+    .milestone {
+        position: absolute;
+        top: -11px;
+        width: 25px;
+        height: 6px;
+        background: #5C6F92;
+        z-index: 3;
+    }
+
+    .milestone.active {
+        background: white;
+    }
+
+    .milestone > span {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: white;
+    }
+
+    .milestone .up {
+        top: -35px;
+    }
+
+
+
+    .milestone-info-up, .milestone-info-down {
+        position: absolute;
+        top: -60px;
+        background-color: #004185;
+        color: #f9f9f9;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        max-width: 150px;
+        text-align: center;
+        word-break: break-word;
+        white-space: normal;
+        transform: translateX(-50%);
+        left: 50%;
+    }
+.mini-date{
+        font-size: 12px;
+    }
+    /* Вертикальная линия на мобильных устройствах */
+    @media (max-width: 768px) {
+         .up-milestone{
+             top:40px !important;
+         }
+        .down-milestone{
+             top:-10px !important;
+         }
+         .timeline {
+            width: 4px; /* Линия становится вертикальной */
+            height: 90%; /* Высота линии */
+            right: 10px; /* Располагаем ближе к правому краю */
+            left: auto; /* Убираем левое выравнивание */
+        }
+
+        .progress {
+            width: 100%; /* Прогресс по вертикали */
+            height: 0;
+            top: 0;
+            left: 0;
+        }
+
+        .milestone {
+            left: auto; /* Убираем выравнивание по левому краю */
+            right: -11px; /* Сдвигаем точки ближе к линии */
+            top: 0;
+        }
+
+        .milestone span {
+            top: 50%; /* Центруем текст по вертикали */
+            right: 35px; /* Сдвигаем текст метки вправо */
+            transform: translateY(-50%);
+        }
+        .milestone-info-up,.milestone-info-down {
+            left: auto; /* Убираем левое выравнивание */
+            right: 50px; /* Располагаем текст метки слева от линии */
+            top: 0;
+            transform: translateY(-50%);
+            width: 200px;
+        }
+
+        .milestone .up, .milestone .down {
+            left: auto; /* Убираем левое выравнивание */
+            right: 60vw; /* Сдвигаем метки справа от линии */
+
+        }
+    }
+
 }
 
 .sub-news-container {
