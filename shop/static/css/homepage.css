@@ -231,7 +231,7 @@ bluetext{
 @media screen and (max-width: 768px) {
     .date-container {
         align-items: end;
-        height: 560px;
+        height: 620px;
     }
     .timeline {
         position: relative;
@@ -301,10 +301,10 @@ bluetext{
     /* Вертикальная линия на мобильных устройствах */
     @media (max-width: 768px) {
          .up-milestone{
-             top:40px !important;
+             top:3.5vh !important;
          }
         .down-milestone{
-             top:-10px !important;
+             top:-3.5vh !important;
          }
          .timeline {
             width: 4px; /* Линия становится вертикальной */
