@@ -111,7 +111,7 @@
                     <hr class="hr-link">
                     <li><a href="{% url 'news_main' %}" class="dropdown-link-mobile" title="Новини">Новини</a></li>
                     <hr class="hr-link">
-                    <li><a href="{% url 'home' %}" class="dropdown-link-mobile" title="Контакти">Контакти</a></li>
+                    <li><a href="{% url 'contact_us' %}" class="dropdown-link-mobile" title="Контакти">Контакти</a></li>
                     <hr class="hr-link">
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link-mobile" title="Аккаунт">Аккаунт</a></li>
@@ -127,6 +127,7 @@
                             <hr class="hr-link">
                         {% endif %}
                         <li><a href="{% url 'logout' %}" class="dropdown-link-mobile" title="Вийти">Вийти</a></li>
+                        <hr class="hr-link">
                     {% endif %}
                 </ul>
             </div>
