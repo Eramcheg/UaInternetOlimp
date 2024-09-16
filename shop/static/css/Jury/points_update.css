@@ -1,0 +1,87 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+}
+
+.tab {
+    display: inline-block;
+    padding: 20px 60px;
+    margin: 10px;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+.active-tab {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Скрываем контент по умолчанию */
+.content {
+    display: none;
+}
+
+/* Контент активного таба */
+.content.active-content {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратами */
+    max-width: 100%;
+    margin: 0 auto; /* Центрирование контейнера */
+    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+}
+.upload-box {
+    width: 100%;
+    height: 300px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    gap: 6px;
+}
+.update-field {
+    width: 80%;
+}
+.update-field form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.update-field input{
+    width: 90%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #bdbdbd;
+}
+.update-field .buttons{
+    display: flex;
+    gap: 5px;
+}
+.update-field .clear-btn{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #CC4343;
+    color: #f9f9f9!important;
+    cursor: pointer;
+}
+.update-field .submit-btn{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #00572C;
+    color: #f9f9f9!important;
+    cursor: pointer;
+}
+
+.upload-box .current-points{
+    font-size: 20px;
+}

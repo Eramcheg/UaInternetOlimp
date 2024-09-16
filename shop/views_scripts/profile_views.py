@@ -30,6 +30,8 @@ from django.core.mail import send_mail
 from shop.forms import UserRegisterForm, User
 from firebase_admin import storage
 
+from shop.views_scripts.jury_control.jury_views import get_all_tasks
+
 
 @login_required
 def profile(request, feature_name):
@@ -46,6 +48,7 @@ def profile(request, feature_name):
         currency = "$"
     context = build_context(feature_name, email, orders, order_details)
 
+    context['tasks'] = get_all_tasks()
     context['currency'] = currency
     context['role'] = info['role']
     context['userId'] = info['userId']
@@ -58,6 +61,7 @@ def profile(request, feature_name):
     context['task_4'] = info['task_4_name'] if "task_4_name" in info else ""
     context['task_5'] = info['task_5_name'] if "task_5_name" in info else ""
     context['rights'] = info['rights'] if "rights" in info else ""
+
     return render(request, 'profile.html', context=context)
 
 

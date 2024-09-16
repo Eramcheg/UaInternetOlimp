@@ -20,6 +20,7 @@ from shop import views
 from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
+from shop.views_scripts.jury_control.jury_views import handle_max_score
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
     move_down_article, edit_article
 from shop.views_scripts.manage_banners.banners_managing import move_down, move_up, delete_banner
@@ -132,6 +133,9 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path('contacts/', contact_us_page, name='contact_us'),
 
+
+    # Jury urls
+    path('submit_score/', handle_max_score, name='submit_max_score'),
     # path('articles/create/', create_article, name='create_article'),
 
 )

@@ -27,35 +27,16 @@
                     <span>Завантажити</span>
                 </a>
             {% endif %}
-{#                <a class="active-page page-solutions" id="history-link" href="{% url 'profile' feature_name='solutions'%}">#}
-{#                    <span>Розв'язки</span>#}
-{#                </a>#}
+            {% if role == "Main_Jury" or role == "Admin" %}
+                <a class="active-page page-points" id="history-link" href="{% url 'profile' feature_name='points'%}">
+                    <span> Властивості задач </span>
+                </a>
+            {% endif %}
                 {% if role == "Student" or rights == "Chat_Admin"%}
                     <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
                         <span>Чат з питаннями</span>
                     </a>
                 {% endif %}
-{#                <a class="active-page page-account" id="identity-link" href="{% url 'profile' feature_name='account'%}">#}
-{#                    <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="24" height="24"><path d="M16.26,15.7A4,4,0,0,0,14,15H7a4,4,0,0,0-4,4v2l1,2h7" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path><circle cx="10.5" cy="7" r="4" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></circle><polygon points="22.96 14.85 26.15 18.04 18.18 26 15 26 15 22.82 22.96 14.85" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></polygon></svg></i>#}
-{#                    <span>Інформація</span>#}
-{#                </a>#}
-{##}
-{#                <a id="addresses-link" href="{% url 'profile' feature_name='addresses'%}">#}
-{#                    <i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></i>#}
-{#                    {% trans "Addresses" %}#}
-{#                </a>#}
-{##}
-{#                <a id="favorites-link" href="{% url 'profile' feature_name='favourites'%}">#}
-{#                    <i class="rts" data-size="24" data-color="#000000" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="width: 24px; height: 24px;"><path d="M14.05,6.72C8.17.2,2.57,7.54,3.67,11.76,5.56,19,14.05,23.57,14.05,23.57s7.74-4.16,10.39-11.81C25.86,7.64,20.24.13,14.05,6.72Z" style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"></path></svg></i>#}
-{#                    <span>#}
-{#                        {% trans "Favorites" %}#}
-{#                    </span>#}
-{#                </a>#}
-{##}
-{#                <a class="logout" href="{% url 'logout'%}" rel="nofollow">#}
-{#                    <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg></i>#}
-{#                    {% trans "Sign out" %}#}
-{#                </a>#}
             </div>
         </div>
     </div>
