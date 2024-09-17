@@ -45,6 +45,12 @@ metadata_ref = db.collection('metadata')
 favourites_ref = db.collection('Favourites')
 single_order_ref = db.collection("Order")
 
+TASKS = [
+    '9_1', '9_2', '9_3', '9_4', '9_5',
+    '10_1', '10_2', '10_3', '10_4', '10_5',
+    '11_1', '11_2', '11_3', '11_4', '11_5'
+]
+
 currency_dict = {
     "1": "Euro",
     "2": "Dollar"

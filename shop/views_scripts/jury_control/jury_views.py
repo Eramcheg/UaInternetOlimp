@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document, updateChatInfo, tasks_ref
+    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS
 
 
 def handle_max_score(request):
@@ -63,3 +63,48 @@ def get_all_tasks():
         tasks_dict[task_key] = {'max_points': max_points}
 
     return tasks_dict
+
+
+def jurys_control(request):
+    admins = get_jury_admins()
+    tasks = TASKS
+    if request.method == 'POST':
+        # Получаем данные с формы
+        data = request.POST
+
+        # Обрабатываем каждую галочку для каждого админа
+        for admin in admins:
+            admin_id = admin['id']
+            allowed_tasks = []
+            for task in tasks:
+                if data.get(f"{admin_id}_{task}") == 'on':
+                    allowed_tasks.append(task)
+
+            # Сохраняем в Firebase
+            users_ref.document(admin_id).update({
+                'allowed_tasks': allowed_tasks
+            })
+            return redirect('profile', feature_name='jury_control')  # Перенаправляем после успешного сохранения
+
+    return render(request, 'superadmin.html', {'admins': admins, 'tasks': tasks})
+
+def get_jury_admins():
+    simple_jury_query = users_ref.where('role', '==', 'Simple_Jury')
+    main_jury_query = users_ref.where('role', '==', 'Main_Jury')
+
+    # Получаем результаты обоих запросов
+    simple_jury_docs = simple_jury_query.stream()
+    main_jury_docs = main_jury_query.stream()
+
+    # Объединяем результаты
+    all_docs = list(simple_jury_docs) + list(main_jury_docs)
+
+    admins = []
+    for doc in all_docs:
+        admin_data = doc.to_dict()
+        admins.append({
+            'id': doc.id,  # ID документа в Firestore, для дальнейшего обновления
+            'name': admin_data.get('first_name') + " " + admin_data.get('last_name'),  # Имя админа (или другое подходящее поле)
+            'allowed_tasks': admin_data.get('allowed_tasks', {})  # Получаем существующие разрешения, если есть
+        })
+    return admins
