@@ -1,0 +1,132 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+}
+.table-container {
+    width: 100%;
+    max-height: 70vh; /* Максимальная высота 70% от высоты окна */
+    overflow-y: auto; /* Включаем вертикальную прокрутку, если содержимое превышает высоту */
+    overflow-x: auto; /* Горизонтальная прокрутка для широких таблиц */
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+
+}
+
+/* Стили заголовка таблицы */
+th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    position: sticky;
+    top: 0; /* Закрепить заголовок при прокрутке */
+    z-index: 1; /* Устанавливаем более высокий индекс для поверхностного отображения */
+}
+.table-container::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #16beb9;
+    border-radius: 6px!important;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Firefox */
+/*.table-container {*/
+/*    scrollbar-width: thin; !* Возможные значения: auto, thin, none *!*/
+/*    scrollbar-color: #f700ff #f1f1f1; !* thumb color | track color *!*/
+/*}*/
+/* Стили строк таблицы */
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Стиль для четных строк таблицы */
+tr:nth-child(even) {
+    /*background-color: #f2f2f2;*/
+}
+
+/* Наведение на строки */
+tr:hover {
+    /*background-color: #e9ecef;*/
+}
+
+/* Стили для чекбоксов */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+    th, td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+td:hover::before {
+    background-color: #ffa;
+    content: '\00a0';
+    height: 100%;
+    left: -5000px;
+    position: absolute;
+    top: 0;
+    width: 10000px;
+    z-index: -1;
+}
+
+td:hover::after {
+    background-color: #ffa;
+    content: '\00a0';
+    height: 10000px;
+    left: 0;
+    position: absolute;
+    top: -5000px;
+    width: 100%;
+    z-index: -1;
+}
+
+tr:nth-child(odd){
+    background-color: rgba(1, 1, 0, 0.2);
+}
+td {
+    padding: 10px;
+    position: relative;
+}
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    overflow: hidden;
+    z-index: 1;
+}
+.button-container{
+    text-align: center;
+}
+.submit-btn{
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00572C;
+    color: #f9f9f9!important;
+    cursor: pointer;
+}

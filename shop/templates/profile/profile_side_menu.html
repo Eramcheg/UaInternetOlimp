@@ -32,6 +32,11 @@
                     <span> Властивості задач </span>
                 </a>
             {% endif %}
+            {% if role == "Main_Jury" or role == "Admin" %}
+                <a class="active-page page-jury_control" id="history-link" href="{% url 'profile' feature_name='jury_control'%}">
+                    <span> Список журі </span>
+                </a>
+            {% endif %}
                 {% if role == "Student" or rights == "Chat_Admin"%}
                     <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
                         <span>Чат з питаннями</span>

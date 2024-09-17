@@ -4,7 +4,7 @@ import string
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, users_ref, addresses_ref, update_email_in_db, \
-    get_user_category, get_user_info, get_vocabulary_product_card, chats_ref, messages_ref, updateChatInfo
+    get_user_category, get_user_info, get_vocabulary_product_card, chats_ref, messages_ref, updateChatInfo, TASKS
 import ast
 import random
 from datetime import datetime
@@ -30,7 +30,7 @@ from django.core.mail import send_mail
 from shop.forms import UserRegisterForm, User
 from firebase_admin import storage
 
-from shop.views_scripts.jury_control.jury_views import get_all_tasks
+from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_admins
 
 
 @login_required
@@ -42,12 +42,18 @@ def profile(request, feature_name):
     category, currency = 0, 1
     info = get_user_info(email) or {}
     show_quantities = info['show_quantities'] if 'show_quantities' in info else False
+
+    jurys = get_jury_admins()
+
     if currency == "Euro":
         currency = "€"
     elif currency == "Dollar":
         currency = "$"
     context = build_context(feature_name, email, orders, order_details)
 
+
+    context['jurys'] = jurys
+    context['tasks_numbers'] = sorted(TASKS, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1])))
     context['tasks'] = get_all_tasks()
     context['currency'] = currency
     context['role'] = info['role']
