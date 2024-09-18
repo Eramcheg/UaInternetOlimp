@@ -37,11 +37,16 @@
                     <span> Список журі </span>
                 </a>
             {% endif %}
-                {% if role == "Student" or rights == "Chat_Admin"%}
-                    <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
-                        <span>Чат з питаннями</span>
-                    </a>
-                {% endif %}
+            {% if role == "Main_Jury" or role == "Admin" or role == "Simple_Jury" %}
+                <a class="active-page page-criteria_create" id="history-link" href="{% url 'profile' feature_name='criteria_create'%}">
+                    <span> Створити критерії </span>
+                </a>
+            {% endif %}
+            {% if role == "Student" or rights == "Chat_Admin"%}
+                <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
+                    <span>Чат з питаннями</span>
+                </a>
+            {% endif %}
             </div>
         </div>
     </div>
