@@ -4,7 +4,8 @@ import string
 from django.contrib.auth.decorators import login_required
 
 from shop.views import db, orders_ref, serialize_firestore_document, users_ref, addresses_ref, update_email_in_db, \
-    get_user_category, get_user_info, get_vocabulary_product_card, chats_ref, messages_ref, updateChatInfo, TASKS
+    get_user_category, get_user_info, get_vocabulary_product_card, chats_ref, messages_ref, updateChatInfo, TASKS, \
+    criteria_ref
 import ast
 import random
 from datetime import datetime
@@ -51,10 +52,19 @@ def profile(request, feature_name):
         currency = "$"
     context = build_context(feature_name, email, orders, order_details)
 
-
+    saved_criteria = {}
+    for task in info['allowed_tasks'] if "allowed_tasks" in info else "":
+        criteria_docs = criteria_ref.where('task_id', '==', task).stream()
+        criteria_list = []
+        for doc in criteria_docs:
+            data = doc.to_dict()
+            criteria_list.append({'criterion_text': data['criterion_text'], 'points': data['points'], 'id': doc.id})
+        saved_criteria[task] = criteria_list
+    context['saved_criteria'] = saved_criteria
     context['jurys'] = jurys
     context['tasks_numbers'] = sorted(TASKS, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1])))
     context['tasks'] = get_all_tasks()
+    context['jury_tasks'] = info['allowed_tasks'] if "allowed_tasks" in info else ""
     context['currency'] = currency
     context['role'] = info['role']
     context['userId'] = info['userId']

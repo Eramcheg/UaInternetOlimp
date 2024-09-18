@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS
+    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS, criteria_ref
 
 
 def handle_max_score(request):
@@ -84,7 +84,7 @@ def jurys_control(request):
             users_ref.document(admin_id).update({
                 'allowed_tasks': allowed_tasks
             })
-            return redirect('profile', feature_name='jury_control')  # Перенаправляем после успешного сохранения
+        return redirect('profile', feature_name='jury_control')  # Перенаправляем после успешного сохранения
 
     return render(request, 'superadmin.html', {'admins': admins, 'tasks': tasks})
 
@@ -108,3 +108,25 @@ def get_jury_admins():
             'allowed_tasks': admin_data.get('allowed_tasks', {})  # Получаем существующие разрешения, если есть
         })
     return admins
+
+
+def submit_criteria(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        criteria_list = data.get('criteria', [])
+
+        try:
+            # Сохранение критериев в базе данных Firebase
+            for criterion in criteria_list:
+                criteria_ref.document(criterion['id']).set({
+                    'criterion_text': criterion['criterion_text'],
+                    'points': criterion['points'],
+                    'task_id': task_id,
+                })
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
