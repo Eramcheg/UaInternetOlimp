@@ -78,13 +78,17 @@
                                     <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link" title="Завантажити">Завантажити</a></li>
 
                                 {% endif %}
-                                {% if role == "Simple_Jury" or role == "Main_Jury" %}
+                                {% if role == "Simple_Jury" %}
                                     <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
-                                     <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Список жюри">Список жюри</a></li>
-                                    <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Критерії оцінювання">Критерії оцінювання</a></li>
+                                    <li><a href="{% url 'profile' feature_name='criteria_create'%}" class="dropdown-link" title="Критерії оцінювання">Критерії оцінювання</a></li>
+                                    <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Перевірка">Перевірка</a></li>
+                                {% endif %}
+                                {% if role == "Main_Jury" %}
+                                    <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
+                                    <li><a href="{% url 'profile' feature_name='jury_control'%}" class="dropdown-link" title="Список жюри">Список жюри</a></li>
+                                    <li><a href="{% url 'profile' feature_name='criteria_create'%}" class="dropdown-link" title="Критерії оцінювання">Критерії оцінювання</a></li>
                                     <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Підтвердити критерії">Підтвердити критерії</a></li>
                                     <li><a href="{% url 'profile' feature_name='account'%}" class="dropdown-link" title="Перевірка">Перевірка</a></li>
-                                    <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
                                 {% endif %}
                                 {% if rights == "Chat_Admin" or role == "Student" %}
                                     <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link" title="Чат з питаннями">Чат з питаннями</a></li>
