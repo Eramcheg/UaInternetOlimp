@@ -19,7 +19,7 @@
 }
 .active-tab {
     background-color: #007bff!important;
-    color: white!important;
+    color: white;
 }
 
 #task-container{
@@ -58,17 +58,33 @@
     display: flex;
     gap: 5px;
 }
+.criteria-counter{
+    padding: 10px;
+    border-radius: 10px;
+    /*border: 1px solid #bdbdbd;*/
+    width: 5%;
+}
 .criteria-text{
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #bdbdbd;
-    width: 85%;
+    /*border: 1px solid #bdbdbd;*/
+    width: 80%;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 .criteria-points{
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #bdbdbd;
-    width: 10%;
+    /*border: 1px solid #bdbdbd;*/
+    width: 15%;
+    max-width: 15%;
+    word-wrap: break-word;
+}
+.criterion-empty{
+    font-size: 24px;
+    text-align: center;
+    color: #818181;
+    padding: 20px;
 }
 .remove-criteria{
     width: 5%;
@@ -104,6 +120,14 @@
     color: #f9f9f9!important;
     cursor: pointer;
 }
+#reject-criteria{
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #CC3434;
+    color: #f9f9f9!important;
+    cursor: pointer;
+}
+
 .Rejected{
     border: 5px solid #ec6a6a;
 }

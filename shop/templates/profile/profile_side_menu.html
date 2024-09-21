@@ -42,6 +42,11 @@
                     <span> Створити критерії </span>
                 </a>
             {% endif %}
+            {% if role == "Main_Jury" or role == "Admin" %}
+                <a class="active-page page-criteria_approve" id="history-link" href="{% url 'profile' feature_name='criteria_approve'%}">
+                    <span> Підтвердити критерії </span>
+                </a>
+            {% endif %}
             {% if role == "Student" or rights == "Chat_Admin"%}
                 <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
                     <span>Чат з питаннями</span>
