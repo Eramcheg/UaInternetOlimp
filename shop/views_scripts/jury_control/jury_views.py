@@ -55,12 +55,13 @@ def get_all_tasks():
 
         # Извлекаем максимальное количество баллов из данных задачи
         max_points = task_data.get('max_points', 0)  # Если max_points отсутствует, по умолчанию ставим 0
+        status = task_data.get('task_status', '')  # Если max_points отсутствует, по умолчанию ставим 0
 
         # Формируем ключ для словаря (например, task9_1)
         task_key = f"task{task_id}"
 
         # Сохраняем данные в словарь с ключами task9_1, task10_1 и т.д.
-        tasks_dict[task_key] = {'max_points': max_points}
+        tasks_dict[task_key] = {'max_points': max_points, 'status': status}
 
     return tasks_dict
 
@@ -124,6 +125,46 @@ def submit_criteria(request):
                     'points': criterion['points'],
                     'task_id': task_id,
                 })
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+
+def approve_criteria(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        criteria_list = data.get('criteria', [])
+
+        try:
+            # Обновление статуса задачи на "approved" в коллекции tasks_ref
+            task_doc = tasks_ref.document(task_id)
+            task_doc.update({'task_status': 'Approved'})
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+
+def reject_criteria(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+
+        try:
+            # Удаление всех критериев, связанных с переданным task_id
+            criteria_docs = criteria_ref.where('task_id', '==', task_id).stream()
+            for doc in criteria_docs:
+                doc.reference.delete()
+
+            # Обновление статуса задачи на "rejected" в коллекции tasks_ref
+            task_doc = tasks_ref.document(task_id)
+            task_doc.update({'task_status': 'Rejected'})
 
             return JsonResponse({'success': True})
         except Exception as e:

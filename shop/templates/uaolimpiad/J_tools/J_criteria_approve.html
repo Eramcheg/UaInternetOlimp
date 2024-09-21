@@ -2,12 +2,12 @@
 {% load static %}
 {% load form_tags %}
 {% load i18n  %}
-<link rel="stylesheet" href="{% static 'css/Jury/jury_criteria_create.css' %}">
+<link rel="stylesheet" href="{% static 'css/Jury/jury_criteria_approve.css' %}">
 
 <div class="page-container">
 
     <div id="tabs">
-        {% for task in jury_tasks %}
+        {% for task in tasks_numbers %}
             {% if forloop.counter == 1 %}
                 <div class="tab active-tab" data-task="{{ task }}">{{ task }}</div>
             {% else %}
@@ -21,33 +21,15 @@
         <div id="criteria-container">
             <!-- Критерии будут добавляться динамически с помощью JS -->
         </div>
-        <i id="add-criteria" class="fa-solid fa-plus"></i>
-        <button id="submit-criteria">Затвердити зміни</button>
+        <div>
+            <button id="reject-criteria">Відхилити критерії</button>
+            <button id="submit-criteria">Підтвердити критерії</button>
+        </div>
     </div>
 
 </div>
 <script>
-{#document.addEventListener('DOMContentLoaded', function () {#}
-{#        // Получаем все табы#}
-{#        const tabs = document.querySelectorAll('.tab');#}
-{##}
-{#        // Добавляем обработчик клика для каждого таба#}
-{#        tabs.forEach(tab => {#}
-{#            tab.addEventListener('click', function () {#}
-{#                // Получаем атрибут data-class выбранного таба#}
-{##}
-{##}
-{#                // Сброс всех активных табов и скрытие контента#}
-{#                tabs.forEach(t => t.classList.remove('active-tab'));#}
-                {#const contents = document.querySelectorAll('.content');#}
-                {#contents.forEach(content => content.classList.remove('active-content'));#}
-{##}
-{#                // Устанавливаем активный таб и показываем соответствующий контент#}
-{#                this.classList.add('active-tab');#}
-                {#document.getElementById(classId).classList.add('active-content');#}
-{#            });#}
-{#        });#}
-{#    });#}
+
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('.tab');
         const criteriaContainer = document.getElementById('criteria-container');
@@ -70,32 +52,47 @@
 
             // Отображение сохраненных критериев, если они есть
 
-            if (savedCriteria[taskId].length !== 0) {
-                savedCriteria[taskId].forEach(criterion => {
-                    addCriteriaRow(criterion.criterion_text, criterion.points);
+            if (savedCriteria[taskId] !== undefined && savedCriteria[taskId].length !== 0) {
+
+                const rejectBtn = document.getElementById('reject-criteria');
+                rejectBtn.style.display = '';
+                const acceptBtn = document.getElementById('submit-criteria');
+                acceptBtn.style.display = '';
+                savedCriteria[taskId].forEach((criterion, index) => {
+                    addCriteriaRow(criterion.criterion_text, criterion.points, index+1);
                 });
             }
             else{
-                addCriteriaRow();
+                addEmptyCriterion();
             }
         }
         if(jury_tasks.length !== 0) {
             showTask(jury_tasks[0]);
         }
         // Функция для добавления новой строки критериев
-        function addCriteriaRow(criterion_text = '', points = '') {
+        function addCriteriaRow(criterion_text = '', points = '', index=1) {
             const row = document.createElement('div');
             row.classList.add('criteria-row');
             row.innerHTML = `
-                <input type="text" class="criteria-text" placeholder="Текст критерію" value="${criterion_text}">
-                <input type="number" class="criteria-points" placeholder="Балів" value="${points}">
-                <button type="button" class="remove-criteria"><i class='fa-solid fa-remove'></i></button>
+                <span class="criteria-counter">${index}.</span>
+                <span class="criteria-text">${criterion_text}</span>
+                <span class="criteria-points">${points} балів</span>
             `;
             criteriaContainer.appendChild(row);
-            row.querySelector('.remove-criteria').addEventListener('click', function () {
-                row.remove();
-            });
         }
+        function addEmptyCriterion() {
+            const row = document.createElement('div');
+            row.classList.add('criteria-row');
+            row.innerHTML = `
+                <span class="criterion-empty">Критерії ще не були додані.</span>
+            `;
+            criteriaContainer.appendChild(row);
+            const rejectBtn = document.getElementById('reject-criteria');
+            rejectBtn.style.display = 'none';
+            const acceptBtn = document.getElementById('submit-criteria');
+            acceptBtn.style.display = 'none';
+        }
+
         // Переключение между задачами
         tabs.forEach(tab => {
             if({{ tasks|safe }}['task'+tab.getAttribute('data-task')].status !== "") {
@@ -109,38 +106,14 @@
             });
         });
 
-        // Добавление новой строки критериев
-        document.getElementById('add-criteria').addEventListener('click', function () {
-            addCriteriaRow();
-        });
-
-
         // Обработка отправки критериев
         document.getElementById('submit-criteria').addEventListener('click', function () {
             const taskId = document.querySelector('.active-tab').getAttribute('data-task');
-            const maxPoints = {{ tasks|safe }}['task'+taskId].max_points;  // Получение максимальных баллов для задачи
-            // Сбор данных критериев
-            const criteriaRows = document.querySelectorAll('.criteria-row');
             const criteriaData = [];
-            let totalPoints = 0;
-            criteriaRows.forEach((row, index) => {
-                const criterion_text = row.querySelector('.criteria-text').value;
-                const points = parseFloat(row.querySelector('.criteria-points').value) || 0;
-                criteriaData.push({ criterion_text, points, id: `${taskId}_${index + 1}` });
-                totalPoints += points;
-            });
 
-            // Проверка суммы баллов
-            if (totalPoints > maxPoints) {
-                alert('Забагато балів! Сумарна кількість балів всіх критеріїв повиння дорівнювати ' + maxPoints);
-                return;
-            } else if (totalPoints < maxPoints) {
-                alert('Замало балів! Сумарна кількість балів всіх критеріїв повиння дорівнювати ' + maxPoints);
-                return;
-            }
             const csrftoken = getCookie('csrftoken'); // Ensure you have csrftoken available
             // Отправка данных на сервер
-            fetch('{% url 'submit_criteria' %}', {
+            fetch('{% url 'approve_criteria' %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -151,9 +124,33 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Критерії успішно збережені!');
+                    alert('Критерії було успішно підтверджено!');
                 } else {
-                    alert('Помилка при збереженні критеріїв.');
+                    alert('Помилка під час підтвердження критеріїв!');
+                    console.log(data.error);
+                }
+            });
+        });
+        document.getElementById('reject-criteria').addEventListener('click', function () {
+            const taskId = document.querySelector('.active-tab').getAttribute('data-task');
+            const criteriaData = [];
+
+            const csrftoken = getCookie('csrftoken'); // Ensure you have csrftoken available
+            // Отправка данных на сервер
+            fetch('{% url 'reject_criteria' %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({ task_id: taskId, criteria: criteriaData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Критерії було успішно відхилено!');
+                } else {
+                    alert('Помилка при відхиленні критеріїв!');
                     console.log(data.error);
                 }
             });
