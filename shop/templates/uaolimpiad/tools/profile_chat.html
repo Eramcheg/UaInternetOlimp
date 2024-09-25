@@ -63,14 +63,15 @@
                         <i class="fa fa-file"></i> <!-- Icon for file upload -->
                     </button>
                     <input id="chat-file-input" type="file" style="display: none;">
-                    <textarea id="chat-message-input" placeholder="Напишите сообщение..."></textarea>
-                    <button id="chat-message-submit" type="button">Отправить</button>
+                    <textarea id="chat-message-input" placeholder="Напишіть повідомлення..."></textarea>
+                    <button id="chat-message-submit" type="button">Надіслати</button>
+                    <button id="chat-message-view" type="button"><i class=""></i></button>
                 </div>
             </div>
         </div>
     {% else %}
         <!-- Обработка для случая, если роль неизвестна -->
-        <p>Неизвестная роль пользователя.</p>
+        <p>Невідома роль користувача. Доступ до чату заблоковано.</p>
     {% endif %}
 
 {#</div>#}
@@ -117,6 +118,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         const button_file = document.getElementById('chat-file-upload');
         button_file.disabled = true;
         button_file.style.backgroundColor = "#ccc";
+        if(role !== "Student") {
+            const button_viewed = document.getElementById('chat-message-view');
+            button_viewed.disabled = true;
+            button_viewed.style.backgroundColor = "#ccc";
+        }
     }
     else{
         const button = document.getElementById('chat-message-submit');
@@ -125,6 +131,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         const button_file = document.getElementById('chat-file-upload');
         button_file.disabled = false;
         button_file.style.backgroundColor = "#007bff";
+        if(role !== "Student") {
+            const button_viewed = document.getElementById('chat-message-view');
+            button_viewed.disabled = false;
+            button_viewed.style.backgroundColor = "#139313";
+        }
     }
 });
 
@@ -187,7 +198,7 @@ async function selectChat(task) {
     const chatRef = doc(db, "chats", currentChatId);
     const chatDoc = await getDoc(chatRef);
     let task_class_name = "";
-   const tasks = {
+    const tasks = {
     "9": {
         "1": "«Закільцьовані»",
         "2": "«І знов середня швидкість»",
@@ -244,6 +255,25 @@ async function selectChat(task) {
     button_file.disabled = false;
     button_file.style.backgroundColor = "#007bff";
 
+    if(role !== "Student") {
+        const button_viewed = document.getElementById('chat-message-view');
+        button_viewed.disabled = false;
+        button_viewed.style.backgroundColor = "#139313";
+        const button_viewed_icon = document.querySelector('#chat-message-view i');
+        button_viewed_icon.classList.add('fa-solid');
+        if(chatDoc.data().chat_state === "answered") {
+            button_viewed_icon.classList.remove('fa-remove');
+            button_viewed_icon.classList.add('fa-check');
+        }
+        else{
+            button_viewed_icon.classList.add('fa-remove');
+            button_viewed_icon.classList.remove('fa-check');
+        }
+
+    }
+
+
+
     // Загружаем сообщения для выбранного чата
     const chatMessagesRef = collection(db, "messages");
     const q = query(chatMessagesRef, where("chat_id", "==", currentChatId), orderBy("timestamp"));
@@ -259,18 +289,24 @@ async function selectChat(task) {
         querySnapshot.forEach((doc) => {
             messages.push(doc.data());
         });
-
         // Обновляем интерфейс только если это текущий чат
         if (currentChatId === messages[0].chat_id) {
             updateChatUI(messages);
 
+            const chatRef = doc(db, "chats", currentChatId);
+            const chatDoc = await getDoc(chatRef);
+            const chatState = chatDoc.data().chat_state;
             // Check if the last message was sent by a student
             const lastMessage = messages[messages.length - 1];
-            if (role !== "Student" && lastMessage.sender_id !== userId) {
+
+            if ((role !== "Student") && (lastMessage.sender_id !== userId) && (chatState === "sent")) {
                 // If the role is Admin and the new message is from a student, mark the chat as viewed
                 await updateDoc(chatRef, {
                     chat_state: "viewed"
                 });
+                const button_viewed_icon = document.querySelector('#chat-message-view i');
+                button_viewed_icon.classList.add('fa-remove');
+                button_viewed_icon.classList.remove('fa-check');
             }
         }
     });
@@ -286,7 +322,13 @@ async function selectChat(task) {
         document.querySelector(`#`+task).classList.add('selected');
     }
 }
-
+async function change_status() {
+    const chatRef = doc(db, "chats", currentChatId); // Получаем ссылку на документ чата
+    await updateDoc(chatRef, {
+        chat_state: "answered" // Если сообщение отправляет студент, флаг viewed становится false
+    });
+    updateChatBorderColor('answered');
+}
 async function sendMessage(senderId, senderName, messageText) {
     const chatRef = doc(db, "chats", currentChatId); // Получаем ссылку на документ чата
     const chatDoc = await getDoc(chatRef);
@@ -434,7 +476,17 @@ function updateChatBorderColor(state) {
                 selectedItem.classList.add('chat-answered');
                 break;
         }
-    }}
+    }
+    const button_viewed_icon = document.querySelector('#chat-message-view i');
+    if(state === 'answered') {
+        button_viewed_icon.classList.remove('fa-remove');
+        button_viewed_icon.classList.add('fa-check');
+    }
+    else{
+        button_viewed_icon.classList.add('fa-remove');
+        button_viewed_icon.classList.remove('fa-check');
+    }
+}
 
 document.querySelector('#chat-message-submit').onclick = function(e) {
     if(currentChatId !== null){
@@ -444,7 +496,19 @@ document.querySelector('#chat-message-submit').onclick = function(e) {
         messageInputDom.value = '';
     }
     else{
-        console.log("Выберите чат");
+        console.log("Виберіть чат");
+    }};
+
+document.querySelector('#chat-message-view').onclick = function(e) {
+    if(currentChatId !== null){
+        const view_button_icon = document.querySelector('#chat-message-view i');
+        view_button_icon.classList.add('fa-solid','fa-check');
+        view_button_icon.classList.remove('fa-remove');
+
+        change_status();
+    }
+    else{
+        console.log("Виберіть чат");
     }};
 
 document.getElementById('chat-file-upload').onclick = function() {
@@ -470,7 +534,7 @@ document.getElementById('chat-file-input').onchange = async function(e) {
         }
     }
     else{
-        console.log("Выберите чат");
+        console.log("Виберіть чат");
     }};
 
 async function sendFileMessage(senderId, senderName, fileName, fileURL) {

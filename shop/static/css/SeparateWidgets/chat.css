@@ -149,6 +149,10 @@
     cursor: pointer;
     font-size: 14px;
 }
+.chat-input #chat-message-view{
+    background-color: #139313;
+    font-size: 24px;
+}
 
 .chat-input button:hover {
     background-color: #0056b3;
