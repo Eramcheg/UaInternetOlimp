@@ -59,6 +59,7 @@ h1, h3{
     }
     .right-high .text-frame{
         width: 80% !important;
+        height: 500px;
         margin: 20px 0
     }
     .right-high {
