@@ -42,11 +42,12 @@
         <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
             <div class="text-frame">
                 <div class="main-text">
-                    <span class="header5">Тепер почніть 1-й раунд</span>
-                    <span class="text">Вам подобається фізика?? Тоді отримайте завдання та приєднуйтесь.…</span>
+                    <span class="header5">Шановні друзі! </span>
+                    <span class="text"> За чисельними вашими зверненнями, термін завантаження розв'язків задач 1 туру продовжуємо на <bluetext class="bold-text">3 доби</bluetext> - до <bluetext class="bold-text">16.10</bluetext> включно.</span>
+                     <span class="text"> На всяк випадок, уточнюємо, що завантажувати розв'язки ви маєте не в телеграм, не в поштову скриньку голови журі, не в форму для питань/відповідей, а в вашому кабінеті по кожній задачі окремо(дивитись вкладку аккаунт) </span>
                 </div>
                 <div>
-                    <a class="frame-link" href="{% url "materials" %}"> до 1-го туру <i class="fas fa-arrow-right"></i> </a>  {# TODO: добавить в ссылку href #}
+                    <a class="frame-link" href="{% url "profile" feature_name="upload" %}"> до завантаження розв'язків <i class="fas fa-arrow-right"></i> </a>  {# TODO: добавить в ссылку href#}
                 </div>
             </div>
         </div>

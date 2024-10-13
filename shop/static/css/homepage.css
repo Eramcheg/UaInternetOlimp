@@ -103,7 +103,7 @@ bluetext{
     justify-content: center;
 }
 .right-high .text-frame{
-    height: 230px;
+    height: 310px;
     width: 454px;
     border-radius: 12px;
     background-color: #f9f9f9;
@@ -693,4 +693,8 @@ html {
   scroll-snap-align: center;
   min-width: 200px;
   border-radius: 8px;
+}
+.bold-text{
+    font-weight: 600;
+    font-size: 16px;
 }
