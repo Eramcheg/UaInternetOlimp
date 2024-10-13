@@ -1,0 +1,384 @@
+{% block content %}
+{% load static %}
+{% load form_tags %}
+{% load i18n  %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Moderation</title>
+    <!-- Добавьте CSS для стилей и Bootstrap для табов -->
+    <link rel="stylesheet" href="{% static 'css/Jury/jury_tasks_verification.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<div class="page-container">
+
+
+
+    <div class="tabs">
+        <!-- Табы для переключения между классами -->
+        <div class="tab active-tab" data-task="9">9 клас</div>
+        <div class="tab" data-task="10">10 клас</div>
+        <div class="tab" data-task="11">11 клас</div>
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="show-without-tasks" checked>
+        <label for="show-without-tasks">Показати учнів без завантажених задач</label>
+    </div>
+
+    <table id="students-table">
+        <thead>
+            <tr>
+                <th>ID учня</th>
+                <th>Задача 1</th>
+                <th>Задача 2</th>
+                <th>Задача 3</th>
+                <th>Задача 4</th>
+                <th>Задача 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Заполнение студентов будет осуществляться через JS -->
+        </tbody>
+    </table>
+
+    <div id="modal-overlay"></div>
+
+    <!-- Модальное окно для оценивания задания -->
+    <div id="evaluate-modal">
+        <!-- Кнопка закрытия -->
+        <i class="fa-solid fa-close" id="evaluate-modal-close" ></i>
+        <h3 class="modal-title">Задача №</h3>
+        <h5 class="modal-user-id">Id учня </h5>
+        <form id="evaluation-form" method="post">
+            {% csrf_token %}
+            <!-- Таблица с критериями будет добавлена через JS -->
+            <table>
+                <thead>
+                    <tr>
+                        <th class="th-text">Критерій</th>
+                        <th>Оцінка</th>
+                        <th>Максимум</th>
+                    </tr>
+                </thead>
+                <tbody id="criteria-table-body">
+                    <!-- Строки критериев будут добавлены через JS -->
+                </tbody>
+            </table>
+            <div class="buttons-container">
+                <button id="form-clear-btn" type="button">Очистити оцінку</button>
+                <button id="form-submit-btn" type="submit">Оцінити</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, collection, query, onSnapshot, doc, getDoc, setDoc, serverTimestamp, addDoc,updateDoc, where, orderBy } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAzV7CPVJJbgteozTbjdlIcyt85Kbuxd90",
+        authDomain: "uainternetolimp-41dd1.firebaseapp.com",
+        projectId: "uainternetolimp-41dd1",
+        storageBucket: "uainternetolimp-41dd1.appspot.com",
+        messagingSenderId: "545486624571",
+        appId: "1:545486624571:web:4a543063a04b43e5bb091e",
+        measurementId: "G-MJBJXCE1SJ"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    let show_without = true;
+    $(document).ready(function() {
+            // Загружаем студентов класса 9 при первой загрузке страницы
+        loadStudents(9);
+
+        const tabs = document.querySelectorAll('.tab');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelector('.active-tab').classList.remove('active-tab');
+                this.classList.add('active-tab');
+                const paralel = this.getAttribute('data-task');
+                loadStudents(paralel);
+            });
+        });
+
+        function loadStudents(classNumber) {
+            $.ajax({
+                url: `/api/students/`,  // URL для получения данных о студентах
+                data: { class: classNumber },
+                success: function(response) {
+                    let tableBody = $('#students-table tbody');
+                    tableBody.empty();  // Очищаем таблицу перед заполнением
+
+                    // Фильтруем студентов в зависимости от значения переменной show
+                    let filteredStudents = response.students.filter(student => {
+                        if (!show_without) {
+                            // Если show = false, показываем только тех, у кого есть хотя бы одна задача
+                            return student.task_1 || student.task_2 || student.task_3 || student.task_4 || student.task_5;
+                        }
+                        return true;  // Если show = true, показываем всех студентов
+                    });
+
+                    // Проходим по отфильтрованным студентам и добавляем их в таблицу
+                    filteredStudents.forEach(student => {
+                        let row = `<tr data-student-id="${student.userId}">
+                            ${generateTaskCells(student)}
+                        </tr>`;
+                        tableBody.append(row);
+
+                        setupRealtimeUpdates();  // Инициализация дополнительных действий, если нужно
+                    });
+                }
+            });
+        }
+
+        $('#show-without-tasks').on('change', function() {
+            // Определяем, установлен ли флаг "Показати учнів без завантажених задач"
+            show_without = $(this).is(':checked');  // Если галочка стоит, значение будет true, иначе false
+            console.log("ch");
+            // Находим активный таб
+            let activeTab = $('.tab.active-tab');
+            let classNumber = activeTab.data('task');  // Получаем номер класса с атрибута data-task
+
+            // Загружаем учеников для активного класса
+            loadStudents(classNumber);
+        });
+
+        // Функция для создания ячеек с заданиями студента
+        function generateTaskCells(student) {
+            let cells = '';
+            cells += `<td>${student.userId}</td>`;
+            for (let i = 1; i <= 5; i++) {
+                const fileField = `task_${i}`;
+                const statusField = `task_${i}_status`;
+                let grade = 0.0;
+                if(student[fileField+"_grading"]){
+                    student[fileField+"_grading"].forEach(element => {
+                        grade = grade+element;
+                    })
+                }
+                let downloadUrl = `/api/download-file/${student.userId}/${student.paralel}/${i}`;
+                cells += `<td>
+                               ${student[fileField] ? `
+                                   <button class="${student[statusField] ? 'btn-green' : 'btn-gray'} evaluate-btn"
+                                           data-student-id="${student.userId}"
+                                           data-task-id="${i}"
+                                           data-student-class="${student.paralel}"
+                                           data-student='${JSON.stringify(student)}'
+                                           >
+                                       ${student[statusField] ? `Оцінено: ${grade}` : 'Оцінити'}
+                                   </button>
+                                   <a class="download-btn" href="${downloadUrl}" download="${student.userId}_${student.paralel}_${i}.pdf"> <i class="fa-solid fa-download"> </i></a>
+                                ` : 'Файл відсутній'}
+                        </td>`;
+            }
+            return cells;
+        }
+
+
+        function setupRealtimeUpdates() {
+        // Подписываемся на все документы в коллекции webUsers
+            const webUsersCollection = collection(db, 'users');
+
+            // Слушаем изменения в коллекции webUsers
+            onSnapshot(webUsersCollection, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    const studentData = change.doc.data();
+                    const studentId = studentData.userId;  // Получаем userId студента
+
+                    if (change.type === "added" || change.type === "modified") {
+                        {#console.log(`Изменения в документе студента ${studentId}:`, studentData);#}
+                        // Обновляем ячейки с заданиями студента
+                        const row = document.querySelector(`tr[data-student-id="${studentId}"]`);
+                        if (row) {
+                            row.innerHTML = generateTaskCells(studentData);  // Перегенерируем строки для этого студента
+                        }
+                    }
+                });
+            });
+        }
+
+
+        $(document).on('click', '.evaluate-btn', function() {
+            let studentId = $(this).data('student-id');
+            let taskId = $(this).data('task-id');
+            let studentClass = $(this).data('student-class');
+            let student = $(this).data('student');
+
+            // Загружаем критерии для выбранного задания
+            openEvaluateModal(studentClass, taskId, studentId, student );
+        });
+
+        // Функция для открытия модального окна оценивания
+        function openEvaluateModal(studentClass, taskId, studentId, student) {
+            // Загружаем критерии для выбранного задания
+            console.log(student);
+            $.ajax({
+                url: `/api/criteria/`,
+                data: { task_id: `${studentClass}_${taskId}` },
+                success: function(response) {
+
+                    let modal_title = $('.modal-title');
+                    modal_title.text(`Оцінка завдання ${studentClass}_${taskId}`);
+
+                    let modal_user_id = $('.modal-user-id');
+                    modal_user_id.text(`Id учня ${studentId}`);
+
+                    let modal = $('#evaluate-modal');
+                    let tableBody = $('#criteria-table-body');
+                    tableBody.empty();
+                    modal.data('task-id', taskId).data('studentClass', studentClass).data('studentId', studentId);
+                    response.criteria.forEach((criterion, index) => {
+                            tableBody.append(`
+                                <tr>
+                                    <td class="td-text">${criterion.criterion_text}</td>
+                                    <td>
+                                        <input type="number" name="criterion_${criterion.id}"
+                                               data-max="${criterion.points}"
+                                               placeholder="Макс ${criterion.points}"
+                                               min="0"
+                                               step="0.1"
+                                               value="${student[`task_${taskId}_grading`] && student[`task_${taskId}_grading`][index] ? student[`task_${taskId}_grading`][index] : ''}"
+                                               required
+                                               />
+                                    </td>
+                                    <td>${criterion.points}</td>
+                                </tr>
+                            `);
+                        });
+                    $('#modal-overlay').show();
+                     $('body').css('overflow', 'hidden');
+                    modal.show();  // Показываем модальное окно
+                }
+            });
+        }
+
+        $('#form-clear-btn').on('click', function() {
+
+            let modal = $('#evaluate-modal');
+            let taskId = modal.data('task-id'); // Получаем ID задачи
+            let studentId = modal.data('student-id');
+            const csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                url: '{% url "api_clear_evaluation" %}',  // Правильный URL
+                type: 'POST',  // Указываем явно POST-запрос
+                contentType: 'application/json',  // Отправляем данные в формате JSON
+                data: JSON.stringify({
+                    student_id: studentId,  // Используем правильный snake_case
+                    task_id: taskId
+                }),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken  // Включаем CSRF-токен
+                },
+                success: function(response) {
+                    console.log('Успешный ответ:', response);  // Лог успешного ответа
+                    if (response.success) {
+                        hideOverlay();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка AJAX-запроса:', error);  // Лог ошибок
+                    alert('Помилка під час збереження оцінки.');
+                }
+            });
+
+            return false;
+        });
+
+        // Функция для отправки оценки
+       $('#evaluation-form').on('submit', function(i) {
+            i.preventDefault();  // Останавливаем стандартное поведение формы
+            let hasErrors = false;
+            let points = {};
+            let modal = $('#evaluate-modal');
+            let taskId = modal.data('task-id'); // Получаем ID задачи
+            let studentId = modal.data('student-id');
+
+            console.log(`taskId: ${taskId}, studentId: ${studentId}`);  // Лог для проверки
+
+            let counter = 1;
+            $('#criteria-table-body input[type="number"]').each(function() {
+                let maxPoints = $(this).data('max');
+                let value = parseFloat($(this).val());
+
+                if (isNaN(value)) {
+                    alert('Будь ласка, введіть правильне числове значення!');
+                    value = 0;  // Устанавливаем значение по умолчанию, если это не число
+                    hasErrors = true;
+                    return false;
+                }
+
+                if (value > maxPoints && value >= 0) {
+                    alert('Оцінка не може бути більша за максимальний бал!');
+                    value = maxPoints;  // Ограничиваем значение
+                    hasErrors = true;
+                    return false;
+                }
+
+                points[counter] = value;  // Используем счетчик как ключ
+                counter++;
+            });
+            if (hasErrors) {
+                return; // Останавливаем выполнение функции
+            }
+            const csrftoken = getCookie('csrftoken');
+
+            // Отправляем оценки на сервер
+            $.ajax({
+                url: '{% url "api_evaluate_task" %}',  // Правильный URL
+                type: 'POST',  // Указываем явно POST-запрос
+                contentType: 'application/json',  // Отправляем данные в формате JSON
+                data: JSON.stringify({
+                    student_id: studentId,  // Используем правильный snake_case
+                    task_id: taskId,
+                    points: points
+                }),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken  // Включаем CSRF-токен
+                },
+                success: function(response) {
+                    console.log('Успешный ответ:', response);  // Лог успешного ответа
+                    if (response.success) {
+                        hideOverlay();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка AJAX-запроса:', error);  // Лог ошибок
+                    alert('Помилка під час збереження оцінки.');
+                }
+            });
+
+            return false;
+       });
+
+       document.querySelector('#evaluate-modal-close').addEventListener('click', () => {
+           hideOverlay();
+       });
+
+       function hideOverlay(){
+            $('#evaluate-modal').hide();  // Скрываем модальное окно
+            $('#modal-overlay').hide();
+            $('body').css('overflow', '');
+       }
+       function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+       }
+   });
+
+</script>
+{% endblock %}

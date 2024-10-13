@@ -47,6 +47,11 @@
                     <span> Підтвердити критерії </span>
                 </a>
             {% endif %}
+            {% if role != "Student"  %}
+                <a class="active-page page-verification" id="history-link" href="{% url 'profile' feature_name='verification'%}">
+                    <span> Перевірка </span>
+                </a>
+            {% endif %}
             {% if role == "Student" or rights == "Chat_Admin"%}
                 <a class="active-page page-chat" id="history-link" href="{% url 'profile' feature_name='chat'%}">
                     <span>Чат з питаннями</span>
