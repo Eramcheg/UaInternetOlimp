@@ -31,7 +31,7 @@ from django.core.mail import send_mail
 from shop.forms import UserRegisterForm, User
 from firebase_admin import storage
 
-from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_admins
+from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_admins, get_students_by_class
 
 
 @login_required
@@ -60,6 +60,12 @@ def profile(request, feature_name):
             data = doc.to_dict()
             criteria_list.append({'criterion_text': data['criterion_text'], 'points': data['points'], 'id': doc.id})
         saved_criteria[task] = criteria_list
+    students = get_students_by_class(9)  # Создадим эту функцию позже
+
+
+    context['students'] = students
+    context['default_class'] = 9  # По умолчанию показываем класс 9
+
     context['saved_criteria'] = saved_criteria
     context['jurys'] = jurys
     context['tasks_numbers'] = sorted(TASKS, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1])))

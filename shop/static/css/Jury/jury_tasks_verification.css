@@ -1,0 +1,252 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+}
+#tabs{
+    max-width: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+.tab {
+    display: inline-block;
+    padding: 20px 60px;
+    margin: 10px;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+.active-tab {
+    background-color: #007bff!important;
+    color: white;
+}
+
+.checkbox-container{
+    display: flex;
+}
+
+#show-without-tasks{
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#students-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    overflow: hidden;     /* Чтобы закругление применялось ко всей таблице */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Небольшая тень для красоты */
+
+}
+
+/* Стили для заголовков таблицы */
+#students-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+
+}
+
+/* Стили для ячеек таблицы */
+#students-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    height: 60px;  /* Минимальная высота ячеек */
+    white-space: nowrap;  /* Запрещаем перенос текста или элементов внутри ячейки */
+}
+
+/* Стили для кнопок */
+#students-table td button {
+    display: inline-block;  /* Устанавливаем кнопки в одну строку */
+    margin-right: 10px;     /* Добавляем отступ между кнопками */
+    padding: 5px 10px;
+    font-size: 14px;
+    white-space: nowrap;    /* Запрещаем переносу текста внутри кнопки */
+}
+
+/* Стили для ссылок (например, кнопки для скачивания) */
+#students-table td a.download-btn {
+    display: inline-block;  /* Устанавливаем кнопку на одной строке с другими элементами */
+    padding: 5px 10px;
+    margin-left: 5px;
+    white-space: nowrap;
+}
+
+/* Стили для строк таблицы */
+#students-table tr {
+    height: 60px;
+}
+
+/* Чередование фона строк */
+#students-table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+#students-table tr:nth-child(odd) {
+    background-color: #f5f3e7;
+}
+
+/* Эффект при наведении */
+#students-table tr:hover {
+    background-color: #e5e5e5;
+}
+
+/* Границы и тени для таблицы */
+#students-table, #students-table th, #students-table td {
+    border: 1px solid #ccc;
+}
+
+/* Стили для текста в ячейках */
+#students-table td, #students-table th {
+    text-align: center;
+    font-size: 14px;
+}
+.download-btn i{
+    color: white;
+}
+.download-btn{
+    padding: 8px 15px;
+    background-color: #1e7e34;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+.download-btn:hover{
+    background-color: #27af46;
+}
+
+.btn-gray, .btn-green{
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-green {
+    background-color: green;
+    color: white;
+}
+.btn-green:hover{ background-color: #03a103; }
+.btn-gray {
+    background-color: rgb(162, 162, 162);
+    color: white;
+}
+.btn-gray:hover{ background-color: rgb(197, 197, 197); }
+
+#modal-overlay {
+    display: none; /* По умолчанию скрыт */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный */
+    z-index: 900; /* Должен быть ниже, чем модальное окно */
+}
+
+#evaluate-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    z-index: 1000;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.modal-user-id{
+
+}
+/* Стили для крестика закрытия */
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Стили для таблицы внутри модального окна */
+#evaluate-modal table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+
+}
+
+#evaluate-modal-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+#evaluate-modal table th, #evaluate-modal table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+#evaluate-modal input[type="text"] {
+    width: 100%;
+    padding: 5px;
+}
+
+#evaluation-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.td-text{
+    word-wrap: break-word;
+}
+#evaluate-modal table th:first-child {
+    width: 60%; /* Устанавливаем одинаковую ширину для первого столбца */
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: right;
+    gap: 40px;
+}
+
+#form-submit-btn, #form-clear-btn{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#form-clear-btn{
+    background-color: #CC3434;
+    color: white;
+}
+#form-clear-btn:hover{
+    background-color: #dc3838;
+}
+
+#form-submit-btn{
+    background-color: #007bff;
+    color: white;
+}
+
+#form-submit-btn:hover{
+    background-color: #0056b3;
+}
+
+
+
+input[type="number"]{
+    max-width: 100%;
+}

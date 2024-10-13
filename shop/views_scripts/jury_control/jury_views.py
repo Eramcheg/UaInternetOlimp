@@ -4,13 +4,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 import os
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.csrf import csrf_exempt
+from firebase_admin import firestore
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
     serialize_firestore_document, updateChatInfo, tasks_ref, TASKS, criteria_ref
-
-
+import os
+import re
+import mimetypes
+import requests
 def handle_max_score(request):
     if request.method == 'POST':
         # Получаем значения из формы
@@ -171,3 +175,101 @@ def reject_criteria(request):
             return JsonResponse({'success': False, 'error': str(e)})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+
+def get_students_by_class(user_class):
+
+    students_query = users_ref.where('paralel', '==', user_class).where('role', '==', 'Student')
+    students = students_query.stream()
+
+    student_list = []
+    for student in students:
+        student_dict = student.to_dict()
+        student_dict['id'] = student_dict['userId']
+        student_list.append(student_dict)
+    return student_list
+
+def get_students(request):
+    class_number = request.GET.get('class', 9)  # Класс по умолчанию - 9
+    students = get_students_by_class(class_number)
+    return JsonResponse({'students': students})
+
+def get_criteria(request):
+    task_id = request.GET.get('task_id')
+    criteria_query = criteria_ref.where('task_id', '==', task_id)
+    criteria = criteria_query.stream()
+
+    criteria_list = [criterion.to_dict() for criterion in criteria]
+    return JsonResponse({'criteria': criteria_list})
+
+
+def evaluate_task(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        student_id = data['student_id']
+        task_id = data['task_id']
+        points = data['points']
+
+        # Обновление статуса задания у студента
+        student_ref = users_ref.where('userId', '==', student_id).get()
+        if student_ref:
+            student_ref = student_ref[0].reference
+            student_ref.update({f'task_{task_id}_status': True})
+
+            points_array = [points[str(i)] for i in range(1, len(points) + 1)]
+            student_ref.update({f'task_{task_id}_grading': points_array})
+
+        return JsonResponse({'success': True})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def clear_task_evaluation(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        student_id = data['student_id']
+        task_id = data['task_id']
+
+        # Обновление статуса задания у студента
+        student_ref = users_ref.where('userId', '==', student_id).get()
+        if student_ref:
+            student_ref = student_ref[0].reference
+            student_ref.update({f'task_{task_id}_status': False})
+
+            student_ref.update({f'task_{task_id}_grading': firestore.DELETE_FIELD})
+
+        return JsonResponse({'success': True})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def download_users_file(request, student_id, paralel, task_id):
+
+    student_ref = users_ref.where('userId', '==', student_id).get()
+    file_url = ""
+    if student_ref:
+        student_ref = student_ref[0].to_dict()
+        file_url = student_ref.get(f'task_{task_id}')
+    response = requests.get(file_url)
+
+    # Создаем правильный ответ с заголовком для скачивания
+    if response.status_code == 200:
+        # Извлекаем имя файла из URL
+        file_name_with_random = os.path.basename(file_url.split('?')[0])
+
+        # Удаляем последние 6 случайных символов и подчеркивание с помощью регулярного выражения
+        file_name_cleaned = re.sub(r'_[a-zA-Z0-9]{6}$', '', file_name_with_random)
+
+        # Получаем расширение файла из очищенного имени файла
+        _, file_extension = os.path.splitext(file_name_cleaned)
+
+        # Генерируем имя файла для скачивания, добавляя оригинальное расширение
+        download_file_name = f"{student_id}_{paralel}_{task_id}{file_extension}"
+
+        # Определяем MIME-тип на основе расширения файла
+        mime_type, _ = mimetypes.guess_type(download_file_name)
+
+        # Создаем HTTP-ответ с правильным именем файла и MIME-типом
+        django_response = HttpResponse(response.content,
+                                       content_type=mime_type if mime_type else 'application/octet-stream')
+        django_response['Content-Disposition'] = f'attachment; filename="{download_file_name}"'
+
+        return django_response
+    else:
+        return HttpResponse('Ошибка при загрузке файла', status=404)

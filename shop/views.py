@@ -801,3 +801,4 @@ def contact_us_page(request):
     else:
         context['rights'] = None
     return render(request, "uaolimpiad/tools/contact_us.html")
+
