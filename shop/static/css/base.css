@@ -97,6 +97,7 @@ body{
 }
 #account-icon{
     display: flex;
+    gap: 5px;
 }
 #account-icon-photo{
     width: 34px;
