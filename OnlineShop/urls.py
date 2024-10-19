@@ -89,14 +89,6 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path('admin_tools/<str:feature_name>/', views.admin_tools, name='admin_tools'),
 
-    # TODO: заменить views.admin_tools на функцию которая будет перекидывать на страницу с функционалом студентов
-    #  (В точности как страница админа, слева будут вкладки с нужной функцией студента)
-    path('student_tools/<str:feature_name>/', views.admin_tools, name='student_tools'),
-
-    # TODO: заменить views.admin_tools на функцию которая будет перекидывать на страницу с функционалом жюри
-    #  (В точности как страница админа, слева будут вкладки с нужной функцией члена жюри)
-    path('jury_tools/<str:feature_name>/', views.admin_tools, name='jury_tools'),
-
     path('at/enable_users/', enable_users, name='at_enable_users'),
     path('at/disable_users/', disable_users, name='at_disable_users'),
     path('at/delete_users/', views.delete_users, name='at_delete_users'),

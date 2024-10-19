@@ -82,6 +82,11 @@ def profile(request, feature_name):
     context['task_3'] = info['task_3_name'] if "task_3_name" in info else ""
     context['task_4'] = info['task_4_name'] if "task_4_name" in info else ""
     context['task_5'] = info['task_5_name'] if "task_5_name" in info else ""
+    context['task_1_2_tour'] = info['task_1_2_tour_name'] if "task_1_2_tour_name" in info else ""
+    context['task_2_2_tour'] = info['task_2_2_tour_name'] if "task_2_2_tour_name" in info else ""
+    context['task_3_2_tour'] = info['task_3_2_tour_name'] if "task_3_2_tour_name" in info else ""
+    context['task_4_2_tour'] = info['task_4_2_tour_name'] if "task_4_2_tour_name" in info else ""
+    context['task_5_2_tour'] = info['task_5_2_tour_name'] if "task_5_2_tour_name" in info else ""
     context['rights'] = info['rights'] if "rights" in info else ""
 
     return render(request, 'profile.html', context=context)
@@ -339,7 +344,7 @@ def upload_file(request):
         code_file = generate_random_string()
 
         # Upload to Firebase Storage
-        file_path = os.path.join('users_files', f"{user_email}_Task_{box_id}_{file.name}_{code_file}")
+        file_path = os.path.join('users_files', f"{user_email}_Task_{box_id}_{file.name}_2_tour_{code_file}")
         blob = upload_to_firebase(file, file_path)
         # Generate the file URL
         file_url = blob.public_url
@@ -350,8 +355,8 @@ def upload_file(request):
 
         if user_ref:
             user_doc = user_ref[0]
-            field_name = f'task_{box_id[-1]}'  # file_1, file_2, ...
-            name_field_name = f'task_{box_id[-1]}_name'  # file_1, file_2, ...
+            field_name = f'task_{box_id[-1]}_2_tour'  # file_1, file_2, ...
+            name_field_name = f'task_{box_id[-1]}_2_tour_name'  # file_1, file_2, ...
             user_doc.reference.update({field_name: file_url})
             user_doc.reference.update({name_field_name: file.name})
 
