@@ -391,6 +391,20 @@ def news_main_view(request):
     context['news_info'] = news_info
     return render(request, 'uaolimpiad/news.html', context)
 
+def task_solutions(request):
+
+    context = {
+
+    }
+    email = get_user_session_type(request)
+    context['role'] = get_user_role(email)
+    user_info = get_user_info(email)
+
+    if user_info is not None and "rights" in user_info:
+        context['rights'] = user_info['rights']
+    else:
+        context['rights'] = None
+    return render(request, 'uaolimpiad/jurysSolutions.html', context)
 
 def get_user_category(email):
     pass
