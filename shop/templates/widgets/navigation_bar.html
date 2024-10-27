@@ -47,6 +47,7 @@
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
             <a href="{% url 'contact_us' %}" class="link">Контакти</a>
+            <a href="{% url 'tasks_solutions' %}" class="link">Рішення</a>
 
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' feature_name="account" %}" class="link">Акаунт</a>
