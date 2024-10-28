@@ -88,6 +88,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     let show_without = true;
+    const jury_tasks = {{ jury_tasks|safe }};
     $(document).ready(function() {
             // Загружаем студентов класса 9 при первой загрузке страницы
         loadStudents(9);
@@ -213,12 +214,21 @@
         // Функция для открытия модального окна оценивания
         function openEvaluateModal(studentClass, taskId, studentId, student) {
             // Загружаем критерии для выбранного задания
-            console.log(student);
+            console.log(studentClass + "_"+ taskId);
+            let id = studentClass + "_" + taskId;
+            console.log(jury_tasks.includes(id));
+            if( !jury_tasks.includes(id) ){
+                alert("У вас немає прав для оцінювання цього завдання");
+                return;
+            }
             $.ajax({
                 url: `/api/criteria/`,
                 data: { task_id: `${studentClass}_${taskId}` },
                 success: function(response) {
-
+                    if(response.criteria.length === 0) {
+                        alert("Завдання не має критеріїв оцінювання або додані критерії не були затвердженні");
+                        return;
+                    }
                     let modal_title = $('.modal-title');
                     modal_title.text(`Оцінка завдання ${studentClass}_${taskId}`);
 
