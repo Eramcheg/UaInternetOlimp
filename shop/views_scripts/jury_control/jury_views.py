@@ -196,10 +196,22 @@ def get_students(request):
 
 def get_criteria(request):
     task_id = request.GET.get('task_id')
+
+    # Ищем задачу по task_id
+    tasks_query = tasks_ref.where('task_id', '==', task_id)
+    tasks = list(tasks_query.stream())
+
+    # Проверяем, существует ли задача и имеет ли она статус Approved
+    if not tasks or tasks[0].to_dict().get('task_status') != 'Approved':
+        return JsonResponse({'criteria': []})  # Возвращаем пустой массив, если статус не Approved
+
+    # Ищем критерии, соответствующие task_id
     criteria_query = criteria_ref.where('task_id', '==', task_id)
     criteria = criteria_query.stream()
 
+    # Формируем список критериев
     criteria_list = [criterion.to_dict() for criterion in criteria]
+
     return JsonResponse({'criteria': criteria_list})
 
 
