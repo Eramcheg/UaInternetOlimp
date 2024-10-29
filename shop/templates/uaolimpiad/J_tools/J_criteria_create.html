@@ -21,38 +21,22 @@
         <div id="criteria-container">
             <!-- Критерии будут добавляться динамически с помощью JS -->
         </div>
-        <i id="add-criteria" class="fa-solid fa-plus"></i>
-        <button id="submit-criteria">Затвердити зміни</button>
+        {% if jury_tasks %}
+            <i id="add-criteria" class="fa-solid fa-plus"></i>
+            <button id="submit-criteria">Затвердити зміни</button>
+        {% else %}
+            <h1> Вам ще не було надано дозвілу додавати критерії</h1>
+        {% endif %}
     </div>
 
 </div>
 <script>
-{#document.addEventListener('DOMContentLoaded', function () {#}
-{#        // Получаем все табы#}
-{#        const tabs = document.querySelectorAll('.tab');#}
-{##}
-{#        // Добавляем обработчик клика для каждого таба#}
-{#        tabs.forEach(tab => {#}
-{#            tab.addEventListener('click', function () {#}
-{#                // Получаем атрибут data-class выбранного таба#}
-{##}
-{##}
-{#                // Сброс всех активных табов и скрытие контента#}
-{#                tabs.forEach(t => t.classList.remove('active-tab'));#}
-                {#const contents = document.querySelectorAll('.content');#}
-                {#contents.forEach(content => content.classList.remove('active-content'));#}
-{##}
-{#                // Устанавливаем активный таб и показываем соответствующий контент#}
-{#                this.classList.add('active-tab');#}
-                {#document.getElementById(classId).classList.add('active-content');#}
-{#            });#}
-{#        });#}
-{#    });#}
+
+    const jury_tasks = {{ jury_tasks|safe }};
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('.tab');
         const criteriaContainer = document.getElementById('criteria-container');
         const currentTask = document.getElementById('current-task');
-        const jury_tasks = {{ jury_tasks|safe }};
         const savedCriteria = {{ saved_criteria|safe }};
         // Функция для отображения сохраненных критериев задачи
         function showTask(taskId) {
@@ -88,7 +72,7 @@
             row.classList.add('criteria-row');
             row.innerHTML = `
                 <input type="text" class="criteria-text" placeholder="Текст критерію" value="${criterion_text}">
-                <input type="number" class="criteria-points" placeholder="Балів" value="${points}">
+                <input class="criteria-points" placeholder="Балів" value="${points}">
                 <button type="button" class="remove-criteria"><i class='fa-solid fa-remove'></i></button>
             `;
             criteriaContainer.appendChild(row);
@@ -125,7 +109,7 @@
             let totalPoints = 0;
             criteriaRows.forEach((row, index) => {
                 const criterion_text = row.querySelector('.criteria-text').value;
-                const points = parseFloat(row.querySelector('.criteria-points').value) || 0;
+                const points = parseFloat(row.querySelector('.criteria-points').value.replace(',', '.')) || 0;
                 criteriaData.push({ criterion_text, points, id: `${taskId}_${index + 1}` });
                 totalPoints += points;
             });
