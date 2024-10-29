@@ -329,6 +329,12 @@
                     console.log("PROBLEM PROBLEM PROBLEM");
                     return false;
                 }
+                if (value < 0) {
+                    alert('Оцінка не може бути менша за 0!');
+                    value = maxPoints;  // Ограничиваем значение
+                    hasErrors = true;
+                    return false;
+                }
 
                 points[counter] = value;  // Используем счетчик как ключ
                 counter++;
