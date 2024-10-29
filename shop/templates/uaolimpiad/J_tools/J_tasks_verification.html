@@ -159,6 +159,7 @@
                         grade = grade+element;
                     })
                 }
+                grade = Number((grade).toFixed(1));
                 let downloadUrl = `/api/download-file/${student.userId}/${student.paralel}/${i}`;
                 cells += `<td>
                                ${student[fileField] ? `
@@ -244,11 +245,11 @@
                                 <tr>
                                     <td class="td-text">${criterion.criterion_text}</td>
                                     <td>
-                                        <input type="number" name="criterion_${criterion.id}"
+                                        <input class="input-criterion" type="text" name="criterion_${criterion.id}"
                                                data-max="${criterion.points}"
                                                placeholder="Макс ${criterion.points}"
                                                min="0"
-                                               step="0.1"
+                                               max="${criterion.points}"
                                                value="${student[`task_${taskId}_grading`] && student[`task_${taskId}_grading`][index] ? student[`task_${taskId}_grading`][index] : ''}"
                                                required
                                                />
@@ -310,9 +311,9 @@
             console.log(`taskId: ${taskId}, studentId: ${studentId}`);  // Лог для проверки
 
             let counter = 1;
-            $('#criteria-table-body input[type="number"]').each(function() {
+            $('#criteria-table-body input[type="text"]').each(function() {
                 let maxPoints = $(this).data('max');
-                let value = parseFloat($(this).val());
+                let value = parseFloat($(this).val().replace(',', '.'));
 
                 if (isNaN(value)) {
                     alert('Будь ласка, введіть правильне числове значення!');
@@ -325,6 +326,7 @@
                     alert('Оцінка не може бути більша за максимальний бал!');
                     value = maxPoints;  // Ограничиваем значение
                     hasErrors = true;
+                    console.log("PROBLEM PROBLEM PROBLEM");
                     return false;
                 }
 
