@@ -46,7 +46,11 @@
     <!-- Модальное окно для оценивания задания -->
     <div id="evaluate-modal">
         <!-- Кнопка закрытия -->
-        <i class="fa-solid fa-close" id="evaluate-modal-close" ></i>
+        <div class="modal-icons">
+            <i class="fa-regular fa-clipboard" id="evaluate-modal-actions" ></i>
+            <i class="fa-solid fa-close" id="evaluate-modal-close" ></i>
+        </div>
+
         <h3 class="modal-title">Задача №</h3>
         <h5 class="modal-user-id">Id учня </h5>
         <form id="evaluation-form" method="post">
@@ -70,7 +74,17 @@
             </div>
         </form>
     </div>
+    <div id="actions-modal">
+        <!-- Кнопка закрытия -->
+        <i class="fa-solid fa-close" id="actions-modal-close" ></i>
+        <h3 class="actions-modal-title">Задача №</h3>
+        <h5 class="actions-modal-user-id">Id учня </h5>
 
+        <div id="action-messages-container">
+            <!-- Строки критериев будут добавлены через JS -->
+        </div>
+
+        </div>
 </div>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
@@ -212,12 +226,55 @@
             openEvaluateModal(studentClass, taskId, studentId, student );
         });
 
+        $(document).on('click', '#evaluate-modal-actions', function() {
+            let studentId = $(this).data('student-id');
+            let taskId = $(this).data('task-id');
+            let studentClass = $(this).data('student-class');
+            let student = $(this).data('student');
+
+            // Загружаем критерии для выбранного задания
+            openActionsModal(studentClass, taskId, studentId, student );
+        });
+        function openActionsModal(studentClass, taskId, studentId, student) {
+            $.ajax({
+                url: `/api/get-actions/`,
+                data: { task_id: `${studentClass}_${taskId}`, student_id: studentId },
+                success: function(response) {
+                    let modal_title = $('.actions-modal-title');
+                    modal_title.text(`Оцінка завдання ${studentClass}_${taskId}`);
+
+                    let modal_user_id = $('.actions-modal-user-id');
+                    modal_user_id.text(`Id учня ${studentId}`);
+
+                    let modal = $('#actions-modal');
+                    modal.data('task-id', taskId).data('studentClass', studentClass).data('studentId', studentId);
+                    let actionsContainer = $('#action-messages-container');
+                    actionsContainer.empty();
+
+                    response.actions.forEach((action, index) => {
+                            const values = action.action_type === "update" ? Object.values(action.action_value) : "";
+                            actionsContainer.append(`
+                                <div class="action-container ${ action.action_type === "update" ? "update-msg" : "delete-msg" }" >
+                                    <span class="action-message">
+                                        ${ action.action_type === "update" ? `Користувач ${action.action_performer} оновив оцінки критеріїв завдання: ${values.join(' | ')}` : `Користувач ${action.action_performer} очистив оцінку завдання`}
+                                    </span>
+                                    <span class="action-date">
+                                        ${action.formatted_action_time}
+                                    </span>
+                                </div>
+                            `);
+                        });
+                    {#$('#modal-overlay').show();#}
+                    {#$('body').css('overflow', 'hidden');#}
+                    modal.show();  // Показываем модальное окно
+                }
+            });
+        }
         // Функция для открытия модального окна оценивания
         function openEvaluateModal(studentClass, taskId, studentId, student) {
             // Загружаем критерии для выбранного задания
             console.log(studentClass + "_"+ taskId);
             let id = studentClass + "_" + taskId;
-            console.log(jury_tasks.includes(id));
             if( !jury_tasks.includes(id) ){
                 alert("У вас немає прав для оцінювання цього завдання");
                 return;
@@ -230,6 +287,14 @@
                         alert("Завдання не має критеріїв оцінювання або додані критерії не були затвердженні");
                         return;
                     }
+
+                    let actions_button = $('#evaluate-modal-actions');
+                    actions_button.attr('data-student-id', studentId);
+                    actions_button.attr('data-task-id', taskId);
+                    actions_button.attr('data-student-class', studentClass);
+                    actions_button.attr('data-student', student);
+
+
                     let modal_title = $('.modal-title');
                     modal_title.text(`Оцінка завдання ${studentClass}_${taskId}`);
 
@@ -270,6 +335,7 @@
             let modal = $('#evaluate-modal');
             let taskId = modal.data('task-id'); // Получаем ID задачи
             let studentId = modal.data('student-id');
+            let studentClass = modal.data('student-class');
             const csrftoken = getCookie('csrftoken');
 
             $.ajax({
@@ -278,7 +344,8 @@
                 contentType: 'application/json',  // Отправляем данные в формате JSON
                 data: JSON.stringify({
                     student_id: studentId,  // Используем правильный snake_case
-                    task_id: taskId
+                    task_id: taskId,
+                    student_class: studentClass,
                 }),
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -307,6 +374,7 @@
             let modal = $('#evaluate-modal');
             let taskId = modal.data('task-id'); // Получаем ID задачи
             let studentId = modal.data('student-id');
+            let student_class = modal.data('student-class');
 
             console.log(`taskId: ${taskId}, studentId: ${studentId}`);  // Лог для проверки
 
@@ -352,7 +420,8 @@
                 data: JSON.stringify({
                     student_id: studentId,  // Используем правильный snake_case
                     task_id: taskId,
-                    points: points
+                    points: points,
+                    student_class: student_class,
                 }),
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -376,7 +445,14 @@
        document.querySelector('#evaluate-modal-close').addEventListener('click', () => {
            hideOverlay();
        });
-
+       document.querySelector('#actions-modal-close').addEventListener('click', () => {
+           hideActionsModal();
+       });
+       function hideActionsModal(){
+            $('#actions-modal').hide();  // Скрываем модальное окно
+            {#$('#modal-overlay').hide();#}
+            {#$('body').css('overflow', '');#}
+       }
        function hideOverlay(){
             $('#evaluate-modal').hide();  // Скрываем модальное окно
             $('#modal-overlay').hide();

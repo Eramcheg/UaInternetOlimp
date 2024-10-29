@@ -148,7 +148,7 @@
     z-index: 900; /* Должен быть ниже, чем модальное окно */
 }
 
-#evaluate-modal {
+#evaluate-modal, #actions-modal {
     display: none;
     position: fixed;
     top: 50%;
@@ -161,6 +161,9 @@
     z-index: 1000;
     width: 50%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#actions-modal{
+    z-index: 2000;
 }
 .modal-user-id{
 
@@ -182,10 +185,19 @@
 
 }
 
-#evaluate-modal-close{
+.modal-icons{
     position: absolute;
     top: 10px;
     right: 10px;
+    display: flex;
+    gap: 20px;
+}
+#actions-modal-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#evaluate-modal-close, #evaluate-modal-actions, #actions-modal-close{
     cursor: pointer;
     font-size: 24px;
 }
@@ -247,4 +259,32 @@
 
 .input-criterion{
     max-width: 100%;
+}
+
+.action-container{
+    display: flex;
+    flex-direction: column;
+}
+#action-messages-container{
+    overflow-y: auto;
+    max-height: 500px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.update-msg, .delete-msg{
+    padding: 10px;
+    border-radius: 10px;
+
+
+}
+.update-msg{
+    background-color: aliceblue;
+}
+.delete-msg{
+    background-color: #ffc8cc;
+}
+.action-date{
+    font-size: 12px;
 }

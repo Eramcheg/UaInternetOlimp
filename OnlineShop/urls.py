@@ -22,7 +22,7 @@ from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_control, submit_criteria, \
     reject_criteria, approve_criteria, get_students, get_criteria, evaluate_task, clear_task_evaluation, \
-    download_users_file
+    download_users_file, get_task_actions
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
     move_down_article, edit_article
 from shop.views_scripts.manage_banners.banners_managing import move_down, move_up, delete_banner
@@ -140,6 +140,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('api/students/', get_students, name='api_get_students'),
     path('api/criteria/', get_criteria, name='api_get_criteria'),
     path('api/evaluate/', evaluate_task, name='api_evaluate_task'),
+    path('api/get-actions/', get_task_actions, name='api_get_actions'),
     path('api/clear-evaluation/', clear_task_evaluation, name='api_clear_evaluation'),
     path('api/download-file/<str:student_id>/<str:paralel>/<int:task_id>/', download_users_file, name='api_download_file'),
 

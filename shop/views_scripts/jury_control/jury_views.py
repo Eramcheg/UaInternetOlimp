@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from dateutil import parser
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
@@ -10,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from firebase_admin import firestore
 
 from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS, criteria_ref
+    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS, criteria_ref, actions_ref
 import os
 import re
 import mimetypes
@@ -217,12 +220,46 @@ def get_criteria(request):
 
     return JsonResponse({'criteria': criteria_list})
 
+def get_task_actions(request):
+    task_id = request.GET.get('task_id')
+    student_id = request.GET.get('student_id')
+
+    # Ищем задачу по task_id
+    actions_query = actions_ref.where('objectId', '==', student_id + "_" + task_id)
+    actions = list(actions_query.stream())
+
+    # Формируем список критериев
+    actions_list = [criterion.to_dict() for criterion in actions]
+
+    # Convert and sort actions based on 'action_time'
+    for action in actions_list:
+        try:
+            action_time = action['action_time']
+            # Check if action_time is already a datetime-like object
+            if isinstance(action_time, datetime):
+                parsed_time = action_time
+            else:
+                # Parse 'action_time' as a string
+                parsed_time = datetime.fromisoformat(str(action_time).replace("Z", "+00:00"))
+
+            # Format the parsed time
+            action['formatted_action_time'] = parsed_time.strftime('%Y-%m-%d %H:%M:%S')
+        except (ValueError, TypeError) as e:
+            print(f"Error parsing action_time: {e}")
+            action['formatted_action_time'] = "Invalid date"
+
+    # Sort actions from latest to earliest based on 'action_time'
+    actions_list.sort(key=lambda x: x['action_time'], reverse=True)
+
+    return JsonResponse({'actions': actions_list})
+
 
 def evaluate_task(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         student_id = data['student_id']
         task_id = data['task_id']
+        student_class = data['student_class']
         points = data['points']
 
         # Обновление статуса задания у студента
@@ -234,6 +271,16 @@ def evaluate_task(request):
             points_array = [points[str(i)] for i in range(1, len(points) + 1)]
             student_ref.update({f'task_{task_id}_grading': points_array})
 
+            action_doc_id = f"{student_id}_{student_class}_{task_id}"
+            action_time = datetime.utcnow()
+            actions_ref.add({
+                'objectId': action_doc_id,
+                'action_performer': f"{request.user.username} {request.user.email}",
+                'action_time': action_time,
+                'action_type': "update",
+                'action_value': points # Generate a random UUID for the document ID
+            })
+
         return JsonResponse({'success': True})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
@@ -242,6 +289,7 @@ def clear_task_evaluation(request):
         data = json.loads(request.body)
         student_id = data['student_id']
         task_id = data['task_id']
+        student_class = data['student_class']
 
         # Обновление статуса задания у студента
         student_ref = users_ref.where('userId', '==', student_id).get()
@@ -250,6 +298,15 @@ def clear_task_evaluation(request):
             student_ref.update({f'task_{task_id}_status': False})
 
             student_ref.update({f'task_{task_id}_grading': firestore.DELETE_FIELD})
+
+            action_doc_id = f"{student_id}_{student_class}_{task_id}"
+            action_time = datetime.utcnow()
+            actions_ref.add({
+                'objectId': action_doc_id,
+                'action_performer': f"{request.user.username} {request.user.email}",
+                'action_time': action_time,
+                'action_type': "delete",  # Generate a random UUID for the document ID
+            })
 
         return JsonResponse({'success': True})
     return JsonResponse({'error': 'Invalid request'}, status=400)
