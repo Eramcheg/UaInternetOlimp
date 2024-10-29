@@ -96,13 +96,15 @@ def jurys_control(request):
 def get_jury_admins():
     simple_jury_query = users_ref.where('role', '==', 'Simple_Jury')
     main_jury_query = users_ref.where('role', '==', 'Main_Jury')
+    admins_jury_query = users_ref.where('role', '==', 'Admin')
 
     # Получаем результаты обоих запросов
     simple_jury_docs = simple_jury_query.stream()
     main_jury_docs = main_jury_query.stream()
+    admins_jury_docs = admins_jury_query.stream()
 
     # Объединяем результаты
-    all_docs = list(simple_jury_docs) + list(main_jury_docs)
+    all_docs = list(simple_jury_docs) + list(main_jury_docs) + list(admins_jury_docs)
 
     admins = []
     for doc in all_docs:
@@ -112,6 +114,7 @@ def get_jury_admins():
             'name': admin_data.get('first_name') + " " + admin_data.get('last_name'),  # Имя админа (или другое подходящее поле)
             'allowed_tasks': admin_data.get('allowed_tasks', {})  # Получаем существующие разрешения, если есть
         })
+    admins.sort(key=lambda x: x['name'])
     return admins
 
 
