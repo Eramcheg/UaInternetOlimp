@@ -158,6 +158,11 @@ MIDDLEWARE = [
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 
 ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Стандартный backend (по умолчанию)
+    'shop.views_scripts.backends.EmailOrUsernameModelBackend', # Ваш кастомный backend
+]
+
 # CACHE_MIDDLEWARE_ALIAS = 'default'
 # CACHE_MIDDLEWARE_SECONDS = 600  # Cache for 10 minutes
 # CACHE_MIDDLEWARE_KEY_PREFIX = ''
