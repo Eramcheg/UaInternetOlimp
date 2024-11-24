@@ -130,7 +130,7 @@
                     let filteredStudents = response.students.filter(student => {
                         if (!show_without) {
                             // Если show = false, показываем только тех, у кого есть хотя бы одна задача
-                            return student.task_1_2_tour || student.task_2_2_tour || student.task_3_2_tour || student.task_4_2_tour || student.task_5_2_tour;
+                            return student.task_1 || student.task_2 || student.task_3 || student.task_4 || student.task_5;
                         }
                         return true;  // Если show = true, показываем всех студентов
                     });
@@ -165,8 +165,8 @@
             let cells = '';
             cells += `<td>${student.userId}</td>`;
             for (let i = 1; i <= 5; i++) {
-                const fileField = `task_${i}_2_tour`;
-                const statusField = `task_${i}_2_tour_status`;
+                const fileField = `task_${i}`;
+                const statusField = `task_${i}_status`;
                 let grade = 0.0;
                 if(student[fileField+"_grading"]){
                     student[fileField+"_grading"].forEach(element => {
@@ -315,7 +315,7 @@
                                                placeholder="Макс ${criterion.points}"
                                                min="0"
                                                max="${criterion.points}"
-                                               value="${student[`task_${taskId}_2_tour_grading`] && student[`task_${taskId}_2_tour_grading`][index] ? student[`task_${taskId}_2_tour_grading`][index] : ''}"
+                                               value="${student[`task_${taskId}_grading`] && student[`task_${taskId}_grading`][index] ? student[`task_${taskId}_grading`][index] : ''}"
                                                required
                                                />
                                     </td>

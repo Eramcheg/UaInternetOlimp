@@ -9,9 +9,9 @@
     <div id="tabs">
         {% for task in jury_tasks %}
             {% if forloop.counter == 1 %}
-                <div class="tab active-tab" data-task="{{ task }}">{{ task }}</div>
+                <div class="tab active-tab" data-task="{{ task }}_2_tour">{{ task }}</div>
             {% else %}
-                <div class="tab" data-task="{{ task }}">{{ task }}</div>
+                <div class="tab" data-task="{{ task }}_2_tour">{{ task }}</div>
             {% endif %}
         {% endfor %}
     </div>
@@ -33,16 +33,19 @@
 <script>
 
     const jury_tasks = {{ jury_tasks|safe }};
+    console.log(jury_tasks);
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('.tab');
         const criteriaContainer = document.getElementById('criteria-container');
         const currentTask = document.getElementById('current-task');
         const savedCriteria = {{ saved_criteria|safe }};
+        console.log(savedCriteria);
         // Функция для отображения сохраненных критериев задачи
         function showTask(taskId) {
+            console.log(taskId);
             currentTask.innerHTML = ``;
             const headerTask = document.createElement('h1');
-            headerTask.textContent = `Задача ${taskId}`;
+            headerTask.textContent = `Задача ${taskId.replace("_2_tour", "")}`;
 
             const pointsHeader = document.createElement('h3');
             pointsHeader.textContent =  {{ tasks|safe }}['task'+taskId].max_points +` балів`;
@@ -53,9 +56,10 @@
             criteriaContainer.innerHTML = '';  // Очистка контейнера критериев
 
             // Отображение сохраненных критериев, если они есть
+            console.log(savedCriteria);
+            if (savedCriteria[taskId.replace("_2_tour", "")].length !== 0) {
 
-            if (savedCriteria[taskId].length !== 0) {
-                savedCriteria[taskId].forEach(criterion => {
+                savedCriteria[taskId.replace("_2_tour", "")].forEach(criterion => {
                     addCriteriaRow(criterion.criterion_text, criterion.points);
                 });
             }
@@ -64,7 +68,8 @@
             }
         }
         if(jury_tasks.length !== 0) {
-            showTask(jury_tasks[0]);
+            console.log(jury_tasks[0]);
+            showTask(jury_tasks[0]+"_2_tour");
         }
         // Функция для добавления новой строки критериев
         function addCriteriaRow(criterion_text = '', points = '') {
