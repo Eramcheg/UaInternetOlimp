@@ -13,301 +13,86 @@
     </div>
     <div id="content-container">
         <div id="class9" class="content active-content">
-            <div class="upload-box" id="box1">
-                <h1> «Закільцьовані»</h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="9_1"> <!-- Уникальное значение для каждой задачи -->
+            {% for key, values in tasks.items %}
+                {% if values.class == 9 %}
+                    <div class="upload-box" id="box{{ forloop.counter }}">
+                        <h1> {{ values.name }} </h1>
+                        <div class="update-field">
+                            <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
+                                {% csrf_token %}
+                                <!-- Скрытое поле для передачи айди задачи в бд -->
+                                <input type="hidden" name="task_id" value="{{ values.task_id }}"> <!-- Уникальное значение для каждой задачи -->
 
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
+                                <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
+                                <div class="buttons">
+                                    <a class="clear-btn">Очистити</a>
+                                    <button type="submit" class="submit-btn"> Підтвердити </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task9_1.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box2">
-                <h1> «І знов середня швидкість» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="9_2"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task9_2.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box3">
-                <h1> «Тиснемо-перетиснемо» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="9_3"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task9_3.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box4">
-                <h1> «Дрова і вода» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="9_4"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task9_4.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box5">
-                <h1> «Циліндр в акваріумі» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="9_5"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task9_5.max_points }}
-                </span>
-            </div>
+                        <span class="current-points">
+                            Бали за задачу: {{ values.max_points }}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div id="class10" class="content">
-            <div class="upload-box" id="box1">
-                <h1> «І знов середня швидкість» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="10_1"> <!-- Уникальное значение для каждой задачи -->
+            {% for key, values in tasks.items %}
+                {% if values.class == 10 %}
+                    <div class="upload-box" id="box{{ forloop.counter }}">
+                        <h1> {{ values.name }} </h1>
+                        <div class="update-field">
+                            <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
+                                {% csrf_token %}
+                                <!-- Скрытое поле для передачи айди задачи в бд -->
+                                <input type="hidden" name="task_id" value="{{ values.task_id }}"> <!-- Уникальное значение для каждой задачи -->
 
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
+                                <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
+                                <div class="buttons">
+                                    <a class="clear-btn">Очистити</a>
+                                    <button type="submit" class="submit-btn"> Підтвердити </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task10_1.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box2">
-                <h1> «Як вимірюють період напіврозпаду» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="10_2"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task10_2.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box3">
-                <h1> «Вода» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="10_3"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task10_3.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box4">
-                <h1> «Мерефо-Херсонський міст» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="10_4"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task10_4.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box5">
-                <h1> «Лабораторна комашка» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="10_5"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task10_5.max_points }}
-                </span>
-            </div>
+                        <span class="current-points">
+                            Бали за задачу: {{ values.max_points }}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div id="class11" class="content">
-            <div class="upload-box" id="box1">
-                <h1> «Оптика циліндру» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="11_1"> <!-- Уникальное значение для каждой задачи -->
+            {% for key, values in tasks.items %}
+                {% if values.class == 11 %}
+                    <div class="upload-box" id="box{{ forloop.counter }}">
+                        <h1> {{ values.name }} </h1>
+                        <div class="update-field">
+                            <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
+                                {% csrf_token %}
+                                <!-- Скрытое поле для передачи айди задачи в бд -->
+                                <input type="hidden" name="task_id" value="{{ values.task_id }}"> <!-- Уникальное значение для каждой задачи -->
 
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
+                                <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
+                                <div class="buttons">
+                                    <a class="clear-btn">Очистити</a>
+                                    <button type="submit" class="submit-btn"> Підтвердити </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task11_1.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box2">
-                <h1> «Молекула водню» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="11_2"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task11_2.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box3">
-                <h1> «Безпечні перевезення» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="11_3"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task11_3.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box4">
-                <h1> «Котимося вгору» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="11_4"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task11_4.max_points }}
-                </span>
-            </div>
-            <div class="upload-box" id="box5">
-                <h1> «Сферичний обігрівач» </h1>
-                <div class="update-field">
-                    <form method="post" class="task-form" action="{% url 'submit_max_score' %}">
-                        {% csrf_token %}
-                        <!-- Скрытое поле для передачи айди задачи в бд -->
-                        <input type="hidden" name="task_id" value="11_5"> <!-- Уникальное значение для каждой задачи -->
-
-                        <input type="number" min="0" placeholder="Введіть бали" name="max_score" class="max-score">
-                        <div class="buttons">
-                            <a class="clear-btn">Очистити</a>
-                            <button type="submit" class="submit-btn"> Підтвердити </button>
-                        </div>
-                    </form>
-                </div>
-                <span class="current-points">
-                    Бали за задачу: {{ tasks.task11_5.max_points }}
-                </span>
-            </div>
+                        <span class="current-points">
+                            Бали за задачу: {{ values.max_points }}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
 <script>
+console.log("{{ tasks|safe }}");
     document.addEventListener('DOMContentLoaded', function () {
         // Получаем все табы
         const tabs = document.querySelectorAll('.tab');

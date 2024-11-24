@@ -9,9 +9,9 @@
     <div id="tabs">
         {% for task in tasks_numbers %}
             {% if forloop.counter == 1 %}
-                <div class="tab active-tab" data-task="{{ task }}">{{ task }}</div>
+                <div class="tab active-tab" data-task="{{ task }}_2_tour">{{ task }}</div>
             {% else %}
-                <div class="tab" data-task="{{ task }}">{{ task }}</div>
+                <div class="tab" data-task="{{ task }}_2_tour">{{ task }}</div>
             {% endif %}
         {% endfor %}
     </div>
@@ -40,7 +40,7 @@
         function showTask(taskId) {
             currentTask.innerHTML = ``;
             const headerTask = document.createElement('h1');
-            headerTask.textContent = `Задача ${taskId}`;
+            headerTask.textContent = `Задача ${taskId.replace('_2_tour', "")}`;
 
             const pointsHeader = document.createElement('h3');
             pointsHeader.textContent =  {{ tasks|safe }}['task'+taskId].max_points +` балів`;
@@ -51,14 +51,15 @@
             criteriaContainer.innerHTML = '';  // Очистка контейнера критериев
 
             // Отображение сохраненных критериев, если они есть
-
-            if (savedCriteria[taskId] !== undefined && savedCriteria[taskId].length !== 0) {
-
+            console.log(taskId);
+            console.log(savedCriteria);
+            if (savedCriteria[taskId.replace("_2_tour", "")] !== undefined && savedCriteria[taskId.replace("_2_tour", '')].length !== 0) {
+                console.log('HERE');
                 const rejectBtn = document.getElementById('reject-criteria');
                 rejectBtn.style.display = '';
                 const acceptBtn = document.getElementById('submit-criteria');
                 acceptBtn.style.display = '';
-                savedCriteria[taskId].forEach((criterion, index) => {
+                savedCriteria[taskId.replace('_2_tour', '')].forEach((criterion, index) => {
                     addCriteriaRow(criterion.criterion_text, criterion.points, index+1);
                 });
             }
@@ -67,7 +68,7 @@
             }
         }
         if(jury_tasks.length !== 0) {
-            showTask(jury_tasks[0]);
+            showTask(jury_tasks[0]+"_2_tour");
         }
         // Функция для добавления новой строки критериев
         function addCriteriaRow(criterion_text = '', points = '', index=1) {

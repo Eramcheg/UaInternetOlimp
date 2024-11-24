@@ -59,20 +59,16 @@ def get_all_tasks():
     for task in tasks:
         task_data = task.to_dict()
         task_id = task.id  # Пример task_id: '9_1'
-        result = task_id.split("_", 2)[-1]
-        if result != "2_tour":
-            continue
+
         # Извлекаем максимальное количество баллов из данных задачи
         max_points = task_data.get('max_points', 0)  # Если max_points отсутствует, по умолчанию ставим 0
         status = task_data.get('task_status', '')  # Если max_points отсутствует, по умолчанию ставим 0
-        name = task_data.get('name', '')  # Если max_points отсутствует, по умолчанию ставим 0
-        clas = task_data.get('class', '')  # Если max_points отсутствует, по умолчанию ставим 0
 
         # Формируем ключ для словаря (например, task9_1)
         task_key = f"task{task_id}"
 
         # Сохраняем данные в словарь с ключами task9_1, task10_1 и т.д.
-        tasks_dict[task_key] = {'max_points': max_points, 'status': status, 'name': name, 'class': clas, 'task_id': task_id, 'task_id_normal': task_id.split("_", 2)[0]}
+        tasks_dict[task_key] = {'max_points': max_points, 'status': status}
 
     return tasks_dict
 
@@ -205,7 +201,7 @@ def get_students(request):
     return JsonResponse({'students': students})
 
 def get_criteria(request):
-    task_id = request.GET.get('task_id')+"_2_tour"
+    task_id = request.GET.get('task_id')
 
     # Ищем задачу по task_id
     tasks_query = tasks_ref.where('task_id', '==', task_id)
@@ -270,10 +266,10 @@ def evaluate_task(request):
         student_ref = users_ref.where('userId', '==', student_id).get()
         if student_ref:
             student_ref = student_ref[0].reference
-            student_ref.update({f'task_{task_id}_2_tour_status': True})
+            student_ref.update({f'task_{task_id}_status': True})
 
             points_array = [points[str(i)] for i in range(1, len(points) + 1)]
-            student_ref.update({f'task_{task_id}_2_tour_grading': points_array})
+            student_ref.update({f'task_{task_id}_grading': points_array})
 
             action_doc_id = f"{student_id}_{student_class}_{task_id}"
             action_time = datetime.utcnow()
@@ -299,9 +295,9 @@ def clear_task_evaluation(request):
         student_ref = users_ref.where('userId', '==', student_id).get()
         if student_ref:
             student_ref = student_ref[0].reference
-            student_ref.update({f'task_{task_id}_2_tour_status': False})
+            student_ref.update({f'task_{task_id}_status': False})
 
-            student_ref.update({f'task_{task_id}_2_tour_grading': firestore.DELETE_FIELD})
+            student_ref.update({f'task_{task_id}_grading': firestore.DELETE_FIELD})
 
             action_doc_id = f"{student_id}_{student_class}_{task_id}"
             action_time = datetime.utcnow()
@@ -321,7 +317,7 @@ def download_users_file(request, student_id, paralel, task_id):
     file_url = ""
     if student_ref:
         student_ref = student_ref[0].to_dict()
-        file_url = student_ref.get(f'task_{task_id}_2_tour')
+        file_url = student_ref.get(f'task_{task_id}')
     response = requests.get(file_url)
 
     # Создаем правильный ответ с заголовком для скачивания
@@ -330,7 +326,7 @@ def download_users_file(request, student_id, paralel, task_id):
         file_name_with_random = os.path.basename(file_url.split('?')[0])
 
         # Удаляем последние 6 случайных символов и подчеркивание с помощью регулярного выражения
-        file_name_cleaned = re.sub(r'_2_tour_[a-zA-Z0-9]{6}$', '', file_name_with_random)
+        file_name_cleaned = re.sub(r'_[a-zA-Z0-9]{6}$', '', file_name_with_random)
 
         # Получаем расширение файла из очищенного имени файла
         _, file_extension = os.path.splitext(file_name_cleaned)

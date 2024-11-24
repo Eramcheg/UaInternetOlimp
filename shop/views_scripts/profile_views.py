@@ -54,10 +54,11 @@ def profile(request, feature_name):
 
     saved_criteria = {}
     for task in info['allowed_tasks'] if "allowed_tasks" in info else "":
-        criteria_docs = criteria_ref.where('task_id', '==', task).stream()
+        criteria_docs = criteria_ref.where('task_id', '==', task+"_2_tour").stream()
         criteria_list = []
         for doc in criteria_docs:
             data = doc.to_dict()
+
             criteria_list.append({'criterion_text': data['criterion_text'], 'points': data['points'], 'id': doc.id})
         saved_criteria[task] = criteria_list
     students = get_students_by_class(9)  # Создадим эту функцию позже
@@ -70,6 +71,7 @@ def profile(request, feature_name):
     context['jurys'] = jurys
     context['tasks_numbers'] = sorted(TASKS, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1])))
     context['tasks'] = get_all_tasks()
+
     context['jury_tasks'] = info['allowed_tasks'] if "allowed_tasks" in info else ""
     context['currency'] = currency
     context['role'] = info['role']
