@@ -81,7 +81,7 @@
                                 <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link" title="Аккаунт">Аккаунт</a></li>
                                 {% if role == "Student" or role == "Admin" %}
                                     <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link" title="Список задач">Список задач</a></li>
-                                    <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link" title="Завантажити">Завантажити</a></li>
+{#                                    <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link" title="Завантажити">Завантажити</a></li>#}
 
                                 {% endif %}
                                 {% if role == "Simple_Jury" %}
@@ -140,8 +140,8 @@
                         {% if role == "Student" or role == "Admin" %}
                             <li><a href="{% url 'profile' feature_name='tasks'%}" class="dropdown-link-mobile" title="Список задач">Список задач</a></li>
                             <hr class="hr-link">
-                            <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link-mobile" title="Завантажити">Завантажити</a></li>
-                            <hr class="hr-link">
+{#                            <li><a href="{% url 'profile' feature_name='upload'%}" class="dropdown-link-mobile" title="Завантажити">Завантажити</a></li>#}
+{#                            <hr class="hr-link">#}
                         {% endif %}
                         {% if rights == "Chat_Admin" or role == "Student" %}
                             <li><a href="{% url 'profile' feature_name='chat'%}" class="dropdown-link-mobile" title="Чат з питаннями">Чат з питаннями</a></li>
