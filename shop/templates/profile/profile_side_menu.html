@@ -24,9 +24,9 @@
                 </a>
             {% endif %}
             {% if role == "Student" or role == "Admin" %}
-                <a class="active-page page-upload" id="history-link" href="{% url 'profile' feature_name='upload'%}">
-                    <span>Завантажити</span>
-                </a>
+{#                <a class="active-page page-upload" id="history-link" href="{% url 'profile' feature_name='upload'%}">#}
+{#                    <span>Завантажити</span>#}
+{#                </a>#}
             {% endif %}
             {% if role == "Main_Jury" or role == "Admin" %}
                 <a class="active-page page-points" id="history-link" href="{% url 'profile' feature_name='points'%}">

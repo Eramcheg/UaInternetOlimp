@@ -288,6 +288,7 @@ def evaluate_task(request):
         return JsonResponse({'success': True})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
+
 def clear_task_evaluation(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -314,6 +315,7 @@ def clear_task_evaluation(request):
 
         return JsonResponse({'success': True})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
 
 def download_users_file(request, student_id, paralel, task_id):
 

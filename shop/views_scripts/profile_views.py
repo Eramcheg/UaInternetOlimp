@@ -37,6 +37,8 @@ from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_a
 @login_required
 def profile(request, feature_name):
     email = request.user.email
+    if feature_name == "upload":
+        feature_name = "account"
     orders = get_orders_for_user(email)
     order_details = get_order_details(orders)
     email = request.user.email
