@@ -86,7 +86,7 @@ body{
 .all-links{
     display: flex;
     justify-content: center; align-items: center;
-    gap: 64px;
+    gap: 36px;
 }
 
 .account-link-wrapper{
