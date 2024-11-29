@@ -39,7 +39,7 @@
                 <div id="dropdownMenu" class="menu">
                     <ul>
                         <li><a href="{% url 'materials' %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
-                        <li><a href="{% url 'materials' %}?page=solutions" class="dropdown-link" title="Рішення">Рішення</a></li>
+                        <li><a href="{% url 'materials' %}?page=solutions" class="dropdown-link" title="Розв'язки">Розв'язки</a></li>
                         <li><a href="{% url 'materials' %}?page=results" class="dropdown-link" title="Результати">Результати</a></li>
                         <li><a href="{% url 'materials' %}?page=other" class="dropdown-link" title="Інше">Інше</a></li>
                     </ul>
@@ -47,7 +47,8 @@
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
             <a href="{% url 'contact_us' %}" class="link">Контакти</a>
-            <a href="{% url 'tasks_solutions' %}" class="link">Рішення</a>
+            <a href="{% url 'tasks_solutions' %}" class="link">Розв'язки</a>
+            <a href="{% url 'olimp_results' %}" class="link">Результати</a>
 
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' feature_name="account" %}" class="link">Акаунт</a>
@@ -133,6 +134,10 @@
                     <li><a href="{% url 'news_main' %}" class="dropdown-link-mobile" title="Новини">Новини</a></li>
                     <hr class="hr-link">
                     <li><a href="{% url 'contact_us' %}" class="dropdown-link-mobile" title="Контакти">Контакти</a></li>
+                    <hr class="hr-link">
+                    <li><a href="{% url 'tasks_solutions' %}" class="dropdown-link-mobile" title="Розв'язки">Розв'язки</a></li>
+                    <hr class="hr-link">
+                    <li><a href="{% url 'olimp_results' %}" class="dropdown-link-mobile" title="Результати">Результати</a></li>
                     <hr class="hr-link">
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link-mobile" title="Аккаунт">Аккаунт</a></li>

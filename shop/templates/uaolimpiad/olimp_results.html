@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Розв'язки</title>
+    <title>Результати</title>
     <link rel="stylesheet" href="{% static 'css/jurysSolutions.css' %}">
 </head>
 <body>
@@ -16,46 +16,26 @@
             <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')"></div>
             <div class="center-high">
                 <div class="container-for-texts">
-                    <h1>Розв'язки задач заочного етапу Всеукраїнської інтернет-олімпіади з фізики</h1>
+                    <h1>Результати заочного етапу Всеукраїнської інтернет-олімпіади з фізики</h1>
                     </div>
             </div>
             <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
             </div>
         </div>
         <div class="rectangles-wrapper">
-            <div class="image solutions-container">
-                <div class="tour-container">
-                    <div class="header-tour"> Розв'язки 1 Туру</div>
-                    <div class="container-downloads">
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 9 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="9 клас_1тур_Розв'язання.pdf" %}">Розв'язки в .pdf<br><i class="fa-solid fa-download"></i></a>
-                        </div>
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 10 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="10 клас_1тур_Розв'язання.pdf" %}">Розв'язки в .pdf<br> <i class="fa-solid fa-download"></i></a>
-                        </div>
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 11 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="11 клас_1тур_Розв'язання.pdf" %}">Розв'язки в .pdf <br><i class="fa-solid fa-download"></i></a>
-                        </div>
+            <div class="image">
+                <div class="container-downloads">
+                    <div class="task-box">
+                        <span class="task-name">Результати 9 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="9_клас_Протоколи_Заочний_тур.pdf" %}">Результати в .pdf<br><i class="fa-solid fa-download"></i></a>
                     </div>
-                </div>
-                <div class="tour-container">
-                    <div class="header-tour"> Розв'язки 2 Туру</div>
-                    <div class="container-downloads">
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 9 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="9кл2йтурРозв24-25.pdf" %}">Розв'язки в .pdf<br><i class="fa-solid fa-download"></i></a>
-                        </div>
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 10 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="10кл2йтурРозв24-25.pdf" %}">Розв'язки в .pdf<br> <i class="fa-solid fa-download"></i></a>
-                        </div>
-                        <div class="task-box">
-                            <span class="task-name">Розв'язки 11 класу</span>
-                            <a class="button-download" href="{% url "download_file" filename="11кл2йтурРозв24-25.pdf" %}">Розв'язки в .pdf <br><i class="fa-solid fa-download"></i></a>
-                        </div>
+                    <div class="task-box">
+                        <span class="task-name">Результати 10 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="10_клас_Протоколи_Заочний_тур.pdf" %}">Результати в .pdf<br> <i class="fa-solid fa-download"></i></a>
+                    </div>
+                    <div class="task-box">
+                        <span class="task-name">Результати 11 класу</span>
+                        <a class="button-download" href="{% url "download_file" filename="11_клас_Протоколи_Заочний_тур.pdf" %}">Результати в .pdf <br><i class="fa-solid fa-download"></i></a>
                     </div>
                 </div>
             </div>
