@@ -173,11 +173,11 @@ bluetext{
 
 @media only screen and (max-width: 400px)  {
     .centered-container {
-        height: 122vh;
+        height: 195vh;
     }
 }@media only screen and (max-width: 768px) and (min-width: 401px)  {
     .centered-container {
-        height: 128vh;
+        height: 167vh;
     }
 }
 .task-box{
