@@ -59,7 +59,7 @@ h1, h3{
     }
     .right-high .text-frame{
         width: 80% !important;
-        height: 200px !important;
+        height: 250px !important;
         margin: 20px 0
     }
     .right-high {
@@ -104,7 +104,7 @@ bluetext{
     justify-content: center;
 }
 .right-high .text-frame{
-    max-height: 210px;
+    max-height: 250px;
     width: 454px;
     border-radius: 12px;
     background-color: #f9f9f9;
