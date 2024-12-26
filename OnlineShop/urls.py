@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shop import views
-from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page, task_solutions, olimp_results
+from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page, task_solutions, olimp_results, \
+    final_results
 from shop.views_scripts import profile_views
 from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_control, submit_criteria, \
@@ -61,6 +62,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('news/', news_main_view, name='news_main'),
     path('task-solutions/', task_solutions, name='tasks_solutions'),
     path('results/', olimp_results, name='olimp_results'),
+    path('final-results/', final_results, name='final_results'),
     path('cart/', cart_page, name='cart'),
     path('order/anonymous/info', anonym_cart_info, name='cart_anonymous'),
     path('checkout/addresses', checkout_addresses, name='checkout_addresses'),

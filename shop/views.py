@@ -423,6 +423,21 @@ def olimp_results(request):
         context['rights'] = None
     return render(request, 'uaolimpiad/olimp_results.html', context)
 
+def final_results(request):
+
+    context = {
+
+    }
+    email = get_user_session_type(request)
+    context['role'] = get_user_role(email)
+    user_info = get_user_info(email)
+
+    if user_info is not None and "rights" in user_info:
+        context['rights'] = user_info['rights']
+    else:
+        context['rights'] = None
+    return render(request, 'uaolimpiad/final_results.html', context)
+
 
 def get_user_category(email):
     pass

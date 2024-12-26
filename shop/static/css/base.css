@@ -38,7 +38,7 @@ body{
         align-items: center;
         text-align: center;
         justify-content: center;
-        gap: 128px;
+        gap: 50px;
         height: 100%;
     }
     .mobile-view{
@@ -86,7 +86,7 @@ body{
 .all-links{
     display: flex;
     justify-content: center; align-items: center;
-    gap: 36px;
+    gap: 25px;
 }
 
 .account-link-wrapper{

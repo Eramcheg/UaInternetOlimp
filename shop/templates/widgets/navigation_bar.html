@@ -49,6 +49,7 @@
             <a href="{% url 'contact_us' %}" class="link">Контакти</a>
             <a href="{% url 'tasks_solutions' %}" class="link">Розв'язки</a>
             <a href="{% url 'olimp_results' %}" class="link">Результати</a>
+            <a href="{% url 'final_results' %}" class="link">Фінальний етап</a>
 
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' feature_name="account" %}" class="link">Акаунт</a>
@@ -138,6 +139,8 @@
                     <li><a href="{% url 'tasks_solutions' %}" class="dropdown-link-mobile" title="Розв'язки">Розв'язки</a></li>
                     <hr class="hr-link">
                     <li><a href="{% url 'olimp_results' %}" class="dropdown-link-mobile" title="Результати">Результати</a></li>
+                    <hr class="hr-link">
+                    <li><a href="{% url 'final_results' %}" class="dropdown-link-mobile" title="Фінальні результати">Фінальний етап</a></li>
                     <hr class="hr-link">
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link-mobile" title="Аккаунт">Аккаунт</a></li>
