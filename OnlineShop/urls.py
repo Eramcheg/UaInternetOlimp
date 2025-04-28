@@ -20,26 +20,21 @@ from shop import views
 from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page, task_solutions, olimp_results, \
     final_results
 from shop.views_scripts import profile_views
-from shop.views_scripts.adresses_views import update_address, delete_address, create_address
 from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_control, submit_criteria, \
     reject_criteria, approve_criteria, get_students, get_criteria, evaluate_task, clear_task_evaluation, \
     download_users_file, get_task_actions
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
     move_down_article, edit_article
-from shop.views_scripts.manage_banners.banners_managing import move_down, move_up, delete_banner
 from shop.views_scripts.orders_control.bulk_change_statuses import change_statuses
 from shop.views_scripts.orders_control.download_order import download_csv_order, download_pdf_w_img, \
     download_pdf_no_img, at_delete_order
 from shop.views_scripts.orders_control.view_order import view_order, change_in_stock, upload_in_stock
-from shop.views_scripts.service_views import service_pages_view, company_info_pages
 from shop.views_scripts.users_control.at_uc_bulk_actions import disable_users, enable_users
 from shop.views_scripts.auth_views import register, logout_view, login_view
 from shop.views_scripts.catalog_views import add_to_cart_from_catalog, materials_view, change_favorite_state, \
     materials_view
-from shop.views_scripts.checkout_cart_views import sort_documents, send_email, cart_page, anonym_cart_info, \
-    register_anonym_cart_info, login_anonym_cart_info, checkout_addresses
+from shop.views_scripts.checkout_cart_views import sort_documents, send_email
 from shop.views_scripts.profile_views import update_user_account, download_file, upload_file
-from shop.views_scripts.shop_views import fetch_numbers, form_page
 from shop.views_scripts.users_control.edit_user import edit_user
 from shop.views_scripts.users_control.view_user import view_user
 from django.conf.urls.i18n import i18n_patterns
@@ -57,29 +52,17 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('register/', register, name='register'),
-    path('shop/', form_page, name='shop_page'),
     path('materials/', materials_view, name='materials'),
     path('news/', news_main_view, name='news_main'),
     path('task-solutions/', task_solutions, name='tasks_solutions'),
     path('results/', olimp_results, name='olimp_results'),
     path('final-results/', final_results, name='final_results'),
-    path('cart/', cart_page, name='cart'),
-    path('order/anonymous/info', anonym_cart_info, name='cart_anonymous'),
-    path('checkout/addresses', checkout_addresses, name='checkout_addresses'),
-    path('anonymous/cart/login', login_anonym_cart_info, name='cart_anonymous_login'),
-    path('anonymous/cart/register', register_anonym_cart_info, name='cart_anonymous_register'),
-
-    # Addresses urls
-    path('profile/addresses/update_address/<str:address_id>/', update_address, name='update_address'),
-    path('profile/addresses/delete_address/<str:address_id>/', delete_address, name='delete_address'),
-    path('profile/addresses/create_new/', create_address, name='create_address'),
 
     path('profile/<str:feature_name>/', profile_views.profile, name='profile'),
     path('update_user_account/', update_user_account, name='update_user_account'),
     path('download/<str:filename>/', download_file, name='download_file'),
     path('upload-file/', upload_file, name='upload_file'),
 
-    path('fetch-numbers/', fetch_numbers, name='fetch_numbers'),
 
     path('delete-document/', views.deleteProduct, name='delete_document'),
     path('update_quantity_input/', views.update_quantity_input, name='update_input'),
@@ -108,13 +91,6 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('admin_tools/orders_control/edit_product_in_stock/', change_in_stock, name='change_in_stock'),
     path('admin_tools/orders_control/upload_in_stock/<str:order_id>/', upload_in_stock, name='upload_in_stock'),
     # path('finish_order/', )
-
-    #Service urls
-    path('service_pages/<str:service_page>/', service_pages_view, name='services'),
-    path('our_company/<str:company_info_page>/', company_info_pages, name='company_info'),
-    path('delete-banner/<int:banner_id>/', delete_banner, name='delete_banner'),
-    path('move-up/<int:article_id>/', move_up, name='move_up'),
-    path('move-down/<int:article_id>/', move_down, name='move_down'),
 
     path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article_detail'),
     path('create-article/', create_article, name='create_article'),
