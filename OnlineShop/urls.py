@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from shop import views
 from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page, task_solutions, olimp_results, \
-    final_results
+    final_results, fourth_step_results
 from shop.views_scripts import profile_views
 from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_control, submit_criteria, \
     reject_criteria, approve_criteria, get_students, get_criteria, evaluate_task, clear_task_evaluation, \
@@ -57,6 +57,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('task-solutions/', task_solutions, name='tasks_solutions'),
     path('results/', olimp_results, name='olimp_results'),
     path('final-results/', final_results, name='final_results'),
+    path('4-step-results/', fourth_step_results, name='4_step_results'),
 
     path('profile/<str:feature_name>/', profile_views.profile, name='profile'),
     path('update_user_account/', update_user_account, name='update_user_account'),
