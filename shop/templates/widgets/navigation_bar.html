@@ -47,9 +47,15 @@
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
             <a href="{% url 'contact_us' %}" class="link">Контакти</a>
-            <a href="{% url 'tasks_solutions' %}" class="link">Розв'язки</a>
-            <a href="{% url 'olimp_results' %}" class="link">Результати</a>
-            <a href="{% url 'final_results' %}" class="link">Фінальний етап</a>
+            <div class="dropdown-link">
+                <a href="#" class="link" id="results-toggle"> Результати та розв'язки </a>
+                <div class="dropdown-menu" id="results-menu">
+                    <a href="{% url 'tasks_solutions' %}" class="dropdown-links">Розв'язки заочного туру</a>
+                    <a href="{% url 'olimp_results' %}" class="dropdown-links">Результати заочного туру</a>
+                    <a href="{% url 'final_results' %}" class="dropdown-links">Результати фінального туру</a>
+                </div>
+            </div>
+            <a href="{% url '4_step_results' %}" class="link">Розв'язки 4-го етапу</a>
 
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' feature_name="account" %}" class="link">Акаунт</a>
@@ -142,6 +148,8 @@
                     <hr class="hr-link">
                     <li><a href="{% url 'final_results' %}" class="dropdown-link-mobile" title="Фінальні результати">Фінальний етап</a></li>
                     <hr class="hr-link">
+                    <li><a href="{% url '4_step_results' %}" class="dropdown-link-mobile" title="Результати 4-го етапу">Розв'язки 4-го етапу</a></li>
+                    <hr class="hr-link">
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'profile' feature_name='account' %}" class="dropdown-link-mobile" title="Аккаунт">Аккаунт</a></li>
                         <hr class="hr-link">
@@ -189,6 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
             menuIcon.src = "{% static 'icons/Menu.png' %}";
         }
     });
+
+    const toggle = document.getElementById("results-toggle");
+    const menu = document.getElementById("results-menu");
+    if (toggle && menu) {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+        });
+        // Закрытие меню при клике вне его
+        document.addEventListener("click", function (e) {
+          if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = "none";
+          }
+        });
+    }
+
 });
 
 {#document.querySelector('.materials-dropdown-trigger').addEventListener('click', function(event) {#}
