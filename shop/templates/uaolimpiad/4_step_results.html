@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Результати</title>
-    <link rel="stylesheet" href="{% static 'css/final_results.css' %}">
+    <link rel="stylesheet" href="{% static 'css/IV_step_results.css' %}">
 </head>
 <body>
 {% include 'widgets/navigation_bar.html' %}
@@ -16,7 +16,7 @@
             <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')"></div>
             <div class="center-high">
                 <div class="container-for-texts">
-                    <h1>Завдання і розв'язки IV етапу Всеукраїнської учнівської олімпіади з фізики</h1>
+                    <h1>Результати IV етапу Всеукраїнської учнівської олімпіади з фізики</h1>
                     </div>
             </div>
             <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
@@ -24,24 +24,28 @@
         </div>
         <div class="rectangles-wrapper">
             <div class="image solutions-container">
-{#                <div class="tour-container">#}
-{#                    <div class="header-tour"> <span> Результати фінального туру </span></div>#}
-{#                    <div class="container-downloads">#}
-{#                        <div class="task-box">#}
-{#                            <span class="task-name">Результати 9 класу</span>#}
-{#                            <a class="button-download" href="{% url "download_file" filename="Фінальний 9 клас.pdf" %}">Розв'язки в .pdf<br><i class="fa-solid fa-download"></i></a>#}
-{#                        </div>#}
-{#                        <div class="task-box">#}
-{#                            <span class="task-name">Результати 10 класу</span>#}
-{#                            <a class="button-download" href="{% url "download_file" filename="Фінальний 10 клас.pdf" %}">Розв'язки в .pdf<br> <i class="fa-solid fa-download"></i></a>#}
-{#                        </div>#}
-{#                        <div class="task-box">#}
-{#                            <span class="task-name">Результати 11 класу</span>#}
-{#                            <a class="button-download" href="{% url "download_file" filename="Фінальний 11 клас.pdf" %}">Розв'язки в .pdf <br><i class="fa-solid fa-download"></i></a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <hr>#}
+                <div class="tour-container">
+                    <div class="header-tour"> <span> Результати IV етапу</span></div>
+                    <div class="container-downloads">
+                        <div class="task-box">
+                            <span class="task-name">Результати 8 класу</span>
+                            <a class="button-download" href="{% url "download_file" filename="2025_Протоколи_підсумкові_фізика_8_клас.pdf" %}">Результати в .pdf<br><i class="fa-solid fa-download"></i></a>
+                        </div>
+                        <div class="task-box">
+                            <span class="task-name">Результати 9 класу</span>
+                            <a class="button-download" href="{% url "download_file" filename="2025_Протоколи_підсумкові_фізика_9_клас.pdf" %}">Результати в .pdf<br><i class="fa-solid fa-download"></i></a>
+                        </div>
+                        <div class="task-box">
+                            <span class="task-name">Результати 10 класу</span>
+                            <a class="button-download" href="{% url "download_file" filename="2025_Протоколи_підсумкові_фізика_10_клас.pdf" %}">Результати в .pdf<br> <i class="fa-solid fa-download"></i></a>
+                        </div>
+                        <div class="task-box">
+                            <span class="task-name">Результати 11 класу</span>
+                            <a class="button-download" href="{% url "download_file" filename="2025_Протоколи_підсумкові_фізика_11_клас.pdf" %}">Результати в .pdf <br><i class="fa-solid fa-download"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <div class="tour-container">
                     <div class="header-tour"> <span> Завдання теоретичного туру </span></div>
                     <div class="container-downloads">
