@@ -1,26 +1,20 @@
+{% extends 'base.html' %}
 {% block content %}
 {% load static %}
 {% load i18n %}
 {% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Головна</title>
-    <link rel="stylesheet" href="{% static 'css/profile/profile_information.css' %}">
-    <link rel="stylesheet" href="{% static 'css/profile/profile_favourites.css' %}">
+
+{% block title %} Головна {% endblock %}
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
-    <script src="{% static "js/product_cards.js" %}"></script>
-    <script src="{% static "js/productsTransmutation.js" %}"></script>
-    {% include 'widgets/navigation_bar.html' %}
-</head>
+{% endblock %}
 <style>
     *{
         font-family:{% static "fonts/montserrat/dir1/Montserrat-Regular.ttf" %}!important;
     }
 </style>
 <body style="">
-<div>
+
     <div class="higher-container" >
         <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
         </div>
@@ -241,8 +235,11 @@
         </div>
     </div>
 </div>
-{% include "widgets/footer.html" %}
 </body>
+{% block extra_js %}
+    <script src="{% static "js/product_cards.js" %}"></script>
+    <script src="{% static "js/productsTransmutation.js" %}"></script>
+{% endblock %}
 <script>
 
 

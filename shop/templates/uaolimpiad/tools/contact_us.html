@@ -1,6 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% include 'widgets/navigation_bar.html' %}
+{% block content %}
 <section id="wrapper" class="stick_parent_lb" style="opacity: 1; margin-top: 100px">
 
    <div class="container">
@@ -56,4 +57,4 @@
       </div>
    </div>
 </section>
-{% include 'widgets/footer.html' %}
+{% endblock %}
