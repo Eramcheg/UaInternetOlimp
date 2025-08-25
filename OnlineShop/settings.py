@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,12 +22,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+dotenv_path = BASE_DIR / '.env'
+
+load_dotenv(dotenv_path)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-av+bzqy62h9m=9%^%c11v16=7h(aq(e*j2zn9-vk6r20wpn%_n'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY is not stored in .env file")
+
+FIREBASE_CREDENTIALS_FILE = os.getenv('FIREBASE_CREDENTIALS')
+FIREBASE_STORAGE_BUCKET = os.getenv('FIREBASE_STORAGE_BUCKET')
+if not firebase_admin._apps:
+    FIREBASE_CREDENTIALS = credentials.Certificate(FIREBASE_CREDENTIALS_FILE)
+    firebase_admin.initialize_app(FIREBASE_CREDENTIALS, {'storageBucket': FIREBASE_STORAGE_BUCKET})
+
+FIRESTORE_CLIENT = firestore.client()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://www.ophs-intolymp.org']
@@ -42,8 +58,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'shop',
     'django_ckeditor_5',
-
-    # 'autotranslate',
 ]
 
 # CKEDITOR_5 = {
@@ -240,9 +254,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'uainternetolimp@gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 
-EMAIL_HOST_PASSWORD = 'pzxp fmpv dune iwxv'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
