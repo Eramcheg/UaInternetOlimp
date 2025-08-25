@@ -1,16 +1,14 @@
 <!-- article_detail.html -->
-{% extends "widgets/navigation_bar.html" %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block content %}
-    }
+{% block title %} Новини {% endblock %}
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/pages/news.css' %}">
-    <head>
-        <title>Новини</title>
-    </head>
+{% endblock %}
+{% block content %}
     <body style="background-image: url('{% static "images/general/backgroundPattern.png" %}');">
-    <div class="white-mask"></div>
-        {% include "widgets/navigation_bar.html" %}
+        <div class="white-mask"></div>
         <div class="centered-container">
             <span class="pre-title">Новини</span>
             <h1 class="title">Новини</h1>
@@ -40,6 +38,5 @@
                  <!-- Use the 'safe' filter if content includes HTML from CKEditor -->
             </div>
         </div>
-        {% include "widgets/footer.html" %}
     </body>
 {% endblock %}
