@@ -1,5 +1,34 @@
 staticfiles/
 
-shop/static/uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json
+credentials/uainternetolimp-41dd1-firebase-adminsdk-i78pu-fd374d92bc.json
 
 shop/migrations
+
+#GitIgnore
+
+# IDE files
+.idea
+
+# Python bytecode
+**/__pycache__/
+*.py[cod]
+
+# Virtualenv
+venv/
+.venv/
+
+# Environment files
+.env
+
+# Django local DB
+db.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Firebase service account (секрет)
+credentials/
+
+# User uploads
+shop/media/
