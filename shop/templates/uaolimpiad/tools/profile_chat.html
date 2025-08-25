@@ -1,78 +1,75 @@
-{% block content %}
 {% load static %}
 {% load i18n  %}
-<link rel="stylesheet" href="{% static 'css/SeparateWidgets/chat.css' %}">
-{#<div class="chat-container">#}
 
-    {% if role == "Student" %}
-        <!-- Интерфейс для пользователя -->
-        <div class="user-chat-widget">
-            <div class="chat-list">
-                <ul>
-                    <li class="li-select" id="1">{% if user_class == "9" %} «Серед морів, серед крижин...»
-                {% elif user_class == "10" %} «Під градусом»
-                {% elif user_class == "11" %} «Поневолений заряд»
-                {% endif %}</li>
-                    <li class="li-select" id="2">{% if user_class == "9" %} «Вангуємо покази амперметра!»
-                {% elif user_class == "10" %} «Реклама – двигун прогресу»
-                {% elif user_class == "11" %} «Індуктивність»
-                {% endif %}</li>
-                    <li class="li-select" id="3">{% if user_class == "9" %} «Важіль на намистинці»
-                {% elif user_class == "10" %} «Ядерний більярд»
-                {% elif user_class == "11" %} «Термодинамічна карта»
-                {% endif %}</li>
-                    <li class="li-select" id="4">{% if user_class == "9" %} «Безсенсовий камін»
-                {% elif user_class == "10" %} «Допоможіть Робінзонам!»
-                {% elif user_class == "11" %} «Терези Тараса»
-                {% endif %}</li>
-                    <li class="li-select" id="5">{% if user_class == "9" %} «Гламурний кулькопідшипник»
-                {% elif user_class == "10" %} «Електричне коло від Фібоначчі»
-                {% elif user_class == "11" %} «Коло конденсаторів від Фібоначчі»
-                {% endif %}</li>
-                </ul>
+{% if role == "Student" %}
+    <!-- Интерфейс для пользователя -->
+    <div class="user-chat-widget">
+        <div class="chat-list">
+            <ul>
+                <li class="li-select" id="1">{% if user_class == "9" %} «Серед морів, серед крижин...»
+            {% elif user_class == "10" %} «Під градусом»
+            {% elif user_class == "11" %} «Поневолений заряд»
+            {% endif %}</li>
+                <li class="li-select" id="2">{% if user_class == "9" %} «Вангуємо покази амперметра!»
+            {% elif user_class == "10" %} «Реклама – двигун прогресу»
+            {% elif user_class == "11" %} «Індуктивність»
+            {% endif %}</li>
+                <li class="li-select" id="3">{% if user_class == "9" %} «Важіль на намистинці»
+            {% elif user_class == "10" %} «Ядерний більярд»
+            {% elif user_class == "11" %} «Термодинамічна карта»
+            {% endif %}</li>
+                <li class="li-select" id="4">{% if user_class == "9" %} «Безсенсовий камін»
+            {% elif user_class == "10" %} «Допоможіть Робінзонам!»
+            {% elif user_class == "11" %} «Терези Тараса»
+            {% endif %}</li>
+                <li class="li-select" id="5">{% if user_class == "9" %} «Гламурний кулькопідшипник»
+            {% elif user_class == "10" %} «Електричне коло від Фібоначчі»
+            {% elif user_class == "11" %} «Коло конденсаторів від Фібоначчі»
+            {% endif %}</li>
+            </ul>
+        </div>
+        <div class="chat-window">
+            <div id="chat-log" class="chat-messages">
+                <span class="center-span">Виберіть чат</span>
             </div>
-            <div class="chat-window">
-                <div id="chat-log" class="chat-messages">
-                    <span class="center-span">Виберіть чат</span>
-                </div>
-                <div class="chat-input">
-                    <button id="chat-file-upload" type="button">
-                        <i class="fa fa-file"></i> <!-- Icon for file upload -->
-                    </button>
-                    <input id="chat-file-input" type="file" style="display: none;">
-                    <textarea id="chat-message-input" placeholder="Напишіть повідомлення..."></textarea>
-                    <button id="chat-message-submit"  type="button">Надіслати</button>
-                </div>
+            <div class="chat-input">
+                <button id="chat-file-upload" type="button">
+                    <i class="fa fa-file"></i> <!-- Icon for file upload -->
+                </button>
+                <input id="chat-file-input" type="file" style="display: none;">
+                <textarea id="chat-message-input" placeholder="Напишіть повідомлення..."></textarea>
+                <button id="chat-message-submit"  type="button">Надіслати</button>
             </div>
         </div>
-    {% elif role != "Student" %}
-        <!-- Интерфейс для админа -->
-        <div class="admin-chat-widget">
-            <div class="chat-list">
-                <!-- Здесь можно отобразить список всех пользователей и их чатов -->
-                <ul>
-                    <!-- И так далее -->
-                </ul>
+    </div>
+{% elif role != "Student" %}
+    <!-- Интерфейс для админа -->
+    <div class="admin-chat-widget">
+        <div class="chat-list">
+            <!-- Здесь можно отобразить список всех пользователей и их чатов -->
+            <ul>
+                <!-- И так далее -->
+            </ul>
+        </div>
+        <div class="chat-window">
+            <div id="chat-log" class="chat-messages">
+                <span class="center-span">Виберіть чат</span>
             </div>
-            <div class="chat-window">
-                <div id="chat-log" class="chat-messages">
-                    <span class="center-span">Виберіть чат</span>
-                </div>
-                <div class="chat-input">
-                    <button id="chat-file-upload" type="button">
-                        <i class="fa fa-file"></i> <!-- Icon for file upload -->
-                    </button>
-                    <input id="chat-file-input" type="file" style="display: none;">
-                    <textarea id="chat-message-input" placeholder="Напишіть повідомлення..."></textarea>
-                    <button id="chat-message-submit" type="button">Надіслати</button>
-                    <button id="chat-message-view" type="button"><i class=""></i></button>
-                </div>
+            <div class="chat-input">
+                <button id="chat-file-upload" type="button">
+                    <i class="fa fa-file"></i> <!-- Icon for file upload -->
+                </button>
+                <input id="chat-file-input" type="file" style="display: none;">
+                <textarea id="chat-message-input" placeholder="Напишіть повідомлення..."></textarea>
+                <button id="chat-message-submit" type="button">Надіслати</button>
+                <button id="chat-message-view" type="button"><i class=""></i></button>
             </div>
         </div>
-    {% else %}
-        <!-- Обработка для случая, если роль неизвестна -->
-        <p>Невідома роль користувача. Доступ до чату заблоковано.</p>
-    {% endif %}
+    </div>
+{% else %}
+    <!-- Обработка для случая, если роль неизвестна -->
+    <p>Невідома роль користувача. Доступ до чату заблоковано.</p>
+{% endif %}
 
 {#</div>#}
 <script type="module">
@@ -618,7 +615,7 @@ function formatTimestamp(seconds, nanoseconds) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // месяцы начинаются с 0
     const year = String(date.getFullYear()); // последние две цифры года
 
-    return `${hours}:${minutes}:${secondsStr} ${day}.${month}.${year}`;}
+    return `${hours}:${minutes}:${secondsStr} ${day}.${month}.${year}`;
+}
 window.selectChat = selectChat;
 </script>
-{% endblock %}
