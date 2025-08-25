@@ -1,47 +1,15 @@
-import concurrent
-import string
-from django.contrib.auth.decorators import login_required
-
-from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, get_cart, cart_ref, single_order_ref, \
-    is_admin, users_ref, metadata_ref
-import ast
 import random
+import string
 from datetime import datetime
-from random import randint
 
-import concurrent.futures
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
-import os
-import json
-import firebase_admin
-from django.views.decorators.csrf import csrf_exempt
-from firebase_admin import credentials, firestore
-from django.conf import settings
 from django.contrib import messages
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect
+from firebase_admin import firestore
 
 from shop.forms import UserRegisterForm, User
-
-
-def get_new_user_id():
-    @firestore.transactional
-    def increment_user_id(transaction, user_counter_ref):
-        snapshot = user_counter_ref.get(transaction=transaction)
-        last_user_id = snapshot.get('lastUserId') if snapshot.exists else 3000
-        new_user_id = last_user_id + 1
-        transaction.update(user_counter_ref, {'lastUserId': new_user_id})
-        return new_user_id
-
-    user_counter_ref = metadata_ref.document('userCounter')
-    transaction = db.transaction()
-    new_user_id = increment_user_id(transaction, user_counter_ref)
-    return new_user_id
+from shop.views import users_ref
 
 def generate_random_code(length=10):
     characters = string.ascii_letters + string.digits
