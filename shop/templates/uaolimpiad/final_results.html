@@ -1,15 +1,11 @@
-{% block content %}
+{% extends 'base.html' %}
 {% load static %}
 {% load i18n  %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Результати</title>
+{% block title %} Результати {% endblock %}
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/final_results.css' %}">
-</head>
-<body>
-{% include 'widgets/navigation_bar.html' %}
+{% endblock %}
+{% block content %}
 <div>
     <div class="main-container">
         <div class="higher-container">
@@ -258,10 +254,4 @@
 {#        </div>#}
 {#    </div>#}
 </div>
-{% include "widgets/footer.html" %}
-</body>
-</html>
-<script>
-
-</script>
 {% endblock %}
