@@ -1,81 +1,73 @@
-{% block content %}
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+{% block title %} Профіль {% endblock %}
+{% block page_meta %}
+ <meta name="profileConfig" content='{
+        "featureName": "{{ feature_name }}"
+    }'>
+{% endblock %}
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/profile/profile_main.css' %}">
-</head>
-<body>
-{% include 'widgets/navigation_bar.html' %}
-        <div class="cont1-1" style="margin-top: 150px; ">
-            {% include 'profile/profile_side_menu.html' %}
-            {% if feature_name == 'dashboard' %}
-                {% include 'profile/profile_dashboard.html' %}
-            {% elif feature_name == 'tasks' %}
-                {% include 'uaolimpiad/tasks_list.html' %}
-            {% elif feature_name == 'account' %}
-                {% include 'profile/profile_information.html' %}
-{#            {% elif feature_name == 'upload' %}#}
-{#                {% include 'uaolimpiad/tools/profile_upload.html' %}#}
-            {% elif feature_name == 'solutions' %}
-                {% include 'uaolimpiad/tools/profile_solutions.html' %}
-            {% elif feature_name == 'points' %}
-                {% include 'uaolimpiad/J_tools/J_points_update.html' %}
-            {% elif feature_name == 'jury_control' %}
-                {% include 'uaolimpiad/J_tools/J_jury_control.html' %}
-            {% elif feature_name == 'criteria_create' %}
-                {% include 'uaolimpiad/J_tools/J_criteria_create.html' %}
-            {% elif feature_name == 'criteria_approve' %}
-                {% include 'uaolimpiad/J_tools/J_criteria_approve.html' %}
-            {% elif feature_name == 'verification' %}
-                {% include 'uaolimpiad/J_tools/J_tasks_verification.html' %}
-            {% elif feature_name == 'chat' %}
-                {% include 'uaolimpiad/tools/profile_chat.html' %}
-            {% endif %}
-        </div>
-
-<!-- Контейнер для чата -->
-{% include "widgets/footer.html" %}
-
-</body>
-
-<script>
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.active-page').forEach(element => {
-            element.classList.remove('active');
-        });
-        let queryclass= '.page-'+  '{{ feature_name }}';
-        document.querySelector(queryclass).classList.add('active');
-
-    })
-    function toggleChat() {
-    const chatContainer = document.getElementById('chat-container');
-
-    if (chatContainer.classList.contains('hidden')) {
-        // Если контейнер скрыт, убираем класс hidden и показываем элемент
-        chatContainer.classList.remove('hidden');
-        chatContainer.classList.add('show');
-        chatContainer.style.display = 'block';
-    } else if (chatContainer.classList.contains('show')) {
-        // Если контейнер показан, скрываем его
-        chatContainer.classList.remove('show');
-        chatContainer.classList.add('hidden');
-
-        // Ожидаем завершения анимации и затем скрываем элемент
-    } else {
-        // В случае если элемент не имеет ни одного из классов, просто показываем его
-        chatContainer.classList.add('show');
-        chatContainer.style.display = 'block';
-    }
-}
-
-</script>
-
-</html>
+    <link rel="stylesheet" href="{% static 'css/profile/profile_menu.css' %}">
+    {% if feature_name == 'dashboard' %}
+        <link rel="stylesheet" href="{% static 'css/profile/profile_information.css' %}">
+    {% elif feature_name == 'tasks' %}
+        <link rel="stylesheet" href="{% static 'css/pages/account_features/list_tasks.css' %}">
+    {% elif feature_name == 'account' %}
+        <link rel="stylesheet"  href="{% static 'css/profile/profile_information.css' %}">
+        <link rel="stylesheet"  href="{% static 'css/profile/account_info.css' %}">
+    {% elif feature_name == 'upload' %}
+         <link rel="stylesheet" href="{% static 'css/pages/account_features/uploading.css' %}">
+    {% elif feature_name == 'solutions' %}
+        {% include 'uaolimpiad/tools/profile_solutions.html' %}
+    {% elif feature_name == 'points' %}
+        <link rel="stylesheet" href="{% static 'css/Jury/points_update.css' %}">
+    {% elif feature_name == 'jury_control' %}
+        <link rel="stylesheet" href="{% static 'css/Jury/jury_control.css' %}">
+    {% elif feature_name == 'criteria_create' %}
+        <link rel="stylesheet" href="{% static 'css/Jury/jury_criteria_create.css' %}">
+    {% elif feature_name == 'criteria_approve' %}
+        <link rel="stylesheet" href="{% static 'css/Jury/jury_criteria_approve.css' %}">
+    {% elif feature_name == 'verification' %}
+        <link rel="stylesheet" href="{% static 'css/Jury/jury_tasks_verification.css' %}">
+    {% elif feature_name == 'chat' %}
+        <link rel="stylesheet" href="{% static 'css/SeparateWidgets/chat.css' %}">
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="cont1-1" style="margin-top: 150px; ">
+        {% include 'profile/profile_side_menu.html' %}
+        {% if feature_name == 'dashboard' %}
+            {% include 'profile/profile_dashboard.html' %}
+        {% elif feature_name == 'tasks' %}
+            {% include 'profile/tasks_list.html' %}
+        {% elif feature_name == 'account' %}
+            {% include 'profile/profile_information.html' %}
+        {% elif feature_name == 'upload' %}
+            {% include 'uaolimpiad/tools/profile_upload.html' %}
+        {% elif feature_name == 'solutions' %}
+            {% include 'uaolimpiad/tools/profile_solutions.html' %}
+        {% elif feature_name == 'points' %}
+            {% include 'uaolimpiad/J_tools/J_points_update.html' %}
+        {% elif feature_name == 'jury_control' %}
+            {% include 'uaolimpiad/J_tools/J_jury_control.html' %}
+        {% elif feature_name == 'criteria_create' %}
+            {% include 'uaolimpiad/J_tools/J_criteria_create.html' %}
+        {% elif feature_name == 'criteria_approve' %}
+            {% include 'uaolimpiad/J_tools/J_criteria_approve.html' %}
+        {% elif feature_name == 'verification' %}
+            {% include 'uaolimpiad/J_tools/J_tasks_verification.html' %}
+        {% elif feature_name == 'chat' %}
+            {% include 'uaolimpiad/tools/profile_chat.html' %}
+        {% endif %}
+    </div>
 
 {% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/pages/profile/profileMain.js' %}"></script>
+{% endblock %}
+
+
+
 

@@ -1,134 +1,110 @@
-{% block content %}
 {% load static %}
 {% load i18n  %}
-<head>
-    <meta charset="UTF-8">
-    <title>Список задач</title>
-    <script src="https://kit.fontawesome.com/ba99d1b9b2.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="{% static 'css/pages/account_features/uploading.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 <div class="centered-container">
+    <div class="upload-box" id="box1">
+        <h1>{% if user_class == "9" %} «Серед морів, серед крижин...»
+                {% elif user_class == "10" %} «Під градусом»
+                {% elif user_class == "11" %} «Поневолений заряд»
+                {% endif %}</h1>
+        <label for="fileInput1">Натисніть сюди щоб завантажити розвязок</label>
+        {% if task_1_2_tour %}
+        <h5>Завантажений файл: {{ task_1_2_tour }}</h5>
+        {% endif %}
+        <input type="file" id="fileInput1" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box1')">
 
-{#    <div class="upload-box" id="box1">#}
-{#        <h1>{% if user_class == "9" %} «Серед морів, серед крижин...»#}
-{#                {% elif user_class == "10" %} «Під градусом»#}
-{#                {% elif user_class == "11" %} «Поневолений заряд»#}
-{#                {% endif %}</h1>#}
-{#        <label for="fileInput1">Натисніть сюди щоб завантажити розвязок</label>#}
-{#        {% if task_1_2_tour %}#}
-{#        <h5>Завантажений файл: {{ task_1_2_tour }}</h5>#}
-{#        {% endif %}#}
-{#        <input type="file" id="fileInput1" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box1')">#}
-{##}
-{#        <span class="file-name" id="fileName1"></span>#}
-{#    </div>#}
-{#    <div class="upload-box" id="box2">#}
-{#        <h1>{% if user_class == "9" %} «Вангуємо покази амперметра!»#}
-{#                {% elif user_class == "10" %} «Реклама – двигун прогресу»#}
-{#                {% elif user_class == "11" %} «Індуктивність»#}
-{#                {% endif %}</h1>#}
-{#        <label for="fileInput2">Натисніть сюди щоб завантажити розвязок</label>#}
-{#        {% if task_2_2_tour %}#}
-{#            <h5>Завантажений файл: {{ task_2_2_tour }}</h5>#}
-{#        {% endif %}#}
-{#        <input type="file" id="fileInput2" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box2')">#}
-{#        <span class="file-name" id="fileName2"></span>#}
-{#    </div>#}
-{#    <div class="upload-box" id="box3">#}
-{#        <h1>{% if user_class == "9" %} «Важіль на намистинці»#}
-{#                {% elif user_class == "10" %} «Ядерний більярд»#}
-{#                {% elif user_class == "11" %} «Термодинамічна карта»#}
-{#                {% endif %}</h1>#}
-{#        <label for="fileInput3">Натисніть сюди щоб завантажити розвязок</label>#}
-{#        {% if task_3_2_tour %}#}
-{#            <h5>Завантажений файл: {{ task_3_2_tour }}</h5>#}
-{#        {% endif %}#}
-{#        <input type="file" id="fileInput3" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box3')">#}
-{#        <span class="file-name" id="fileName3"></span>#}
-{#    </div>#}
-{#    <div class="upload-box" id="box4">#}
-{#        <h1>{% if user_class == "9" %} «Безсенсовий камін»#}
-{#                {% elif user_class == "10" %} «Допоможіть Робінзонам!»#}
-{#                {% elif user_class == "11" %} «Терези Тараса».#}
-{#                {% endif %}</h1>#}
-{#        <label for="fileInput4">Натисніть сюди щоб завантажити розвязок</label>#}
-{#        {% if task_4_2_tour %}#}
-{#            <h5>Завантажений файл: {{ task_4_2_tour }}</h5>#}
-{#        {% endif %}#}
-{#        <input type="file" id="fileInput4" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box4')">#}
-{#        <span class="file-name" id="fileName4"></span>#}
-{#    </div>#}
-{#    <div class="upload-box" id="box5">#}
-{#        <h1>{% if user_class == "9" %} «Гламурний кулькопідшипник»#}
-{#                {% elif user_class == "10" %} «Електричне коло від Фібоначчі»#}
-{#                {% elif user_class == "11" %} «Коло конденсаторів від Фібоначчі»#}
-{#                {% endif %}</h1>#}
-{#        <label for="fileInput5">Натисніть сюди щоб завантажити розвязок</label>#}
-{#        {% if task_5_2_tour %}#}
-{#            <h5>Завантажений файл: {{ task_5_2_tour }}</h5>#}
-{#        {% endif %}#}
-{#        <input type="file" id="fileInput5" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box5')">#}
-{#        <span class="file-name" id="fileName5"></span>#}
-{#    </div>#}
+        <span class="file-name" id="fileName1"></span>
+    </div>
+    <div class="upload-box" id="box2">
+        <h1>{% if user_class == "9" %} «Вангуємо покази амперметра!»
+                {% elif user_class == "10" %} «Реклама – двигун прогресу»
+                {% elif user_class == "11" %} «Індуктивність»
+                {% endif %}</h1>
+        <label for="fileInput2">Натисніть сюди щоб завантажити розвязок</label>
+        {% if task_2_2_tour %}
+            <h5>Завантажений файл: {{ task_2_2_tour }}</h5>
+        {% endif %}
+        <input type="file" id="fileInput2" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box2')">
+        <span class="file-name" id="fileName2"></span>
+    </div>
+    <div class="upload-box" id="box3">
+        <h1>{% if user_class == "9" %} «Важіль на намистинці»
+                {% elif user_class == "10" %} «Ядерний більярд»
+                {% elif user_class == "11" %} «Термодинамічна карта»
+                {% endif %}</h1>
+        <label for="fileInput3">Натисніть сюди щоб завантажити розвязок</label>
+        {% if task_3_2_tour %}
+            <h5>Завантажений файл: {{ task_3_2_tour }}</h5>
+        {% endif %}
+        <input type="file" id="fileInput3" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box3')">
+        <span class="file-name" id="fileName3"></span>
+    </div>
+    <div class="upload-box" id="box4">
+        <h1>{% if user_class == "9" %} «Безсенсовий камін»
+                {% elif user_class == "10" %} «Допоможіть Робінзонам!»
+                {% elif user_class == "11" %} «Терези Тараса».
+                {% endif %}</h1>
+        <label for="fileInput4">Натисніть сюди щоб завантажити розвязок</label>
+        {% if task_4_2_tour %}
+            <h5>Завантажений файл: {{ task_4_2_tour }}</h5>
+        {% endif %}
+        <input type="file" id="fileInput4" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box4')">
+        <span class="file-name" id="fileName4"></span>
+    </div>
+    <div class="upload-box" id="box5">
+        <h1>{% if user_class == "9" %} «Гламурний кулькопідшипник»
+                {% elif user_class == "10" %} «Електричне коло від Фібоначчі»
+                {% elif user_class == "11" %} «Коло конденсаторів від Фібоначчі»
+                {% endif %}</h1>
+        <label for="fileInput5">Натисніть сюди щоб завантажити розвязок</label>
+        {% if task_5_2_tour %}
+            <h5>Завантажений файл: {{ task_5_2_tour }}</h5>
+        {% endif %}
+        <input type="file" id="fileInput5" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box5')">
+        <span class="file-name" id="fileName5"></span>
+    </div>
 
 </div>
-{#<script>#}
-{#    function uploadFile(input, boxId) {#}
-{#        const file = input.files[0];#}
-{#        if (file) {#}
-{#            document.getElementById(boxId).querySelector('.file-name').textContent = file.name;#}
-{##}
-{#            const formData = new FormData();#}
-{#            formData.append('file', file);#}
-{#            formData.append('box_id', boxId);#}
-{##}
-{#            fetch('{% url "upload_file" %}', {#}
-{#                method: 'POST',#}
-{#                headers: {#}
-{#                    'X-CSRFToken': getCookie('csrftoken'),#}
-{#                },#}
-{#                body: formData#}
-{#            })#}
-{#            .then(response => {#}
-{#                // Логгирование для проверки содержимого ответа#}
-{#                console.log(response);#}
-{##}
-{#                // Проверка типа содержимого#}
-{#                const contentType = response.headers.get("content-type");#}
-{#                if (contentType && contentType.indexOf("application/json") !== -1) {#}
-{#                    return response.json();#}
-{#                } else {#}
-{#                    throw new Error("Response is not JSON");#}
-{#                }#}
-{#            })#}
-{#            .then(data => {#}
-{#                if (data.success) {#}
-{#                    console.log('File uploaded successfully:', data.file_url);#}
-{#                    window.location.reload();#}
-{#                } else {#}
-{#                    console.error('File upload failed:', data.error);#}
-{#                }#}
-{#            })#}
-{#            .catch(error => {#}
-{#                console.error('Error:', error);#}
-{#            });#}
-{#        }#}
-{#    }#}
-{#    function getCookie(name) {#}
-{#    let cookieValue = null;#}
-{#    if (document.cookie && document.cookie !== '') {#}
-{#        const cookies = document.cookie.split(';');#}
-{#        for (let i = 0; i < cookies.length; i++) {#}
-{#            const cookie = cookies[i].trim();#}
-{#            if (cookie.substring(0, name.length + 1) === (name + '=')) {#}
-{#                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));#}
-{#                break;#}
-{#            }#}
-{#        }#}
-{#    }#}
-{#    return cookieValue;#}
-{##}
-{#</script>#}
-{% endblock %}
+<script>
+    function uploadFile(input, boxId) {
+        const file = input.files[0];
+        if (file) {
+            document.getElementById(boxId).querySelector('.file-name').textContent = file.name;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('box_id', boxId);
+
+            fetch('{% url "upload_file" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: formData
+            })
+            .then(response => {
+                // Логгирование для проверки содержимого ответа
+                console.log(response);
+
+                // Проверка типа содержимого
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                } else {
+                    throw new Error("Response is not JSON");
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    console.log('File uploaded successfully:', data.file_url);
+                    window.location.reload();
+                } else {
+                    console.error('File upload failed:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+
+</script>
