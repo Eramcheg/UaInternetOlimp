@@ -1,13 +1,15 @@
-{% block content %}
+{% extends 'base.html' %}
 {% load static %}
 {% load i18n  %}
-<link rel="stylesheet" href="{% static 'css/pages/newsPrototype.css' %}">
-<head>
-    <title> Новини </title>
-</head>
+{% block title %} Новини {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/pages/newsPrototype.css' %}">
+{% endblock %}
+
+{% block content %}
 <body style="background-image: url('{% static "images/general/backgroundPattern.png" %}');">
     <div class="white-mask"></div>
-    {% include 'widgets/navigation_bar.html' %}
 
     <div class="hat-container" style="background-image: url('{% static "images/general/backgroundBlue.svg" %}'); ">
         <div class="title-container">
@@ -130,7 +132,5 @@
             </div>
         </div>
     </div>
-
-    {% include "widgets/footer.html" %}
 </body>
 {% endblock %}

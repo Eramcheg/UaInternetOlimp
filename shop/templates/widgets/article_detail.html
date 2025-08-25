@@ -3,13 +3,11 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/pages/full_article.css' %}">
     <body>
-        {% include "widgets/navigation_bar.html" %}
         <div class="centered-container">
             <h1>{{ article.title }}</h1>
             <div class="article-content">
                 {{ article.article_content|safe }}  <!-- Use the 'safe' filter if content includes HTML from CKEditor -->
             </div>
         </div>
-        {% include "widgets/footer.html" %}
     </body>
 {% endblock %}
