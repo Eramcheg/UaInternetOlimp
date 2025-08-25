@@ -1,21 +1,14 @@
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% block title %} Customer Registration {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+    <link rel="stylesheet" href="{% static "css/registration.css" %}">
+{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Registration</title>
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
-<link rel="stylesheet" href="{% static "css/registration.css" %}">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <!-- Additional styles -->
-</head>
-<body>
-
 <div id="errorModal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="close-button">&times;</span>
@@ -23,7 +16,7 @@
         <button id="okButton">OK</button>
     </div>
 </div>
-{% include 'widgets/navigation_bar.html' %}
+
 <section id="wrapper" class="stick_parent_lb">
 
     <aside id="notifications">
@@ -205,7 +198,6 @@
         </div>
     </div>
 </section>
-</body>
 {{ form.errors|json_script:"form_errors" }}
 <script>
 let currentTab = 0;
@@ -310,6 +302,8 @@ let currentTab = 0;
         return valid;
     }
 </script>
-</html>
+{% endblock %}
 
+{% block extra_js %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
