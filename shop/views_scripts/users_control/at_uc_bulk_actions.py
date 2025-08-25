@@ -1,32 +1,10 @@
-import concurrent
-
-from django.contrib.auth.decorators import login_required
-
-from shop.views import db, orders_ref, serialize_firestore_document, itemsRef, get_cart, cart_ref, single_order_ref, \
-    is_admin, users_ref
-import ast
-import random
-from datetime import datetime
-from random import randint
-
-import concurrent.futures
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
-import os
 import json
-import firebase_admin
-from django.views.decorators.csrf import csrf_exempt
-from firebase_admin import credentials, firestore
-from django.conf import settings
-from django.contrib import messages
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.mail import send_mail
 
-from shop.forms import UserRegisterForm, User
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import JsonResponse
+
+from shop.views import db, is_admin, users_ref
+
 
 @login_required
 @user_passes_test(is_admin)  # Adjust the test as needed
@@ -77,9 +55,7 @@ def update_user_enabled_status(user_ids, enable):
     batch = db.batch()
 
     for user_id in user_ids:
-
         docs = users_ref.where('userId', '==', user_id).get()
-
         for doc in docs:
             doc_ref = users_ref.document(doc.id)
             batch.update(doc_ref, {"Enabled": enable})
