@@ -1,0 +1,58 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}  {% endblock %}</title>
+
+    <script src="https://kit.fontawesome.com/ba99d1b9b2.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-86VH3095NK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-86VH3095NK');
+    </script>
+
+    <link rel="icon" href="{% static "icons/LogoMain.png" %}" type="image/png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    <link rel="stylesheet" href="{% static "css/SeparateWidgets/footer.css" %}">
+    {% block extra_css %}
+
+    {% endblock %}
+
+     <meta name="navbar-config" content='{
+        "crossIcon": "{% static 'icons/Cross.png' %}",
+        "menuIcon": "{% static 'icons/Menu.png' %}"
+        }'>
+
+    {% block page_meta %}{% endblock %}
+</head>
+<body>
+    {% include 'widgets/navigation_bar.html' %}
+    {% block content %}
+
+    {% endblock %}
+    {% include "widgets/footer.html" %}
+
+    <script src="{% static "js/base.js" %}"></script>
+    <script src="{% static "js/widgets/navigation_bar.js" %}"></script>
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>
