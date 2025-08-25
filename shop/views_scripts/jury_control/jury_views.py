@@ -1,23 +1,18 @@
-from datetime import datetime
-
-from dateutil import parser
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
-import os
 import json
-from django.http import JsonResponse, HttpResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views.decorators.csrf import csrf_exempt
-from firebase_admin import firestore
-
-from shop.views import get_user_category, users_ref, is_admin, update_email_in_db, currency_dict, groups_dict, \
-    serialize_firestore_document, updateChatInfo, tasks_ref, TASKS, criteria_ref, actions_ref
+import mimetypes
 import os
 import re
-import mimetypes
+from collections import defaultdict
+from datetime import datetime
+
 import requests
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
+from firebase_admin import firestore
+
+from shop.views import users_ref, tasks_ref, TASKS, criteria_ref, actions_ref, assignments_ref, current_tour
+
+
 def handle_max_score(request):
     if request.method == 'POST':
         # Получаем значения из формы
@@ -58,9 +53,8 @@ def get_all_tasks():
 
     for task in tasks:
         task_data = task.to_dict()
-        task_id = task.id  # Пример task_id: '9_1'
-        result = task_id.split("_", 2)[-1]
-        if result != "2_tour":
+        task_id = task_data['task_id']  # Пример task_id: '9_1'
+        if task_data['tour'] != current_tour:
             continue
         # Извлекаем максимальное количество баллов из данных задачи
         max_points = task_data.get('max_points', 0)  # Если max_points отсутствует, по умолчанию ставим 0
@@ -130,14 +124,19 @@ def submit_criteria(request):
         data = json.loads(request.body)
         task_id = data.get('task_id')
         criteria_list = data.get('criteria', [])
+        paralel = int(task_id.split('_')[0])
+        task_num = task_id.split('_')[1]
 
         try:
             # Сохранение критериев в базе данных Firebase
             for criterion in criteria_list:
-                criteria_ref.document(criterion['id']).set({
+                criteria_ref.document(f"task_{task_num}_{criterion['num']}_class_{paralel}_tour_{current_tour}").set({
                     'criterion_text': criterion['criterion_text'],
+                    'num': criterion['num'],
+                    'paralel': paralel,
                     'points': criterion['points'],
                     'task_id': task_id,
+                    'tour': current_tour
                 })
 
             return JsonResponse({'success': True})
@@ -151,11 +150,13 @@ def approve_criteria(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         task_id = data.get('task_id')
-        criteria_list = data.get('criteria', [])
 
         try:
             # Обновление статуса задачи на "approved" в коллекции tasks_ref
-            task_doc = tasks_ref.document(task_id)
+            paralel = task_id.split('_')[0]
+            task_num = task_id.split('_')[1]
+            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}"
+            task_doc = tasks_ref.document(task_id_)
             task_doc.update({'task_status': 'Approved'})
 
             return JsonResponse({'success': True})
@@ -172,12 +173,15 @@ def reject_criteria(request):
 
         try:
             # Удаление всех критериев, связанных с переданным task_id
-            criteria_docs = criteria_ref.where('task_id', '==', task_id).stream()
-            for doc in criteria_docs:
-                doc.reference.delete()
+            # criteria_docs = criteria_ref.where('task_id', '==', task_id).stream()
+            # for doc in criteria_docs:
+            #     doc.reference.delete()
 
             # Обновление статуса задачи на "rejected" в коллекции tasks_ref
-            task_doc = tasks_ref.document(task_id)
+            paralel = task_id.split('_')[0]
+            task_num = task_id.split('_')[1]
+            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}"
+            task_doc = tasks_ref.document(task_id_)
             task_doc.update({'task_status': 'Rejected'})
 
             return JsonResponse({'success': True})
@@ -198,17 +202,40 @@ def get_students_by_class(user_class):
         student_dict['id'] = student_dict['userId']
         student_list.append(student_dict)
     return student_list
+def get_assignments(user_class):
+
+    assignments_query = assignments_ref.where('paralel', '==', user_class).where('tour', '==', current_tour)
+    assignments = assignments_query.stream()
+
+    grouped = defaultdict(list)
+
+    for assignment in assignments:
+        assignment_dict = assignment.to_dict()
+        # сохраним id документа тоже (если нужно)
+        assignment_dict['docId'] = assignment.id
+        user_id = assignment_dict.get('userId')
+        if user_id:
+            grouped[user_id].append(assignment_dict)
+
+    # Если нужен массив объектов [{userId: [tasks]}]
+    result = [{user_id: tasks} for user_id, tasks in grouped.items()]
+    return result
 
 def get_students(request):
     class_number = request.GET.get('class', 9)  # Класс по умолчанию - 9
     students = get_students_by_class(class_number)
     return JsonResponse({'students': students})
 
+def get_assignments_by_tour(request):
+    class_number = request.GET.get('class', 9)
+    assignments = get_assignments(class_number)
+    return JsonResponse({'assignments': assignments})
+
 def get_criteria(request):
-    task_id = request.GET.get('task_id')+"_2_tour"
+    task_id = request.GET.get('task_id')
 
     # Ищем задачу по task_id
-    tasks_query = tasks_ref.where('task_id', '==', task_id)
+    tasks_query = tasks_ref.where('task_id', '==', task_id).where('tour', '==', current_tour)
     tasks = list(tasks_query.stream())
 
     # Проверяем, существует ли задача и имеет ли она статус Approved
@@ -216,7 +243,7 @@ def get_criteria(request):
         return JsonResponse({'criteria': []})  # Возвращаем пустой массив, если статус не Approved
 
     # Ищем критерии, соответствующие task_id
-    criteria_query = criteria_ref.where('task_id', '==', task_id)
+    criteria_query = criteria_ref.where('task_id', '==', task_id).where('tour', '==', current_tour)
     criteria = criteria_query.stream()
 
     # Формируем список критериев
@@ -262,20 +289,22 @@ def evaluate_task(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         student_id = data['student_id']
-        task_id = data['task_id']
+        paralel = data['student_class']
+        task_num = data['task_id']
         student_class = data['student_class']
         points = data['points']
 
-        # Обновление статуса задания у студента
-        student_ref = users_ref.where('userId', '==', student_id).get()
-        if student_ref:
-            student_ref = student_ref[0].reference
-            student_ref.update({f'task_{task_id}_2_tour_status': True})
+        # Обновление статуса задания
+        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}"
+
+        assignment_ref = assignments_ref.document(doc_id)
+        if assignment_ref:
+            assignment_ref.update({f'status': True})
 
             points_array = [points[str(i)] for i in range(1, len(points) + 1)]
-            student_ref.update({f'task_{task_id}_2_tour_grading': points_array})
+            assignment_ref.update({f'grading': points_array})
 
-            action_doc_id = f"{student_id}_{student_class}_{task_id}"
+            action_doc_id = f"{student_id}_{student_class}_{task_num}"
             action_time = datetime.utcnow()
             actions_ref.add({
                 'objectId': action_doc_id,
@@ -293,18 +322,18 @@ def clear_task_evaluation(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         student_id = data['student_id']
-        task_id = data['task_id']
-        student_class = data['student_class']
+        task_num = data['task_id']
+        paralel = data['student_class']
 
+        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}"
         # Обновление статуса задания у студента
-        student_ref = users_ref.where('userId', '==', student_id).get()
-        if student_ref:
-            student_ref = student_ref[0].reference
-            student_ref.update({f'task_{task_id}_2_tour_status': False})
 
-            student_ref.update({f'task_{task_id}_2_tour_grading': firestore.DELETE_FIELD})
+        assignment_ref = assignments_ref.document(doc_id)
+        if assignment_ref:
+            assignment_ref.update({f'status': False})
+            assignment_ref.update({f'grading': firestore.DELETE_FIELD})
 
-            action_doc_id = f"{student_id}_{student_class}_{task_id}"
+            action_doc_id = f"{student_id}_{paralel}_{task_num}"
             action_time = datetime.utcnow()
             actions_ref.add({
                 'objectId': action_doc_id,
@@ -319,35 +348,35 @@ def clear_task_evaluation(request):
 
 def download_users_file(request, student_id, paralel, task_id):
 
-    student_ref = users_ref.where('userId', '==', student_id).get()
+    student_ref = assignments_ref.where('userId', '==', student_id).get()
     file_url = ""
     if student_ref:
         student_ref = student_ref[0].to_dict()
-        file_url = student_ref.get(f'task_{task_id}_2_tour')
+        file_url = student_ref.get(f'fileUrl')
     response = requests.get(file_url)
 
+    if response.status_code != 200:
+        return HttpResponse("Ошибка при загрузке файла", status=404)
+
     # Создаем правильный ответ с заголовком для скачивания
-    if response.status_code == 200:
-        # Извлекаем имя файла из URL
-        file_name_with_random = os.path.basename(file_url.split('?')[0])
+    # Извлекаем имя файла из URL
+    file_name_with_random = os.path.basename(file_url.split('?')[0])
 
-        # Удаляем последние 6 случайных символов и подчеркивание с помощью регулярного выражения
-        file_name_cleaned = re.sub(r'_2_tour_[a-zA-Z0-9]{6}$', '', file_name_with_random)
+    # Удаляем последние 6 случайных символов и подчеркивание с помощью регулярного выражения
+    file_name_cleaned = re.sub(r'_2_tour_[a-zA-Z0-9]{6}$', '', file_name_with_random)
 
-        # Получаем расширение файла из очищенного имени файла
-        _, file_extension = os.path.splitext(file_name_cleaned)
+    # Получаем расширение файла из очищенного имени файла
+    _, file_extension = os.path.splitext(file_name_cleaned)
 
-        # Генерируем имя файла для скачивания, добавляя оригинальное расширение
-        download_file_name = f"{student_id}_{paralel}_{task_id}{file_extension}"
+    # Генерируем имя файла для скачивания, добавляя оригинальное расширение
+    download_file_name = f"{student_id}_{paralel}_{task_id}{file_extension}"
 
-        # Определяем MIME-тип на основе расширения файла
-        mime_type, _ = mimetypes.guess_type(download_file_name)
+    # Определяем MIME-тип на основе расширения файла
+    mime_type, _ = mimetypes.guess_type(download_file_name)
 
-        # Создаем HTTP-ответ с правильным именем файла и MIME-типом
-        django_response = HttpResponse(response.content,
-                                       content_type=mime_type if mime_type else 'application/octet-stream')
-        django_response['Content-Disposition'] = f'attachment; filename="{download_file_name}"'
+    # Создаем HTTP-ответ с правильным именем файла и MIME-типом
+    django_response = HttpResponse(response.content,
+                                   content_type=mime_type if mime_type else 'application/octet-stream')
+    django_response['Content-Disposition'] = f'attachment; filename="{download_file_name}"'
 
-        return django_response
-    else:
-        return HttpResponse('Ошибка при загрузке файла', status=404)
+    return django_response

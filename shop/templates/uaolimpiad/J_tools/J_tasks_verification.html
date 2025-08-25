@@ -1,28 +1,13 @@
-{% block content %}
 {% load static %}
 {% load form_tags %}
 {% load i18n  %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Moderation</title>
-    <!-- Добавьте CSS для стилей и Bootstrap для табов -->
-    <link rel="stylesheet" href="{% static 'css/Jury/jury_tasks_verification.css' %}">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
 <div class="page-container">
-
-
-
     <div class="tabs">
         <!-- Табы для переключения между классами -->
         <div class="tab active-tab" data-task="9">9 клас</div>
         <div class="tab" data-task="10">10 клас</div>
         <div class="tab" data-task="11">11 клас</div>
-    </div>
-    <div class="checkbox-container">
-        <input type="checkbox" id="show-without-tasks" checked>
-        <label for="show-without-tasks">Показати учнів без завантажених задач</label>
     </div>
 
     <table id="students-table">
@@ -101,11 +86,20 @@
     };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    let currentTour = {{ current_tour }};
     let show_without = true;
     const jury_tasks = {{ jury_tasks|safe }};
+    const DOWNLOAD_API_PREFIX = "/api/download-file";
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const taskIndexOf = (taskKey) => parseInt(String(taskKey ?? "").split("_")[1] || "0", 10);
+    let unsubscribeAssignments = null;
+
+    const MAX_TASKS = 5;
     $(document).ready(function() {
-            // Загружаем студентов класса 9 при первой загрузке страницы
+        // Загружаем студентов класса 9 при первой загрузке страницы
         loadStudents(9);
+        window.__byUser = window.__byUser || new Map();
 
         const tabs = document.querySelectorAll('.tab');
 
@@ -119,100 +113,181 @@
         });
 
         function loadStudents(classNumber) {
+            if (window.__byUser) window.__byUser.clear();
+
             $.ajax({
-                url: `/api/students/`,  // URL для получения данных о студентах
+                url: `/api/assignments/`,  // URL для получения данных о студентах
                 data: { class: classNumber },
                 success: function(response) {
                     let tableBody = $('#students-table tbody');
                     tableBody.empty();  // Очищаем таблицу перед заполнением
 
-                    // Фильтруем студентов в зависимости от значения переменной show
-                    let filteredStudents = response.students.filter(student => {
-                        if (!show_without) {
-                            // Если show = false, показываем только тех, у кого есть хотя бы одна задача
-                            return student.task_1_2_tour || student.task_2_2_tour || student.task_3_2_tour || student.task_4_2_tour || student.task_5_2_tour;
-                        }
-                        return true;  // Если show = true, показываем всех студентов
-                    });
+                    let grouped = [];
 
-                    // Проходим по отфильтрованным студентам и добавляем их в таблицу
-                    filteredStudents.forEach(student => {
-                        let row = `<tr data-student-id="${student.userId}">
-                            ${generateTaskCells(student)}
-                        </tr>`;
-                        tableBody.append(row);
-
-                        setupRealtimeUpdates();  // Инициализация дополнительных действий, если нужно
-                    });
+                    if (Array.isArray(response.assignments)) {
+                        grouped = response.assignments.map(obj => {
+                          const [userId, tasks] = Object.entries(obj)[0] || [];
+                          return { userId, tasks: tasks || [] };
+                        }).filter(x => x.userId);
+                      } else if (response.assignments && typeof response.assignments === 'object') {
+                        grouped = Object.entries(response.assignments).map(([userId, tasks]) => ({
+                          userId, tasks: tasks || []
+                        }));
+                      }
+                    if (!grouped.length) {
+                        tableBody.append('<tr><td colspan="999">Немає даних</td></tr>');
+                    }
+                    else {
+                        const rowsHtml = grouped.map(({userId, tasks}) => {
+                            const paralel = (tasks[0] && tasks[0].paralel) || classNumber;
+                            const payload = {userId, paralel, tasks};
+                            return `<tr data-student-id="${userId}">${generateTaskCells(payload)}</tr>`;
+                        }).join('');
+                        tableBody.append(rowsHtml);
+                    }
+                    setupRealtimeUpdates(String(classNumber));
                 }
             });
         }
-
-        $('#show-without-tasks').on('change', function() {
-            // Определяем, установлен ли флаг "Показати учнів без завантажених задач"
-            show_without = $(this).is(':checked');  // Если галочка стоит, значение будет true, иначе false
-            console.log("ch");
-            // Находим активный таб
-            let activeTab = $('.tab.active-tab');
-            let classNumber = activeTab.data('task');  // Получаем номер класса с атрибута data-task
-
-            // Загружаем учеников для активного класса
-            loadStudents(classNumber);
-        });
 
         // Функция для создания ячеек с заданиями студента
-        function generateTaskCells(student) {
-            let cells = '';
-            cells += `<td>${student.userId}</td>`;
-            for (let i = 1; i <= 5; i++) {
-                const fileField = `task_${i}_2_tour`;
-                const statusField = `task_${i}_2_tour_status`;
-                let grade = 0.0;
-                if(student[fileField+"_grading"]){
-                    student[fileField+"_grading"].forEach(element => {
-                        grade = grade+element;
-                    })
-                }
-                grade = Number((grade).toFixed(1));
-                let downloadUrl = `/api/download-file/${student.userId}/${student.paralel}/${i}`;
-                cells += `<td>
-                               ${student[fileField] ? `
-                                   <button class="${student[statusField] ? 'btn-green' : 'btn-gray'} evaluate-btn"
-                                           data-student-id="${student.userId}"
-                                           data-task-id="${i}"
-                                           data-student-class="${student.paralel}"
-                                           data-student='${JSON.stringify(student)}'
-                                           >
-                                       ${student[statusField] ? `Оцінено: ${grade}` : 'Оцінити'}
-                                   </button>
-                                   <a class="download-btn" href="${downloadUrl}" download="${student.userId}_${student.paralel}_${i}.pdf"> <i class="fa-solid fa-download"> </i></a>
-                                ` : 'Файл відсутній'}
-                        </td>`;
+        function generateTaskCells(assignmentOrGroup) {
+          let userId, paralel, tasks = [];
+
+          // NEW: если пришла группа { userId, paralel, tasks: [...] }
+          if (assignmentOrGroup && typeof assignmentOrGroup === "object" && Array.isArray(assignmentOrGroup.tasks)) {
+            userId = assignmentOrGroup.userId;
+            paralel = assignmentOrGroup.paralel;
+            tasks = assignmentOrGroup.tasks.slice();
+          } else {
+            // OLD: одиночный assignment (как раньше)
+            const a = assignmentOrGroup || {};
+            userId = a.userId;
+            paralel = a.paralel;
+            tasks = [a];
+          }
+
+          // карта индекс -> task
+          const byIndex = new Map();
+          for (const t of tasks) {
+            const idx = taskIndexOf(t.taskKey) || Number(t.taskId) || 0; // task_1 -> 1
+            if (idx) byIndex.set(idx, t);
+          }
+
+          let cells = '';
+          cells += `<td>${esc(userId ?? "")}</td>`;
+
+          for (let i = 1; i <= MAX_TASKS; i++) {
+            const t = byIndex.get(i);
+            if (!t) {
+              cells += `<td data-task="task_${i}">Файл відсутній</td>`;
+              continue;
             }
-            return cells;
+
+            // сумма оценок
+            let grade = 0.0;
+            if (Array.isArray(t.grading)) {
+              for (const el of t.grading) {
+                const num = Number(el);
+                if (!Number.isNaN(num)) grade += num;
+              }
+              grade = Number(grade.toFixed(1));
+            }
+
+            const hasFile = Boolean(t.fileUrl);
+            const isDone  = Boolean(t.status);
+            const btnClass = isDone ? 'btn-green' : 'btn-gray';
+            const btnText  = isDone ? `Оцінено: ${grade}` : 'Оцінити';
+            const downloadUrl = `${DOWNLOAD_API_PREFIX}/${esc(userId)}/${esc(paralel)}/${i}`;
+
+            let grading = t.grading;
+            cells += `<td data-task="task_${i}">
+              ${
+                hasFile
+                  ? `
+                    <button class="${btnClass} evaluate-btn"
+                            data-student-id="${esc(userId)}"
+                            data-task-id="${i}"
+                            data-student-class="${esc(paralel)}"
+                            data-student='${esc(JSON.stringify({ userId, paralel, grading }))}'>
+                      ${btnText}
+                    </button>
+                    <a class="download-btn" href="${downloadUrl}" download="${esc(userId)}_${esc(paralel)}_${i}.pdf">
+                      <i class="fa-solid fa-download"></i>
+                    </a>
+                  `
+                  : 'Файл відсутній'
+              }
+            </td>`;
+          }
+
+          return cells;
         }
 
+        const byUser = new Map();
+        function setupRealtimeUpdates(paralel) {
+            if (typeof unsubscribeAssignments === 'function') {
+                unsubscribeAssignments();
+                unsubscribeAssignments = null;
+            }
+            byUser.clear();
 
-        function setupRealtimeUpdates() {
-        // Подписываемся на все документы в коллекции webUsers
-            const webUsersCollection = collection(db, 'users');
+            const q = query(
+                collection(db, 'assignments'),
+                where('paralel', '==', String(paralel)),
+                where('tour', '==', currentTour)
+            );
 
-            // Слушаем изменения в коллекции webUsers
-            onSnapshot(webUsersCollection, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    const studentData = change.doc.data();
-                    const studentId = studentData.userId;  // Получаем userId студента
+            unsubscribeAssignments = onSnapshot(q, (snapshot) => {
+            // 1) при первом снимке соберём всё состояние
+            if (snapshot.docChanges().every(ch => ch.type === 'added')) {
+              byUser.clear();
+              snapshot.forEach(doc => {
+                const a = doc.data();
+                if (!byUser.has(a.userId)) byUser.set(a.userId, { paralel: a.paralel, tasks: [] });
+                byUser.get(a.userId).tasks.push(a);
+              });
+              const $tb = $('#students-table tbody').empty();
+              if (!byUser.size) {
+                $tb.append('<tr><td colspan="999">Немає даних</td></tr>');
+              } else {
+                const rows = [];
+                for (const [userId, {paralel, tasks}] of byUser.entries()) {
+                  rows.push(`<tr data-student-id="${userId}">${generateTaskCells({ userId: userId, paralel: paralel, tasks: tasks })}</tr>`);
+                }
+                $tb.append(rows.join(''));
+              }
+              return;
+            }
 
-                    if (change.type === "added" || change.type === "modified") {
-                        {#console.log(`Изменения в документе студента ${studentId}:`, studentData);#}
-                        // Обновляем ячейки с заданиями студента
-                        const row = document.querySelector(`tr[data-student-id="${studentId}"]`);
-                        if (row) {
-                            row.innerHTML = generateTaskCells(studentData);  // Перегенерируем строки для этого студента
-                        }
-                    }
-                });
+            // 2) на последующих изменениях точечно обновляем строки
+            snapshot.docChanges().forEach((change) => {
+              const a = change.doc.data();
+              const userId = a.userId;
+              if (!byUser.has(userId)) byUser.set(userId, { paralel: a.paralel, tasks: [] });
+              const entry = byUser.get(userId);
+
+              if (change.type === 'removed') {
+                entry.tasks = entry.tasks.filter(t => t.taskKey !== a.taskKey);
+              } else { // added | modified
+                entry.paralel = a.paralel;
+                const i = entry.tasks.findIndex(t => t.taskKey === a.taskKey);
+                if (i === -1) entry.tasks.push(a); else entry.tasks[i] = a;
+              }
+
+              // перерисовать только одну строку
+              const rowHtml = generateTaskCells({ userId, paralel: entry.paralel, tasks: entry.tasks });
+              let row = document.querySelector(`tr[data-student-id="${CSS.escape(userId)}"]`);
+              if (row) {
+                row.innerHTML = rowHtml;
+              } else {
+                row = document.createElement('tr');
+                row.setAttribute('data-student-id', userId);
+                row.innerHTML = rowHtml;
+                document.querySelector('#students-table tbody').appendChild(row);
+              }
             });
+          });
         }
 
 
@@ -264,24 +339,22 @@
                                 </div>
                             `);
                         });
-                    {#$('#modal-overlay').show();#}
-                    {#$('body').css('overflow', 'hidden');#}
-                    modal.show();  // Показываем модальное окно
+                    modal.show();  // Show modal dialog
                 }
             });
         }
         // Функция для открытия модального окна оценивания
         function openEvaluateModal(studentClass, taskId, studentId, student) {
             // Загружаем критерии для выбранного задания
-            console.log(studentClass + "_"+ taskId);
-            let id = studentClass + "_" + taskId;
+            console.log(studentClass + "_"+ taskId+ "");
+            let id = studentClass + "_" + taskId+ "_" + currentTour;
             if( !jury_tasks.includes(id) ){
                 alert("У вас немає прав для оцінювання цього завдання");
                 return;
             }
             $.ajax({
                 url: `/api/criteria/`,
-                data: { task_id: `${studentClass}_${taskId}` },
+                data: { task_id: id },
                 success: function(response) {
                     if(response.criteria.length === 0) {
                         alert("Завдання не має критеріїв оцінювання або додані критерії не були затвердженні");
@@ -293,7 +366,6 @@
                     actions_button.attr('data-task-id', taskId);
                     actions_button.attr('data-student-class', studentClass);
                     actions_button.attr('data-student', student);
-
 
                     let modal_title = $('.modal-title');
                     modal_title.text(`Оцінка завдання ${studentClass}_${taskId}`);
@@ -315,7 +387,7 @@
                                                placeholder="Макс ${criterion.points}"
                                                min="0"
                                                max="${criterion.points}"
-                                               value="${student[`task_${taskId}_2_tour_grading`] && student[`task_${taskId}_2_tour_grading`][index] ? student[`task_${taskId}_2_tour_grading`][index] : ''}"
+                                               value="${student[`grading`] && student[`grading`][index] ? student[`grading`][index] : ''}"
                                                required
                                                />
                                     </td>
@@ -325,7 +397,7 @@
                         });
                     $('#modal-overlay').show();
                      $('body').css('overflow', 'hidden');
-                    modal.show();  // Показываем модальное окно
+                    modal.show();  // Show modal dialog
                 }
             });
         }
@@ -333,7 +405,7 @@
         $('#form-clear-btn').on('click', function() {
 
             let modal = $('#evaluate-modal');
-            let taskId = modal.data('task-id'); // Получаем ID задачи
+            let taskId = modal.data('task-id');
             let studentId = modal.data('student-id');
             let studentClass = modal.data('student-class');
             const csrftoken = getCookie('csrftoken');
@@ -397,13 +469,6 @@
                     console.log("PROBLEM PROBLEM PROBLEM");
                     return false;
                 }
-                {#if (value < 0) {#}
-                {#    alert('Оцінка не може бути менша за 0!');#}
-                {#    value = maxPoints;  // Ограничиваем значение#}
-                {#    hasErrors = true;#}
-                {#    return false;#}
-                {##}
-
                 points[counter] = value;  // Используем счетчик как ключ
                 counter++;
             });
@@ -414,27 +479,27 @@
 
             // Отправляем оценки на сервер
             $.ajax({
-                url: '{% url "api_evaluate_task" %}',  // Правильный URL
-                type: 'POST',  // Указываем явно POST-запрос
-                contentType: 'application/json',  // Отправляем данные в формате JSON
+                url: '{% url "api_evaluate_task" %}',
+                type: 'POST',
+                contentType: 'application/json',
                 data: JSON.stringify({
-                    student_id: studentId,  // Используем правильный snake_case
+                    student_id: studentId,
                     task_id: taskId,
                     points: points,
                     student_class: student_class,
                 }),
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': csrftoken  // Включаем CSRF-токен
+                    'X-CSRFToken': csrftoken
                 },
                 success: function(response) {
-                    console.log('Успешный ответ:', response);  // Лог успешного ответа
+                    console.log('Успешный ответ:', response); // Success
                     if (response.success) {
                         hideOverlay();
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Ошибка AJAX-запроса:', error);  // Лог ошибок
+                    console.error('Ошибка AJAX-запроса:', error); // Error
                     alert('Помилка під час збереження оцінки.');
                 }
             });
@@ -449,30 +514,13 @@
            hideActionsModal();
        });
        function hideActionsModal(){
-            $('#actions-modal').hide();  // Скрываем модальное окно
-            {#$('#modal-overlay').hide();#}
-            {#$('body').css('overflow', '');#}
+            $('#actions-modal').hide();  // Hide modal dialog
        }
        function hideOverlay(){
-            $('#evaluate-modal').hide();  // Скрываем модальное окно
+            $('#evaluate-modal').hide();  // Hide modal dialog
             $('#modal-overlay').hide();
             $('body').css('overflow', '');
-       }
-       function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
        }
    });
 
 </script>
-{% endblock %}
