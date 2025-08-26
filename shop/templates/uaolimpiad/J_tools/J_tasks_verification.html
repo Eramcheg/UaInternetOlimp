@@ -88,8 +88,8 @@
     const db = getFirestore(app);
 
     let currentTour = {{ current_tour }};
-    let show_without = true;
     const jury_tasks = {{ jury_tasks|safe }};
+    let show_without = true;
     const DOWNLOAD_API_PREFIX = "/api/download-file";
     const esc = (s) => String(s ?? "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     const taskIndexOf = (taskKey) => parseInt(String(taskKey ?? "").split("_")[1] || "0", 10);

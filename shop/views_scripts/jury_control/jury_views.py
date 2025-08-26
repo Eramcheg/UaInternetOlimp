@@ -6,11 +6,11 @@ from collections import defaultdict
 from datetime import datetime
 
 import requests
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from firebase_admin import firestore
 
-from shop.views import users_ref, tasks_ref, TASKS, criteria_ref, actions_ref, assignments_ref, current_tour
+from shop.views import users_ref, tasks_ref, TASKS, criteria_ref, actions_ref, assignments_ref, current_tour, db
 
 
 def handle_max_score(request):
@@ -120,31 +120,83 @@ def get_jury_admins():
 
 
 def submit_criteria(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        task_id = data.get('task_id')
-        criteria_list = data.get('criteria', [])
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+    data = json.loads(request.body)
+    task_id = data.get('task_id')
+    criteria_list = data.get('criteria', [])
+
+    if not task_id:
+        return JsonResponse({'success': False, 'error': 'Task id is required.'})
+
+    try:
         paralel = int(task_id.split('_')[0])
         task_num = task_id.split('_')[1]
+    except Exception:
+        return JsonResponse({'success': False, 'error': 'Bad task_id format'})
 
+    existing_snap = (criteria_ref
+         .where('task_id', '==', task_id)
+         .where('paralel', '==', paralel)
+         .where('tour', '==', current_tour)
+         .stream())
+
+    existing_by_num = {}
+    for d in existing_snap:
+        doc_data = d.to_dict() or {}
+        num = doc_data.get('num')
+        if num is not None:
+            existing_by_num[int(num)] = (d.id, doc_data)
+
+    incoming_by_num = {}
+    for c in criteria_list:
         try:
-            # Сохранение критериев в базе данных Firebase
-            for criterion in criteria_list:
-                criteria_ref.document(f"task_{task_num}_{criterion['num']}_class_{paralel}_tour_{current_tour}").set({
-                    'criterion_text': criterion['criterion_text'],
-                    'num': criterion['num'],
-                    'paralel': paralel,
-                    'points': criterion['points'],
-                    'task_id': task_id,
-                    'tour': current_tour
-                })
+            num = int(c['num'])
+        except Exception:
+            continue
+        payload = {
+            'criterion_text': c.get('criterion_text', ''),
+            'num': num,
+            'paralel': paralel,
+            'points': c.get('points', 0),
+            'task_id': task_id,
+            'tour': current_tour,
+        }
+        incoming_by_num[num] = payload
+    batch = db.batch()
+    upserts = 0
+    deletes = 0
 
-            return JsonResponse({'success': True})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
+    for num, payload in incoming_by_num.items():
+        doc_id = f"task_{task_num}_{num}_class_{paralel}_tour_{current_tour}"
+        doc_ref = criteria_ref.document(doc_id)
+        existed = existing_by_num.get(num)
 
-    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+        if existed:
+            _, old = existed
+            comparable_old = {
+                'criterion_text': old.get('criterion_text', ''),
+                'num': int(old.get('num', num)),
+                'paralel': int(old.get('paralel', paralel)),
+                'points': old.get('points', 0),
+                'task_id': old.get('task_id', task_id),
+                'tour': old.get('tour', current_tour),
+            }
+            if comparable_old == payload:
+                continue
+        batch.set(doc_ref, payload, merge=True)
+        upserts += 1
 
+    to_delete_nums = set(existing_by_num.keys()) - set(incoming_by_num.keys())
+    for num in to_delete_nums:
+        existing_doc_id, _ = existing_by_num[num]
+        batch.delete(criteria_ref.document(existing_doc_id))
+        deletes += 1
+
+    batch.commit()
+
+    return JsonResponse({'success': True, 'upserts': upserts, 'deletes': deletes})
 
 def approve_criteria(request):
     if request.method == 'POST':
@@ -363,7 +415,7 @@ def download_users_file(request, student_id, paralel, task_id):
     file_name_with_random = os.path.basename(file_url.split('?')[0])
 
     # Удаляем последние 6 случайных символов и подчеркивание с помощью регулярного выражения
-    file_name_cleaned = re.sub(r'_2_tour_[a-zA-Z0-9]{6}$', '', file_name_with_random)
+    file_name_cleaned = re.sub(r'_[a-zA-Z0-9_]*[a-zA-Z0-9]{6}$', '', file_name_with_random)
 
     # Получаем расширение файла из очищенного имени файла
     _, file_extension = os.path.splitext(file_name_cleaned)
