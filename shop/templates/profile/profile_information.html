@@ -232,7 +232,7 @@ document.getElementById('customer-form').addEventListener('submit', function(e) 
     }
 
     const formData = new FormData(document.getElementById('customer-form'));
-    formData.append('old', JSON.stringify({{ user_info_dict|safe }}));
+    formData.append('old', JSON.stringify({{ user_info|safe }}));
     formData.append('new', JSON.stringify(Object.fromEntries(formData.entries())));
 
     console.log(new FormData(this));

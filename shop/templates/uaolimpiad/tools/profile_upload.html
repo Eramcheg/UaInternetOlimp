@@ -7,8 +7,8 @@
                 {% elif user_class == "11" %} «Поневолений заряд»
                 {% endif %}</h1>
         <label for="fileInput1">Натисніть сюди щоб завантажити розвязок</label>
-        {% if task_1_2_tour %}
-        <h5>Завантажений файл: {{ task_1_2_tour }}</h5>
+        {% if task_1 %}
+        <h5>Завантажений файл: {{ task_1 }}</h5>
         {% endif %}
         <input type="file" id="fileInput1" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box1')">
 
@@ -20,8 +20,8 @@
                 {% elif user_class == "11" %} «Індуктивність»
                 {% endif %}</h1>
         <label for="fileInput2">Натисніть сюди щоб завантажити розвязок</label>
-        {% if task_2_2_tour %}
-            <h5>Завантажений файл: {{ task_2_2_tour }}</h5>
+        {% if task_2 %}
+            <h5>Завантажений файл: {{ task_2 }}</h5>
         {% endif %}
         <input type="file" id="fileInput2" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box2')">
         <span class="file-name" id="fileName2"></span>
@@ -32,8 +32,8 @@
                 {% elif user_class == "11" %} «Термодинамічна карта»
                 {% endif %}</h1>
         <label for="fileInput3">Натисніть сюди щоб завантажити розвязок</label>
-        {% if task_3_2_tour %}
-            <h5>Завантажений файл: {{ task_3_2_tour }}</h5>
+        {% if task_3 %}
+            <h5>Завантажений файл: {{ task_3 }}</h5>
         {% endif %}
         <input type="file" id="fileInput3" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box3')">
         <span class="file-name" id="fileName3"></span>
@@ -44,8 +44,8 @@
                 {% elif user_class == "11" %} «Терези Тараса».
                 {% endif %}</h1>
         <label for="fileInput4">Натисніть сюди щоб завантажити розвязок</label>
-        {% if task_4_2_tour %}
-            <h5>Завантажений файл: {{ task_4_2_tour }}</h5>
+        {% if task_4 %}
+            <h5>Завантажений файл: {{ task_4 }}</h5>
         {% endif %}
         <input type="file" id="fileInput4" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box4')">
         <span class="file-name" id="fileName4"></span>
@@ -56,13 +56,12 @@
                 {% elif user_class == "11" %} «Коло конденсаторів від Фібоначчі»
                 {% endif %}</h1>
         <label for="fileInput5">Натисніть сюди щоб завантажити розвязок</label>
-        {% if task_5_2_tour %}
-            <h5>Завантажений файл: {{ task_5_2_tour }}</h5>
+        {% if task_5 %}
+            <h5>Завантажений файл: {{ task_5 }}</h5>
         {% endif %}
         <input type="file" id="fileInput5" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box5')">
         <span class="file-name" id="fileName5"></span>
     </div>
-
 </div>
 <script>
     function uploadFile(input, boxId) {
@@ -106,5 +105,4 @@
             });
         }
     }
-
 </script>

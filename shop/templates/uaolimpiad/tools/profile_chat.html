@@ -94,6 +94,7 @@ let currentChatId = null;
 let userId = "{{ userId }}";
 let user_class = {{ user_class|safe }};
 let role = "{{ role }}";
+let rights = "{{ rights }}";
 let username = "{{ username }}";
 const chatMessagesRef = collection(db, "messages");
 const q = query(chatMessagesRef, where("chat_id", "==", currentChatId), orderBy("timestamp"));
@@ -101,7 +102,7 @@ const chatMessagesRef2 = collection(db, "messages");
 const q2 = query(chatMessagesRef2, orderBy("activity"));
 document.addEventListener("DOMContentLoaded", async function () {
     console.log(user_class);
-    if(role !== "Student" && "{{ rights }}"!=="Chat_Admin"){
+    if(role !== "Student" && rights!=="Chat_Admin"){
          window.location.href = "{% url "profile" feature_name="account" %}";
     }
     console.log(userId);
@@ -601,14 +602,9 @@ async function sendFileMessage(senderId, senderName, fileName, fileURL) {
         activity: serverTimestamp()
     });}
 function formatTimestamp(seconds, nanoseconds) {
-    // Преобразуем секунды в миллисекунды
     const timestampInMillis = (seconds * 1000) + (nanoseconds / 1000000);
-
-    // Создаем объект даты на основе миллисекунд
     const date = new Date(timestampInMillis);
-
-    // Форматируем дату в нужный формат: HH:mm:ss dd:MM:YY
-    const hours = String(date.getHours()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0'); // Форматируем дату в нужный формат: HH:mm:ss dd:MM:YY
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const secondsStr = String(date.getSeconds()).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
