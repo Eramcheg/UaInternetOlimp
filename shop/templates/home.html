@@ -8,15 +8,10 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
 {% endblock %}
-<style>
-    *{
-        font-family:{% static "fonts/montserrat/dir1/Montserrat-Regular.ttf" %}!important;
-    }
-</style>
-<body style="">
+<body>
 
     <div class="higher-container" >
-        <div class="left-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
+        <div class="left-high bg-shapes">
         </div>
         <div class="center-high">
 
@@ -41,7 +36,7 @@
 
 
         </div>
-        <div class="right-high" style="background-image: url('{% static "images/home/imgs/Shapes.svg" %}')">
+        <div class="right-high bg-shapes">
             <div class="text-frame">
                 <div class="main-text">
                     <span class="header5">Шановні друзі! </span>
@@ -56,7 +51,7 @@
         </div>
     </div>
 
-    <div class="date-container" style="">
+    <div class="date-container">
         <div class="timeline">
             <div class="progress"></div>
             <div class="milestone" data-date="2024-09-09">
@@ -107,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="current-date" style="display: none">
+        <div class="current-date d-none">
             Today is <span id="currentDate"></span>
         </div>
     </div>
@@ -125,7 +120,11 @@
                         Вогонь і полум'я для фізики?
                     </h1>
                     <span class="text">
-                        Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою! Заочні та очні тури Всеукраїнської інтернет-олімпіади кидають виклик! Ми підтримуємо учнів, які люблять фізику, захоплюючими завданнями, навчання в <span style="font-weight: 600">безкоштовній онлайн-школі з фізики</span> та багатьма додатковими активностями.
+                        Якщо вам подобається фізика та складні головоломки, ви прийшли за адресою!
+                        Заочні та очні тури Всеукраїнської інтернет-олімпіади кидають виклик!
+                        Ми підтримуємо учнів, які люблять фізику, захоплюючими завданнями, навчання в
+                        <span class="bold-weight">безкоштовній онлайн-школі з фізики</span>
+                        та багатьма додатковими активностями.
                     </span>
                 </div>
 
@@ -148,8 +147,8 @@
         <div class="containerr">
             <div class="carousel-view">
                 <button id="prev-btn" class="prev-btn">
-                    <svg viewBox="0 0 512 512" width="20" title="chevron-circle-left">
-                        <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z" />
+                    <svg viewBox="0 0 512 512" width="20">
+                        <path d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
                     </svg>
                 </button>
                 <div id="item-list" class="item-list">
@@ -162,18 +161,16 @@
                     {% endfor %}
                 </div>
                 <button id="next-btn" class="next-btn">
-                    <svg viewBox="0 0 512 512" width="20" title="chevron-circle-right">
-                        <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
+                    <svg viewBox="0 0 512 512" width="20">
+                        <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" ></path>
                     </svg>
                 </button>
             </div>
         </div>
-
     </div>
-
     <div class="container-post-news">
-        <div class="background-purposes-1" style="background-image: url('{% static "images/home/imgs/purposes1.svg" %}')"></div>
-        <div class="background-purposes-2" style="background:linear-gradient(to bottom, white, rgba(255, 255, 255, 0)), url('{% static "images/home/imgs/purposes2.svg" %}')"></div>
+        <div class="background-purposes-1"></div>
+        <div class="background-purposes-2"></div>
         <div class="post-news-wrapper">
             <div class="purpose-container">
                 <div class="text-header">
@@ -181,21 +178,21 @@
                 </div>
                 <div class="purposes">
                     <div class="purpose">
-                        <img src="{% static "images/home/imgs/profile-2user.svg" %}" width="48" height="48">
+                        <img src="{% static "images/home/imgs/profile-2user.svg" %}" alt="Для учнів" width="48" height="48">
                         <h3>Учнів</h3>
                         <span class="text">Всеукраїнська інтернет-олімпіада — це чудова можливість для учнів перевірити свої знання та вміння в різних предметах, не виходячи з дому.</span>
                         <span class="text">Завдяки двом заочним турах, кожен учень може взяти участь в цікавому змаганні, а очний тур дозволяє продемонструвати свої знання на високому рівні серед найкращих учнів.</span>
                         <span class="text">Це не лише шанс отримати цінний досвід, але й можливість проявити себе, отримати визнання і відчуття справжніх, трошки спортивних змагань.</span>
                     </div>
                     <div class="purpose">
-                        <img src="{% static "images/home/imgs/briefcase.svg" %}" width="48" height="48">
+                        <img src="{% static "images/home/imgs/briefcase.svg" %}" alt="Для вчителів" width="48" height="48">
                         <h3>Вчителів</h3>
                         <span class="text">Для вчителів Всеукраїнська інтернет-олімпіада — це ефективний інструмент для оцінки рівня олімпіадних знань їх учнів.</span>
                         <span class="text">Вона дає можливість виявити сильні та слабкі сторони в підготовці учнів, що допоможе в подальшій роботі з ними. Крім того, участь в такій олімпіаді сприяє підвищенню мотивації учнів до навчання, оскільки вони прагнуть показати кращі результати. </span>
                         <span class="text">Це також можливість для вчителів побачити сучасні освітні тенденції та обмінятися досвідом з колегами.</span>
                     </div>
                     <div class="purpose">
-                        <img src="{% static "images/home/imgs/buildings.svg" %}" width="48" height="48">
+                        <img src="{% static "images/home/imgs/buildings.svg" %}" alt="Для шкіл" width="48" height="48">
                         <h3>Шкіл</h3>
                         <span class="text">Для школи участь у Всеукраїнській інтернет-олімпіаді є свідченням високого рівня підготовки учнів та професійної роботи педагогічного колективу. </span>
                         <span class="text">Успішна участь школярів у такій олімпіаді підвищує престиж навчального закладу, демонструючи його конкурентоспроможність. Крім того, це стимул для розвитку інноваційних методів навчання та впровадження сучасних технологій в освітній процес.</span>
@@ -210,7 +207,7 @@
                     <h1>Почніть змагання негайно</h1>
                 </div>
                 <div class="etaps">
-                    <div class="first-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                    <div class="first-tour-info bg-steps">
                         <span class="poznachka">2 ТУР</span>
                         <span class="title-1">Інформація та матеріали до 2-го туру</span>
                         <span class="text">
@@ -219,129 +216,23 @@
                             захоплюючу наукову дисципліну, перевірити власні межі та,
                             що не менш важливо, познайомитися з цікавими людьми.
                         </span>
-                        <a class="frame-link" href="{% url "materials" %}" style="color: #f9f9f9!important;"> до 2-го туру <i class="fas fa-arrow-right"></i> </a>
+                        <a class="frame-link std-text-color" href="{% url "materials" %}"> до 2-го туру <i class="fas fa-arrow-right"></i> </a>
                     </div>
-                    <div class="online-tour-info" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                    <div class="online-tour-info bg-steps">
                         <span class="poznachka">Онлайн школа</span>
                         <span class="title-1">Реєстрація на онлайн-школу з фізики</span>
                         <span class="text">
                            Онлайн школа з фізики цілком безкоштовна і дозволяє учням з різних міст України та світу отримати шкільні знання на високому олімпіадному та шкільному рівні.
-Працює 8 груп(по 2 кожному класі з 8 по 11): базові  - за рівнем стандарту з доповненням від нас, поглиблена – за рівнем поглибленого та олімпіадного курсу.
+                           Працює 8 груп(по 2 кожному класі з 8 по 11): базові  - за рівнем стандарту з доповненням від нас, поглиблена – за рівнем поглибленого та олімпіадного курсу.
                         </span>
-                        <a class="frame-link" href="https://t.me/+86JzRhcXWPdkMGVi" style="color: #f9f9f9!important; "> На сторінку школи <i class="fas fa-arrow-right"></i> </a>
+                        <a class="std-text-color frame-link" href="https://t.me/+86JzRhcXWPdkMGVi"> На сторінку школи <i class="fas fa-arrow-right"></i> </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 {% block extra_js %}
-    <script src="{% static "js/product_cards.js" %}"></script>
-    <script src="{% static "js/productsTransmutation.js" %}"></script>
+    <script src="{% static "js/pages/home.js" %}"></script>
 {% endblock %}
-<script>
-
-
-    function setupItemsCarousel(){
-        const prev = document.getElementById('prev-btn');
-        const next = document.getElementById('next-btn');
-        const list = document.getElementById('item-list');
-
-        const itemWidth = 250;
-        let autoScroll = setInterval(function () {
-            list.scrollLeft += itemWidth;
-            // Reset to the beginning if it reaches the end
-            if (list.scrollWidth - list.clientWidth === list.scrollLeft) {
-                list.scrollLeft = 0;
-            }
-        }, 6000); // Scroll every 9000 milliseconds
-
-        prev.addEventListener('click', () => {
-            list.scrollLeft -= itemWidth;  // Adjusted to include gap
-            resetAutoScroll();
-        });
-        next.addEventListener('click', () => {
-            list.scrollLeft += itemWidth;  // Adjusted to include gap
-            resetAutoScroll();
-        });
-
-        function resetAutoScroll() {
-            clearInterval(autoScroll);
-            autoScroll = setInterval(function () {
-                list.scrollLeft += itemWidth;
-                // Reset to the beginning if it reaches the end
-                if (list.scrollWidth - list.clientWidth === list.scrollLeft) {
-                    list.scrollLeft = 0;
-                }
-            }, 6000);
-        }
-    }
-
-
-
-   document.addEventListener("DOMContentLoaded", function() {
-    setupItemsCarousel();
-    const milestones = document.querySelectorAll(".milestone");
-    const progressBar = document.querySelector(".progress");
-    const currentDateElem = document.getElementById("currentDate");
-
-    const currentDate = new Date();
-    currentDateElem.textContent = currentDate.toLocaleDateString();
-
-    let startDate = new Date(milestones[0].dataset.date);
-    let endDate = new Date(milestones[milestones.length - 1].dataset.date);
-
-    milestones.forEach((milestone, index) => {
-        let milestoneDate = new Date(milestone.dataset.date);
-
-        // Рассчитываем позицию контрольной точки в процентах от начала
-        let milestonePercent = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
-
-        if (window.innerWidth <= 768) {
-            // Если это мобильное устройство, позиционируем по top
-            milestone.style.top = `${milestonePercent}%`;
-        } else {
-            // Для десктопов позиционируем по left
-            milestone.style.left = `${milestonePercent}%`;
-        }
-
-        // Если текущая дата больше или равна дате контрольной точки, активируем её
-        if (currentDate >= milestoneDate) {
-            milestone.classList.add("active");
-
-            if (index < milestones.length - 1) {
-                let nextMilestoneDate = new Date(milestones[index + 1].dataset.date);
-                let nextMilestonePercent = ((nextMilestoneDate - startDate) / (endDate - startDate)) * 100;
-
-                let progressPercent = milestonePercent + ((nextMilestonePercent - milestonePercent) * (currentDate - milestoneDate) / (nextMilestoneDate - milestoneDate));
-
-                if (window.innerWidth <= 768) {
-                    // Для мобильных устройств прогресс измеряем по высоте
-                    progressBar.style.height = `${progressPercent}%`;
-                } else {
-                    // Для десктопов измеряем по ширине
-                    progressBar.style.width = `${progressPercent}%`;
-                }
-            } else {
-                if (window.innerWidth <= 768) {
-                    progressBar.style.height = `${milestonePercent}%`;
-                } else {
-                    progressBar.style.width = `${milestonePercent}%`;
-                }
-            }
-        }
-    });
-
-    // Если текущая дата больше конечной даты, заполняем прогресс полностью
-    if (currentDate >= endDate) {
-        if (window.innerWidth <= 768) {
-            progressBar.style.height = "100%";
-        } else {
-            progressBar.style.width = "100%";
-        }
-    }
-});
-</script>
-</html>
 {%endblock%}

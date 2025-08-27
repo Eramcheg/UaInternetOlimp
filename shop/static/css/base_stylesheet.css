@@ -1,0 +1,16 @@
+.bold-weight{
+    font-weight: 600;
+}
+.std-text-color{
+    color: #f9f9f9!important;
+}
+.bg-shapes{
+    background-image: url("../images/home/imgs/Shapes.svg");
+}
+.d-none{
+    display: none;
+}
+.bg-steps{
+    background-image: url("../images/home/imgs/backgroundSteps.png");
+    background-size: contain;
+}
