@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/pages/news.css' %}">
 {% endblock %}
 {% block content %}
-    <body style="background-image: url('{% static "images/general/backgroundPattern.png" %}');">
+    <body class="bg-pattern">
         <div class="white-mask"></div>
         <div class="centered-container">
             <span class="pre-title">Новини</span>
@@ -21,7 +21,7 @@
                         <a class="absolute-link" href="{% url "open_news" news_number=forloop.counter %}">Читати далі <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     {% if forloop.counter == 2 or forloop.counter == 5 %}
-                        <div class="first-tour-info-type-2" style="background-image: url('{% static "images/home/imgs/backroundEtaps.png" %}'); background-size: contain;">
+                        <div class="first-tour-info-type-2 bg-steps">
                             <span class="poznachka">2 ТУР</span>
                             <span class="title-2">Інформація та матеріали до 2-го туру</span>
                             <span class="text">
@@ -29,7 +29,7 @@
                                 інтенсивної роботи з питаннями фізики, відчути фізику як
                                 захоплюючу наукову дисципліну.
                             </span>
-                            <a class="frame-link" href="{% url "home" %}" style="color: #f9f9f9!important;"> до 2-го туру <i class="fas fa-arrow-right"></i> </a>
+                            <a class="frame-link std-text-color" href="{% url "home" %}" > до 2-го туру <i class="fas fa-arrow-right"></i> </a>
                         </div>
                     {% endif %}
                 {% endfor %}

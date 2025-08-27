@@ -132,3 +132,12 @@
 .text-vertical-paragraph h1{
     font-size: 32px;
 }
+.bg-blue{
+    background-image: url("../../images/general/backgroundBlue.svg");
+}
+.bg-pattern{
+    background-image: url("../../images/general/backgroundPattern.png");
+}
+.text-upper{
+    height: 18px; width: 18px; color: #f9f9f9; border-radius: 10px
+}

@@ -112,6 +112,7 @@ def olimp_results(request):
         context['rights'] = None
     return render(request, 'uaolimpiad/olimp_results.html', context)
 
+
 def final_results(request):
 
     context = {
@@ -309,41 +310,6 @@ def parallel_fetch_names(item_list):
         items[item.get("name")] = item
     return items
 
-
-def process_items(item_list):
-    """ Process items from item list with efficient fetching and error handling. """
-    all_orders = parallel_fetch_names(item_list)
-
-    names = [item for item in all_orders.keys()]
-
-    # assuming item_list consists of item names
-    name_to_item_data = fetch_items_by_names(names)
-    order_items = []
-    for name in names:
-        item_data = name_to_item_data.get(name)
-        if item_data and 'quantity' in item_data and 'price' in item_data:
-            order_items.append({
-                **all_orders.get(name),
-                'quantity_max': item_data.get('quantity'),  # Example additional data
-                'total': round(all_orders.get(name)['quantity'] * all_orders.get(name).get('price', 0), 2)
-            })
-    return order_items
-
-
-def fetch_items_by_names(names):
-    """ Fetch items by names using batched 'IN' queries to reduce the number of read operations. """
-    items_ref = db.collection('item')
-    name_to_item_data = {}
-
-    # Firestore supports up to 10 items in an 'IN' query
-    for i in range(0, len(names), 10):
-        batch_names = names[i:i + 10]
-        query_result = items_ref.where('name', 'in', batch_names).get()
-        for doc in query_result:
-            if doc.exists:
-                name_to_item_data[doc.get('name')] = doc.to_dict()
-    return name_to_item_data
-
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'uaolimpiad/prototypes/news_prototype.html'
@@ -418,6 +384,7 @@ def contact_us_page(request):
     else:
         context['rights'] = None
     return render(request, "uaolimpiad/tools/contact_us.html")
+
 
 def materials_view(request):
     materials_page = request.GET.get('page') or ""

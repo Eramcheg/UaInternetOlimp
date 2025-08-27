@@ -89,7 +89,6 @@ def profile(request, feature_name):
     context['userId'] = info['userId']
     context['username'] = info['first_name'] + " " + info["last_name"]
     context['rights'] = info['rights'] if "rights" in info else ""
-    context['current_tour'] = current_tour
 
     return render(request, 'profile.html', context=context)
 
