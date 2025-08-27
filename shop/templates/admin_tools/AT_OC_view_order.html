@@ -76,9 +76,9 @@
         </div>
     {% endif %}
         <div class="order-table">
-           <div class="card-header table-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-    <h3 style="margin-right: auto;">Products ({{ user_orders|length }})</h3>
-    <div class="card-header table-header" style="display: flex; justify-content: space-between;">
+           <div class="card-header table-header w-100 d-flex justify-content-between align-center">
+    <h3 class="m-auto">Products ({{ user_orders|length }})</h3>
+    <div class="card-header table-header d-flex justify-content-between" >
 
         <form id="uploadForm" method="post" enctype="multipart/form-data">
             {% csrf_token %}

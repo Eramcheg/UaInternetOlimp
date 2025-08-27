@@ -45,9 +45,11 @@
 </head>
 <body>
     {% include 'widgets/navigation_bar.html' %}
-    {% block content %}
+    <div class="basic-navbar-margin">
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
+    </div>
     {% include "widgets/footer.html" %}
 
     <script src="{% static "js/base.js" %}"></script>

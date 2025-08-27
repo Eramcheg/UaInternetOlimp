@@ -8,24 +8,24 @@
 {% endblock %}
 
 {% block content %}
-<body style="background-image: url('{% static "images/general/backgroundPattern.png" %}');">
+<body class="bg-pattern">
     <div class="white-mask"></div>
 
-    <div class="hat-container" style="background-image: url('{% static "images/general/backgroundBlue.svg" %}'); ">
+    <div class="hat-container bg-blue" >
         <div class="title-container">
             <span class="predislovie">
                 <span class="mini-text">
                     Новини
                 </span>
-                <span style="height: 18px; width: 18px; color: #f9f9f9; border-radius: 10px"></span>
+                <span class="text-upper"></span>
                 <span class="white-t big-text">
                     На плечах гігантів - команда EuPhO в Кембриджі3
                 </span>
             </span>
             <h1 class="big-text white-t">На плечах гігантів - команда EuPhO в Кембріджі. 3</h1>
             <div class="properties">
-                <span class="mini-text"><img src="{% static "icons/Calendar.svg" %}" width="20" height="20"> 5 липня 2024 р</span>
-                <span class="mini-text"><img src="{% static "icons/Eye.svg" %}" width="20" height="20"> 8 хв читання</span>
+                <span class="mini-text"><img src="{% static "icons/Calendar.svg" %}" alt="Calendar" width="20" height="20"> 5 липня 2024 р</span>
+                <span class="mini-text"><img src="{% static "icons/Eye.svg" %}" alt="Eye" width="20" height="20"> 8 хв читання</span>
             </div>
         </div>
         <img src="{% static "images/general/hat_image.jpg" %}" width="500" height="400" alt="hat" class="hat">
