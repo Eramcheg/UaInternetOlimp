@@ -518,10 +518,12 @@ bluetext{
 .background-purposes-1 {
     top: 0;
     height: 550px;
+    background-image: url("../images/home/imgs/purposes1.svg");
 }
 .background-purposes-2 {
     bottom: 0;
     height: 930px;
+    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0)), url("../images/home/imgs/purposes2.svg")
 }
 
 .post-news-wrapper{
