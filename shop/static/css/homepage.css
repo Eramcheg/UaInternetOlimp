@@ -20,7 +20,6 @@ h1, h3{
 @media (min-width: 769px) {
     .higher-container{
         height: 422px;
-        margin-top: 80px;
     }
     .left-high, .center-high, .right-high {
         height: 100%;

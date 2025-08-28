@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.views.generic import DetailView
+from google.cloud.firestore_v1 import DocumentReference
 
 from shop.forms import User, ArticleForm
 from shop.models import Article
@@ -79,7 +80,7 @@ def news_main_view(request):
     else:
         context['rights'] = None
     context['news_info'] = news_info
-    return render(request, 'uaolimpiad/news.html', context)
+    return render(request, 'uaolimpiad/mainPages/news.html', context)
 
 def task_solutions(request):
 
@@ -94,7 +95,7 @@ def task_solutions(request):
         context['rights'] = user_info['rights']
     else:
         context['rights'] = None
-    return render(request, 'uaolimpiad/jurysSolutions.html', context)
+    return render(request, 'uaolimpiad/mainPages/jurysSolutions.html', context)
 
 
 def olimp_results(request):
@@ -110,7 +111,7 @@ def olimp_results(request):
         context['rights'] = user_info['rights']
     else:
         context['rights'] = None
-    return render(request, 'uaolimpiad/olimp_results.html', context)
+    return render(request, 'uaolimpiad/mainPages/olimp_results.html', context)
 
 
 def final_results(request):
@@ -126,7 +127,7 @@ def final_results(request):
         context['rights'] = user_info['rights']
     else:
         context['rights'] = None
-    return render(request, 'uaolimpiad/final_results.html', context)
+    return render(request, 'uaolimpiad/mainPages/final_results.html', context)
 
 
 def fourth_step_results(request):
@@ -142,7 +143,7 @@ def fourth_step_results(request):
         context['rights'] = user_info['rights']
     else:
         context['rights'] = None
-    return render(request, 'uaolimpiad/4_step_results.html', context)
+    return render(request, 'uaolimpiad/mainPages/4_step_results.html', context)
 
 
 def get_user_category(email):
@@ -312,7 +313,7 @@ def parallel_fetch_names(item_list):
 
 class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'uaolimpiad/prototypes/news_prototype.html'
+    template_name = 'uaolimpiad/news/news_prototype.html'
     context_object_name = 'article'
 
 
@@ -383,7 +384,19 @@ def contact_us_page(request):
         context['rights'] = user_info['rights']
     else:
         context['rights'] = None
-    return render(request, "uaolimpiad/tools/contact_us.html")
+    return render(request, "uaolimpiad/mainPages/contact_us.html")
+
+
+def make_json_serializable(obj):
+    if isinstance(obj, DocumentReference):
+        # choose whichever you need on the client side:
+        return obj.path       # or obj.id
+    elif isinstance(obj, dict):
+        return {k: make_json_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [make_json_serializable(v) for v in obj]
+    else:
+        return obj
 
 
 def materials_view(request):
@@ -394,4 +407,4 @@ def materials_view(request):
         "page_name": materials_page,
         "role": role,
     }
-    return render(request, 'uaolimpiad/materialsMain.html', context=context)
+    return render(request, 'uaolimpiad/mainPages/materialsMain.html', context=context)

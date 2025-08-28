@@ -11,7 +11,31 @@ function getProfileMetaConfig() {
   }
   return {};
 }
-const profileConfig = getProfileMetaConfig();
+
+function getScriptConfig() {
+    const configScript = document.getElementById('config-data');
+    if (configScript) {
+      try {
+        return JSON.parse(configScript.textContent);
+      } catch (err) {
+        console.error("Error while parsing config-data from script:", err);
+      }
+    } else {
+      console.error('Element with id "config-data" was not found');
+    }
+    return {};
+}
+
+function getMergedConfig() {
+    const metaConfig = getProfileMetaConfig();
+    const scriptConfig = getScriptConfig();
+    return { ...metaConfig, ...scriptConfig };
+}
+window.config = {
+  ...(window.config || {}),
+  ...getMergedConfig()
+};
+const profileConfig = window.config;
 
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.active-page').forEach(element => {

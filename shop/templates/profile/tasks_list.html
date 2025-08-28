@@ -175,18 +175,8 @@
         <span class="">
 
         </span>
-        <a id="all"  class="download-task">
+        <a id="all" class="download-task">
             <i class="fa-solid fa-download"></i>
         </a>
     </div>
 </div>
-<script>
-    let user_class = "{{ user_class|safe }}";
-    document.addEventListener("DOMContentLoaded", function() {
-        const downloadTasks = document.querySelectorAll('.download-task');
-        downloadTasks.forEach(task => {
-            let id = task.getAttribute('id');
-            task.setAttribute('href', '/uk/download/'+id+"_"+user_class+" клас 2 тур.pdf")
-        });
-    });
-</script>
