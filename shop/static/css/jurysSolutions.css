@@ -71,7 +71,6 @@ bluetext{
     height: 650px; /* Высота зависит от содержимого */
     /*min-height: 100px; !* Минимальная высота *!*/
     background-size: cover; /* Масштабируем по контейнеру */
-    background-position: center; /* Центрируем */
     background-repeat: no-repeat; /* Изображение не повторяется */
     flex-grow: 1; /* Растягиваем контейнер по мере необходимости */
 }

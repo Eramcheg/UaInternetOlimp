@@ -3,7 +3,17 @@
 {% block title %} Профіль {% endblock %}
 {% block page_meta %}
  <meta name="profileConfig" content='{
-        "featureName": "{{ feature_name }}"
+        "featureName": "{{ feature_name }}",
+        "uploadSolutionUrl": "{% url 'upload_file' %}",
+        "urlUpdateUserAccount": "{% url 'update_user_account' %}",
+        "urlProfileAccount": "{% url 'profile' feature_name='account' %}",
+        "userClass": "{{ user_class }}",
+        "submitCriteriaUrl": "{% url 'submit_criteria' %}",
+        "approveCriteriaUrl": "{% url 'approve_criteria' %}",
+        "rejectCriteriaUrl": "{% url 'reject_criteria' %}",
+        "apiEvaluateTaskUrl": "{% url "api_evaluate_task" %}",
+        "apiClearEvaluationUrl": "{% url "api_clear_evaluation" %}",
+        "currentTour": {{ current_tour }}
     }'>
 {% endblock %}
 {% block extra_css %}
@@ -18,8 +28,6 @@
         <link rel="stylesheet"  href="{% static 'css/profile/account_info.css' %}">
     {% elif feature_name == 'upload' %}
          <link rel="stylesheet" href="{% static 'css/pages/account_features/uploading.css' %}">
-    {% elif feature_name == 'solutions' %}
-        {% include 'uaolimpiad/tools/profile_solutions.html' %}
     {% elif feature_name == 'points' %}
         <link rel="stylesheet" href="{% static 'css/Jury/points_update.css' %}">
     {% elif feature_name == 'jury_control' %}
@@ -44,9 +52,7 @@
         {% elif feature_name == 'account' %}
             {% include 'profile/profile_information.html' %}
         {% elif feature_name == 'upload' %}
-            {% include 'uaolimpiad/tools/profile_upload.html' %}
-        {% elif feature_name == 'solutions' %}
-            {% include 'uaolimpiad/tools/profile_solutions.html' %}
+            {% include 'profile/profile_upload.html' %}
         {% elif feature_name == 'points' %}
             {% include 'uaolimpiad/J_tools/J_points_update.html' %}
         {% elif feature_name == 'jury_control' %}
@@ -58,14 +64,33 @@
         {% elif feature_name == 'verification' %}
             {% include 'uaolimpiad/J_tools/J_tasks_verification.html' %}
         {% elif feature_name == 'chat' %}
-            {% include 'uaolimpiad/tools/profile_chat.html' %}
+            {% include 'profile/profile_chat.html' %}
         {% endif %}
     </div>
 
 {% endblock %}
 
 {% block extra_js %}
+    {{ config_data|json_script:"config-data" }}
     <script src="{% static 'js/pages/profile/profileMain.js' %}"></script>
+    {% if feature_name == 'dashboard' %}
+    {% elif feature_name == 'tasks' %}
+        <script src="{% static "js/pages/profile/profileTasksList.js" %}"></script>
+    {% elif feature_name == 'account' %}
+        <script src="{% static "js/pages/profile/profileInformation.js" %}"></script>
+    {% elif feature_name == 'upload' %}
+        <script src="{% static "js/pages/profile/profileUploadSolutions.js" %}"></script>
+    {% elif feature_name == 'points' %}
+        <script src="{% static "js/pages/profile/profilePointsUpdate.js" %}"></script>
+    {% elif feature_name == 'jury_control' %}
+    {% elif feature_name == 'criteria_create' %}
+        <script src="{% static "js/pages/profile/profileCriteriaCreate.js" %}"></script>
+    {% elif feature_name == 'criteria_approve' %}
+        <script src="{% static "js/pages/profile/profileCriteriaApprove.js" %}"></script>
+    {% elif feature_name == 'verification' %}
+        <script type="module" src="{% static "js/pages/profile/profileTasksVerification.js" %}"></script>
+    {% elif feature_name == 'chat' %}
+    {% endif %}
 {% endblock %}
 
 

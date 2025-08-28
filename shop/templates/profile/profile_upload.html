@@ -10,7 +10,7 @@
         {% if task_1 %}
         <h5>Завантажений файл: {{ task_1 }}</h5>
         {% endif %}
-        <input type="file" id="fileInput1" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box1')">
+        <input type="file" id="fileInput1" accept=".pdf,.docx,.txt">
 
         <span class="file-name" id="fileName1"></span>
     </div>
@@ -23,7 +23,7 @@
         {% if task_2 %}
             <h5>Завантажений файл: {{ task_2 }}</h5>
         {% endif %}
-        <input type="file" id="fileInput2" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box2')">
+        <input type="file" id="fileInput2" accept=".pdf,.docx,.txt">
         <span class="file-name" id="fileName2"></span>
     </div>
     <div class="upload-box" id="box3">
@@ -35,7 +35,7 @@
         {% if task_3 %}
             <h5>Завантажений файл: {{ task_3 }}</h5>
         {% endif %}
-        <input type="file" id="fileInput3" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box3')">
+        <input type="file" id="fileInput3" accept=".pdf,.docx,.txt">
         <span class="file-name" id="fileName3"></span>
     </div>
     <div class="upload-box" id="box4">
@@ -47,7 +47,7 @@
         {% if task_4 %}
             <h5>Завантажений файл: {{ task_4 }}</h5>
         {% endif %}
-        <input type="file" id="fileInput4" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box4')">
+        <input type="file" id="fileInput4" accept=".pdf,.docx,.txt">
         <span class="file-name" id="fileName4"></span>
     </div>
     <div class="upload-box" id="box5">
@@ -59,50 +59,7 @@
         {% if task_5 %}
             <h5>Завантажений файл: {{ task_5 }}</h5>
         {% endif %}
-        <input type="file" id="fileInput5" accept=".pdf,.docx,.txt" onchange="uploadFile(this, 'box5')">
+        <input type="file" id="fileInput5" accept=".pdf,.docx,.txt">
         <span class="file-name" id="fileName5"></span>
     </div>
 </div>
-<script>
-    function uploadFile(input, boxId) {
-        const file = input.files[0];
-        if (file) {
-            document.getElementById(boxId).querySelector('.file-name').textContent = file.name;
-
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('box_id', boxId);
-
-            fetch('{% url "upload_file" %}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-                body: formData
-            })
-            .then(response => {
-                // Логгирование для проверки содержимого ответа
-                console.log(response);
-
-                // Проверка типа содержимого
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                } else {
-                    throw new Error("Response is not JSON");
-                }
-            })
-            .then(data => {
-                if (data.success) {
-                    console.log('File uploaded successfully:', data.file_url);
-                    window.location.reload();
-                } else {
-                    console.error('File upload failed:', data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    }
-</script>

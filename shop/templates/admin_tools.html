@@ -12,16 +12,12 @@
     {% include 'admin_tools/AT_side_menu.html' %}
     {% if feature_name == 'dashboard' %}
         {% include 'admin_tools/AT_dashboard.html' %}
-    {% elif feature_name == 'orders_control' %}
-        {% include 'admin_tools/AT_orders_control.html' %}
     {% elif feature_name == 'users_control' %}
         {% include 'admin_tools/AT_users_control.html' %}
     {% elif feature_name == 'edit_user' %}
         {% include 'admin_tools/AT_UC_edit_user.html' %}
     {% elif feature_name == 'view_user' %}
         {% include 'admin_tools/AT_UC_view_user.html' %}
-    {% elif feature_name == 'view_order' %}
-        {% include 'admin_tools/AT_OC_view_order.html' %}
     {% elif feature_name == 'manage_articles' %}
         {% include 'admin_tools/AT_manage_articles.html' %}
     {% endif %}

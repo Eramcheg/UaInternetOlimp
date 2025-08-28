@@ -13,7 +13,7 @@ from firebase_admin import storage, firestore
 
 from shop.views import db, serialize_firestore_document, users_ref, get_user_info, \
     updateChatInfo, TASKS, \
-    criteria_ref, current_tour, assignments_ref
+    criteria_ref, current_tour, assignments_ref, make_json_serializable
 from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_admins, get_students_by_class
 
 
@@ -39,12 +39,14 @@ def profile(request, feature_name):
 
     context = dict()
     context['feature_name'] = feature_name
-
+    config = {}
     if feature_name == "dashboard":
         pass
     elif feature_name == "tasks":
         context['user_class'] = info.get('paralel', 9)
     elif feature_name == "account":
+        context['user_info'], context['user_info_dict'] = get_user_info_dicts(email)
+        config['user_info_dict'] = context['user_info_dict']
         context['user_info'] = info
     elif feature_name == "upload":
         docs = assignments_ref.where("userId", "==", info['userId']).where('tour', '==', current_tour).stream()
@@ -69,19 +71,23 @@ def profile(request, feature_name):
         context['jury_tasks'] = [inf + f"_{current_tour}" for inf in info.get('allowed_tasks', "")]
         context['tasks'] = get_all_tasks()
         context['saved_criteria'] = saved_criteria
-
+        config['saved_criteria'] = saved_criteria
+        config['tasks'] = context['tasks']
+        config['jury_tasks'] = context['jury_tasks']
     elif feature_name == "criteria_approve":
         context['tasks_numbers'] = [y + f"_{current_tour}" for y in
                                     sorted(TASKS, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1])))]
         context['jury_tasks'] = [inf + f"_{current_tour}" for inf in info.get('allowed_tasks', "")]
         context['tasks'] = get_all_tasks()
         context['saved_criteria'] = saved_criteria
+        config['saved_criteria'] = saved_criteria
+        config['tasks'] = context['tasks']
+        config['jury_tasks'] = context['jury_tasks']
     elif feature_name == "verification":
         context['jury_tasks'] = [inf + f"_{current_tour}" for inf in info.get('allowed_tasks', "")]
-
+        config['jury_tasks'] = context['jury_tasks']
     elif feature_name == "chat":
         context['user_class'] = info.get('paralel', 9)
-
     else:
         pass
 
@@ -89,8 +95,26 @@ def profile(request, feature_name):
     context['userId'] = info['userId']
     context['username'] = info['first_name'] + " " + info["last_name"]
     context['rights'] = info['rights'] if "rights" in info else ""
-
+    config_data = make_json_serializable(config)
+    context['config_data'] = config_data
     return render(request, 'profile.html', context=context)
+
+
+def get_user_info_dicts(email):
+    """
+    Fetch user information from Firestore and convert it to dictionaries.
+    :param email:
+    :return:
+    """
+    existing_users = users_ref.where('email', '==', email).limit(1).get()
+    if existing_users:
+        for user in existing_users:
+            user_ref = users_ref.document(user.id)
+            user_data = serialize_firestore_document(user_ref.get())
+            information = json.dumps(user_data)
+            information2 = json.loads(information)
+            return information2, information
+    return None, None
 
 
 def format_date(date_obj):
