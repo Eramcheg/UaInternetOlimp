@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 {% load i18n %}
 {% load widget_tweaks %}
-
 {% block title %} Головна {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
 {% endblock %}
-<body>
-
+{% block content %}
     <div class="higher-container" >
         <div class="left-high bg-shapes">
         </div>
@@ -231,7 +228,6 @@
             </div>
         </div>
     </div>
-</body>
 {% block extra_js %}
     <script src="{% static "js/pages/home.js" %}"></script>
 {% endblock %}
