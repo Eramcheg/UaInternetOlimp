@@ -1,6 +1,6 @@
 from django.urls import reverse
 
-from shop.views import current_tour, get_user_role
+from shop.views import current_tour, get_user_role, get_user_session_type
 
 
 def get_current_tour(request):
@@ -8,4 +8,4 @@ def get_current_tour(request):
 
 
 def user_role(request):
-    return {'role':get_user_role(request.user.email)}
+    return {'role': get_user_role(get_user_session_type(request))}
