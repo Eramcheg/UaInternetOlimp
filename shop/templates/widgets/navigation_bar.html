@@ -36,7 +36,7 @@
                 <a href="{% url 'profile' feature_name="account" %}" class="link">Акаунт</a>
             {% endif %}
             {% if role == "Admin" %}
-                <a href="{% url 'admin_tools' feature_name='home' %}" class="link">Адмін</a>
+                <a href="{% url 'admin_tools' feature_name='dashboard' %}" class="link">Адмін</a>
             {% endif %}
             </div>
             {% if not user.is_authenticated %}

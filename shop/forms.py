@@ -134,10 +134,8 @@ class SchoolRegistrationForm(Form):
     olympiadsAchievements = forms.CharField(
         label="Досягнення (коротко)",
         widget=forms.Textarea(attrs={"rows": 3}),
-        required=True
+        required=False
     )
-
-    plannedGroup = forms.ChoiceField(label="Група навчання", choices=GROUP_CHOICES)
 
     contactLinks = forms.CharField(
         label="Посилання на соцмережі / месенджери (по одному у рядку)",
@@ -145,26 +143,15 @@ class SchoolRegistrationForm(Form):
         required=True
     )
 
-    npRecipientFullName = forms.CharField(label="ПІБ отримувача (НП)", max_length=90)
-    npPhone = forms.CharField(
-        label="Телефон отримувача (НП)",
-        validators=[ua_phone_validator]
-    )
-
-    npCity = forms.CharField(label="Місто (НП)", max_length=80)
-    npBranchNumber = forms.CharField(label="№ відділення НП", max_length=20)
-
     consentGiven = forms.BooleanField(label="Згоден(-на) з наданням персональної інформації")
 
     def clean(self):
         cleaned = super().clean()
-        # Якщо «навчаюсь в Україні» — область і номер школи обов’язкові
         if cleaned.get("studyInUkraine"):
             if not cleaned.get("schoolOblast"):
                 self.add_error("schoolOblast", "Вкажіть область.")
             if not cleaned.get("schoolNumber"):
                 self.add_error("schoolNumber", "Вкажіть номер школи.")
-        # Якщо участь в олімпіадах — щонайменше предмет або опис
         # Згода обов’язкова (поле й так required=True, але дублюємо перевірку)
         if not cleaned.get("consentGiven"):
             self.add_error("consentGiven", "Потрібна згода на обробку персональних даних.")

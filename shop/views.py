@@ -220,8 +220,6 @@ def admin_tools(request, feature_name):
         from shop.views_scripts.manage_articles.create_article import create_article
         create_article(request)
 
-    # Banner.objects.all().delete() # Функция чтобы удалять из бд данные
-    # print(Banner.objects.all())
     articles = Article.objects.all().order_by('priority')
     context = {
         "feature_name": feature_name,

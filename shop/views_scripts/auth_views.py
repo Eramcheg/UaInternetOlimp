@@ -186,17 +186,7 @@ def school_registration(request):
 
                 # Олімпіади
                 "olympiadsParticipation": bool(cd["olympiadsParticipation"]),
-                "olympiadsSubjects": cd.get("olympiadsSubjects") or [],
                 "olympiadsAchievements": cd.get("olympiadsAchievements") or "",
-
-                # Група
-                "plannedGroup": cd["plannedGroup"],
-
-                # Нова пошта
-                "npRecipientFullName": cd["npRecipientFullName"],
-                "npPhone": cd["npPhone"],
-                "npCity": cd["npCity"],
-                "npBranchNumber": cd["npBranchNumber"],
 
                 # Згода
                 "consentGiven": True,
