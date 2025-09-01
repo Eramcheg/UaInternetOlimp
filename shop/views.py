@@ -54,7 +54,6 @@ def home_page(request):
         print(user)
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -72,7 +71,6 @@ def news_main_view(request):
         'articles': articles
     }
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -88,7 +86,6 @@ def task_solutions(request):
 
     }
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -104,7 +101,6 @@ def olimp_results(request):
 
     }
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -120,7 +116,6 @@ def final_results(request):
 
     }
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -136,7 +131,6 @@ def fourth_step_results(request):
 
     }
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -157,7 +151,7 @@ def get_user_role(email):
             user_dict = user_info.to_dict()
             return user_dict['role']
     else:
-        return "Default", "Euro"
+        return "Default"
 
 
 def get_user_info(email):
@@ -319,7 +313,6 @@ class ArticleDetailView(DetailView):
 def open_news(request, news_number):
     context = {}
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:
@@ -376,7 +369,6 @@ def updateChatInfo(old_data, new_data):
 def contact_us_page(request):
     context = {}
     email = get_user_session_type(request)
-    context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
     if user_info is not None and "rights" in user_info:

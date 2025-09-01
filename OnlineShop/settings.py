@@ -197,6 +197,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'shop.context_processor.get_current_tour',
+                'shop.context_processor.user_role',
             ],
         },
     },
