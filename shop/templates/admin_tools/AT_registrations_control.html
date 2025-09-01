@@ -23,7 +23,7 @@
         <thead>
             <tr>
                 <th></th>
-                <th>ID<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
+                <th>Id<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Ім'я<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>Прізвище<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
                 <th>По батькові<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
@@ -68,7 +68,7 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
     import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
-    var firebaseConfig = {
+    let firebaseConfig = {
         apiKey: "AIzaSyAzV7CPVJJbgteozTbjdlIcyt85Kbuxd90",
         authDomain: "uainternetolimp-41dd1.firebaseapp.com",
         projectId: "uainternetolimp-41dd1"
@@ -97,7 +97,7 @@
 
 
     async function fetchAllUsers() {
-        const usersQuery = query(collection(db, "users"));
+        const usersQuery = query(collection(db, "school_registrations"));
         const querySnapshot = await getDocs(usersQuery);
         return querySnapshot.docs.map(doc => doc.data());
     }
@@ -427,26 +427,26 @@
             row.appendChild(userIdCell);
 
             let firstNameCell = document.createElement('td');
-            firstNameCell.textContent = user.first_name;
+            firstNameCell.textContent = user.firstName_uk;
             row.appendChild(firstNameCell);
 
             let lastNameCell = document.createElement('td');
-            lastNameCell.textContent = user.last_name;
+            lastNameCell.textContent = user.lastName_uk;
             row.appendChild(lastNameCell);
 
             let thirdNameCell = document.createElement('td');
-            thirdNameCell.textContent = user.third_name;
+            thirdNameCell.textContent = user.patronymic_uk;
             row.appendChild(thirdNameCell);
 
             let emailCell = document.createElement('td');
-            emailCell.textContent = user.email;
+            emailCell.textContent = user.contactEmail;
             row.appendChild(emailCell);
 
 
             // Repeat for each user property...
             // For cells with static content like '---' for sales
             let schoolCell = document.createElement('td');
-            schoolCell.textContent = user.school || "Жюри"; // Assuming sales data is not available
+            schoolCell.textContent = user.studyInUkraine; // Assuming sales data is not available
             row.appendChild(schoolCell);
 
             let enabledCell = document.createElement('td');
@@ -461,7 +461,7 @@
 
             let registrationDateCell = document.createElement('td');
 
-            registrationDateCell.textContent = user.registrationDate.split(" ")[0];
+            {#registrationDateCell.textContent = user.registrationDate.split(" ")[0];#}
             row.appendChild(registrationDateCell);
 
             // Actions cell
