@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Реєстрація успішна {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+    <link rel="stylesheet" href="{% static "css/schoolRegistration.css" %}">
+{% endblock %}
+
+{% block content %}
+    <section id="wrapper" class="stick_parent_lb">
+        <header class="text-align-center">
+            <h1 class="f-600-block text-black"> Дякуємо! Анкету надіслано! </h1>
+        </header>
+        <section id="content" class="page-content card card-block">
+            <span>
+                Ми успішно отримали вашу анкету OnlinePhysicsSchool.
+                Цю інформацію використано лише для навчання та комунікації зі школою.
+                Вона не передається третім особам.
+            </span>
+        </section>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

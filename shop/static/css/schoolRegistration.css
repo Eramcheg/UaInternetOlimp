@@ -23,6 +23,10 @@
     padding: 7px 14px!important;
     height: 48px!important;
 }
+.form-control-checkmark{
+    padding: 7px 14px!important;
+    height: 30px!important;
+}
 .back-btn{
     border-radius: 6px!important;
     background-color: #e6eff8!important;
@@ -63,7 +67,7 @@
 .tab {
     padding: 10px;
     background-color: #f0f0f0;
-    width: 33%;
+    width: 25%;
     height: 1px;
     border-radius: 10px;
 }
