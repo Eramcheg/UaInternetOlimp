@@ -1,23 +1,30 @@
+import hashlib
 import random
 import string
 from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from firebase_admin import firestore
 
-from shop.forms import UserRegisterForm, User
-from shop.views import users_ref
+from shop.forms import UserRegisterForm, User, SchoolRegistrationForm
+from shop.views import users_ref, school_registrations_ref, get_user_info, get_user_session_type
+
+CONSENT_VERSION = "v1.0-2025-09-01"
+
 
 def generate_random_code(length=10):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
 
+
 def check_code_unique(code, collection_ref):
     query = collection_ref.where('user_id', '==', code).limit(1).stream()
     return any(query)
+
 
 def get_unique_user_id():
 
@@ -25,9 +32,13 @@ def get_unique_user_id():
         new_user_id = generate_random_code()
         if not check_code_unique(new_user_id, users_ref):
             return new_user_id
+
+
 def check_login_unique_in_firestore(login_name):
     query = users_ref.where('login', '==', login_name).limit(1).stream()
     return any(query)
+
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -98,6 +109,116 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form, 'errors': form.errors})
 
 
+def _email_fingerprint(email: str) -> str:
+    # стабильный doc_id для гостя
+    return "anon_" + hashlib.sha256(email.strip().lower().encode("utf-8")).hexdigest()[:24]
+
+
+def school_registration(request):
+    try:
+        email_from_session = get_user_session_type(request)  # может вернуть None
+    except Exception:
+        email_from_session = None
+    try:
+        info = get_user_info(email_from_session) if email_from_session else {}
+    except Exception:
+        info = {}
+    user_id = info.get('userId')
+
+    if user_id:
+        if school_registrations_ref.document(user_id).get().exists:
+            return redirect("school_registration_success")
+
+    initial = {
+        "contactEmail": (email_from_session or ""),
+        "paralel": info.get('paralel', '8'),
+    }
+
+    if request.method == 'POST':
+        form = SchoolRegistrationForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            if user_id:
+                doc_id = user_id
+            else:
+                contact_email = cd["contactEmail"].strip().lower()
+                if not contact_email:
+                    messages.error(request, "Вкажіть email.")
+                    return render(request, 'registration/school_registration.html', {'form': form})
+                doc_id = _email_fingerprint(contact_email)
+                existing_by_email = (school_registrations_ref
+                                     .where('contactEmail', '==', contact_email)
+                                     .limit(1).stream())
+                if any(existing_by_email):
+                    return redirect("school_registration_success")
+
+            payload = {
+                "schemaVersion": 1,
+                "status": "submitted",
+                "userId": doc_id,
+
+                # ПІБ
+                "lastName_uk": cd["lastName_uk"],
+                "firstName_uk": cd["firstName_uk"],
+                "patronymic_uk": cd.get("patronymic_uk") or "",
+                "lastName_en": cd["lastName_en"],
+                "firstName_en": cd["firstName_en"],
+                "patronymic_en": cd.get("patronymic_en") or "",
+
+                # Школа в Україні / за кордоном
+                "studyInUkraine": bool(cd["studyInUkraine"]),
+                "schoolOblast": cd.get("schoolOblast") or "",
+                "schoolNumber": cd.get("schoolNumber") or "",
+                "schoolName": cd.get("schoolName") or "",
+                "studyAbroadNote": "" if cd["studyInUkraine"] else "Навчаюсь за кордоном",
+
+                # Проживання
+                "residenceCity": cd["residenceCity"],
+                "residenceCountry": cd["residenceCountry"],
+
+                # Контакти
+                "contactEmail": cd["contactEmail"],
+                "contactLinks": cd["contactLinks"],
+
+                # Паралель (рядок!)
+                "paralel": str(cd["paralel"]),
+
+                # Олімпіади
+                "olympiadsParticipation": bool(cd["olympiadsParticipation"]),
+                "olympiadsSubjects": cd.get("olympiadsSubjects") or [],
+                "olympiadsAchievements": cd.get("olympiadsAchievements") or "",
+
+                # Група
+                "plannedGroup": cd["plannedGroup"],
+
+                # Нова пошта
+                "npRecipientFullName": cd["npRecipientFullName"],
+                "npPhone": cd["npPhone"],
+                "npCity": cd["npCity"],
+                "npBranchNumber": cd["npBranchNumber"],
+
+                # Згода
+                "consentGiven": True,
+                "consentTextVersion": CONSENT_VERSION,
+                "consentGivenAt": firestore.SERVER_TIMESTAMP,
+
+                # Службові
+                "createdAt": firestore.SERVER_TIMESTAMP,
+                "updatedAt": firestore.SERVER_TIMESTAMP,
+            }
+            school_registrations_ref.document(doc_id).set(payload, merge=True)
+
+            messages.success(request, "Анкету надіслано. Дякуємо!")
+            return redirect("school_registration_success")
+    else:
+        form = SchoolRegistrationForm(initial=initial)
+
+    return render(request, 'registration/school_registration.html', {'form': form, 'errors': form.errors})
+
+
+def school_registration_success(request):
+    return render(request, 'registration/school_registration_success.html')
 
 def login_view(request):
     if request.method == 'POST':

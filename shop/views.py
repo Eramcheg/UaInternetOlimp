@@ -21,6 +21,7 @@ chats_ref = db.collection('chats')
 criteria_ref = db.collection('criteria')
 actions_ref = db.collection('jury_actions')
 messages_ref = db.collection('messages')
+school_registrations_ref = db.collection('school_registrations')
 tasks_ref = db.collection('tasks')
 users_ref = db.collection('users')
 
@@ -41,19 +42,18 @@ def get_user_session_type(request):
     else:
         return request.session.session_key
 
+
 def home_page(request):
     context = {
     }
     all_users = User.objects.all()
     articles = Article.objects.all().order_by('priority')
-    articles_json = serialize('json', articles, fields=('article_name', 'mini_article_photo', 'mini_article_text'))
     context['news_info'] = news_info
     context['articles'] = articles
     for user in all_users:
         print(user)
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
-    print(get_user_role(email))
     context['role'] = get_user_role(email)
     user_info = get_user_info(email)
 
@@ -165,6 +165,7 @@ def get_user_info(email):
     for user_info in user:
         user_dict = user_info.to_dict()
         return user_dict
+    return {}
 
 
 def update_email_in_db(old_email, new_email):

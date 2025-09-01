@@ -26,7 +26,8 @@ from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_c
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
     move_down_article, edit_article
 from shop.views_scripts.users_control.at_uc_bulk_actions import disable_users, enable_users
-from shop.views_scripts.auth_views import register, logout_view, login_view
+from shop.views_scripts.auth_views import register, logout_view, login_view, school_registration, \
+    school_registration_success
 from shop.views_scripts.profile_views import update_user_account, download_file, upload_file
 from shop.views_scripts.users_control.edit_user import edit_user
 from shop.views_scripts.users_control.view_user import view_user
@@ -42,9 +43,6 @@ urlpatterns = i18n_patterns(
 path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('register/', register, name='register'),
     path('materials/', materials_view, name='materials'),
     path('news/', news_main_view, name='news_main'),
     path('task-solutions/', task_solutions, name='tasks_solutions'),
@@ -73,13 +71,18 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('move-down-article/<int:article_id>/', move_down_article, name='move_down_article'),
     path('news/<str:news_number>/', open_news, name='open_news'),
 
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('register/', register, name='register'),
+    path('school-registration/', school_registration, name='school_registration'),
+    path('school-registration-success/', school_registration_success, name='school_registration_success'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-    path('contacts/', contact_us_page, name='contact_us'),
 
+    path('contacts/', contact_us_page, name='contact_us'),
 
     # Jury urls
     path('submit_score/', handle_max_score, name='submit_max_score'),

@@ -1,0 +1,422 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Реєстрація до школи {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+    <link rel="stylesheet" href="{% static "css/schoolRegistration.css" %}">
+{% endblock %}
+
+{% block content %}
+<div id="errorModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p id="errorText"></p>
+        <button id="okButton">OK</button>
+    </div>
+</div>
+
+<section id="wrapper" class="stick_parent_lb">
+    <div class="container">
+        <div id="content-wrapper">
+            <section id="main">
+                <div class="container">
+                    <header class="text-align-center">
+                        <h1 class="f-600-block"> Реєстрація до онлайн школи з фізики </h1>
+                    </header>
+                    <section id="content" class="page-content card card-block">
+                        <section class="sociallogin displayCustomerAccountFormTop authentication hidden-print">
+                            <div class="col-xs-12">
+                            </div>
+                        </section>
+                        <ul class="tab-list">
+                            <li class="tab active"></li>
+                            <li class="tab"></li>
+                            <li class="tab"></li>
+                            <li class="tab"></li>
+                        </ul>
+                        <section class="register-form">
+                            <form action="{% url 'school_registration' %}" id="customer-form" class="js-customer-form" method="post" novalidate>
+                            {% csrf_token %}
+                                <div>
+                                    <div class="tab-content active">
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Ім'я</label>
+                                                {{ form.firstName_uk | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Прізвище</label>
+                                                {{ form.lastName_uk | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>По батькові</label>
+                                                {{ form.patronymic_uk | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label> Ім'я (лат.) </label>
+                                                {{ form.firstName_en | add_class:"form-control" | attr:"" }}
+                                                <span class="form-control-comment"> (Латиницею, як у паспорті) </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label> Прізвище (лат.) </label>
+                                                {{ form.lastName_en | add_class:"form-control" | attr:"" }}
+                                                <span class="form-control-comment"> (Латиницею, як у паспорті) </span>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Ви навчаєтесь в Україні?</label>
+                                                {{ form.studyInUkraine | add_class:"form-control form-control-checkmark" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div id="school-fields">
+                                          <div class="form-group row">
+                                            <div class="col-md-12">
+                                              <label>Область в якій ви навчаєтесь</label>
+                                              {{ form.schoolOblast|add_class:"form-control" }}
+                                            </div>
+                                            <div class="col-md-12">
+                                              <label>Номер школи</label>
+                                              {{ form.schoolNumber|add_class:"form-control" }}
+                                            </div>
+                                            <div class="col-md-12">
+                                              <label>Назва школи</label>
+                                              {{ form.schoolName|add_class:"form-control" }}
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div id="residence-fields">
+                                            <div class="form-group row">
+                                                <div class="col-md-12">
+                                                  <label>Країна проживання</label>
+                                                  {{ form.residenceCountry|add_class:"form-control" }}
+                                                </div>
+                                                <div class="col-md-12">
+                                                  <label>Місто проживання</label>
+                                                  {{ form.residenceCity|add_class:"form-control" }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Емейл</label>
+                                                {{ form.contactEmail | add_class:"form-control" | attr:"placeholder: "|attr:"autocomplete:off" }}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row ">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12 form-control-valign">
+                                                <label> Ваша учбова паралель</label>
+                                                {{ form.paralel | add_class:"form-control" | attr:""  }}
+                                            </div>
+                                            <div class="col-md-12 form-control-comment">
+                                                В якій учбовій паралелі ви навчаєтесь зараз по українським стандартам?
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-content">
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Чи приймаєте Ви участь в олімпіадах з Фізики/Астрономії?</label>
+                                                {{ form.olympiadsParticipation | add_class:"form-control form-control-checkmark" | attr:"" }}
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Які Ваші досягнення?</label>
+                                                {{ form.olympiadsAchievements | add_class:"form-control" | attr:"" }}
+                                                <div class="col-md-12 form-control-comment">
+                                                    Розкажіть про Ваші досягнення
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row ">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12 form-control-valign">
+                                                <label> В якій групі нашої школи Ви плануєте навчатися? </label>
+                                                {{ form.plannedGroup | add_class:"form-control" | attr:""  }}
+                                            </div>
+                                            <div class="col-md-12 form-control-comment">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-content">
+                                        <h3> Увага. </h3>
+                                        <h4>
+                                            Наступні поля потрібні для того, щоб попередити вас про форс мажорні обставини,
+                                            щоб вислати вам сертифікат/подарунок від нашої школи та університету Лейдена
+                                            як активному учню школи, запросити вас до наукової школи чи олімпіади від
+                                            OnlinePhysicsSchool.
+                                        </h4>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>
+                                                    Будь ласка, дайте Ваше посилання на якусь соцмережу, щоб Ви могли
+                                                    отримати листа безпосередньо (Telegram, Whatsapp, Signal, ін.)
+                                                </label>
+                                                {{ form.contactLinks | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h4>
+                                            Будь ласка, напишіть номер відділення нової пошти,
+                                            місто, ПІБ та телефон людини, на яку можна відправити
+                                            сертифікат/подарунок від нашої школи.
+                                        </h4>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>ПІБ отримувача</label>
+                                                {{ form.npRecipientFullName | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Телефон отримувача</label>
+                                                {{ form.npPhone | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Місто</label>
+                                                {{ form.npCity | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Номер відділення Нової Пошти</label>
+                                                {{ form.npBranchNumber | add_class:"form-control" | attr:"" }}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 form-control-comment">
+                                                <span class="req">*</span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Згоден(-на) з наданням персональної інформації</label>
+                                                {{ form.consentGiven | add_class:"form-control form-control-checkmark" | attr:"" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content">
+                                        <h3> Вітаємо! Ви майже зареєструвались!</h3>
+                                        <h4> Натисніть "Завершити"</h4>
+                                    </div>
+                                </div>
+                                <footer class="form-footer clearfix">
+                                    <button class="forward-btn btn btn-primary wide form-control-submit float-xs-right" type="button"> Далі </button>
+
+                                    <button class="back-btn btn btn-primary wide form-control-submit float-xs-right" type="button"> Назад </button>
+
+                                    <button class="submit-btn btn btn-primary wide form-control-submit float-xs-right" type="submit"> Завершити </button>
+
+                                </footer>
+                            </form>
+                        </section>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{{ form.errors|json_script:"form_errors" }}
+<script>
+    let currentTab = 0;
+    let maxTabs = document.querySelectorAll('.tab-content').length - 1;
+    const form = document.getElementById('customer-form');
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('.submit-btn').style.display='none';
+
+        Inputmask({
+            mask: "+38 (999) 999-99-99",
+            removeMaskOnSubmit: true,
+            autoUnmask: true
+        }).mask("input[name='npPhone']");
+
+        showTab(currentTab);
+
+        let formErrors = {% if form.errors %}true{% else %}false{% endif %};
+        let errorModal = document.getElementById("errorModal");
+        let errorText = document.getElementById("errorText");
+        let okButton = document.getElementById("okButton");
+        let closeButton = document.querySelector(".close-button");
+
+        if (formErrors) {
+            let errorMessage = "";
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errorMessage += "{{ error }}\n";
+                {% endfor %}
+            {% endfor %}
+            errorText.innerText = errorMessage;
+            errorModal.style.display = "block";
+        }
+
+        okButton.onclick = function() {
+            errorModal.style.display = "none";
+        }
+
+        closeButton.onclick = function() {
+            errorModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = "none";
+            }
+        }
+
+        const checkbox = document.querySelector("#id_studyInUkraine"); // id = "id_" + имя поля
+        const schoolBlock = document.querySelector("#school-fields");
+
+        function toggleSchoolFields() {
+            if (checkbox.checked) {
+              schoolBlock.style.display = "";
+              // включаем поля обратно
+              schoolBlock.querySelectorAll("input, select").forEach(el => el.disabled = false);
+            } else {
+              schoolBlock.style.display = "none";
+              // выключаем поля, чтобы не слали пустые значения
+              schoolBlock.querySelectorAll("input, select").forEach(el => el.disabled = true);
+            }
+        }
+
+        checkbox.addEventListener("change", toggleSchoolFields);
+        toggleSchoolFields();
+    });
+
+    document.querySelector('.back-btn').addEventListener('click', function() { if(currentTab > 0) previousStep();   });
+    document.querySelector('.forward-btn').addEventListener('click', function() { if( currentTab !== maxTabs) nextStep();  });
+
+    function showTab(n) {
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        tabs[n].classList.add('active');
+        contents[n].classList.add('active');
+        if (currentTab===maxTabs) {
+            document.querySelector('.back-btn').style.display = 'none';
+            document.querySelector('.forward-btn').style.display = 'none';
+            document.querySelector('.submit-btn').style.display='block';
+        }
+    }
+
+    function nextStep() {
+        if (!validateForm()) return false;
+        currentTab++;
+        if (currentTab >= document.querySelectorAll('.tab-content').length) {
+            currentTab = 0;
+        }
+        showTab(currentTab);
+    }
+    function previousStep() {
+        currentTab--;
+        if (currentTab < 0) {
+            currentTab = 0;
+        }
+        showTab(currentTab);
+    }
+    function validateForm() {
+        let valid = true;
+        const currentInputs = document.querySelectorAll('.tab-content.active .form-control[required]');
+        if(currentTab === 0){
+            if(document.getElementById('id_studyInUkraine').checked === true){
+                let schoolInputs = document.querySelectorAll('.tab-content.active #school-fields .form-control');
+                schoolInputs.forEach(input => {
+                    if (input.value === "") {
+                        input.style.borderColor = "red";
+                        valid = false;
+                    } else {
+                        input.style.borderColor = "";
+                    }
+                });
+            }
+        }
+        if(currentTab === (maxTabs-1))
+        {
+            if(document.getElementById('id_consentGiven').checked !== true){
+                alert("Повинно бути підтвердження на надання Ваших персональних даних.");
+                return false;
+            }
+        }
+        currentInputs.forEach(input => {
+            if (input.value === "") {
+                input.style.borderColor = "red";
+                valid = false;
+            } else {
+                input.style.borderColor = "";
+            }
+        });
+        return valid;
+    }
+</script>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
