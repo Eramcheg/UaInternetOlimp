@@ -145,3 +145,37 @@ body{
     text-align: center;
     color:black;
 }
+
+/* Убираем список у стандартного RadioSelect */
+.yesno ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; }
+.yesno li { margin: 0; }
+
+.yesno input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border: 2px solid #888;
+  border-radius: 3px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.yesno input[type="radio"]:checked::after {
+  content: "✓";
+  position: absolute;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 20px;
+    transform: translate(-50%, -50%);
+}
+
+.yesno label { cursor: pointer; user-select: none; }
+
+#id_studyInUkraine, #id_olympiadsParticipation, #id_consentGiven{
+    display: flex;
+    justify-content: center;
+    gap:20px;
+}

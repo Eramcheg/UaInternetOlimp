@@ -85,9 +85,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Ви навчаєтесь в Україні?</label>
-                                            <div class="checkmark-container">
-                                                {{ form.studyInUkraine | add_class:"form-control form-control-checkmark" | attr:"" }}
-                                                <span class="check-label" id="label_studyInUkraine">Ні</span>
+                                            <div class="checkmark-container yesno" data-show="#school-fields">
+                                                {{ form.studyInUkraine }}
                                             </div>
                                         </div>
                                     </div>
@@ -149,9 +148,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Чи брали Ви участь в олімпіадах з Фізики/Астрономії?</label>
-                                            <div class="checkmark-container">
-                                                {{ form.olympiadsParticipation | add_class:"form-control form-control-checkmark" | attr:"" }}
-                                                <span class="check-label" id="label_olympiadsParticipation">Ні</span>
+                                            <div class="checkmark-container yesno" data-show="#achievements-fields">
+                                                {{ form.olympiadsParticipation }}
                                             </div>
                                         </div>
                                         <div id="achievements-fields">
@@ -191,9 +189,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label> Згоден(-на) з наданням персональної інформації </label>
-                                            <div class="checkmark-container">
-                                                {{ form.consentGiven | add_class:"form-control form-control-checkmark" | attr:"" }}
-                                                <span class="check-label" id="label_consentGiven">Ні</span>
+                                            <div class="checkmark-container yesno">
+                                                {{ form.consentGiven }}
                                             </div>
                                         </div>
                                     </div>
@@ -215,6 +212,28 @@
     let maxTabs = document.querySelectorAll('.tab-content').length - 1;
     const form = document.getElementById('customer-form');
     document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.yesno').forEach(group => {
+            const targetSel = group.dataset.show;
+            const radios = group.querySelectorAll('input[type="radio"]');
+            const target = targetSel ? document.querySelector(targetSel) : null;
+
+            function apply() {
+              if (!target) return;
+              const val = group.querySelector('input[type="radio"]:checked')?.value;
+              const isYes = (val === 'true');
+              if (isYes) {
+                target.style.display = "";
+                target.querySelectorAll("input, select, textarea, button").forEach(el => el.disabled = false);
+              } else {
+                target.style.display = "none";
+                target.querySelectorAll("input, select, textarea, button").forEach(el => el.disabled = true);
+              }
+            }
+
+            radios.forEach(r => r.addEventListener('change', apply));
+            apply();
+        });
+
         let formErrors = {% if form.errors %}true{% else %}false{% endif %};
         let errorModal = document.getElementById("errorModal");
         let errorText = document.getElementById("errorText");
@@ -246,40 +265,7 @@
             }
         }
 
-        const checkbox = document.querySelector("#id_studyInUkraine");
-        const schoolBlock = document.querySelector("#school-fields");
 
-        function toggleSchoolFields() {
-            if (checkbox.checked) {
-              schoolBlock.style.display = "";
-              // включаем поля обратно
-              schoolBlock.querySelectorAll("input, select").forEach(el => el.disabled = false);
-            } else {
-              schoolBlock.style.display = "none";
-              // выключаем поля, чтобы не слали пустые значения
-              schoolBlock.querySelectorAll("input, select").forEach(el => el.disabled = true);
-            }
-        }
-
-        checkbox.addEventListener("change", toggleSchoolFields);
-        toggleSchoolFields();
-
-
-        const checkboxAchievements = document.querySelector("#id_olympiadsParticipation");
-        const achievementsBlock = document.querySelector("#achievements-fields");
-
-        function toggleAchievementsFields() {
-            if (checkboxAchievements.checked) {
-              achievementsBlock.style.display = "";
-              achievementsBlock.querySelectorAll("input, select").forEach(el => el.disabled = false);
-            } else {
-              achievementsBlock.style.display = "none";
-              achievementsBlock.querySelectorAll("input, select").forEach(el => el.disabled = true);
-            }
-        }
-
-        checkboxAchievements.addEventListener("change", toggleAchievementsFields);
-        toggleAchievementsFields();
     });
     function bindCheckboxLabel(checkboxId, labelId) {
         const checkbox = document.getElementById(checkboxId);
@@ -303,24 +289,21 @@
 
     function validateForm() {
         let valid = true;
+        const consent = document.querySelector('#id_consentGiven input[type="radio"]:checked')?.value;
+        if (consent !== 'true') {
+          alert("Повинно бути підтвердження на надання Ваших персональних даних.");
+          return false;
+        }
         const currentInputs = document.querySelectorAll('.form-control[required]');
-        if(document.getElementById('id_studyInUkraine').checked === true){
-            let schoolInputs = document.querySelectorAll('#school-fields .form-control');
-            schoolInputs.forEach(input => {
-                if (input.value === "") {
-                    input.style.borderColor = "red";
-                    valid = false;
-                } else {
-                    input.style.borderColor = "";
-                }
+        const studyVal = document.querySelector('#id_studyInUkraine input[type="radio"]:checked')?.value;
+        if (studyVal === 'true') {
+            let ok = true;
+            document.querySelectorAll('#school-fields .form-control').forEach(input => {
+                if (!input.value.trim()) { input.style.borderColor = "red"; ok = false; }
+                else { input.style.borderColor = ""; }
             });
+            if (!ok) valid = false;
         }
-
-        if(document.getElementById('id_consentGiven').checked !== true){
-            alert("Повинно бути підтвердження на надання Ваших персональних даних.");
-            return false;
-        }
-
         currentInputs.forEach(input => {
             if (input.value === "") {
                 input.style.borderColor = "red";
