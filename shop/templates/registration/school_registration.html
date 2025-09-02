@@ -35,8 +35,8 @@
                                             <span class="req">*</span>
                                         </div>
                                         <div class="col-md-12">
-                                            <label>Ім'я</label>
-                                            {{ form.firstName_uk | add_class:"form-control" | attr:"" }}
+                                            <label>Прізвище</label>
+                                            {{ form.lastName_uk | add_class:"form-control" | attr:"" }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -44,8 +44,8 @@
                                             <span class="req">*</span>
                                         </div>
                                         <div class="col-md-12">
-                                            <label>Прізвище</label>
-                                            {{ form.lastName_uk | add_class:"form-control" | attr:"" }}
+                                            <label>Ім'я</label>
+                                            {{ form.firstName_uk | add_class:"form-control" | attr:"" }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -57,14 +57,13 @@
                                             {{ form.patronymic_uk | add_class:"form-control" | attr:"" }}
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
                                         <div class="col-md-12 form-control-comment">
                                             <span class="req">*</span>
                                         </div>
                                         <div class="col-md-12">
-                                            <label> Ім'я (лат.) </label>
-                                            {{ form.firstName_en | add_class:"form-control" | attr:"" }}
+                                            <label> Прізвище (лат.) </label>
+                                            {{ form.lastName_en | add_class:"form-control" | attr:"" }}
                                             <span class="form-control-comment"> (Латиницею, як у паспорті) </span>
                                         </div>
                                     </div>
@@ -73,8 +72,8 @@
                                             <span class="req">*</span>
                                         </div>
                                         <div class="col-md-12">
-                                            <label> Прізвище (лат.) </label>
-                                            {{ form.lastName_en | add_class:"form-control" | attr:"" }}
+                                            <label> Ім'я (лат.) </label>
+                                            {{ form.firstName_en | add_class:"form-control" | attr:"" }}
                                             <span class="form-control-comment"> (Латиницею, як у паспорті) </span>
                                         </div>
                                     </div>
