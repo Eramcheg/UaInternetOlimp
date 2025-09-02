@@ -25,7 +25,7 @@ OBLAST_CHOICES = [
     ("71", "Черкаська"), ("73", "Чернівецька"), ("74", "Чернігівська"),
     ("80", "м. Київ")
 ]
-
+BOOL_CHOICES = (('false', 'Ні'), ('true', 'Так'))
 PARALEL_CHOICES = [("8", "8"), ("9", "9"), ("10", "10"), ("11", "11")]
 GROUP_CHOICES = [
     ("beginner", "Базова"),
@@ -111,8 +111,13 @@ class SchoolRegistrationForm(Form):
     firstName_en = forms.CharField(label="Ім’я (лат.)", max_length=60)
     # patronymic_en = forms.CharField(label="По батькові (лат.)", max_length=60, required=False)
 
-    studyInUkraine = forms.BooleanField(
-        label="Навчаюсь в Україні", required=False, initial=False
+    studyInUkraine = forms.TypedChoiceField(
+        label="Ви навчаєтесь в Україні?",
+        choices=BOOL_CHOICES,
+        coerce=lambda v: v == 'true',
+        widget=forms.RadioSelect,
+        initial='false',
+        required=True,
     )
     schoolOblast = forms.ChoiceField(label="Область школи (якщо в Україні)",
                                      choices=OBLAST_CHOICES, required=False)
@@ -128,9 +133,15 @@ class SchoolRegistrationForm(Form):
 
     paralel = forms.ChoiceField(label="Паралель", choices=PARALEL_CHOICES)
 
-    olympiadsParticipation = forms.BooleanField(
-        label="Беру участь в олімпіадах", required=False
+    olympiadsParticipation = forms.TypedChoiceField(
+        label="Чи брали Ви участь в олімпіадах з Фізики/Астрономії?",
+        choices=BOOL_CHOICES,
+        coerce=lambda v: v == 'true',
+        widget=forms.RadioSelect,
+        initial='false',
+        required=True,
     )
+
     olympiadsAchievements = forms.CharField(
         label="Досягнення (коротко)",
         widget=forms.Textarea(attrs={"rows": 3}),
@@ -143,7 +154,14 @@ class SchoolRegistrationForm(Form):
         required=True
     )
 
-    consentGiven = forms.BooleanField(label="Згоден(-на) з наданням персональної інформації")
+    consentGiven = forms.TypedChoiceField(
+        label="Згоден(-на) з наданням персональної інформації",
+        choices=BOOL_CHOICES,
+        coerce=lambda v: v == 'true',
+        widget=forms.RadioSelect,
+        initial='false',
+        required=True,
+    )
 
     def clean(self):
         cleaned = super().clean()
