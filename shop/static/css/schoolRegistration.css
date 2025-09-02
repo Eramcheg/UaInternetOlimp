@@ -176,6 +176,6 @@ body{
 
 #id_studyInUkraine, #id_olympiadsParticipation, #id_consentGiven{
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap:20px;
 }
