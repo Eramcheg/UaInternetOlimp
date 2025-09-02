@@ -25,7 +25,7 @@ OBLAST_CHOICES = [
     ("71", "Черкаська"), ("73", "Чернівецька"), ("74", "Чернігівська"),
     ("80", "м. Київ")
 ]
-BOOL_CHOICES = (('false', 'Ні'), ('true', 'Так'))
+BOOL_CHOICES = (('true', 'Так'), ('false', 'Ні'))
 PARALEL_CHOICES = [("8", "8"), ("9", "9"), ("10", "10"), ("11", "11")]
 GROUP_CHOICES = [
     ("beginner", "Базова"),
@@ -116,7 +116,6 @@ class SchoolRegistrationForm(Form):
         choices=BOOL_CHOICES,
         coerce=lambda v: v == 'true',
         widget=forms.RadioSelect,
-        initial='false',
         required=True,
     )
     schoolOblast = forms.ChoiceField(label="Область школи (якщо в Україні)",
@@ -138,7 +137,6 @@ class SchoolRegistrationForm(Form):
         choices=BOOL_CHOICES,
         coerce=lambda v: v == 'true',
         widget=forms.RadioSelect,
-        initial='false',
         required=True,
     )
 
@@ -159,7 +157,6 @@ class SchoolRegistrationForm(Form):
         choices=BOOL_CHOICES,
         coerce=lambda v: v == 'true',
         widget=forms.RadioSelect,
-        initial='false',
         required=True,
     )
 
