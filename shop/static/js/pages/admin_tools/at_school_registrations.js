@@ -34,9 +34,6 @@ import(window.config.firebaseFunctionScriptUrl)
         async function init() {
             showOverlay();
             allRegistrations = await fetchAllRegistrations();
-
-            addEventListenersToUsers();
-
             const wrapper = document.querySelector('[data-table-id="registrations-control-table"]');
             if (!usersTablePaginator) {
                 usersTablePaginator = initPagination(
@@ -53,6 +50,7 @@ import(window.config.firebaseFunctionScriptUrl)
         function addEventListenersToUsers() {
             const headers = document.querySelectorAll('.arrow-sorting');
             headers.forEach((header, index) => {
+                index = index + 1;
                 header.addEventListener('click', () => {
                     updateSortPriority(index);
                     adjustSortIcon(index); // Use the updated function here
@@ -102,33 +100,45 @@ import(window.config.firebaseFunctionScriptUrl)
                     let valA, valB;
                     // Switch statement to assign valA and valB based on columnIndex
                     switch (columnIndex) {
-                        case 0: // User ID
-                            valA = a.userId; valB = b.userId;
+                        case 1: // Uk name
+                            valA = `${a.firstName_uk} ${a.lastName_uk} ${a.patronymic_uk}`; valB = `${b.firstName_uk} ${b.lastName_uk} ${b.patronymic_uk}`;
                             break;
-                        case 1: // First Name
-                           valA = a.firstName_uk || ""; valB = b.firstName_uk || "";
+                        case 2: // En name
+                           valA = `${a.firstName_en} ${a.lastName_uk}`; valB = `${b.firstName_en} ${b.lastName_en}`;
                             break;
-                        case 2: // Last Name
-                            valA = a.lastName_uk || ""; valB = b.lastName_uk || "";
+                        case 3: // study in ukraine
+                            valA = a.studyInUkraine || false ? "Yes" : "No"; valB = b.studyInUkraine || false ? "Yes" : "No";
                             break;
-                        case 3: // Third Name
-                            valA = a.patronymic_uk || ""; valB = b.patronymic_uk || "";
+                        case 4: // school oblast
+                            valA = a.schoolOblast || ""; valB = b.schoolOblast || "";
                             break;
-                        case 4: // First name EN
-                            valA = a.email; valB = b.email;
+                        case 5: // school num
+                            valA = a.schoolNumber || ""; valB = b.schoolNumber || "";
                             break;
-                        case 5: // school
-                            valA = a.school || ""; valB = b.school || "";
+                        case 6: // school name
+                            valA = a.schoolName || a.studyAbroadNote ||""; valB = b.schoolName || b.studyAbroadNote || "";
                             break;
-                        case 6: // Enabled
-                             valA = a.Enabled || false ? "Yes" : "No"; valB = b.Enabled || false ? "Yes" : "No";
+                        case 7: // residence
+                             valA = `${a.residenceCountry}, ${a.residenceCity}`; valB = `${b.residenceCountry}, ${b.residenceCity}`;
                             break;
-                        case 7: // paralel
+                        case 8: // paralel
+                            valA = a.contactEmail || ""; valB = b.contactEmail || "";
+                            break;
+                        case 9: // paralel
+                            valA = a.contactLinks || ""; valB = b.contactLinks || "";
+                            break;
+                        case 10: // paralel
                             valA = a.paralel || ""; valB = b.paralel || "";
                             break;
-                        case 8: // RegistrationDate
-                            valA = a.registrationDate ? new Date(a.registrationDate) : new Date(0);
-                            valB = b.registrationDate ? new Date(b.registrationDate) : new Date(0);
+                        case 11: // olympiads participation
+                            valA = a.olympiadsParticipation || false ? "Yes" : "No"; valB = b.olympiadsParticipation || false ? "Yes" : "No";
+                            break;
+                        case 12: // olympiads achievements
+                            valA = a.olympiadsAchievements || ""; valB = b.olympiadsAchievements || "";
+                            break;
+                        case 13: // RegistrationDate
+                            valA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+                            valB = b.createdAt ? new Date(b.createdAt) : new Date(0);
                             break;
 
                         // Add additional cases as needed.
@@ -335,145 +345,10 @@ import(window.config.firebaseFunctionScriptUrl)
         function buildUsersControlTable(usersArray, tbody) {
             buildHeader();
 
+            addEventListenersToUsers();
             addFilterInputs();
             addEventListenersToFilterInputs();
             buildBody(usersArray, tbody);
-            return;
-            tbody.innerHTML = '';
-            usersArray.forEach(user => {
-                // Create the row
-                let row = document.createElement('tr');
-
-                // Checkbox cell
-                let checkBoxCell = document.createElement('td');
-                let checkBox = document.createElement('input');
-                checkBox.setAttribute('type', 'checkbox');
-                checkBox.setAttribute('name', 'selectedUser');
-                checkBox.setAttribute('value', user.userId);
-                checkBoxCell.appendChild(checkBox);
-                row.appendChild(checkBoxCell);
-
-                let firstNameCell = document.createElement('td');
-                firstNameCell.textContent = user.firstName_uk;
-                row.appendChild(firstNameCell);
-
-                let lastNameCell = document.createElement('td');
-                lastNameCell.textContent = user.lastName_uk;
-                row.appendChild(lastNameCell);
-
-                let thirdNameCell = document.createElement('td');
-                thirdNameCell.textContent = user.patronymic_uk;
-                row.appendChild(thirdNameCell);
-
-                let firstNameENCell = document.createElement('td');
-                firstNameENCell.textContent = user.firstName_en;
-                row.appendChild(firstNameENCell);
-
-                let lastNameENCell = document.createElement('td');
-                lastNameENCell.textContent = user.lastName_en;
-                row.appendChild(lastNameENCell);
-
-                // Repeat for each user property...
-                // For cells with static content like '---' for sales
-                let studyWhereCell = document.createElement('td');
-                studyWhereCell.textContent = user.studyInUkraine ? "Так" : "Ні"; // Assuming sales data is not available
-                row.appendChild(studyWhereCell);
-
-                let livingPlaceCell = document.createElement('td');
-                livingPlaceCell.textContent = `${user.residenceCountry}, ${user.residenceCity}`; // Assuming sales data is not available
-                row.appendChild(livingPlaceCell);
-
-                let emailCell = document.createElement('td');
-                emailCell.textContent = user.contactEmail;
-                row.appendChild(emailCell);
-
-                // For boolean values, you might want to show a more user-friendly value
-                let paralelCell = document.createElement('td');
-                paralelCell.textContent = user.paralel;
-                row.appendChild(paralelCell);
-
-                let olympParticipCell = document.createElement('td');
-                olympParticipCell.textContent = user.olympiadsParticipation ? "Так" : "Ні";
-                row.appendChild(olympParticipCell);
-
-                let olimpAchiveCell = document.createElement('td');
-                olimpAchiveCell.textContent = user.olympiadsAchievements;
-                row.appendChild(olimpAchiveCell);
-
-                let registrationDateCell = document.createElement('td');
-
-                registrationDateCell.textContent = "";//user.registrationDate.split(" ")[0];
-                row.appendChild(registrationDateCell);
-
-                // Actions cell
-                let actionsCell = document.createElement('td');
-                let editLink = document.createElement('a');
-
-                let editUrl = `/admin_tools/users_control/edit_user/${user.userId}/`; // Construct the URL using the user ID
-                editLink.setAttribute('href', editUrl);
-                const editbutton = document.createElement('i');
-                editbutton.classList.add('material-icons');
-                editbutton.textContent = 'edit';
-                editLink.appendChild(editbutton);
-                actionsCell.appendChild(editLink);
-
-                let optionsButton = document.createElement('i');
-                optionsButton.classList.add('material-symbols-outlined');
-                let optionsLink = document.createElement('a');
-                optionsButton.textContent = 'more_vert';
-                optionsButton.style.cursor = 'pointer';
-                optionsLink.appendChild(optionsButton);
-                actionsCell.appendChild(optionsLink);
-                optionsButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevent the click from closing the menu immediately
-
-                    // Position the menu
-                    const contextMenu = document.getElementById('contextMenu');
-                    contextMenu.style.display = 'block';
-                    contextMenu.style.left = `${event.pageX - 100}px`;
-                    contextMenu.style.top = `${event.pageY}px`;
-
-                    // Function to hide the context menu
-                    function hideContextMenu() {
-                        contextMenu.style.display = 'none';
-                    }
-
-                    // Close the menu when clicking outside of it
-                    document.addEventListener('click', hideContextMenu, { once: true });
-
-                    // Set up the menu actions
-                    document.getElementById('viewUser').onclick = function() {
-                        // Replace with the actual function or navigation action
-                        window.location.href = `/admin_tools/users_control/view_user/${user.userId}/`;
-                    };
-                    document.getElementById('deleteUser').onclick = async function() {
-                        const csrftoken = getCookie('csrftoken'); // Get the CSRF token
-                        let userIds = [user.userId]
-                        const jsonObject = { userIds: userIds };
-                        const response = await fetch(window.config.atDeleteUsersUrl, { // Use the correct URL for your request
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': csrftoken, // Include CSRF token in request headers
-                            },
-                            body: JSON.stringify(jsonObject),
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-
-                        allRegistrations = allRegistrations.filter(user => !userIds.includes(user.userId));
-                        usersTablePaginator.setData(allRegistrations);
-                    }
-                });
-                row.appendChild(actionsCell);
-                // Append the row to the table body
-                tbody.appendChild(row);
-            });
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', updateBulkActionsDropdown);
-            });
         }
 
         function buildHeader() {
@@ -515,7 +390,17 @@ import(window.config.firebaseFunctionScriptUrl)
 
             // bottom fields
             const th = document.createElement('th');
-            th.innerHTML = col.title;
+            let existingIdx = sortPriority.findIndex(sp => sp.columnIndex === idx);
+            let typeOfArrow = "fa-x";
+            if (existingIdx !== -1){
+                typeOfArrow = sortPriority[existingIdx].direction === "asc" ? "fa-arrow-up" : "fa-arrow-down";
+            }
+            if ([0, 14].includes(idx)){
+                th.innerHTML = col.title;
+            }
+            else{
+                th.innerHTML = `${col.title} <span class="arrow-sorting"><i class="sort-arrow fa-solid ${typeOfArrow}"></i></span>`;
+            }
 
             th.setAttribute('data-column', col.key);
             // sticky classes на заголовках тоже
