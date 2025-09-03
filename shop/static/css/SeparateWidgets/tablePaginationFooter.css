@@ -1,0 +1,47 @@
+.pagination input{
+    text-align: center;
+    width: 70px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.table-footer{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.table-footer > div{
+    padding: 0 10px;
+}
+#items-per-page{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.clickable:hover {
+     cursor: pointer;
+}
+.clickable:hover{
+    text-decoration: underline;
+}
+
+.disabled {
+    color: #ccc;
+    pointer-events: none;
+}
+.previousContainer, .nextContainer, .firstPageContainer, .lastPageContainer{
+    padding: 10px;
+}
