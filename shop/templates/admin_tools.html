@@ -5,23 +5,59 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+    {% if feature_name == 'dashboard' %}
+    {% elif feature_name == 'users_control' %}
+        <link rel="stylesheet" href="{% static "css/SeparateWidgets/tablePaginationFooter.css" %}">
+        <link rel="stylesheet" href="{% static 'css/admin_tools/at_control_tables.css' %}">
+    {% elif feature_name == 'registrations_control' %}
+        <link rel="stylesheet" href="{% static "css/SeparateWidgets/tablePaginationFooter.css" %}">
+    {% elif feature_name == 'edit_user' %}
+    {% elif feature_name == 'view_user' %}
+    {% elif feature_name == 'manage_articles' %}
+    {% endif %}
+{% endblock %}
+
+{% block page_meta %}
+
+    <meta name="admin_config" content='{
+        "firebaseFunctionScriptUrl": "{% static 'js/firebaseFunctions/firebaseManagement.js' %}",
+        "atDeleteUsersUrl": "{% url 'at_delete_users' %}",
+        "atEnableUsersUrl": "{% url 'at_enable_users' %}",
+        "atDisableUsersUrl": "{% url 'at_disable_users' %}"
+    }'>
 {% endblock %}
 
 {% block content %}
-<div class="container-page">
-    {% include 'admin_tools/AT_side_menu.html' %}
-    {% if feature_name == 'dashboard' %}
-        {% include 'admin_tools/AT_dashboard.html' %}
-    {% elif feature_name == 'users_control' %}
-        {% include 'admin_tools/AT_users_control.html' %}
-    {% elif feature_name == 'registrations_control' %}
-        {% include 'admin_tools/AT_registrations_control.html' %}
-    {% elif feature_name == 'edit_user' %}
-        {% include 'admin_tools/AT_UC_edit_user.html' %}
-    {% elif feature_name == 'view_user' %}
-        {% include 'admin_tools/AT_UC_view_user.html' %}
-    {% elif feature_name == 'manage_articles' %}
-        {% include 'admin_tools/AT_manage_articles.html' %}
-    {% endif %}
-</div>
+    <div class="container-page">
+        {% include 'admin_tools/AT_side_menu.html' %}
+        {% if feature_name == 'dashboard' %}
+            {% include 'admin_tools/AT_dashboard.html' %}
+        {% elif feature_name == 'users_control' %}
+            {% include 'admin_tools/AT_users_control.html' %}
+        {% elif feature_name == 'registrations_control' %}
+            {% include 'admin_tools/AT_registrations_control.html' %}
+        {% elif feature_name == 'edit_user' %}
+            {% include 'admin_tools/AT_UC_edit_user.html' %}
+        {% elif feature_name == 'view_user' %}
+            {% include 'admin_tools/AT_UC_view_user.html' %}
+        {% elif feature_name == 'manage_articles' %}
+            {% include 'admin_tools/AT_manage_articles.html' %}
+        {% endif %}
+    </div>
 {%endblock%}
+
+{% block extra_js %}
+    {{ config_data|json_script:"config-data" }}
+    <script src="{% static "js/pages/admin_tools/at_main.js" %}"></script>
+    {% if feature_name == 'dashboard' %}
+    {% elif feature_name == 'users_control' %}
+        <script src='{% static "js/widgets/tablePaginationFooter.js" %}'></script>
+        <script type="module" src='{% static "js/pages/admin_tools/at_users_control.js" %}'></script>
+    {% elif feature_name == 'registrations_control' %}
+        <script src='{% static "js/widgets/tablePaginationFooter.js" %}'></script>
+        <script type="module" src='{% static "js/pages/admin_tools/at_school_registrations.js" %}'></script>
+    {% elif feature_name == 'edit_user' %}
+    {% elif feature_name == 'view_user' %}
+    {% elif feature_name == 'manage_articles' %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% load static %}
+{% load i18n %}
+<div class="table-footer" data-pagination-for="{{ table_id }}">
+    <div class="pagination">
+        <!-- Pagination controls will be inserted here by JavaScript -->
+    </div>
+    <div class="pgntn-information">
+        <span class="pgntn-info"></span>
+    </div>
+    {% if showItemsPerPage|default:"Yes" == "Yes" %}
+        <div class="pgntn-items-per-page">
+            <span> {% trans "Items per page" %}: </span>
+            <select id="items-per-page">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    {% endif %}
+</div>
