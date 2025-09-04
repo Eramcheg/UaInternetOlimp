@@ -50,49 +50,13 @@ import(window.config.firebaseFunctionScriptUrl)
         function addEventListenersToUsers() {
             const headers = document.querySelectorAll('.arrow-sorting');
             headers.forEach((header, index) => {
-                index = index + 1;
                 header.addEventListener('click', () => {
-                    updateSortPriority(index);
-                    adjustSortIcon(index); // Use the updated function here
+                    updateSortPriority(index+1, sortPriority);
+                    adjustSortIcon(index+1, index, sortPriority); // Use the updated function here
                     sortUsers(getActualArray());
                 });
             });
         }
-
-        function updateSortPriority(columnIndex) {
-            const existingPriority = sortPriority.findIndex(sp => sp.columnIndex === columnIndex);
-            if (existingPriority === -1) {
-                // Add new sort priority if not already present
-                sortPriority.push({ columnIndex: columnIndex, direction: 'asc' });
-            } else {
-                // If clicked again, update direction or remove if it's the third click
-                if (sortPriority[existingPriority].direction === 'asc') {
-                    sortPriority[existingPriority].direction = 'desc';
-                } else {
-                    sortPriority.splice(existingPriority, 1); // Remove this sort priority
-                }
-            }
-        }
-
-        function adjustSortIcon(columnIndex) {
-            const arrows = document.querySelectorAll('.sort-arrow');
-            const currentArrow = arrows[columnIndex];
-            const existingPriority = sortPriority.find(sp => sp.columnIndex === columnIndex);
-            const direction = existingPriority ? existingPriority.direction : null;
-            // Set current arrow based on direction
-            if (direction === 'asc') {
-                currentArrow.classList.remove('fa-arrow-up','fa-x' );
-                currentArrow.classList.add( "fa-arrow-down"); //= '↓'; // Down arrow indicates ascending sort
-
-            } else if (direction === 'desc') {
-                currentArrow.classList.remove('fa-arrow-down','fa-x' );
-                currentArrow.classList.add("fa-arrow-up");// = '↑'; // Up arrow indicates descending sort
-            } else {
-                currentArrow.classList.remove('fa-arrow-down', 'fa-arrow-up','fa-x' );
-                currentArrow.classList.add("fa-x");
-            }
-        }
-
         function sortUsers(array) {
             array.sort((a, b) => {
                 for (let i = 0; i < sortPriority.length; i++) {
@@ -137,8 +101,12 @@ import(window.config.firebaseFunctionScriptUrl)
                             valA = a.olympiadsAchievements || ""; valB = b.olympiadsAchievements || "";
                             break;
                         case 13: // RegistrationDate
-                            valA = a.createdAt ? new Date(a.createdAt) : new Date(0);
-                            valB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+                            valA = a.createdAt
+  ? new Date(a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1e6)
+  : new Date(0);
+                            valB = b.createdAt
+  ? new Date(b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1e6)
+  : new Date(0);
                             break;
 
                         // Add additional cases as needed.
