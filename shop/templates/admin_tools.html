@@ -52,9 +52,11 @@
     {% if feature_name == 'dashboard' %}
     {% elif feature_name == 'users_control' %}
         <script src='{% static "js/widgets/tablePaginationFooter.js" %}'></script>
+        <script src='{% static "js/widgets/tableSorting.js" %}'></script>
         <script type="module" src='{% static "js/pages/admin_tools/at_users_control.js" %}'></script>
     {% elif feature_name == 'registrations_control' %}
         <script src='{% static "js/widgets/tablePaginationFooter.js" %}'></script>
+        <script src='{% static "js/widgets/tableSorting.js" %}'></script>
         <script type="module" src='{% static "js/pages/admin_tools/at_school_registrations.js" %}'></script>
     {% elif feature_name == 'edit_user' %}
     {% elif feature_name == 'view_user' %}
