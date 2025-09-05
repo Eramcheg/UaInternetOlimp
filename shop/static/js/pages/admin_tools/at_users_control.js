@@ -5,13 +5,28 @@ import(window.config.firebaseFunctionScriptUrl)
         let usersTablePaginator = null;
         let filteredUsers = [];
         let sortPriority = [];
+
+        const COLUMNS = [
+          { key: "_select",    title: "",               group: "",           width: 40,  sticky: "left" },
+          { key: "userId", title: "Id", group: "Основне",  width: 100, sticky: "left2", render: u => `${u.userId}` },
+          { key: "first_name", title: "Ім'я", group: "Основне", width: 100, render: u => `${u.first_name}` },
+          { key: "last_name", title: "Прізвище", group: "Основне", width: 100, render: u => `${u.last_name}` },
+          { key: "third_name",   title: "По батькові", group: "Основне", width: 100, render: u => `${u.third_name}` },
+          { key: "email",   title: "Email",        group: "Основне", width: 100, render: u => `<span class="mono">${u.email}</span>` },
+          { key: "phone",   title: "Телефон",      group: "Основне", width: 100, render: u => `<span class="mono">${u.phone}</span>` },
+
+          { key: "paralel",   title: "Паралель",   group: "Навчання", width: 90, render: u => `<span class="mono">${u.paralel}</span>` },
+          { key: "school",     title: "Школа",  group: "Навчання", width: 220, render: u => `${u.school}` },
+
+          { key: "Enabled", title: "Статус акаунта", group: "Службове", width: 100, render: u => u.Enabled ? '<span class="badge badge-yes">Активний</span>' : '<span class="badge badge-no">Деактивований</span>' },
+          { key: "registrationDate",      title: "Дата реєстрації",     group: "Службове", width: 140, render: u => `${u.registrationDate}` },
+
+          { key: "_actions",       title: "Дії",          group: "",         width: 80,  sticky: "right" },
+        ];
+
         async function init() {
             showOverlay();
             allUsers = await fetchAllUsers();
-
-            addEventListenersToUsers();
-            addFilterInputs();
-            addEventListenersToFilterInputs();
 
             const wrapper = document.querySelector('[data-table-id="users-control-table"]');
             if (!usersTablePaginator) {
@@ -143,7 +158,7 @@ import(window.config.firebaseFunctionScriptUrl)
 
         function addFilterInputs() {
             const table = document.getElementById('usersTable');
-            const headerRow = table.querySelector('thead tr');
+            const headerRow = table.querySelectorAll('thead tr')[1];
             const filterRow = document.createElement('tr');
 
             Array.from(headerRow.cells).forEach((cell, index) => {
@@ -162,35 +177,7 @@ import(window.config.firebaseFunctionScriptUrl)
                         filterCell.appendChild(select);
                     }
 
-                    let data_column = "";
-                    if (cell.textContent.trim() === "User ID")
-                    {
-                        data_column="userId";
-                    }
-                    else if(cell.textContent.trim() === "First Name"){
-                        data_column="first_name";
-                    }
-                    else if(cell.textContent.trim() === "Last name"){
-                        data_column="last_name";
-                    }
-                    else if(cell.textContent.trim() === "Third name"){
-                        data_column="third_name";
-                    }
-                    else if(cell.textContent.trim() === "Email"){
-                        data_column="email";
-                    }
-                    else if(cell.textContent.trim() === "School"){
-                        data_column="school";
-                    }
-                    else if(cell.textContent.trim() === "Enabled"){
-                        data_column="Enabled";
-                    }
-                    else if(cell.textContent.trim() === "Paralel"){
-                        data_column="paralel";
-                    }
-                    else if(cell.textContent.trim() === "Registration Date"){
-                        data_column="registrationDate";
-                    }
+                    let data_column = cell.getAttribute('data-column').trim();
 
                     if (cell.textContent.trim() === "Registration Date") {
                         // Create "From" date input
@@ -225,18 +212,25 @@ import(window.config.firebaseFunctionScriptUrl)
                         // Regular text input for other columns
                         const input = document.createElement('input');
                         input.type = 'text';
-                        input.className = 'filter-input';
+                        input.classList.add('filter-input');
+                        if (data_column === "userId"){
+                            filterCell.classList.add('sticky-left-2');
+                        }
                         input.setAttribute('data-column', data_column);
-                        input.placeholder = `Search ${cell.textContent}`;
+                        input.placeholder = `Фільтр ${cell.textContent}`;
                         filterCell.appendChild(input);
                     }
 
                 }
                 else if(index===(headerRow.cells.length - 1)){
                     const buttonSearch = document.createElement('button');
-                    buttonSearch.textContent = "Search";
+                    buttonSearch.textContent = "Фільтр";
+                    filterCell.classList.add('sticky-right');
                     buttonSearch.addEventListener('click', filterUsers);
                     filterCell.appendChild(buttonSearch);
+                }
+                else if (index===0){
+                    filterCell.classList.add('sticky-left');
                 }
 
                 filterRow.appendChild(filterCell);
@@ -280,133 +274,156 @@ import(window.config.firebaseFunctionScriptUrl)
             });
         }
 
+
         function buildUsersControlTable(usersArray, tbody) {
-            tbody.innerHTML = '';
-            usersArray.forEach(user => {
-                // Create the row
-                let row = document.createElement('tr');
+            buildHeader();
+            addEventListenersToUsers();
+            addFilterInputs();
+            addEventListenersToFilterInputs();
+            buildBody(usersArray, tbody);
+        }
 
-                // Checkbox cell
-                let checkBoxCell = document.createElement('td');
-                let checkBox = document.createElement('input');
-                checkBox.setAttribute('type', 'checkbox');
-                checkBox.setAttribute('name', 'selectedUser');
-                checkBox.setAttribute('value', user.userId);
-                checkBoxCell.appendChild(checkBox);
-                row.appendChild(checkBoxCell);
+        function buildHeader() {
+          const colgroup = document.getElementById('usersColGroup');
+          const thead = document.getElementById('usersThead');
+          colgroup.innerHTML = "";
+          thead.innerHTML = "";
 
-                // User ID cell
-                let userIdCell = document.createElement('td');
-                userIdCell.textContent = user.userId;
-                row.appendChild(userIdCell);
+          const groupsRow = document.createElement('tr');
+          const fieldsRow = document.createElement('tr');
 
-                let firstNameCell = document.createElement('td');
-                firstNameCell.textContent = user.first_name;
-                row.appendChild(firstNameCell);
+          // считаем кол-во колонок на группу
+          const groupSpans = {};
+          COLUMNS.forEach(col => {
+            const g = col.group || "";
+            groupSpans[g] = (groupSpans[g] || 0) + 1;
+          });
 
-                let lastNameCell = document.createElement('td');
-                lastNameCell.textContent = user.last_name;
-                row.appendChild(lastNameCell);
+          // строим верхнюю строку
+          let builtGroups = new Set();
+          COLUMNS.forEach((col, idx) => {
+            // colgroup width
+            const c = document.createElement('col');
+            c.style.width = (col.width || 120) + "px";
+            colgroup.appendChild(c);
 
-                let thirdNameCell = document.createElement('td');
-                thirdNameCell.textContent = user.third_name;
-                row.appendChild(thirdNameCell);
+            // top groups (только первый раз для каждой группы)
+            const g = col.group || "";
+            if (!builtGroups.has(g)) {
+              builtGroups.add(g);
+              const thg = document.createElement('th');
+              thg.className = 'group';
+              thg.colSpan = groupSpans[g];
+              thg.textContent = g || "";
+              groupsRow.appendChild(thg);
+            }
 
-                let emailCell = document.createElement('td');
-                emailCell.textContent = user.email;
-                row.appendChild(emailCell);
+            // bottom fields
+            const th = document.createElement('th');
+            let existingIdx = sortPriority.findIndex(sp => (sp.columnIndex+1) === idx);
+            let typeOfArrow = "fa-x";
+            if (existingIdx !== -1){
+                typeOfArrow = sortPriority[existingIdx].direction === "asc" ? "fa-arrow-up" : "fa-arrow-down";
+            }
+            if ([0, 11].includes(idx)){
+                th.innerHTML = col.title;
+            }
+            else{
+                th.innerHTML = `${col.title} <span class="arrow-sorting"><i class="sort-arrow fa-solid ${typeOfArrow}"></i></span>`;
+            }
 
+            th.setAttribute('data-column', col.key);
+            // sticky classes на заголовках тоже
+            if (col.sticky === "left") th.classList.add('sticky-left');
+            if (col.sticky === "left2") th.classList.add('sticky-left-2');
+            if (col.sticky === "right") th.classList.add('sticky-right');
+            fieldsRow.appendChild(th);
+          });
 
-                // Repeat for each user property...
-                // For cells with static content like '---' for sales
-                let schoolCell = document.createElement('td');
-                schoolCell.textContent = user.school || "Жюри"; // Assuming sales data is not available
-                row.appendChild(schoolCell);
+          thead.appendChild(groupsRow);
+          thead.appendChild(fieldsRow);
+        }
+        function buildBody(usersArray, tbody) {
+          tbody.innerHTML = "";
 
-                let enabledCell = document.createElement('td');
-                enabledCell.textContent = user.Enabled ? "Активний" : "Неактивний"; // Assuming sales data is not available
-                row.appendChild(enabledCell);
+          usersArray.forEach(user => {
+            const tr = document.createElement('tr');
 
-                // For boolean values, you might want to show a more user-friendly value
-                let paralelCell = document.createElement('td');
-                paralelCell.textContent = user.paralel;
-                row.appendChild(paralelCell);
+            COLUMNS.forEach(col => {
+              const td = document.createElement('td');
 
+              // sticky клетки
+              if (col.sticky === "left")  td.classList.add('sticky-left');
+              if (col.sticky === "left2") td.classList.add('sticky-left-2');
+              if (col.sticky === "right") td.classList.add('sticky-right');
 
-                let registrationDateCell = document.createElement('td');
+              // перенос текста
+              if (col.wrap) td.classList.add('wrap'); else td.classList.add('nowrap');
 
-                registrationDateCell.textContent = user.registrationDate.split(" ")[0];
-                row.appendChild(registrationDateCell);
+              // содержимое
+              if (col.key === "_select") {
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.name = 'selectedUser';
+                cb.value = user.userId;
+                td.appendChild(cb);
+              } else if (col.key === "_actions") {
+                td.innerHTML = renderActions(user);
 
-                // Actions cell
-                let actionsCell = document.createElement('td');
-                let editLink = document.createElement('a');
+                attachContextMenu(td, user); // твоя логика открытия меню
+              }
+              else if (col.key === "schoolOblast"){
+                  td.innerHTML = (col.render ? col.render(user) : (user[col.key] ?? ""));
+                  td.title = td.textContent.trim();
+              }
+              else {
+                  td.innerHTML = (col.render ? col.render(user) : (user[col.key] ?? ""));
+                  td.title = td.textContent.trim();
+              }
 
-                let editUrl = `/admin_tools/users_control/edit_user/${user.userId}/`; // Construct the URL using the user ID
-                editLink.setAttribute('href', editUrl);
-                const editbutton = document.createElement('i');
-                editbutton.classList.add('material-icons');
-                editbutton.textContent = 'edit';
-                editLink.appendChild(editbutton);
-                actionsCell.appendChild(editLink);
-
-                let optionsButton = document.createElement('i');
-                optionsButton.classList.add('material-symbols-outlined');
-                let optionsLink = document.createElement('a');
-                optionsButton.textContent = 'more_vert';
-                optionsButton.style.cursor = 'pointer';
-                optionsLink.appendChild(optionsButton);
-                actionsCell.appendChild(optionsLink);
-                optionsButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevent the click from closing the menu immediately
-
-                    // Position the menu
-                    const contextMenu = document.getElementById('contextMenu');
-                    contextMenu.style.display = 'block';
-                    contextMenu.style.left = `${event.pageX - 100}px`;
-                    contextMenu.style.top = `${event.pageY}px`;
-
-                    // Function to hide the context menu
-                    function hideContextMenu() {
-                        contextMenu.style.display = 'none';
-                    }
-
-                    // Close the menu when clicking outside of it
-                    document.addEventListener('click', hideContextMenu, { once: true });
-
-                    // Set up the menu actions
-                    document.getElementById('viewUser').onclick = function() {
-                        // Replace with the actual function or navigation action
-                        window.location.href = `/admin_tools/users_control/view_user/${user.userId}/`;
-                    };
-                    document.getElementById('deleteUser').onclick = async function() {
-                        const csrftoken = getCookie('csrftoken'); // Get the CSRF token
-                        let userIds = [user.userId]
-                        const jsonObject = { userIds: userIds };
-                        const response = await fetch(window.config.atDeleteUsersUrl, { // Use the correct URL for your request
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': csrftoken, // Include CSRF token in request headers
-                            },
-                            body: JSON.stringify(jsonObject),
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-
-                        allUsers = allUsers.filter(user => !userIds.includes(user.userId));
-                        usersTablePaginator.setData(allUsers);
-                    }
-                });
-                row.appendChild(actionsCell);
-                // Append the row to the table body
-                tbody.appendChild(row);
+              tr.appendChild(td);
             });
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', updateBulkActionsDropdown);
-            });
+
+            tbody.appendChild(tr);
+          });
+        }
+        function renderActions(user) {
+          const editUrl = `/admin_tools/users_control/edit_user/${user.userId}/`;
+          return `
+            <a href="${editUrl}" title="Редагувати"><i class="material-icons">edit</i></a>
+            <a class="more" title="Більше"><i class="material-symbols-outlined">more_vert</i></a>
+          `;
+        }
+        function attachContextMenu(td, user) {
+          const btn = td.querySelector('.more');
+          if (!btn) return;
+          btn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = `${event.pageX - 100}px`;
+            contextMenu.style.top = `${event.pageY}px`;
+
+            function hide() { contextMenu.style.display = 'none'; }
+            document.addEventListener('click', hide, { once: true });
+
+            document.getElementById('viewUser').onclick = function() {
+              window.location.href = `/admin_tools/users_control/view_user/${user.userId}/`;
+            };
+            document.getElementById('deleteUser').onclick = async function() {
+              const csrftoken = getCookie('csrftoken');
+              const userIds = [user.userId];
+              const response = await fetch(window.config.atDeleteUsersUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+                body: JSON.stringify({ userIds })
+              });
+              if (!response.ok) { alert('Помилка мережі'); return; }
+              allUsers = allUsers.filter(u => !userIds.includes(u.userId));
+              usersTablePaginator.setData(allUsers);
+              renderUsersTable(allUsers);
+            };
+          });
         }
         function updateBulkActionsDropdown() {
             const checkboxes = document.querySelectorAll(' input[type="checkbox"]');

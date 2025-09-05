@@ -5,7 +5,17 @@ import(window.config.firebaseFunctionScriptUrl)
         let usersTablePaginator = null;
         let filteredRegistrations = [];
         let sortPriority = [];
-
+        let OBLAST_CHOICES = [
+            {"24": "Вінницька"}, {"07": "Волинська"}, {"12": "Дніпропетровська"},
+            {"14": "Донецька"}, {"18": "Житомирська"}, {"21": "Закарпатська"},
+            {"23": "Запорізька"}, {"26": "Івано-Франківська"}, {"32": "Київська"},
+            {"35": "Кіровоградська"}, {"44": "Луганська"}, {"46": "Львівська"},
+            {"48": "Миколаївська"}, {"51": "Одеська"}, {"53": "Полтавська"},
+            {"56": "Рівненська"}, {"59": "Сумська"}, {"61": "Тернопільська"},
+            {"63": "Харківська"}, {"65": "Херсонська"}, {"68": "Хмельницька"},
+            {"71": "Черкаська"}, {"73": "Чернівецька"}, {"74": "Чернігівська"},
+            {"80": "м. Київ"}
+        ]
         const COLUMNS = [
           { key: "_select",    title: "",               group: "",           width: 40,  sticky: "left" },
           { key: "lastNameUk", title: "ПІБ", group: "Основне",  width: 220, sticky: "left2", render: u => `${u.lastName_uk} ${u.firstName_uk}${u.patronymic_uk? " "+u.patronymic_uk:""}` },
@@ -102,11 +112,11 @@ import(window.config.firebaseFunctionScriptUrl)
                             break;
                         case 13: // RegistrationDate
                             valA = a.createdAt
-  ? new Date(a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1e6)
-  : new Date(0);
+                              ? new Date(a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1e6)
+                              : new Date(0);
                             valB = b.createdAt
-  ? new Date(b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1e6)
-  : new Date(0);
+                              ? new Date(b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1e6)
+                              : new Date(0);
                             break;
 
                         // Add additional cases as needed.
@@ -409,11 +419,14 @@ import(window.config.firebaseFunctionScriptUrl)
                 td.innerHTML = renderActions(user);
 
                 attachContextMenu(td, user); // твоя логика открытия меню
-              } else {
-                const html = (col.render ? col.render(user) : (user[col.key] ?? ""));
-                td.innerHTML = html;
-                // наводишь — показываем полный текст (для обрезанных)
-                td.title = td.textContent.trim();
+              }
+              else if (col.key === "schoolOblast"){
+                  td.innerHTML = (col.render ? col.render(user) : (user[col.key] ?? ""));
+                  td.title = td.textContent.trim();
+              }
+              else {
+                  td.innerHTML = (col.render ? col.render(user) : (user[col.key] ?? ""));
+                  td.title = td.textContent.trim();
               }
 
               tr.appendChild(td);
