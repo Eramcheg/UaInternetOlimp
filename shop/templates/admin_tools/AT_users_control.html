@@ -11,41 +11,28 @@
 
     <div class="table-header">
         <select id="bulk-actions" disabled value="Bulk actions">
-            <option value="" disabled selected>Bulk actions</option>
-            <option value="Enable selected">Enable selected</option>
-            <option value="Disable selected">Disable selected</option>
-            <option value="Delete accounts"> Delete selected</option>
+            <option value="" disabled selected>Дії</option>
+            <option value="Enable selected"> Активувати обраних </option>
+            <option value="Disable selected"> Деактивувати обраних </option>
+            <option value="Delete accounts"> Видалити обраних </option>
         </select>
-        <button id="remove-filters" style="display: none;">Remove all filters</button>
+        <button id="remove-filters" style="display: none;">Прибрати фільтри</button>
     </div>
     <div data-table-id="users-control-table">
-        <table id="usersTable">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>ID<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Ім'я<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Прізвище<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>По батькові<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Емейл<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Школа<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Статус акаунту<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Паралель<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Дата реєстрації<span class="arrow-sorting"><i class="sort-arrow fa-solid fa-x"></i></span></th>
-                    <th>Дії</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Rows will be inserted here by JavaScript -->
-            </tbody>
-        </table>
+        <div class="table-wrap">
+            <table id="usersTable">
+                <colgroup id="usersColGroup"></colgroup>
+                <thead id="usersThead"></thead>
+                <tbody id="usersTbody"></tbody>
+            </table>
+        </div>
         {% include "widgets/tablePaginationFooter.html" %}
     </div>
 </div>
 <div id="contextMenu" class="context-menu" style="display: none;">
     <ul>
-        <li id="viewUser">View User</li>
-        <li id="deleteUser">Delete User</li>
+        <li id="viewUser">Відомості акаунта</li>
+        <li id="deleteUser">Видалити акаунт</li>
     </ul>
 </div>
 {% include "widgets/overlay.html" %}
