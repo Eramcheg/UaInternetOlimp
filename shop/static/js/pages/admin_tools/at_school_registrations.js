@@ -287,7 +287,7 @@ import(window.config.firebaseFunctionScriptUrl)
             fetchAllRegistrations().then(users => {
                 allRegistrations = users;
                 sortPriority = [];
-
+                filteredRegistrations = [];
                 resetSortIcons();
                 usersTablePaginator.setData(allRegistrations); // Rebuild table without sorting
                 hideOverlay();

@@ -75,16 +75,19 @@ import(window.config.firebaseFunctionScriptUrl)
                         case 4: // Email
                             valA = a.email; valB = b.email;
                             break;
-                        case 5: // school
+                        case 5: // Phone
+                            valA = a.phone; valB = b.phone;
+                            break;
+                        case 6: // paralel
+                            valA = Number(a.paralel || 9) ; valB = Number(b.paralel || 9);
+                            break;
+                        case 7: // school
                             valA = a.school || ""; valB = b.school || "";
                             break;
-                        case 6: // Enabled
+                        case 8: // Enabled
                              valA = a.Enabled || false ? "Yes" : "No"; valB = b.Enabled || false ? "Yes" : "No";
                             break;
-                        case 7: // paralel
-                            valA = a.paralel || ""; valB = b.paralel || "";
-                            break;
-                        case 8: // RegistrationDate
+                        case 9: // RegistrationDate
                             valA = a.registrationDate ? new Date(a.registrationDate) : new Date(0);
                             valB = b.registrationDate ? new Date(b.registrationDate) : new Date(0);
                             break;
@@ -248,12 +251,12 @@ import(window.config.firebaseFunctionScriptUrl)
             });
         }
 
-        document.getElementById('remove-filters').addEventListener('click', function() {
+        document.getElementById('remove-filters').addEventListener('click', async function () {
             showOverlay();
-            fetchAllUsers().then(users => {
+            await fetchAllUsers().then(users => {
                 allUsers = users;
                 sortPriority = [];
-
+                filteredUsers = [];
                 resetSortIcons();
                 usersTablePaginator.setData(allUsers); // Rebuild table without sorting
                 hideOverlay();
