@@ -13,7 +13,7 @@ from firebase_admin import storage, firestore
 
 from shop.views import db, serialize_firestore_document, users_ref, get_user_info, \
     updateChatInfo, TASKS, \
-    criteria_ref, current_tour, assignments_ref, make_json_serializable
+    criteria_ref, current_tour, assignments_ref, make_json_serializable, current_year
 from shop.views_scripts.jury_control.jury_views import get_all_tasks, get_jury_admins, get_students_by_class
 
 
@@ -29,7 +29,7 @@ def profile(request, feature_name):
     for task in info['allowed_tasks'] if "allowed_tasks" in info else "":
         task = task + f"_{current_tour}"
         task_id = task
-        criteria_docs = criteria_ref.where('task_id', '==', task_id).stream()
+        criteria_docs = criteria_ref.where('task_id', '==', task_id).where('year', '==', current_year).stream()
         criteria_list = []
         for doc in criteria_docs:
             data = doc.to_dict()
@@ -49,7 +49,9 @@ def profile(request, feature_name):
         config['user_info_dict'] = context['user_info_dict']
         context['user_info'] = info
     elif feature_name == "upload":
-        docs = assignments_ref.where("userId", "==", info['userId']).where('tour', '==', current_tour).stream()
+        docs = (assignments_ref.where("userId", "==", info['userId'])
+                .where('tour', '==', current_tour)
+                .where('year', '==', current_year).stream())
         for d in docs:
             data = d.to_dict() or {}
             task_key = data.get("taskKey")  # например: "task_1"
@@ -288,13 +290,13 @@ def upload_file(request):
     code_file = generate_random_string()
     file_path = os.path.join(
         'users_files',
-        f"{user_email}_Task_{box_id}_{file.name}_{current_tour}_tour_{code_file}"
+        f"{user_email}_Task_{box_id}_{file.name}_{current_tour}_tour_{current_year}_{code_file}"
     )
     blob = upload_to_firebase(file, file_path)
     file_url = blob.public_url
 
     # Update user's document in Firestore
-    assignment_doc_id = f"{user_id}_{box_id}_{paralel}_tour_{current_tour}"
+    assignment_doc_id = f"{user_id}_{box_id}_{paralel}_tour_{current_tour}_{current_year}"
     assignment_payload = {
         "createdAt": firestore.SERVER_TIMESTAMP,
         "fileUrl": file_url,
@@ -303,6 +305,7 @@ def upload_file(request):
         "paralel": paralel,
         "taskKey": f"task_{box_id.replace('box', '')}",  # например "task_1"
         "tour": current_tour,
+        "year": current_year,
         "userId": user_id,
     }
     assignments_ref.document(assignment_doc_id).set(assignment_payload, merge=True)

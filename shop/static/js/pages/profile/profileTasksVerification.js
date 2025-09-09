@@ -14,6 +14,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let currentTour = profileConfig.currentTour;
+let currentYear = profileConfig.currentYear;
 const jury_tasks = profileConfig.jury_tasks;
 let show_without = true;
 const DOWNLOAD_API_PREFIX = "/api/download-file";
@@ -162,7 +163,8 @@ $(document).ready(function() {
         const q = query(
             collection(db, 'assignments'),
             where('paralel', '==', String(paralel)),
-            where('tour', '==', currentTour)
+            where('tour', '==', currentTour),
+            where('year', '==', currentYear)
         );
 
         unsubscribeAssignments = onSnapshot(q, (snapshot) => {
