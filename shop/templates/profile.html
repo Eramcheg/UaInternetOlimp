@@ -13,7 +13,8 @@
         "rejectCriteriaUrl": "{% url 'reject_criteria' %}",
         "apiEvaluateTaskUrl": "{% url "api_evaluate_task" %}",
         "apiClearEvaluationUrl": "{% url "api_clear_evaluation" %}",
-        "currentTour": {{ current_tour }}
+        "currentTour": {{ current_tour }},
+        "currentYear": {{ current_year }}
     }'>
 {% endblock %}
 {% block extra_css %}

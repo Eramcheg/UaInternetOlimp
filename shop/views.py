@@ -26,6 +26,7 @@ tasks_ref = db.collection('tasks')
 users_ref = db.collection('users')
 
 current_tour = 1
+current_year = 2024
 
 TASKS = [
     '9_1', '9_2', '9_3', '9_4', '9_5',

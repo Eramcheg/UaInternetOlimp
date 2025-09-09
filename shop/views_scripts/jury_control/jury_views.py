@@ -10,7 +10,8 @@ from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from firebase_admin import firestore
 
-from shop.views import users_ref, tasks_ref, TASKS, criteria_ref, actions_ref, assignments_ref, current_tour, db
+from shop.views import users_ref, tasks_ref, TASKS, criteria_ref, actions_ref, assignments_ref, current_tour, db, \
+    current_year
 
 
 def handle_max_score(request):
@@ -46,7 +47,7 @@ def handle_max_score(request):
 
 def get_all_tasks():
     # Получаем все документы из коллекции 'tasks'
-    tasks = tasks_ref.stream()
+    tasks = tasks_ref.where("year", "==", current_year).stream()
 
     # Словарь для хранения задач в нужном формате
     tasks_dict = {}
@@ -140,6 +141,7 @@ def submit_criteria(request):
          .where('task_id', '==', task_id)
          .where('paralel', '==', paralel)
          .where('tour', '==', current_tour)
+         .where('year', '==', current_year)
          .stream())
 
     existing_by_num = {}
@@ -162,6 +164,7 @@ def submit_criteria(request):
             'points': c.get('points', 0),
             'task_id': task_id,
             'tour': current_tour,
+            'year': current_year,
         }
         incoming_by_num[num] = payload
     batch = db.batch()
@@ -169,7 +172,7 @@ def submit_criteria(request):
     deletes = 0
 
     for num, payload in incoming_by_num.items():
-        doc_id = f"task_{task_num}_{num}_class_{paralel}_tour_{current_tour}"
+        doc_id = f"task_{task_num}_{num}_class_{paralel}_tour_{current_tour}_{current_year}"
         doc_ref = criteria_ref.document(doc_id)
         existed = existing_by_num.get(num)
 
@@ -182,6 +185,7 @@ def submit_criteria(request):
                 'points': old.get('points', 0),
                 'task_id': old.get('task_id', task_id),
                 'tour': old.get('tour', current_tour),
+                'year': old.get('year', ""),
             }
             if comparable_old == payload:
                 continue
@@ -207,7 +211,7 @@ def approve_criteria(request):
             # Обновление статуса задачи на "approved" в коллекции tasks_ref
             paralel = task_id.split('_')[0]
             task_num = task_id.split('_')[1]
-            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}"
+            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}_{current_year}"
             task_doc = tasks_ref.document(task_id_)
             task_doc.update({'task_status': 'Approved'})
 
@@ -232,7 +236,7 @@ def reject_criteria(request):
             # Обновление статуса задачи на "rejected" в коллекции tasks_ref
             paralel = task_id.split('_')[0]
             task_num = task_id.split('_')[1]
-            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}"
+            task_id_ = f"task_{task_num}_class_{paralel}_tour_{current_tour}_{current_year}"
             task_doc = tasks_ref.document(task_id_)
             task_doc.update({'task_status': 'Rejected'})
 
@@ -254,9 +258,12 @@ def get_students_by_class(user_class):
         student_dict['id'] = student_dict['userId']
         student_list.append(student_dict)
     return student_list
-def get_assignments(user_class):
 
-    assignments_query = assignments_ref.where('paralel', '==', user_class).where('tour', '==', current_tour)
+
+def get_assignments(user_class):
+    assignments_query = (assignments_ref.where('paralel', '==', user_class)
+                         .where('tour', '==', current_tour)
+                         .where('year', '==', current_year))
     assignments = assignments_query.stream()
 
     grouped = defaultdict(list)
@@ -273,21 +280,26 @@ def get_assignments(user_class):
     result = [{user_id: tasks} for user_id, tasks in grouped.items()]
     return result
 
+
 def get_students(request):
     class_number = request.GET.get('class', 9)  # Класс по умолчанию - 9
     students = get_students_by_class(class_number)
     return JsonResponse({'students': students})
+
 
 def get_assignments_by_tour(request):
     class_number = request.GET.get('class', 9)
     assignments = get_assignments(class_number)
     return JsonResponse({'assignments': assignments})
 
+
 def get_criteria(request):
     task_id = request.GET.get('task_id')
 
     # Ищем задачу по task_id
-    tasks_query = tasks_ref.where('task_id', '==', task_id).where('tour', '==', current_tour)
+    tasks_query = (tasks_ref.where('task_id', '==', task_id)
+                   .where('tour', '==', current_tour)
+                   .where('year', '==', current_year))
     tasks = list(tasks_query.stream())
 
     # Проверяем, существует ли задача и имеет ли она статус Approved
@@ -295,13 +307,16 @@ def get_criteria(request):
         return JsonResponse({'criteria': []})  # Возвращаем пустой массив, если статус не Approved
 
     # Ищем критерии, соответствующие task_id
-    criteria_query = criteria_ref.where('task_id', '==', task_id).where('tour', '==', current_tour)
+    criteria_query = (criteria_ref.where('task_id', '==', task_id)
+                      .where('tour', '==', current_tour)
+                      .where('year', '==', current_year))
     criteria = criteria_query.stream()
 
     # Формируем список критериев
     criteria_list = [criterion.to_dict() for criterion in criteria]
 
     return JsonResponse({'criteria': criteria_list})
+
 
 def get_task_actions(request):
     task_id = request.GET.get('task_id')
@@ -347,7 +362,7 @@ def evaluate_task(request):
         points = data['points']
 
         # Обновление статуса задания
-        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}"
+        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}_{current_year}"
 
         assignment_ref = assignments_ref.document(doc_id)
         if assignment_ref:
@@ -377,7 +392,7 @@ def clear_task_evaluation(request):
         task_num = data['task_id']
         paralel = data['student_class']
 
-        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}"
+        doc_id = f"{student_id}_task_{task_num}_tour_{current_tour}_class_{paralel}_{current_year}"
         # Обновление статуса задания у студента
 
         assignment_ref = assignments_ref.document(doc_id)
@@ -399,7 +414,6 @@ def clear_task_evaluation(request):
 
 
 def download_users_file(request, student_id, paralel, task_id):
-
     student_ref = assignments_ref.where('userId', '==', student_id).get()
     file_url = ""
     if student_ref:
