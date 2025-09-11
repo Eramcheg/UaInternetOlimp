@@ -39,6 +39,11 @@ def profile(request, feature_name):
 
     context = dict()
     context['feature_name'] = feature_name
+
+    role = info.get('role', "")
+    rights = info.get('rights', "")
+
+
     config = {}
     if feature_name == "dashboard":
         pass
@@ -89,14 +94,23 @@ def profile(request, feature_name):
         context['jury_tasks'] = [inf + f"_{current_tour}" for inf in info.get('allowed_tasks', "")]
         config['jury_tasks'] = context['jury_tasks']
     elif feature_name == "chat":
+        if role != "Student" and rights != "Chat_Admin":
+            context['feature_name'] = "dashboard"
+        tasks = get_all_tasks()
+        tasks_js = {}
+        for item in tasks.values():
+            tasks_js.update({item['class']: {}})
+        for item in tasks.values():
+            tasks_js[item['class']].update({item['task_id_normal']: item['name']})
+        config['tasks_chat'] = tasks_js
         context['user_class'] = info.get('paralel', 9)
     else:
         pass
 
-    context['role'] = info['role']
+    context['role'] = role
+    context['rights'] = rights
     context['userId'] = info['userId']
     context['username'] = info['first_name'] + " " + info["last_name"]
-    context['rights'] = info['rights'] if "rights" in info else ""
     config_data = make_json_serializable(config)
     context['config_data'] = config_data
     return render(request, 'profile.html', context=context)

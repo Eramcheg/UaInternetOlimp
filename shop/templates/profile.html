@@ -7,12 +7,16 @@
         "uploadSolutionUrl": "{% url 'upload_file' %}",
         "urlUpdateUserAccount": "{% url 'update_user_account' %}",
         "urlProfileAccount": "{% url 'profile' feature_name='account' %}",
-        "userClass": "{{ user_class }}",
         "submitCriteriaUrl": "{% url 'submit_criteria' %}",
         "approveCriteriaUrl": "{% url 'approve_criteria' %}",
         "rejectCriteriaUrl": "{% url 'reject_criteria' %}",
         "apiEvaluateTaskUrl": "{% url "api_evaluate_task" %}",
         "apiClearEvaluationUrl": "{% url "api_clear_evaluation" %}",
+        "userRole" : "{{ role }}",
+        "userRights": "{{ rights }}",
+        "userClass": "{{ user_class }}",
+        "userId": "{{ userId }}",
+        "username": "{{ username }}",
         "currentTour": {{ current_tour }},
         "currentYear": {{ current_year }}
     }'>
@@ -91,6 +95,7 @@
     {% elif feature_name == 'verification' %}
         <script type="module" src="{% static "js/pages/profile/profileTasksVerification.js" %}"></script>
     {% elif feature_name == 'chat' %}
+        <script type="module" src="{% static "js/pages/profile/profileChat.js" %}"></script>
     {% endif %}
 {% endblock %}
 

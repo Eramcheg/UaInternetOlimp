@@ -67,7 +67,7 @@ def get_all_tasks():
         task_key = f"task{task_id}"
 
         # Сохраняем данные в словарь с ключами task9_1, task10_1 и т.д.
-        tasks_dict[task_key] = {'max_points': max_points, 'status': status, 'name': name, 'class': clas, 'task_id': task_id, 'task_id_normal': task_id.split("_", 2)[0]}
+        tasks_dict[task_key] = {'max_points': max_points, 'status': status, 'name': name, 'class': clas, 'task_id': task_id, 'task_id_normal': task_id.split("_")[1]}
 
     return tasks_dict
 
