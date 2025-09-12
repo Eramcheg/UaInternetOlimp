@@ -1,16 +1,11 @@
 .main-block-login{
     width: 100%;
-    height: 100%;
+    height: 80vh;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
     display: grid;
-
-    width: 100%;
-    height: 1100px; /* Высота зависит от содержимого */
     /*min-height: 100px; !* Минимальная высота *!*/
     background-size: cover; /* Масштабируем по контейнеру */
     background-position: center; /* Центрируем */
-    background-repeat: no-repeat; /* Изображение не повторяется */
     flex-grow: 1; /* Растягиваем контейнер по мере необходимости */
     padding: 0 20px;
 }
@@ -21,7 +16,7 @@
     }
     #wrapper{
         opacity: 1;
-        margin: 120px auto auto;
+        margin: 40px auto auto;
         grid-column: 3;
         display: flex;
         flex-direction: column;
