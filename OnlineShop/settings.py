@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
+
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 import firebase_admin
@@ -45,8 +48,17 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://www.ophs-intolymp.org']
 AUTH_USER_MODEL = 'shop.User'
-# Application definition
 
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,17 +70,10 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'shop',
     'django_ckeditor_5',
+    'axes',
+    'csp',
 ]
 
-# CKEDITOR_5 = {
-#     'default': {
-#         'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
-#         'height': 291,
-#         'width': 'auto',
-#     },
-#     'UPLOAD_PATH': 'uploads/',  # Ensure this path is correctly set up
-#     'IMAGE_BACKEND': 'pillow',  # Using Pillow for image processing
-# }
 customColorPalette = [
         {
             'color': 'hsl(4, 90%, 58%)',
@@ -163,26 +168,28 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'axes.middleware.AxesMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 'shop.middleware.ensure_anon_session_middleware.EnsureAnonymousSessionMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
-
+    "csp.middleware.CSPMiddleware",
 ]
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Стандартный backend (по умолчанию)
-    'shop.views_scripts.backends.EmailOrUsernameModelBackend', # Ваш кастомный backend
+    'axes.backends.AxesBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    'shop.views_scripts.backends.EmailOrUsernameModelBackend',
 ]
 
-# CACHE_MIDDLEWARE_ALIAS = 'default'
-# CACHE_MIDDLEWARE_SECONDS = 600  # Cache for 10 minutes
-# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+AXES_FAILURE_LIMIT = 2
+AXES_COOLOFF_TIME = timedelta(minutes=5)
+AXES_LOCKOUT_URL = '/lockout/'
+AXES_ONLY_USER_FAILURES = True           # считать по пользователю
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True  # часто полезно
+AXES_ENABLED = True
+
 ROOT_URLCONF = 'OnlineShop.urls'
 CSRF_COOKIE_HTTPONLY = False  # Убедитесь, что JavaScript может читать cookie
 CSRF_COOKIE_SECURE = False     # Только если используется HTTPS
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -206,7 +213,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'OnlineShop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -216,7 +222,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -235,10 +240,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'uk'
 

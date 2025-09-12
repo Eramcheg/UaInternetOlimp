@@ -27,7 +27,7 @@ from shop.views_scripts.manage_articles.create_article import create_article, de
     move_down_article, edit_article
 from shop.views_scripts.users_control.at_uc_bulk_actions import disable_users, enable_users
 from shop.views_scripts.auth_views import register, logout_view, login_view, school_registration, \
-    school_registration_success
+    school_registration_success, lockout_view
 from shop.views_scripts.profile_views import update_user_account, download_file, upload_file
 from shop.views_scripts.users_control.edit_user import edit_user
 from shop.views_scripts.users_control.view_user import view_user
@@ -80,6 +80,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('lockout/', lockout_view, name='lockout_view'),
 
 
     path('contacts/', contact_us_page, name='contact_us'),

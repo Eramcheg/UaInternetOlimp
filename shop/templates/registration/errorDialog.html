@@ -1,0 +1,16 @@
+{% load static %}
+{% load i18n %}
+
+{% if error_messages %}
+  {{ error_messages|json_script:"error-data" }}
+{% elif form.errors %}
+  {{ form.errors.get_json_data|json_script:"error-data" }}
+{% endif %}
+<link rel="stylesheet" href="{% static 'css/SeparateWidgets/errorDialog.css' %}">
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button"><i class="fa-solid fa-remove"></i></span>
+        <p id="errorText"></p>
+        <button id="okButton">OK</button>
+    </div>
+ </div>

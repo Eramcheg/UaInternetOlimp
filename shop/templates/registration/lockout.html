@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Тимчасове блокування {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/profile/profile_information.css" %}">
+    <link rel="stylesheet" href="{% static "css/auth/authMain.css" %}">
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-block-login" style="background-image: url('{% static "images/home/imgs/FonMainOlimp.png" %}')">
+        <section id="wrapper" class="stick_parent_lb">
+            <header class="page-header">
+                <h1> Тимчасове блокування</h1>
+            </header>
+            <div class="text-align-center">
+                <h7> Забагато спроб невдалого входу.</h7><br>
+                {% if unlock_time %}
+                    <p> Будь ласка спробуйте знову через {{ unlock_time }}</p>
+                {% else %}
+                    <h7>Ваш акаунт було тимчасово омежено.</h7>
+                {% endif %}
+                <p>
+                  Якщо Ви забули свій пароль - будь ласка,
+                  <a href="{% url 'password_reset' %}" class="reset-password">натисніть сюди щоб відновити його.</a>.
+                </p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

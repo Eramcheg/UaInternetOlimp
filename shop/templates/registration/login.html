@@ -10,132 +10,63 @@
 {% endblock %}
 
 {% block content %}
-<div id="errorModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p id="errorText"></p>
-            <button id="okButton">OK</button>
-        </div>
-    </div>
-<div class="main-block-login" style="background-image: url('{% static "images/home/imgs/FonMainOlimp.png" %}')">
-
-    <section id="wrapper" class="stick_parent_lb">
-
-                        <header class="page-header" >
-                            <h1> Авторизація</h1>
-                            <h8><a href="{% url "password_reset" %}">Забули пароль?</a></h8>
-                        </header>
-                        <section id="content" class="page-content ">
-                            <section class="login-form">
-                                <form id="login-form" action="{% url 'login' %}" method="post">
-                                    {% csrf_token %}
-                                    <div>
-                                        <input type="hidden" name="back" value="my-account">
-                                        <div class="form-group row ">
-                                            <div class="col-md-12 form-control-comment">
-                                                <span class="req">*</span>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label>Логін або Емейл</label>
-                                                {{ form.username | add_class:"form-control" | attr:"placeholder: " }}
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group row ">
-                                            <div class="col-md-12 form-control-comment">
-                                                <span class="req">*</span>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label>Пароль</label>
-                                                <div class="input-group js-parent-focus">
-                                                    {{  form.password | add_class:"form-control js-child-focus js-visible-password" | attr:"placeholder: "  }}
-                                                    <span class="input-group-btn">
-                                                        <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
-                                                            <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                                            </i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <footer class="form-footer text-sm-center clearfix">
-                                        <button class="btn btn-primary" data-link-action="sign-in" type="submit">
-                                            Авторизація
-                                        </button>
-                                    </footer>
-                                </form>
-                            </section>
-                            <div>
-                                Новий на нашій платформі? <a href="{% url "register" %}" data-link-action="display-register-form">Створити акаунт</a>
+    {% if error_messages or form.errors %}
+        {% include "registration/errorDialog.html" %}
+    {% endif %}
+    <div class="main-block-login" style="background-image: url('{% static "images/home/imgs/FonMainOlimp.png" %}')">
+        <section id="wrapper" class="stick_parent_lb">
+            <header class="page-header">
+                <h1> Авторизація</h1>
+                <h8><a href="{% url "password_reset" %}">Забули пароль?</a></h8>
+            </header>
+            <section id="content" class="page-content ">
+                <section class="login-form">
+                    <form id="login-form" action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <div>
+                            <input type="hidden" name="back" value="my-account">
+                            <div class="form-group row ">
+                                <div class="col-md-12 form-control-comment">
+                                    <span class="req">*</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Логін або Емейл</label>
+                                    {{ form.username | add_class:"form-control" | attr:"placeholder: " }}
+                                </div>
                             </div>
+                            <div class="form-group row ">
+                                <div class="col-md-12 form-control-comment">
+                                    <span class="req">*</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Пароль</label>
+                                    <div class="input-group js-parent-focus">
+                                        {{  form.password | add_class:"form-control js-child-focus js-visible-password" | attr:"placeholder: "  }}
+                                        <span class="input-group-btn">
+                                            <button class="btn material-icons" type="button" data-action="show-password" data-text-show="" data-text-hide="">
+                                                <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                </i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
 
-                        </section>
-                        <footer class="page-footer hidden">
+                            </div>
+                        </div>
+                        <footer class="form-footer text-sm-center clearfix">
+                            <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                Авторизація
+                            </button>
                         </footer>
-
+                    </form>
                 </section>
-            </div>
-        </div>
-    </section>
-</div>
-{{ form.errors|json_script:"form_errors" }}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-         const togglePasswordButtons = document.querySelectorAll('button[data-action="show-password"]');
-         togglePasswordButtons.forEach(togglePasswordButton =>
-         togglePasswordButton.addEventListener('click', function() {
-             // Select the password input
-             const passwordInput = this.parentElement.parentElement.querySelector('input');
-
-             // Check the current type of the password input and toggle
-             if (passwordInput.type === "password") {
-                passwordInput.type = "text"; // Show the password
-                // Change the SVG to 'eye'
-                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></i>';
-             } else {
-                passwordInput.type = "password"; // Hide the password
-                // Change the SVG back to 'eye-off'
-                togglePasswordButton.innerHTML = '<i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></i>';
-             }
-         }));
-        var formErrors = {% if form.errors %}true{% else %}false{% endif %};
-        var errorModal = document.getElementById("errorModal");
-        var errorText = document.getElementById("errorText");
-        var okButton = document.getElementById("okButton");
-        var closeButton = document.querySelector(".close-button");
-
-        if (formErrors) {
-            var errorMessage = "";
-            {% for field in form %}
-                {% for error in field.errors %}
-                    errorMessage += "{{ error }}\n";
-                {% endfor %}
-            {% endfor %}
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                    errorMessage += "{{ error }}\n";
-                {% endfor %}
-            {% endif  %}
-            errorText.innerText = errorMessage;
-            errorModal.style.display = "block";
-        }
-
-        okButton.onclick = function() {
-            errorModal.style.display = "none";
-        }
-
-        closeButton.onclick = function() {
-            errorModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target === errorModal) {
-                errorModal.style.display = "none";
-            }
-        }
-    });
-</script>
-</html>
+                <div>
+                    Новий на нашій платформі? <a href="{% url "register" %}" data-link-action="display-register-form">Створити акаунт</a>
+                </div>
+            </section>
+        </section>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    {{ form.errors|json_script:"form_errors" }}
 {% endblock %}

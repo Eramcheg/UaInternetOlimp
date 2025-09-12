@@ -1,8 +1,10 @@
 import hashlib
 import random
 import string
+import time
 from datetime import datetime
 
+from axes.decorators import axes_dispatch
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,7 +12,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from firebase_admin import firestore
 
+from shop.decorators import not_logged_in, ratelimit_with_logging
 from shop.forms import UserRegisterForm, User, SchoolRegistrationForm
+from shop.utils import advanced_redirect
 from shop.views import users_ref, school_registrations_ref, get_user_info, get_user_session_type
 
 CONSENT_VERSION = "v1.0-2025-09-01"
@@ -39,6 +43,8 @@ def check_login_unique_in_firestore(login_name):
     return any(query)
 
 
+@ratelimit_with_logging(key='ip', rate='5/m', method='POST')
+@not_logged_in
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -48,22 +54,22 @@ def register(request):
             login_name = form.cleaned_data.get('login')
             if check_login_unique_in_firestore(login_name):
                 form.add_error('login', 'Логін вже використовується.')
-                return render(request, 'registration/register.html', {'form': form})
+                return render(request, 'registration/register.html', {'form': form, 'error_messages': get_all_errors(form)})
 
                 # Check if login is unique in Django's database
             if User.objects.filter(username=login_name).exists():
                 form.add_error('login', 'Логін вже використовується.')
-                return render(request, 'registration/register.html', {'form': form})
+                return render(request, 'registration/register.html', {'form': form, 'error_messages': get_all_errors(form)})
             paralel = form.cleaned_data.get('paralel_number')
             if paralel not in ["9", "10", "11"]:
                 form.add_error('login', 'Неіснуюча паралель.')
-                return render(request, 'registration/register.html', {'form': form})
+                return render(request, 'registration/register.html', {'form': form, 'error_messages': get_all_errors(form)})
             existing_user = users_ref.where('email', '==', email).limit(1).get()
 
             if list(existing_user):  # Convert to list to check if it's non-empty
                 print('Error: User with this Email already exists.')
                 form.add_error('email', 'Користувач з таким емейлем вже існує.')
-                return render(request, 'registration/register.html', {'form': form})
+                return render(request, 'registration/register.html', {'form': form, 'error_messages': get_all_errors(form)})
             else:
 
                 user_id = get_unique_user_id()
@@ -77,7 +83,7 @@ def register(request):
                 phone = form.cleaned_data.get('phone_number')
 
                 new_user = {
-                    'Enabled': 'True',
+                    'Enabled': True,
                     "login": login_name,
                     'first_name': first_name,
                     'last_name': last_name,
@@ -94,19 +100,16 @@ def register(request):
 
                 user = form.save(commit=False)
                 user.username = login_name  # Set the username to be the login field
+                user.set_password(form.cleaned_data['password1'])
                 user.save()  # Now save the user to the database
 
-                password = form.cleaned_data.get('password1')
-                form.save()
-                user = authenticate(username=login_name, password=password)
+                user = authenticate(request=request, username=login_name, password=form.cleaned_data['password1'])
                 if user:
                     login(request, user)
                     return redirect('home')
     else:
         form = UserRegisterForm()
-
-    print(form.errors)
-    return render(request, 'registration/register.html', {'form': form, 'errors': form.errors})
+    return render(request, 'registration/register.html', {'form': form, 'error_messages': get_all_errors(form)})
 
 
 def _email_fingerprint(email: str) -> str:
@@ -210,32 +213,56 @@ def school_registration(request):
 def school_registration_success(request):
     return render(request, 'registration/school_registration_success.html')
 
+
+@not_logged_in
+@axes_dispatch  # ← удобно: мгновенно режет заблокированные попытки
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                email = form.cleaned_data.get('email') or user.email
-
-                # Query Firebase Firestore to check the user's Enabled status
-                firebase_user_doc = users_ref.where('email', '==', email).limit(1).get()
-                if firebase_user_doc and firebase_user_doc[0].to_dict().get('Enabled', True) == False:
-                    # Redirect to home with an error message
-                    messages.error(request, "Your account was disabled")
-                    form.add_error(None, "Your account was disabled")
-                    return render(request, 'registration/login.html', {'form': form})
-                else:
-                    # Proceed to log the user in
-                    login(request, user)
-                    return redirect('home')
+            user = form.get_user()  # ← не вызываем authenticate() вручную
+            # твоя проверка Enabled во Firestore
+            email = getattr(user, 'email', None)
+            firebase_user_doc = users_ref.where('email', '==', email).limit(1).get()
+            if firebase_user_doc and firebase_user_doc[0].to_dict().get('Enabled', True) is False:
+                form.add_error(None, "Ваш акаунт було вимкнено")
+            else:
+                login(request, user)
+                return advanced_redirect(request, 'home')
+        # если невалидна — Axes сам посчитает неудачу
     else:
         form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form, 'error_messages': get_all_errors(form)})
+
+
+
+def get_all_errors(forms):
+    # If list is passed - just continue. If it is not list - we should wrap it inside of the new list
+    if not isinstance(forms, list):
+        forms = [forms]
+    seen = set()
+    all_errors = []
+    for form in forms:
+        for field, errors in form.errors.items():
+            for error in errors:
+                message = f"{field}: {error}" if field != "__all__" else error
+                if message not in seen:
+                    seen.add(message)
+                    all_errors.append(message)
+        # Process non-field errors separately
+        for error in form.non_field_errors():
+            if error not in seen:
+                seen.add(error)
+                all_errors.append(error)
+    return all_errors
 
 
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+def lockout_view(request):
+    # Можно просто показать страницу с сообщением.
+    # Axes сам снимет блокировку по истечении AXES_COOLOFF_TIME
+    return render(request, 'registration/lockout.html')
