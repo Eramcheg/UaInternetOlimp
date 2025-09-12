@@ -179,7 +179,7 @@ AUTHENTICATION_BACKENDS = [
     'shop.views_scripts.backends.EmailOrUsernameModelBackend',
 ]
 
-AXES_FAILURE_LIMIT = 2
+AXES_FAILURE_LIMIT = 10
 AXES_COOLOFF_TIME = timedelta(minutes=5)
 AXES_LOCKOUT_URL = '/lockout/'
 AXES_ONLY_USER_FAILURES = True           # считать по пользователю
