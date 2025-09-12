@@ -25,6 +25,7 @@ from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_c
     download_users_file, get_task_actions, get_assignments_by_tour
 from shop.views_scripts.manage_articles.create_article import create_article, delete_article, move_up_article, \
     move_down_article, edit_article
+from shop.views_scripts.registrations_control.registrations_control import download_registrations
 from shop.views_scripts.users_control.at_uc_bulk_actions import disable_users, enable_users
 from shop.views_scripts.auth_views import register, logout_view, login_view, school_registration, \
     school_registration_success, lockout_view
@@ -63,6 +64,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path('admin_tools/users_control/edit_user/<str:user_id>/', edit_user, name='at_edit_user'),
     path('admin_tools/users_control/view_user/<str:user_id>/', view_user, name='at_view_user'),
+    path('at/registrations_control/download_xlsx/', download_registrations, name='at_download_regs'),
     path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article_detail'),
     path('create-article/', create_article, name='create_article'),
     path('edit_article/<int:article_id>/', edit_article, name='edit_article'),

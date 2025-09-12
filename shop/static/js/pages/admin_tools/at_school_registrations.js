@@ -282,7 +282,9 @@ import(window.config.firebaseFunctionScriptUrl)
                 select.addEventListener('change', filterUsers);
             });
         }
-
+        document.getElementById('download-excel').addEventListener('click', function() {
+            window.location.href = window.config.atDownloadRegistrations;
+        });
         document.getElementById('remove-filters').addEventListener('click', function() {
             showOverlay();
             fetchAllRegistrations().then(users => {
