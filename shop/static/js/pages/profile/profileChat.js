@@ -19,7 +19,7 @@ let user_class = window.config.userClass;
 let role = window.config.userRole;
 let tour = window.config.currentTour;
 let year = window.config.currentYear;
-let tasks = window.config.tasks_chats || {};
+let tasks = window.config.tasks_chat || {};
 let username = window.config.username;
 const chatMessagesRef = collection(db, "messages");
 const q = query(chatMessagesRef, where("chat_id", "==", currentChatId), orderBy("timestamp"));
@@ -264,6 +264,11 @@ function updateChatUI(messages) {
 
     // Add each message to the chat log
     messages.forEach((message) => {
+
+        if(message.message_text.trim() === ""){
+            return;
+        }
+
         const messageElement = document.createElement('div');
         const messageElementHigh = document.createElement('div');
         messageElementHigh.classList.add('message-high');
@@ -274,10 +279,7 @@ function updateChatUI(messages) {
         messageElementHighTime.classList.add('timestamp');
         const messageElementText = document.createElement('div');
 
-        messageElement.appendChild(messageElementHigh);
-        messageElement.appendChild(messageElementText);
-        messageElementHigh.appendChild(messageElementHighName);
-        messageElementHigh.appendChild(messageElementHighTime);
+
 
         if (message.user_role === "Student") {
             // The message is from the student (the current user)
@@ -303,9 +305,11 @@ function updateChatUI(messages) {
 
             messageElementHighTime.textContent = formatTimestamp(message.timestamp.seconds, message.timestamp.nanoseconds);
             messageElementHighName.textContent = message.sender_name;
-            messageElement.textContent = message.sender_name + ": " + message.message_text;
         }
-
+        messageElement.appendChild(messageElementHigh);
+        messageElement.appendChild(messageElementText);
+        messageElementHigh.appendChild(messageElementHighName);
+        messageElementHigh.appendChild(messageElementHighTime);
         chatLog.appendChild(messageElement);
     });
 
