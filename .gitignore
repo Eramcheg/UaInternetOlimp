@@ -31,4 +31,4 @@ logs/
 credentials/
 
 # User uploads
-shop/media/
+shop/media/-e "\n# DB\n*.sqlite3" 
