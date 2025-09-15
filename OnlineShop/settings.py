@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'background_task',
     'widget_tweaks',
     'shop',
     'django_ckeditor_5',

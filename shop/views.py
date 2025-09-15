@@ -26,7 +26,7 @@ tasks_ref = db.collection('tasks')
 users_ref = db.collection('users')
 
 current_tour = 1
-current_year = 2024
+current_year = 2025
 
 TASKS = [
     '9_1', '9_2', '9_3', '9_4', '9_5',
@@ -51,8 +51,6 @@ def home_page(request):
     articles = Article.objects.all().order_by('priority')
     context['news_info'] = news_info
     context['articles'] = articles
-    for user in all_users:
-        print(user)
     test_text = _("Welcome to my site.")
     email = get_user_session_type(request)
     user_info = get_user_info(email)
