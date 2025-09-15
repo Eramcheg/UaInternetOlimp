@@ -264,11 +264,9 @@ function updateChatUI(messages) {
 
     // Add each message to the chat log
     messages.forEach((message) => {
-
         if(message.message_text.trim() === ""){
             return;
         }
-
         const messageElement = document.createElement('div');
         const messageElementHigh = document.createElement('div');
         messageElementHigh.classList.add('message-high');
