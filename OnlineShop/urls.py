@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from shop import views
 from shop.views import ArticleDetailView, news_main_view, open_news, contact_us_page, task_solutions, olimp_results, \
-    final_results, fourth_step_results, materials_view
+    final_results, fourth_step_results, materials_view, csp_report
 from shop.views_scripts import profile_views
 from shop.views_scripts.jury_control.jury_views import handle_max_score, jurys_control, submit_criteria, \
     reject_criteria, approve_criteria, get_students, get_criteria, evaluate_task, clear_task_evaluation, \
@@ -102,6 +102,8 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('api/get-actions/', get_task_actions, name='api_get_actions'),
     path('api/clear-evaluation/', clear_task_evaluation, name='api_clear_evaluation'),
     path('api/download-file/<str:student_id>/<str:paralel>/<int:task_id>/', download_users_file, name='api_download_file'),
+
+    path('csp-report/', csp_report, name='csp_report'),
 )
 
 if settings.DEBUG:

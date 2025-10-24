@@ -16,8 +16,6 @@ from pathlib import Path
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
-import firebase_admin
-from firebase_admin import credentials, firestore
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,28 +34,86 @@ if not SECRET_KEY:
 
 FIREBASE_CREDENTIALS_FILE = os.getenv('FIREBASE_CREDENTIALS')
 FIREBASE_STORAGE_BUCKET = os.getenv('FIREBASE_STORAGE_BUCKET')
-if not firebase_admin._apps:
-    FIREBASE_CREDENTIALS = credentials.Certificate(FIREBASE_CREDENTIALS_FILE)
-    firebase_admin.initialize_app(FIREBASE_CREDENTIALS, {'storageBucket': FIREBASE_STORAGE_BUCKET})
 
-FIRESTORE_CLIENT = firestore.client()
+AUTH_USER_MODEL = 'shop.User'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://www.ophs-intolymp.org']
-AUTH_USER_MODEL = 'shop.User'
+IS_PROD = not DEBUG
 
-SECURE_SSL_REDIRECT = not DEBUG
+raw_hosts = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1")
+ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(',') if h.strip()]
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    "https://www.ophs-intolymp.org,https://ophs-intolymp.org"
+).split(",")
+
+SECURE_SSL_REDIRECT = IS_PROD
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
 
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+if IS_PROD:
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+    X_FRAME_OPTIONS = "DENY"
+else:
+    # В разработке проще жить без редиректа/SSL-кук
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
+# CONTENT_SECURITY_POLICY_REPORT_ONLY = {
+#     "EXCLUDE_URL_PREFIXES": [],
+#     "DIRECTIVES": {
+#         "default-src": ["'none'"],
+#         "media-src": ["'self'"],
+#         "script-src": [
+#             "'self'",
+#             "blob:",
+#             "https://code.jquery.com",
+#             "https://kit.fontawesome.com",
+#             "https://www.googletagmanager.com",
+#             "https://cdnjs.cloudflare.com"
+#
+#         ],
+#         "style-src": [
+#             "'self'",
+#             "https://fonts.googleapis.com",
+#             "https://maxcdn.bootstrapcdn.com",
+#             "https://kit.fontawesome.com",
+#             "https://cdn.jsdelivr.net"
+#         ],
+#         "img-src": [
+#             "'self'",
+#             "data:",
+#             "blob:",
+#             "https://www.google-analytics.com",
+#         ],
+#         "font-src": [
+#             "'self'",
+#             "https://fonts.gstatic.com",
+#             "https://ka-f.fontawesome.com",
+#         ],
+#         "connect-src": [
+#             "'self'",
+#             "https://firestore.googleapis.com",
+#             "https://ka-f.fontawesome.com",
+#         ],
+#         "frame-ancestors": ["'self'"],
+#         "form-action": ["'self'"],
+#         "frame-src": [
+#             "'self'",
+#         ],
+#         "upgrade-insecure-requests": True,
+#         "report-uri": "/uk/csp-report/",
+#     },
+# }
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -181,13 +237,10 @@ AUTHENTICATION_BACKENDS = [
 AXES_FAILURE_LIMIT = 10
 AXES_COOLOFF_TIME = timedelta(minutes=5)
 AXES_LOCKOUT_URL = '/lockout/'
-AXES_ONLY_USER_FAILURES = True           # считать по пользователю
-AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True  # часто полезно
 AXES_ENABLED = True
+AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]
 
 ROOT_URLCONF = 'OnlineShop.urls'
-CSRF_COOKIE_HTTPONLY = False  # Убедитесь, что JavaScript может читать cookie
-CSRF_COOKIE_SECURE = False     # Только если используется HTTPS
 
 TEMPLATES = [
     {
@@ -247,7 +300,6 @@ LOGIN_URL = 'login'
 USE_I18N = True
 USE_L10N = True
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
-from django.utils.translation import gettext_lazy as _
 LANGUAGES = [
     ('uk', _('Ukrainian')),
 ]
@@ -280,3 +332,67 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # Save Django's default loggers
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname}: {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'ignore_static': {
+            '()': 'shop.logging_filters.IgnoreStaticFilesFilter',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',  # INFO or WARN can be selected for production
+            'class': 'logging.handlers.RotatingFileHandler',
+            'encoding': 'utf-8',
+            'filename': os.path.join(LOG_DIR, 'django.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 5,
+            'filters': ['ignore_static'],
+            'formatter': 'verbose',
+            'delay': True,
+        },
+        'console': {
+            'level': 'DEBUG',  # You can use DEBUG for development
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'filters': ['ignore_static'],
+        },
+    },
+    'loggers': {
+        # Generic logger for Django (includes standard behavior)
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        # Logger for queries - only errors are logged
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        # Example for your application ('shop' is the name of the application)
+        'shop': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',  # DEBUG can be enabled here for detailed tracking
+            'propagate': True,
+        },
+    },
+}
