@@ -3,6 +3,7 @@
     max-width: 100vw;
     /*overflow-x: hidden;*/
 }
+
 body{
     overflow-x: hidden;
 }
@@ -125,7 +126,7 @@ body{
     font-size: 16px;
     text-decoration: none !important;
     padding: 5px;
-    margin: 0 5px 0 0px;
+    margin: 0 5px 0 0;
     font-family: 'Montserrat-Bold', sans-serif;
     position: relative;
 }
@@ -183,8 +184,8 @@ body{
     position: absolute;
     left: 0;
     bottom: 5px;
-    width: 0%;
-    height: 1.5px;
+    width: 0;
+    height: 2px;
     transition: width 0.3s ease;
 }
 .dropdown-link:hover::after {
@@ -402,7 +403,7 @@ body{
     left: 0;
     bottom: 5px;
     width: 0;
-    height: 1.5px;
+    height: 2px;
     background-color: #000000;
     transition: all 0.3s ease;
 }
@@ -526,4 +527,7 @@ body{
 }
 .frame-link:hover{
     text-decoration: none;
+}
+.user-name-navbar{
+     margin-top: 6px;
 }

@@ -1,20 +1,21 @@
 import concurrent.futures
 import json
+import logging
 from datetime import datetime
-
-from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 from google.cloud.firestore_v1 import DocumentReference
 
+from shop.firebase import get_firestore
 from shop.forms import User, ArticleForm
 from shop.models import Article
 
-db = settings.FIRESTORE_CLIENT
+logger = logging.getLogger(__name__)
+db = get_firestore()
 
 assignments_ref = db.collection('assignments')
 chats_ref = db.collection('chats')
@@ -398,3 +399,25 @@ def materials_view(request):
         "role": role,
     }
     return render(request, 'uaolimpiad/mainPages/materialsMain.html', context=context)
+
+@csrf_exempt
+def csp_report(request):
+    """
+    Processes CSP violation reports.
+    Browser sends POST request with JSON content.
+    """
+    if request.method == "POST":
+        try:
+            report_data = json.loads(request.body.decode("utf-8"))
+        except json.JSONDecodeError:
+            logger.error("Invalid JSON in CSP report.")
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+        # Log the received offence. Here you can configure other behaviour:
+        # for example, saving the report to the database or sending notifications.
+        logger.info("CSP Violation Report: %s", json.dumps(report_data, indent=2))
+
+        # Returning a response with no content
+        return JsonResponse({"status": "received"}, status=204)
+    else:
+        return JsonResponse({"error": "Method not allowed. Use POST."}, status=405)
