@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container-page">
+  {% include 'admin_tools/AT_side_menu.html' %}
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <h1 class="text-xl font-semibold text-gray-900 truncate">Олімпіади — {{ group.title }}</h1>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="{% url 'admin_tools' feature_name="group_list" %}"
+           class="text-sm text-gray-600 hover:text-gray-900">← Назад до всіх груп</a>
+        <a href="{% url 'olymps_admin:olymp_new' group_id=group.id %}"
+           class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm hover:bg-gray-50">
+          + Додати олімпіаду
+        </a>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+      <table class="min-w-full table-fixed text-sm">
+        <colgroup>
+          <col class="w-[40%]">
+          <col class="w-[9rem]">
+          <col class="w-[36rem]">
+          <col class="w-[10rem]">
+        </colgroup>
+        <thead class="bg-gray-50 text-gray-600">
+          <tr>
+            <th class="px-3 py-2 text-left font-medium">Назва</th>
+            <th class="px-3 py-2 text-center font-medium">Рік</th>
+            <th class="px-3 py-2 text-left font-medium">Завдання / Розв'язки</th>
+            <th class="px-3 py-2 text-right font-medium"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {% for o in olymps %}
+            <tr class="align-middle">
+              <td class="px-3 py-2">
+                <span class="block truncate" title="{{ o.name }}">{{ o.name }}</span>
+              </td>
+              <td class="px-3 py-2 text-center text-gray-800">
+                {{ o.year }}
+              </td>
+              <td class="px-3 py-2">
+                {% if o.tasks.all %}
+                  <!-- Scroll if too many tasks; keep it compact -->
+                  <div class="max-h-36 overflow-auto pr-1">
+                    <ul class="space-y-1">
+                      {% for t in o.tasks.all %}
+                        <li class="flex items-center gap-2">
+                          <span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-[11px] text-gray-700 shrink-0">
+                            {{ t.order }}
+                          </span>
+                          <span class="truncate max-w-[16rem]" title="{{ t.title }}">{{ t.title }}</span>
+                          {% if t.tasks_file %}
+                            <a href="{{ t.tasks_file.url }}" target="_blank"
+                               class="inline-flex items-center rounded border border-gray-300 px-2 py-0.5 text-[11px] hover:bg-gray-50 shrink-0">
+                              📄 Завдання
+                            </a>
+                          {% else %}
+                            <span class="inline-flex items-center rounded bg-gray-50 px-2 py-0.5 text-[11px] text-gray-400 shrink-0">📄 немає</span>
+                          {% endif %}
+                          {% if t.solutions_file %}
+                            <a href="{{ t.solutions_file.url }}" target="_blank"
+                               class="inline-flex items-center rounded border border-gray-300 px-2 py-0.5 text-[11px] hover:bg-gray-50 shrink-0">
+                              ✅ Розв'язки
+                            </a>
+                          {% else %}
+                            <span class="inline-flex items-center rounded bg-gray-50 px-2 py-0.5 text-[11px] text-gray-400 shrink-0">✅ немає</span>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% else %}
+                  <span class="text-gray-400">Задачі відсутні.</span>
+                {% endif %}
+              </td>
+              <td class="px-3 py-2 text-right whitespace-nowrap">
+                <a href="{% url 'olymps_admin:olymp_edit' group_id=group.id pk=o.id %}"
+                   class="text-indigo-700 hover:text-indigo-900">Редагувати</a>
+                <span class="mx-1 text-gray-300">|</span>
+                <a href="{% url 'olymps_admin:olymp_delete' group_id=group.id pk=o.id %}"
+                   class="text-red-700 hover:text-red-900">Видалити</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="px-3 py-6 text-center text-gray-500">Ще немає олімпіад.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

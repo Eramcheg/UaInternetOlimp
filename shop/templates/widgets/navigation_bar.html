@@ -10,21 +10,20 @@
             <div class="all-links">
             <a href="{% url 'home' %}" class="link">Головна</a>
             <div class="dropdown-container">
-                <a class="link" href="{% url 'materials' %}">Матеріали</a> {# class="link materials-dropdown-trigger" #}
-                <div id="dropdownMenu" class="menu">
-                    <ul>
-                        <li><a href="{% url 'materials' %}?page=terms" class="dropdown-link" title="Умови">Умови</a></li>
-                        <li><a href="{% url 'materials' %}?page=solutions" class="dropdown-link" title="Розв'язки">Розв'язки</a></li>
-                        <li><a href="{% url 'materials' %}?page=results" class="dropdown-link" title="Результати">Результати</a></li>
-                        <li><a href="{% url 'materials' %}?page=other" class="dropdown-link" title="Інше">Інше</a></li>
-                    </ul>
+                <a class="link link-dropdown">Матеріали</a>
+                <div id="materialsDropdownMenu" class="dropdown-menu">
+                    <a href="{% url 'materials' %}" class="dropdown-links" title="Умови"> Матеріали останньої олімпіади </a>
+                    <a href="{% url 'olymps:group_grid' %}" class="dropdown-links" title="Умови"> Завдання інших олімпіад </a>
+{#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Розв'язки">Розв'язки</a>#}
+{#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Результати">Результати</a>#}
+{#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Інше">Інше</a>#}
                 </div>
             </div>
             <a href="{% url 'news_main' %}" class="link">Новини</a>
             <a href="{% url 'contact_us' %}" class="link">Контакти</a>
             <div class="dropdown-link">
-                <a href="#" class="link" id="results-toggle"> Результати та розв'язки </a>
-                <div class="dropdown-menu" id="results-menu">
+                <a class="link link-dropdown"> Результати та розв'язки </a>
+                <div id="results-menu" class="dropdown-menu">
                     <a href="{% url 'tasks_solutions' %}" class="dropdown-links">Розв'язки заочного туру</a>
                     <a href="{% url 'olimp_results' %}" class="dropdown-links">Результати заочного туру</a>
                     <a href="{% url 'final_results' %}" class="dropdown-links">Результати фінального туру</a>
@@ -45,12 +44,12 @@
             {% if user.is_authenticated %}
                 <span class="icons-container">
                     <div class="dropdown-container-account">
-                        <span class="icon-link account-link-wrapper account-dropdown-trigger" onclick="dropdownTrigger()">
+                        <span class="icon-link account-link-wrapper account-dropdown-trigger" onclick="dropdownTrigger('accountDropdownMenu')">
                             <a id="account-icon">
                                 <div id="account-icon-photo">
                                     <span></span>
                                 </div>
-                                <span style="margin-top: 6px">
+                                <span class="user-name-navbar">
                                     {% if user.username %}
                                         {{ user.username }}
                                     {% elif user.email %}

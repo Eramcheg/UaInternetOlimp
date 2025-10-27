@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django_ckeditor_5.widgets import CKEditor5Widget
-from shop.models import User, Article
+from shop.models import User, Article, Group, Olympiad
 from django import forms
 
 # Register your models here.
+admin.site.register(Group)
+admin.site.register(Olympiad)
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'is_active', 'is_staff')

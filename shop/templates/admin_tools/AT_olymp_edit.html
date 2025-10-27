@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container-page">
+  {% include 'admin_tools/AT_side_menu.html' %}
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="mb-6">
+      <h1 class="text-2xl font-semibold text-gray-900">
+        {% if obj %}Редагувати олімпіаду{% else %}Додати олімпіаду{% endif %} — {{ group.title }}
+      </h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" id="olymp-form" class="max-w-4xl">
+      {% csrf_token %}
+
+      <fieldset class="p-4 border border-gray-200 rounded-xl mb-4">
+        <legend class="px-2 text-gray-800 font-semibold">Олімпіада</legend>
+        <div class="space-y-4">
+          {{ form.as_p }}
+        </div>
+      </fieldset>
+
+      <fieldset class="p-4 border border-gray-200 rounded-xl">
+        <legend class="px-2 text-gray-800 font-semibold">Завдання</legend>
+
+        {{ formset.management_form }}
+
+        <div id="tasks-container" class="space-y-4 mt-2">
+          {% for f in formset.forms %}
+            <div class="task-item p-3 border border-gray-200 rounded-lg">
+              <div class="grid grid-cols-1 gap-3">
+                <!-- items-center = vertical middle for all columns -->
+                <div class="grid [grid-template-columns:80px_1fr_1fr_1fr] gap-3 items-center">
+                  <div class="space-y-1">
+                    {{ f.order.label_tag }}
+                    {{ f.order }}
+                  </div>
+
+                  <div class="space-y-1">
+                    {{ f.title.label_tag }}
+                    {{ f.title }}
+                  </div>
+
+                  <!-- FIXED: file column uses flex-col (no duplicate/conflicting classes) -->
+                  <div class="flex flex-col gap-1">
+                    {{ f.tasks_file.label_tag }}
+                    <div class="file-wrap flex flex-col items-start gap-2">
+                      {{ f.tasks_file }}
+                      <span class="js-file-name truncate max-w-[16rem] text-xs text-gray-600"></span>
+                      <div class="flex items-center gap-2">
+                        <button type="button" class="js-clear-file text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100">Очистити</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-1">
+                    {{ f.solutions_file.label_tag }}
+                    <div class="file-wrap flex flex-col items-start gap-2">
+                      {{ f.solutions_file }}
+                      <span class="js-file-name truncate max-w-[16rem] text-xs text-gray-600"></span>
+                      <div class="flex items-center gap-2">
+                        <button type="button" class="js-clear-file text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100">Очистити</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% if formset.can_delete %}
+                  <!-- keep native delete checkbox hidden; we toggle it from the red button -->
+                  <div class="hidden">
+                    {{ f.id }}
+                    {{ f.DELETE }}
+                  </div>
+                {% endif %}
+
+                <div class="pt-3 mt-3 border-t border-gray-200 text-right">
+                  <button type="button"
+                          class="js-remove-task inline-flex items-center rounded-md border border-red-300 text-red-700 px-3 py-1.5 text-sm hover:bg-red-50">
+                    Видалити завдання
+                  </button>
+                </div>
+              </div>
+
+              {% if f.non_field_errors %}
+                <div class="text-red-700 mt-2">{{ f.non_field_errors }}</div>
+              {% endif %}
+            </div>
+          {% empty %}
+            <p id="no-tasks" class="text-gray-500">Задачі відсутні. Додайте першу.</p>
+          {% endfor %}
+        </div>
+
+        <button type="button" id="add-task-btn"
+                class="mt-3 inline-flex items-center rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm hover:bg-gray-100">
+          + Додати задачу
+        </button>
+
+        <template id="empty-form-template">
+          <div class="task-item p-3 border border-gray-200 rounded-lg">
+            <div class="grid grid-cols-1 gap-3">
+              <div class="grid [grid-template-columns:80px_1fr_1fr_1fr] gap-3 items-center">
+                <div class="space-y-1">__ORDER_LABEL__<br>__ORDER_INPUT__</div>
+                <div class="space-y-1">__TITLE_LABEL__<br>__TITLE_INPUT__</div>
+
+                <div class="flex flex-col gap-1">__TASKS_LABEL__
+                  <span class="file-wrap flex flex-col items-start gap-2">__TASKS_INPUT__
+                    <span class="js-file-name truncate max-w-[16rem] text-xs text-gray-600"></span>
+                    <div class="flex items-center gap-2">
+                      <button type="button" class="js-clear-file text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100">Очистити</button>
+                    </div>
+                  </span>
+                </div>
+
+                <div class="flex flex-col gap-1">__SOL_LABEL__
+                  <span class="file-wrap flex flex-col items-start gap-2">__SOL_INPUT__
+                    <span class="js-file-name truncate max-w-[16rem] text-xs text-gray-600"></span>
+                    <div class="flex items-center gap-2">
+                      <button type="button" class="js-clear-file text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100">Очистити</button>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="hidden">__ID__ <br> __DELETE__</div>
+
+              <div class="pt-3 mt-3 border-t border-gray-200 text-right">
+                <button type="button"
+                        class="js-remove-task inline-flex items-center rounded-md border border-red-300 text-red-700 px-3 py-1.5 text-sm hover:bg-red-50">
+                  Видалити завдання
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </fieldset>
+
+      <div class="mt-4">
+        <button type="submit"
+                class="inline-flex items-center rounded-lg bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-black">
+          Зберегти
+        </button>
+        <a href="{% url 'olymps_admin:olymp_list' group_id=group.id %}"
+           class="ml-3 text-sm text-gray-700 hover:text-gray-900">Скасувати</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const container = document.getElementById('tasks-container');
+    const addBtn = document.getElementById('add-task-btn');
+    const totalFormsInput = document.querySelector('#id_' + '{{ formset.prefix }}' + '-TOTAL_FORMS');
+
+    const emptyForm = "{{ formset.empty_form.as_p|escapejs }}";
+
+    const baseInputClasses = [
+      'block','w-full','rounded-md','border','border-gray-300','bg-white',
+      'px-3','py-2','text-gray-900','shadow-sm','focus:outline-none',
+      'focus:ring-2','focus:ring-indigo-500','focus:border-indigo-500','sm:text-sm'
+    ];
+    const orderExtraClasses = ['text-center','px-2'];
+
+    function styleFields(root) {
+      const controls = root.querySelectorAll('input, select, textarea');
+      controls.forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') return;
+        baseInputClasses.forEach(c => el.classList.add(c));
+        if (/-order$/.test(el.name)) {
+          orderExtraClasses.forEach(c => el.classList.add(c));
+          el.setAttribute('inputmode', 'numeric');
+          el.setAttribute('min', '1');
+          el.setAttribute('max', '100');
+          el.setAttribute('placeholder', '1–100');
+        }
+        if (el.type === 'file') {
+          el.classList.add(
+            'max-w-xs',
+            'file:mr-3','file:rounded-md','file:border','file:border-gray-300',
+            'file:bg-gray-50','file:px-3','file:py-2','file:text-sm','file:text-gray-700',
+            'hover:file:bg-gray-100'
+          );
+        }
+      });
+
+      // SAFER: just hide Django extras instead of removing them
+      hideClearableExtras(root);
+      // Truncate any existing anchors
+      root.querySelectorAll('.file-wrap a').forEach(a => {
+        a.classList.add('truncate','max-w-[16rem]','inline-block','align-middle','text-sm','text-gray-600');
+        a.title = a.textContent.trim();
+      });
+    }
+
+    // Hide (not remove) clear checkbox/label and "Currently/Change" text nodes
+    function hideClearableExtras(root) {
+      root.querySelectorAll('.file-wrap').forEach(wrap => {
+        const file = wrap.querySelector('input[type="file"]');
+        if (!file) return;
+
+        // Clear checkbox + label (hide)
+        const name = file.getAttribute('name');
+        const clear = wrap.querySelector(`input[name="${name}-clear"]`) ||
+                      wrap.parentElement.querySelector(`input[name="${name}-clear"]`);
+        const lbl = clear
+          ? (wrap.querySelector(`label[for="${clear.id}"]`) ||
+             wrap.parentElement.querySelector(`label[for="${clear.id}"]`))
+          : null;
+        if (clear) clear.classList.add('hidden');
+        if (lbl) lbl.classList.add('hidden');
+
+        // Hide stray text nodes by wrapping them in a span.hidden (only if present)
+        Array.from(wrap.childNodes).forEach(n => {
+          if (n.nodeType === Node.TEXT_NODE && n.textContent.trim().length) {
+            const s = document.createElement('span');
+            s.className = 'hidden';
+            s.textContent = n.textContent;
+            wrap.replaceChild(s, n);
+          }
+        });
+      });
+    }
+
+    // Style existing fields
+    styleFields(document);
+
+    function renderEmptyFormHtml(index) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString('<div>'+ emptyForm +'</div>', 'text/html');
+
+      const nodes = doc.querySelectorAll('input, select, textarea, label');
+      nodes.forEach(el => {
+        if (el.name) el.name = el.name.replace(/__prefix__/g, index);
+        if (el.id) el.id = el.id.replace(/__prefix__/g, index);
+        if (el.htmlFor) el.htmlFor = el.htmlFor.replace(/__prefix__/g, index);
+      });
+
+      const getField = (name) => doc.querySelector('[name="{{ formset.prefix }}-' + index + '-' + name + '"]');
+      const getLabel = (id) => doc.querySelector('label[for="'+ id +'"]');
+
+      const order   = getField('order');
+      const title   = getField('title');
+      const tasks   = getField('tasks_file');
+      const sol     = getField('solutions_file');
+      const delFld  = getField('DELETE');
+      const idFld  = getField('id');
+
+      styleFields(doc);
+
+      return document.getElementById('empty-form-template').innerHTML
+        .replace('__ORDER_LABEL__', getLabel(order.id).outerHTML)
+        .replace('__ORDER_INPUT__', order.outerHTML)
+        .replace('__TITLE_LABEL__', getLabel(title.id).outerHTML)
+        .replace('__TITLE_INPUT__', title.outerHTML)
+        .replace('__TASKS_LABEL__', getLabel(tasks.id).outerHTML)
+        .replace('__TASKS_INPUT__', tasks.outerHTML)
+        .replace('__SOL_LABEL__', getLabel(sol.id).outerHTML)
+        .replace('__SOL_INPUT__', sol.outerHTML)
+        .replace('__ID__', idFld ? idFld.outerHTML : '')
+        .replace('__DELETE__', delFld ? delFld.outerHTML : '');
+    }
+
+    addBtn.addEventListener('click', function() {
+      const idx = parseInt(totalFormsInput.value, 10);
+      const html = renderEmptyFormHtml(idx);
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+      container.appendChild(wrapper.firstElementChild);
+
+      // suggest next order
+      const orders = Array.from(container.querySelectorAll('input[name$="-order"]'))
+        .filter(i => i.closest('.task-item') && i.closest('.task-item').style.display !== 'none')
+        .map(i => parseInt(i.value || '0', 10)).filter(Number.isFinite);
+      const next = orders.length ? Math.max(...orders) + 1 : 1;
+      const lastOrder = wrapper.querySelector('input[name$="-order"]');
+      if (lastOrder && (!lastOrder.value || Number(lastOrder.value) === 1)) lastOrder.value = next;
+
+      totalFormsInput.value = idx + 1;
+      const no = document.getElementById('no-tasks');
+      if (no) no.remove();
+    });
+
+    // Clear selected file (keeps existing stored file unless you tick Django's hidden clear)
+    container.addEventListener('click', function (e) {
+      const btn = e.target.closest('.js-clear-file');
+      if (!btn) return;
+      const wrap = btn.closest('.file-wrap');
+      if (!wrap) return;
+
+      const input = wrap.querySelector('input[type="file"]');
+      if (input) input.value = '';
+
+      const label = wrap.querySelector('.js-file-name');
+      if (label) { label.textContent = ''; label.removeAttribute('title'); }
+
+      // also uncheck the (hidden) clear checkbox if present
+      if (input) {
+        const name = input.getAttribute('name');
+        const clear = wrap.querySelector(`input[name="${name}-clear"]`) ||
+                      wrap.parentElement.querySelector(`input[name="${name}-clear"]`);
+        if (clear) clear.checked = false;
+      }
+    });
+
+    // Show chosen filename (truncated) & hide Django extras for that row
+    container.addEventListener('change', function(e) {
+      const inp = e.target;
+      if (!(inp && inp.type === 'file')) return;
+      const wrap = inp.closest('.file-wrap');
+      const nameSpan = wrap && wrap.querySelector('.js-file-name');
+      if (nameSpan) {
+        const fname = inp.files && inp.files[0] ? inp.files[0].name : '';
+        nameSpan.textContent = fname;
+        if (fname) nameSpan.title = fname; else nameSpan.removeAttribute('title');
+      }
+      hideClearableExtras(wrap);
+    });
+
+    // Remove entire task card
+    container.addEventListener('click', function(e) {
+      const btn = e.target.closest('.js-remove-task');
+      if (!btn) return;
+      const item = btn.closest('.task-item');
+      if (!item) return;
+
+      const del = item.querySelector('input[type="checkbox"][name$="-DELETE"]');
+      if (del) {
+        del.checked = true;        // mark for deletion
+        item.style.display = 'none';
+        return;
+      }
+      // extra form: clear and hide
+      item.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.type === 'file') el.value = '';
+        else if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+        else el.value = '';
+      });
+      item.style.display = 'none';
+    });
+
+  })();
+</script>
+{% endblock %}

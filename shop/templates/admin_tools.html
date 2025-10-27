@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{% static "css/SeparateWidgets/tablePaginationFooter.css" %}">
     {% elif feature_name == 'edit_user' %}
     {% elif feature_name == 'view_user' %}
+    {% elif feature_name == 'group_list' %}
+    {% elif feature_name == 'olymp_list' %}
     {% elif feature_name == 'manage_articles' %}
     {% endif %}
 {% endblock %}
@@ -41,6 +43,10 @@
             {% include 'admin_tools/AT_UC_edit_user.html' %}
         {% elif feature_name == 'view_user' %}
             {% include 'admin_tools/AT_UC_view_user.html' %}
+        {% elif feature_name == 'group_list' %}
+            {% include 'admin_tools/AT_group_list.html' %}
+        {% elif feature_name == 'olymp_list' %}
+            {% include 'admin_tools/AT_olymp_list.html' %}
         {% elif feature_name == 'manage_articles' %}
             {% include 'admin_tools/AT_manage_articles.html' %}
         {% endif %}
@@ -61,6 +67,8 @@
         <script type="module" src='{% static "js/pages/admin_tools/at_school_registrations.js" %}'></script>
     {% elif feature_name == 'edit_user' %}
     {% elif feature_name == 'view_user' %}
+    {% elif feature_name == 'group_list' %}
+    {% elif feature_name == 'olymp_list' %}
     {% elif feature_name == 'manage_articles' %}
     {% endif %}
 {% endblock %}

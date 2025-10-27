@@ -34,14 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const toggle = document.getElementById("results-toggle");
-    const menu = document.getElementById("results-menu");
-    if (toggle && menu) {
+    let toggles = document.querySelectorAll('.link-dropdown');
+    let menus = document.querySelectorAll('.dropdown-menu');
+    for (let i = 0; i < toggles.length; i++) {
+        let toggle = toggles[i];
+        let menu = menus[i];
+        if (toggle && menu) {
         toggle.addEventListener("click", function (e) {
           e.preventDefault();
           menu.style.display = menu.style.display === "flex" ? "none" : "flex";
         });
-        // Закрытие меню при клике вне его
         document.addEventListener("click", function (e) {
           if (!toggle.contains(e.target) && !menu.contains(e.target)) {
             menu.style.display = "none";
@@ -49,11 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    }
+
+
 });
 
 
-function dropdownTrigger(){
-    const dropdownMenu = document.getElementById('accountDropdownMenu');
+function dropdownTrigger(dropdownMenuId){
+    const dropdownMenu = document.getElementById(dropdownMenuId);
     dropdownMenu.classList.toggle('open');
     event.stopPropagation();
 }
