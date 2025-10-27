@@ -1,15 +1,16 @@
 import re
+from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.forms import Form
+from django.forms import Form, inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Widget
 
-from shop.models import Banner, Article
+from shop.models import Banner, Article, Olympiad, Group, OlympiadTask
 
 User = get_user_model()
 
@@ -181,3 +182,58 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['article_name', 'article_content', 'mini_article_photo', 'mini_article_name', 'mini_article_text']
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ["title", "description"]
+
+
+class OlympiadForm(forms.ModelForm):
+    class Meta:
+        model = Olympiad
+        fields = ["name", "year"]
+
+    def clean_year(self):
+        y = self.cleaned_data["year"]
+        if y < 1950 or y > date.today().year + 1:
+            raise forms.ValidationError("Рік повинен бути в діапазоні від 1950 до наступного року")
+        return y
+
+
+class OlympiadTaskForm(forms.ModelForm):
+    class Meta:
+        model = OlympiadTask
+        fields = ['order', 'title', 'tasks_file', 'solutions_file']
+
+    def clean(self):
+        cleaned = super().clean()
+        tasks = cleaned.get('tasks_file')         # File OR False (if "clear" checked) OR None
+        sols  = cleaned.get('solutions_file')
+
+        cleared_tasks = (tasks is False)
+        cleared_sols  = (sols is False)
+
+        has_new = (tasks and tasks is not False) or (sols and sols is not False)
+        has_existing = (
+            self.instance and self.instance.pk and (
+                (self.instance.tasks_file and not cleared_tasks) or
+                (self.instance.solutions_file and not cleared_sols)
+            )
+        )
+
+        if not (has_new or has_existing):
+            raise forms.ValidationError("Потрібно прикріпити хоча б один файл (завдання або рішення).")
+
+        return cleaned
+
+
+TaskFormSet = inlineformset_factory(
+    parent_model=Olympiad,
+    model=OlympiadTask,
+    form=OlympiadTaskForm,
+    fields=["title", "order", "tasks_file", "solutions_file"],
+    extra=0,
+    can_delete=True,
+)

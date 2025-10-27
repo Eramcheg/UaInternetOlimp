@@ -102,8 +102,11 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('api/get-actions/', get_task_actions, name='api_get_actions'),
     path('api/clear-evaluation/', clear_task_evaluation, name='api_clear_evaluation'),
     path('api/download-file/<str:student_id>/<str:paralel>/<int:task_id>/', download_users_file, name='api_download_file'),
+    path("dashboard/olymps/", include("shop.admin_urls", namespace="olymps_admin")),
 
     path('csp-report/', csp_report, name='csp_report'),
+
+    path("world-olymps/", include("shop.urls", namespace="olymps")),
 )
 
 if settings.DEBUG:

@@ -127,7 +127,30 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'axes',
     'csp',
+    "storages"
 ]
+
+USE_GCS = not DEBUG
+
+if USE_GCS:
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    GS_BUCKET_NAME = "uainternetolimp-41dd1.appspot.com"  # твой Firebase bucket
+
+    # Сервис-аккаунт (JSON) — скачай из Firebase Console > Service Accounts
+    from google.oauth2.service_account import Credentials
+    import os
+    GS_CREDENTIALS = Credentials.from_service_account_file(
+        os.path.join(BASE_DIR, os.environ.get("FIREBASE_CREDENTIALS"))
+    )
+
+    GS_DEFAULT_ACL = "publicRead"
+
+    # MEDIA_URL можно так:
+    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
+else:
+    # Локальная разработка
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 customColorPalette = [
         {

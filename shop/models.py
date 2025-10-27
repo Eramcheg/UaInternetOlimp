@@ -38,6 +38,7 @@ class Banner(models.Model):
     def __str__(self):
         return self.title
 
+
 class Article(models.Model):
     article_name = models.CharField(max_length=200, verbose_name="Article Name")
     article_content = CKEditor5Field('Article Content', config_name='extends', default='')
@@ -64,3 +65,61 @@ class Article(models.Model):
     def __str__(self):
         return self.article_name
 
+
+class Group(models.Model):
+    title = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+    description = models.TextField(blank=True)
+    # image = models.ImageField(upload_to="groups/", blank=True, null=True)
+
+    class Meta:
+        ordering = ["title"]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+def _olymp_file_path(instance, filename):
+    # media/olympiads/<group-slug>/<year>/<task-order-or-slug>/<filename>
+    gslug = instance.olympiad.group.slug
+    year = instance.olympiad.year
+    order = f"{instance.order:02d}" if instance.order is not None else "x"
+    return f"olympiads/{gslug}/{year}/{order}/{filename}"
+
+
+class Olympiad(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="olympiads")
+    name = models.CharField(max_length=160)
+    year = models.PositiveIntegerField()
+    # is_published = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = (("group", "name", "year"),)
+        ordering = ["-year", "name"]
+        indexes = [
+            models.Index(fields=["group", "year"]),
+            # models.Index(fields=["is_published"]),
+        ]
+
+    def __str__(self):
+        return f"{self.name} {self.year}"
+
+
+class OlympiadTask(models.Model):
+    olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, related_name="tasks")
+    title = models.CharField(max_length=160, help_text="Назва завдання")
+    order = models.PositiveIntegerField(default=1, help_text="Порядок виводу завдань")
+    tasks_file = models.FileField(upload_to=_olymp_file_path, blank=True, null=True)
+    solutions_file = models.FileField(upload_to=_olymp_file_path, blank=True, null=True)
+
+    class Meta:
+        ordering = ["order", "title"]
+        unique_together = (("olympiad", "order"),)
+
+    def __str__(self):
+        return f"{self.olympiad}: {self.title}"

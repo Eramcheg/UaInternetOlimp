@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container-page">
+    {% include 'admin_tools/AT_side_menu.html' %}
+    <div>
+        <div>
+        <h1>Видалити об'єкт?</h1>
+            <p>Ви певні, що хочете видалити: <strong>{{ obj }}</strong>?</p>
+        </div>
+        <div>
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" style="background:#c62828;color:#fff;padding:8px 12px">Видалити</button>
+              <a href="{{ back_url }}">Скасувати</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -9,6 +9,9 @@ from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 from google.cloud.firestore_v1 import DocumentReference
+from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
+from .models import Group, Olympiad
 
 from shop.firebase import get_firestore
 from shop.forms import User, ArticleForm
@@ -215,11 +218,15 @@ def admin_tools(request, feature_name):
         create_article(request)
 
     articles = Article.objects.all().order_by('priority')
+    groups = Group.objects.all()
     context = {
         "feature_name": feature_name,
-        "form": ArticleForm() if feature_name == "manage_articles" else "",
-        "articles": articles
+        "articles": articles,
+        "groups": groups
     }
+    if feature_name == "manage_articles":
+        context['form'] = ArticleForm()
+
     return render(request, 'admin_tools.html', context)
 
 
@@ -421,3 +428,33 @@ def csp_report(request):
         return JsonResponse({"status": "received"}, status=204)
     else:
         return JsonResponse({"error": "Method not allowed. Use POST."}, status=405)
+
+
+class GroupGridView(ListView):
+    model = Group
+    template_name = "olymps/group_grid.html"
+    context_object_name = "groups"
+
+
+class OlympiadListView(ListView):
+    model = Olympiad
+    template_name = "olymps/olympiad_list.html"
+    context_object_name = "olymps"
+    paginate_by = 20
+
+    def get_queryset(self):
+        self.group = get_object_or_404(Group, slug=self.kwargs["slug"])
+        qs = (Olympiad.objects
+              .filter(group=self.group)
+              .select_related("group"))
+        year = self.request.GET.get("year")
+        if year and year.isdigit():
+            qs = qs.filter(year=int(year))
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["group"] = self.group
+        ctx["years"] = (self.group.olympiads
+                        .values_list("year", flat=True).distinct().order_by("-year"))
+        return ctx
