@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} {% endblock %}
 {% block extra_css %}
   <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
 {% endblock %}
@@ -295,7 +296,7 @@
       const label = wrap.querySelector('.js-file-name');
       if (label) { label.textContent = ''; label.removeAttribute('title'); }
 
-      // also uncheck the (hidden) clear checkbox if present
+      // Uncheck the clear checkbox if present
       if (input) {
         const name = input.getAttribute('name');
         const clear = wrap.querySelector(`input[name="${name}-clear"]`) ||

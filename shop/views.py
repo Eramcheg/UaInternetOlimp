@@ -440,7 +440,7 @@ class OlympiadListView(ListView):
     model = Olympiad
     template_name = "olymps/olympiad_list.html"
     context_object_name = "olymps"
-    paginate_by = 20
+    paginate_by = 10
 
     def get_queryset(self):
         self.group = get_object_or_404(Group, slug=self.kwargs["slug"])
