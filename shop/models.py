@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from slugify import slugify
 # Create your models here.
 
 class User(AbstractUser):

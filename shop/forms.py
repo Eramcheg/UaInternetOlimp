@@ -224,7 +224,7 @@ class OlympiadTaskForm(forms.ModelForm):
         )
 
         if not (has_new or has_existing):
-            raise forms.ValidationError("Потрібно прикріпити хоча б один файл (завдання або рішення).")
+            raise forms.ValidationError("Потрібно прикріпити хоча б один файл (завдання або розв'язки).")
 
         return cleaned
 
