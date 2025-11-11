@@ -1,0 +1,46 @@
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <h1 class="text-xl font-semibold text-gray-900">Бібліотеки</h1>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+    <table class="min-w-full table-fixed text-sm">
+      <colgroup>
+        <col class="w-[70%]">
+        <col class="w-[10rem]">
+        <col class="w-[12rem]">
+      </colgroup>
+      <thead class="bg-gray-50 text-gray-600">
+        <tr>
+          <th class="px-3 py-2 text-left font-medium">Назва</th>
+          <th class="px-3 py-2 text-center font-medium">Кількість матеріалів</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        {% for l in libraries %}
+          <tr class="align-middle">
+            <td class="px-3 py-3">
+              <a href="{% url 'olymps_admin:material_list' library_id=l.id %}"
+                 class="font-medium text-indigo-700 hover:text-indigo-900 truncate block"
+                 title="{{ l.title }}">
+                {{ l.title }}
+              </a>
+            </td>
+            <td class="px-3 py-3 text-center">
+              <span class="inline-flex items-center justify-center rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-800">
+                {{ l.materials.count }}
+              </span>
+            </td>
+
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3" class="px-3 py-8 text-center text-gray-500">
+              Поки що ще немає бібліотек.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

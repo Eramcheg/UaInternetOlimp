@@ -107,6 +107,7 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('csp-report/', csp_report, name='csp_report'),
 
     path("world-olymps/", include("shop.urls", namespace="olymps")),
+    path("library/", include("shop.library_urls", namespace="literature")),
 )
 
 if settings.DEBUG:

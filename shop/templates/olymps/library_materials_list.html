@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Матеріали — {{ library.title }}{% endblock %}
+
+{% block content %}
+<div class="px-4 sm:px-6 lg:px-8 sm:mx-[10%] lg:mx-[20%]">
+  <h1 class="text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-8">{{ library.title }}</h1>
+
+  {% if materials %}
+    <div class="space-y-3">
+      {% for m in materials %}
+        <div class="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-3">
+          <!-- Слева: файл -->
+          <div class="truncate text-left w-full ml-4">
+            <span class="font-medium text-gray-900 truncate" title="{{ m.title }}">{{ m.title }}</span>
+          </div>
+          <div class="shrink-0">
+            {% if m.file %}
+              <a href="{{ m.file.url }}" target="_blank"
+                 class="inline-flex items-center rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100">
+                📄 Відкрити файл
+              </a>
+            {% else %}
+              <span class="text-sm text-gray-400">📄 файл відсутній</span>
+            {% endif %}
+          </div>
+
+          <!-- Справа: название -->
+
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-600">Немає матеріалів.</p>
+  {% endif %}
+
+  {% if is_paginated %}
+    <nav class="mt-6 flex items-center justify-center gap-6 text-sm">
+      {% if page_obj.has_previous %}
+        <a class="text-indigo-700 hover:text-indigo-900"
+           href="?page={{ page_obj.previous_page_number }}">← Попередня</a>
+      {% else %}
+        <span class="text-gray-300">← Попередня</span>
+      {% endif %}
+
+      <span class="text-gray-700">Стор. {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a class="text-indigo-700 hover:text-indigo-900"
+           href="?page={{ page_obj.next_page_number }}">Наступна →</a>
+      {% else %}
+        <span class="text-gray-300">Наступна →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

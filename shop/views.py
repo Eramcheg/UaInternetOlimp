@@ -11,7 +11,7 @@ from django.views.generic import DetailView
 from google.cloud.firestore_v1 import DocumentReference
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
-from .models import Group, Olympiad
+from .models import Group, Olympiad, LibraryType, Material
 
 from shop.firebase import get_firestore
 from shop.forms import User, ArticleForm
@@ -219,10 +219,12 @@ def admin_tools(request, feature_name):
 
     articles = Article.objects.all().order_by('priority')
     groups = Group.objects.all()
+    libraries = LibraryType.objects.all()
     context = {
         "feature_name": feature_name,
         "articles": articles,
-        "groups": groups
+        "groups": groups,
+        "libraries": libraries
     }
     if feature_name == "manage_articles":
         context['form'] = ArticleForm()
@@ -458,3 +460,31 @@ class OlympiadListView(ListView):
         ctx["years"] = (self.group.olympiads
                         .values_list("year", flat=True).distinct().order_by("-year"))
         return ctx
+
+
+
+class LibraryGridView(ListView):
+    model = LibraryType
+    template_name = "olymps/library_grid.html"
+    context_object_name = "libraries"
+
+
+
+class MaterialsListView(ListView):
+    model = Olympiad
+    template_name = "olymps/library_materials_list.html"
+    context_object_name = "materials"
+    paginate_by = 10
+
+    def get_queryset(self):
+        self.library = get_object_or_404(LibraryType, slug=self.kwargs["slug"])
+        qs = (Material.objects
+              .filter(library=self.library)
+              .select_related("library"))
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["library"] = self.library
+        return ctx
+

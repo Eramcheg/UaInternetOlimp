@@ -10,7 +10,7 @@ from django.forms import Form, inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Widget
 
-from shop.models import Banner, Article, Olympiad, Group, OlympiadTask
+from shop.models import Banner, Article, Olympiad, Group, OlympiadTask, Material
 
 User = get_user_model()
 
@@ -225,6 +225,24 @@ class OlympiadTaskForm(forms.ModelForm):
 
         if not (has_new or has_existing):
             raise forms.ValidationError("Потрібно прикріпити хоча б один файл (завдання або розв'язки).")
+
+        return cleaned
+
+
+
+class MaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ['title', 'file']
+
+    def clean(self):
+        cleaned = super().clean()
+        f = cleaned.get('file')
+
+        has_existing = bool(getattr(self.instance, 'file', None))
+
+        if (f in (None, False)) and not has_existing:
+            raise forms.ValidationError("Потрібно прикріпити хоча б один файл.")
 
         return cleaned
 

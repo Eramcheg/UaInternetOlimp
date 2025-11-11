@@ -13,4 +13,10 @@ urlpatterns = [
     path("groups/<int:group_id>/olymps/new/", views.olymp_edit, name="olymp_new"),
     path("groups/<int:group_id>/olymps/<int:pk>/edit/", views.olymp_edit, name="olymp_edit"),
     path("groups/<int:group_id>/olymps/<int:pk>/delete/", views.olymp_delete, name="olymp_delete"),
+
+    path("libraries/", views.library_list, name="library_list"),
+    path("libraries/<int:library_id>/materials/", views.materials_list, name="material_list"),
+    path("libraries/<int:library_id>/materials/new/", views.materials_edit, name="material_new"),
+    path("libraries/<int:library_id>/materials/<int:pk>/edit/", views.materials_edit, name="material_edit"),
+    path("libraries/<int:library_id>/materials/<int:pk>/delete/", views.olymp_delete, name="material_delete"),
 ]

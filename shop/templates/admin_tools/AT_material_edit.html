@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% if obj %}Редагувати матеріали{% else %}Додати матеріали{% endif %} — {{ library.title }} {% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container-page">
+  {% include 'admin_tools/AT_side_menu.html' %}
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="mb-6">
+      <h1 class="text-2xl font-semibold text-gray-900">
+        {% if obj %}Редагувати матеріали{% else %}Додати матеріали{% endif %} — {{ library.title }}
+      </h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="max-w-4xl">
+      {% csrf_token %}
+
+      <fieldset class="p-4 border border-gray-200 rounded-xl mb-4">
+        <legend class="px-2 text-gray-800 font-semibold">Матеріали</legend>
+        <div class="space-y-4">
+          {{ form.as_p }}
+        </div>
+      </fieldset>
+
+
+      <div class="mt-4">
+        <button type="submit"
+                class="inline-flex items-center rounded-lg bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-black">
+          Зберегти
+        </button>
+        <a href="{% url 'olymps_admin:material_list' library_id=library.id %}"
+           class="ml-3 text-sm text-gray-700 hover:text-gray-900">Скасувати</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+
+    const baseInputClasses = [
+      'block','w-full','rounded-md','border','border-gray-300','bg-white',
+      'px-3','py-2','text-gray-900','shadow-sm','focus:outline-none',
+      'focus:ring-2','focus:ring-indigo-500','focus:border-indigo-500','sm:text-sm'
+    ];
+    const orderExtraClasses = ['text-center','px-2'];
+
+    function styleFields(root) {
+      const controls = root.querySelectorAll('input, select, textarea');
+      controls.forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') return;
+        baseInputClasses.forEach(c => el.classList.add(c));
+        if (/-order$/.test(el.title)) {
+          orderExtraClasses.forEach(c => el.classList.add(c));
+          el.setAttribute('inputmode', 'numeric');
+          el.setAttribute('min', '1');
+          el.setAttribute('max', '100');
+          el.setAttribute('placeholder', '1–100');
+        }
+        if (el.type === 'file') {
+          el.classList.add(
+            'max-w-xs',
+            'file:mr-3','file:rounded-md','file:border','file:border-gray-300',
+            'file:bg-gray-50','file:px-3','file:py-2','file:text-sm','file:text-gray-700',
+            'hover:file:bg-gray-100'
+          );
+        }
+      });
+
+      // SAFER: just hide Django extras instead of removing them
+      hideClearableExtras(root);
+      // Truncate any existing anchors
+      root.querySelectorAll('.file-wrap a').forEach(a => {
+        a.classList.add('truncate','max-w-[16rem]','inline-block','align-middle','text-sm','text-gray-600');
+        a.title = a.textContent.trim();
+      });
+    }
+
+    // Hide (not remove) clear checkbox/label and "Currently/Change" text nodes
+    function hideClearableExtras(root) {
+      root.querySelectorAll('.file-wrap').forEach(wrap => {
+        const file = wrap.querySelector('input[type="file"]');
+        if (!file) return;
+
+        // Clear checkbox + label (hide)
+        const name = file.getAttribute('title');
+        const clear = wrap.querySelector(`input[name="${name}-clear"]`) ||
+                      wrap.parentElement.querySelector(`input[name="${name}-clear"]`);
+        const lbl = clear
+          ? (wrap.querySelector(`label[for="${clear.id}"]`) ||
+             wrap.parentElement.querySelector(`label[for="${clear.id}"]`))
+          : null;
+        if (clear) clear.classList.add('hidden');
+        if (lbl) lbl.classList.add('hidden');
+
+        // Hide stray text nodes by wrapping them in a span.hidden (only if present)
+        Array.from(wrap.childNodes).forEach(n => {
+          if (n.nodeType === Node.TEXT_NODE && n.textContent.trim().length) {
+            const s = document.createElement('span');
+            s.className = 'hidden';
+            s.textContent = n.textContent;
+            wrap.replaceChild(s, n);
+          }
+        });
+      });
+    }
+    // Style existing fields
+    styleFields(document);
+  })();
+</script>
+{% endblock %}

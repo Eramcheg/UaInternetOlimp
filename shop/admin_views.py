@@ -4,8 +4,8 @@ from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
-from shop.models import Group, Olympiad, OlympiadTask
-from shop.forms import GroupForm, OlympiadForm, TaskFormSet
+from shop.models import Group, Olympiad, OlympiadTask, LibraryType, Material
+from shop.forms import GroupForm, OlympiadForm, TaskFormSet, MaterialForm
 from shop.views import is_admin
 
 
@@ -14,6 +14,12 @@ from shop.views import is_admin
 def group_list(request):
     groups = Group.objects.all()
     return render(request, "admin_tools/AT_group_list.html", {"groups": groups})
+
+@login_required
+@user_passes_test(is_admin)
+def library_list(request):
+    libraries = LibraryType.objects.all()
+    return render(request, "admin_tools/AT_library_list.html", {"libraries": libraries})
 
 
 @login_required
@@ -56,6 +62,18 @@ def olymp_list(request, group_id):
 
 @login_required
 @user_passes_test(is_admin)
+def materials_list(request, library_id):
+    library = get_object_or_404(LibraryType, pk=library_id)
+    materials = (
+        library.materials
+        .all()
+        .order_by('title')
+    )
+    return render(request, "admin_tools/AT_materials_list.html", {"library": library, "materials": materials})
+
+
+@login_required
+@user_passes_test(is_admin)
 def olymp_edit(request, group_id, pk=None):
     group = get_object_or_404(Group, pk=group_id)
     olymp = Olympiad.objects.filter(group=group, pk=pk).first()
@@ -84,6 +102,36 @@ def olymp_edit(request, group_id, pk=None):
         request,
         "admin_tools/AT_olymp_edit.html",
         {"form": form, "formset": formset, "group": group, "obj": olymp},
+    )
+
+
+@login_required
+@user_passes_test(is_admin)
+def materials_edit(request, library_id, pk=None):
+    library = get_object_or_404(LibraryType, pk=library_id)
+    materials = Material.objects.filter(library=library, pk=pk).first()
+
+    form = MaterialForm(request.POST or None, request.FILES, instance=materials)
+    # ✅ ensure unique check sees group
+    form.instance.library = library
+
+    if request.method == "POST":
+        if form.is_valid():
+            materials = form.save(commit=False)  # already has group set
+            materials.save()
+            # Rebind formset to the saved parent if this was a new one
+            messages.success(request, "Олімпіада та задачі збережені.")
+            return redirect("olymps_admin:material_list", library_id=library.id)
+        # If not valid, form will now show a proper “already exists” error
+    else:
+        # ВАЖНО: на GET — только instance, без data/files
+        form = MaterialForm(instance=materials)
+        form.instance.library = library
+
+    return render(
+        request,
+        "admin_tools/AT_material_edit.html",
+        {"form": form, "library": library, "obj": materials},
     )
 
 

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Список олімпіад {% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/admin_tools/admin_tools_main.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container-page">
+  {% include 'admin_tools/AT_side_menu.html' %}
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <h1 class="text-xl font-semibold text-gray-900 truncate">Матеріали — {{ library.title }}</h1>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="{% url 'admin_tools' feature_name="library_list" %}"
+           class="text-sm text-gray-600 hover:text-gray-900">← Назад до всіх бібліотек</a>
+        <a href="{% url 'olymps_admin:material_new' library_id=library.id %}"
+           class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm hover:bg-gray-50">
+          + Додати матеріали
+        </a>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+      <table class="min-w-full table-fixed text-sm">
+        <colgroup>
+          <col class="w-[40%]">
+          <col class="w-[36rem]">
+          <col class="w-[10rem]">
+        </colgroup>
+        <thead class="bg-gray-50 text-gray-600">
+          <tr>
+            <th class="px-3 py-2 text-left font-medium">Назва</th>
+            <th class="px-3 py-2 text-left font-medium">Матеріали</th>
+            <th class="px-3 py-2 text-right font-medium"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {% for m in materials %}
+            <tr class="align-middle">
+              <td class="px-3 py-2">
+                <span class="block truncate" title="{{ m.title }}">{{ m.title }}</span>
+              </td>
+              <td class="px-3 py-2">
+                {% if m.file %}
+                    <a href="{{ m.file.url }}" target="_blank"
+                       class="inline-flex items-center rounded border border-gray-300 px-2 py-0.5 text-[11px] hover:bg-gray-50 shrink-0">
+                      📄 Матеріали
+                    </a>
+                {% endif %}
+              </td>
+              <td class="px-3 py-2 text-right whitespace-nowrap">
+                <a href="{% url 'olymps_admin:material_edit' library_id=library.id pk=m.id %}"
+                   class="text-indigo-700 hover:text-indigo-900">Редагувати</a>
+                <span class="mx-1 text-gray-300">|</span>
+                <a href="{% url 'olymps_admin:material_delete' library_id=library.id pk=m.id %}"
+                   class="text-red-700 hover:text-red-900">Видалити</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="px-3 py-6 text-center text-gray-500">Ще немає матеріалів.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

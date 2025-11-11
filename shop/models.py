@@ -1,3 +1,5 @@
+import os
+
 from django.urls import reverse
 from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
@@ -124,3 +126,49 @@ class OlympiadTask(models.Model):
 
     def __str__(self):
         return f"{self.olympiad}: {self.title}"
+
+
+def _olymp_library_path(instance, filename):
+    # instance — это объект Material
+    name, ext = os.path.splitext(filename)
+    title_slug = slugify(instance.title or name)
+
+    # безопасно получаем id/slug библиотеки
+    lib_part = getattr(instance.library, "slug", None) or instance.library_id or "library"
+
+    # не полагайтесь на instance.pk — при создании его ещё может не быть
+    return f"olymp/{lib_part}/{title_slug}{ext}"
+
+
+class LibraryType(models.Model):
+    title = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+
+    class Meta:
+        ordering = ["title"]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class Material(models.Model):
+    title = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+    file = models.FileField(upload_to=_olymp_library_path, blank=True, null=True)
+    library = models.ForeignKey(LibraryType, on_delete=models.CASCADE, related_name="materials")
+
+    class Meta:
+        ordering = ["title"]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

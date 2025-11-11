@@ -12,8 +12,9 @@
             <div class="dropdown-container">
                 <a class="link link-dropdown">Матеріали</a>
                 <div id="materialsDropdownMenu" class="dropdown-menu">
-                    <a href="{% url 'materials' %}" class="dropdown-links" title="Умови"> Матеріали останньої олімпіади </a>
-                    <a href="{% url 'olymps:group_grid' %}" class="dropdown-links" title="Умови"> Завдання інших олімпіад </a>
+                    <a href="{% url 'materials' %}" class="dropdown-links" title="Матеріали останньої олімпіади"> Матеріали останньої олімпіади </a>
+                    <a href="{% url 'olymps:group_grid' %}" class="dropdown-links" title="Завдання інших олімпіа"> Завдання інших олімпіад </a>
+                    <a href="{% url 'literature:library_grid' %}" class="dropdown-links" title="Література"> Література </a>
 {#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Розв'язки">Розв'язки</a>#}
 {#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Результати">Результати</a>#}
 {#                    <a href="{% url 'materials' %}" class="dropdown-links" title="Інше">Інше</a>#}
