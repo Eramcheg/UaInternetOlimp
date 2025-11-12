@@ -147,3 +147,18 @@ def olymp_delete(request, group_id, pk):
         return redirect("admin_tools", feature_name="group_list")
     return render(request, "admin_tools/AT_confirm_delete.html",
                   {"obj": obj, "back_url": reverse("admin_tools", args=["group_list"])})
+
+
+
+@login_required
+@user_passes_test(is_admin)
+def materials_delete(request, library_id, pk):
+    library = get_object_or_404(LibraryType, pk=library_id)
+    obj = get_object_or_404(Material, pk=pk, library=library)
+    if request.method == "POST":
+        name = str(obj)
+        obj.delete()
+        messages.success(request, f"«{name}» видалено.")
+        return redirect("admin_tools", feature_name="library_list")
+    return render(request, "admin_tools/AT_confirm_delete.html",
+                  {"obj": obj, "back_url": reverse("admin_tools", args=["library_list"])})

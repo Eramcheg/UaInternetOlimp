@@ -18,5 +18,5 @@ urlpatterns = [
     path("libraries/<int:library_id>/materials/", views.materials_list, name="material_list"),
     path("libraries/<int:library_id>/materials/new/", views.materials_edit, name="material_new"),
     path("libraries/<int:library_id>/materials/<int:pk>/edit/", views.materials_edit, name="material_edit"),
-    path("libraries/<int:library_id>/materials/<int:pk>/delete/", views.olymp_delete, name="material_delete"),
+    path("libraries/<int:library_id>/materials/<int:pk>/delete/", views.materials_delete, name="material_delete"),
 ]
