@@ -116,11 +116,20 @@ def materials_edit(request, library_id, pk=None):
     form.instance.library = library
 
     if request.method == "POST":
+        # form уже связан: MaterialForm(request.POST, request.FILES, ...)
         if form.is_valid():
-            materials = form.save(commit=False)  # already has group set
+            materials = form.save(commit=False)
+            materials.library = library
+
+            ext_url = request.POST.get("external_url")
+            if ext_url:
+                # если используешь поле external_url в модели — заполни его
+                materials.external_url = ext_url
+                # и не обязательно хранить file:
+                materials.file = None
+
             materials.save()
-            # Rebind formset to the saved parent if this was a new one
-            messages.success(request, "Олімпіада та задачі збережені.")
+            messages.success(request, "Матеріал збережено.")
             return redirect("olymps_admin:material_list", library_id=library.id)
         # If not valid, form will now show a proper “already exists” error
     else:
