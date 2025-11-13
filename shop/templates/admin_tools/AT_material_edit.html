@@ -46,7 +46,16 @@
   // Если правила требуют авторизации, добавь Anonymous Auth:
   // import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-  const firebaseConfig = { /* твой Web config из Firebase Console → Project settings → General → Web app */ };
+  const firebaseConfig = {
+  apiKey: "AIzaSyAzV7CPVJJbgteozTbjdlIcyt85Kbuxd90",
+  authDomain: "uainternetolimp-41dd1.firebaseapp.com",
+  projectId: "uainternetolimp-41dd1",
+  storageBucket: "uainternetolimp-41dd1.appspot.com",
+  messagingSenderId: "545486624571",
+  appId: "1:545486624571:web:4a543063a04b43e5bb091e",
+  measurementId: "G-MJBJXCE1SJ"
+};
+
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   // const auth = getAuth(app); await signInAnonymously(auth);
