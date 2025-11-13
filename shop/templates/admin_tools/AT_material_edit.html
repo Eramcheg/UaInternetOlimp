@@ -83,7 +83,7 @@
     // === 1) Загрузка в Firebase ===
     try {
       progressEl.classList.remove("hidden");
-      statusEl.textContent = "Загрузка в Firebase…";
+      statusEl.textContent = "Йде завантаження…";
 
       const titleInput = form.querySelector('input[name$="title"]');
       const title = titleInput?.value?.trim() || file.name.replace(/\.[^.]+$/,"");
@@ -101,7 +101,7 @@
           snap => {
             const pct = Math.round(100 * snap.bytesTransferred / snap.totalBytes);
             progressEl.value = pct;
-            statusEl.textContent = `Загружено: ${pct}%`;
+            statusEl.textContent = `Завантажено: ${pct}%`;
           },
           reject,
           resolve
@@ -122,12 +122,12 @@
       // fileInput.removeAttribute('name');
       // const clone = fileInput.cloneNode(); fileInput.replaceWith(clone);
 
-      statusEl.textContent = "Готово. Отправляю форму…";
+      statusEl.textContent = "Завантаженою";
 
       // === 3) Сабмит без файла ===
       form.submit();
     } catch (err) {
-      statusEl.textContent = "Ошибка загрузки: " + (err?.message || err);
+      statusEl.textContent = "Сталася помилка: " + (err?.message || err);
       progressEl.classList.add("hidden");
     }
   });

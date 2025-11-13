@@ -231,21 +231,34 @@ class OlympiadTaskForm(forms.ModelForm):
 
 
 class MaterialForm(forms.ModelForm):
+    # спрячем в форме, JS будет сюда записывать URL из Firebase
+    external_url = forms.URLField(required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = Material
-        fields = ['title', 'file']
+        fields = ['title', 'file', 'external_url']
 
     def clean(self):
         cleaned = super().clean()
         f = cleaned.get('file')
+        ext = cleaned.get('external_url')
 
-        has_existing = bool(getattr(self.instance, 'file', None))
+        has_existing_file = bool(self.instance and getattr(self.instance, 'file', None))
+        has_existing_ext  = bool(self.instance and getattr(self.instance, 'external_url', ''))
 
-        if (f in (None, False)) and not has_existing:
+        if not f and not ext and not has_existing_file and not has_existing_ext:
             raise forms.ValidationError("Потрібно прикріпити хоча б один файл.")
-
         return cleaned
 
+    def save(self, commit=True):
+        obj = super().save(commit=False)
+        ext = self.cleaned_data.get('external_url')
+        if ext:
+            obj.external_url = ext
+            obj.file = None  # если пришла внешняя ссылка — локальный файл не храним
+        if commit:
+            obj.save()
+        return obj
 
 TaskFormSet = inlineformset_factory(
     parent_model=Olympiad,
