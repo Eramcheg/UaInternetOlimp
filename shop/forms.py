@@ -246,8 +246,6 @@ class MaterialForm(forms.ModelForm):
         has_existing_file = bool(self.instance and getattr(self.instance, 'file', None))
         has_existing_ext  = bool(self.instance and getattr(self.instance, 'external_url', ''))
 
-        if not f and not ext and not has_existing_file and not has_existing_ext:
-            raise forms.ValidationError("Потрібно прикріпити хоча б один файл.")
         return cleaned
 
     def save(self, commit=True):
@@ -255,10 +253,11 @@ class MaterialForm(forms.ModelForm):
         ext = self.cleaned_data.get('external_url')
         if ext:
             obj.external_url = ext
-            obj.file = None  # если пришла внешняя ссылка — локальный файл не храним
+            obj.file = None
         if commit:
             obj.save()
         return obj
+
 
 TaskFormSet = inlineformset_factory(
     parent_model=Olympiad,
