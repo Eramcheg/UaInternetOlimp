@@ -16,7 +16,7 @@
 
     <form method="post" enctype="multipart/form-data" class="max-w-4xl">
       {% csrf_token %}
-
+      <input type="hidden" name="external_url" id="external_url" />
       <fieldset class="p-4 border border-gray-200 rounded-xl mb-4">
         <legend class="px-2 text-gray-800 font-semibold">Матеріали</legend>
         <div class="space-y-4">
@@ -36,7 +36,103 @@
     </form>
   </div>
 </div>
+<script type="module">
+    // 1) Firebase SDK (без сборщиков)
+    import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import {
+        getDownloadURL,
+        getStorage,
+        ref,
+        uploadBytesResumable
+    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
 
+    const firebaseConfig = {
+    apiKey: "AIzaSyAzV7CPVJJbgteozTbjdlIcyt85Kbuxd90",
+    authDomain: "uainternetolimp-41dd1.firebaseapp.com",
+    projectId: "uainternetolimp-41dd1",
+    storageBucket: "uainternetolimp-41dd1.appspot.com",
+    messagingSenderId: "545486624571",
+    appId: "1:545486624571:web:4a543063a04b43e5bb091e",
+    measurementId: "G-MJBJXCE1SJ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  const LIMIT = 49 * 1024 * 1024; // чуть меньше 50MB
+  const form = document.querySelector("form");
+  const submitBtn = document.getElementById("submitBtn");
+  const progressEl = document.getElementById("upload_progress");
+  const statusEl = document.getElementById("upload_status");
+
+  function slugify(s) {
+    return (s || "")
+      .toString()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase()
+      .substring(0, 120);
+  }
+
+  form.addEventListener("submit", async (e) => {
+    const fileInput = form.querySelector('input[type="file"][name$="file"]');
+    const extUrlInput = document.getElementById("external_url");
+    const file = fileInput?.files?.[0];
+
+    // Если нет файла или он маленький — отправляем как обычно
+    if (!file || file.size <= LIMIT) return;
+
+    e.preventDefault(); // перехватываем submit только для больших файлов
+
+    try {
+      submitBtn.disabled = true;
+      progressEl.classList.remove("hidden");
+      statusEl.textContent = "Загрузка в Firebase…";
+
+      // Генерируем путь похожий на твой upload_to
+      const titleInput = form.querySelector('input[name$="title"]');
+      const title = titleInput?.value?.trim() || file.name.replace(/\.[^.]+$/, "");
+      const nameSlug = slugify(title || file.name);
+      const ext = file.name.split(".").pop() || "bin";
+      const libSlug = "{{ library.slug|default:library.id }}"; // из контекста страницы
+      const unique = Date.now();
+      const path = `olymp/${libSlug}/${nameSlug}-${unique}.${ext}`;
+
+      const storageRef = ref(storage, path);
+      const task = uploadBytesResumable(storageRef, file, {
+        contentType: file.type || "application/octet-stream",
+        // можно добавить cacheControl / contentDisposition при желании
+      });
+
+      task.on("state_changed", (snap) => {
+        const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+        progressEl.value = pct;
+        statusEl.textContent = `Загружено: ${pct}%`;
+      });
+
+      await new Promise((resolve, reject) => {
+        task.on("state_changed", () => {},
+          (err) => reject(err),
+          () => resolve()
+        );
+      });
+
+      // Подкладываем URL и очищаем файл, чтобы Django не принимал большую загрузку
+      extUrlInput.value = await getDownloadURL(task.snapshot.ref);
+      fileInput.value = ""; // очистка инпута
+      statusEl.textContent = "Готово. Отправляю форму…";
+
+      // Теперь обычный сабмит — сервер получит только метаданные
+      form.submit();
+    } catch (err) {
+      submitBtn.disabled = false;
+      statusEl.textContent = "Ошибка загрузки: " + (err?.message || err);
+      progressEl.classList.add("hidden");
+    }
+  });
+</script>
 <script>
   (function() {
 

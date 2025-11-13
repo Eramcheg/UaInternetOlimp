@@ -160,6 +160,7 @@ class Material(models.Model):
     title = models.CharField(max_length=120, unique=True)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
     file = models.FileField(upload_to=_olymp_library_path, blank=True, null=True)
+    external_url = models.URLField(blank=True)
     library = models.ForeignKey(LibraryType, on_delete=models.CASCADE, related_name="materials")
 
     class Meta:
