@@ -41,8 +41,13 @@
                 <span class="block truncate" title="{{ m.title }}">{{ m.title }}</span>
               </td>
               <td class="px-3 py-2">
-                  {% if m.file or m.external_url %}
-                    <a href="{{ m.file.url|default:m.external_url }}" target="_blank" rel="noopener"
+                  {% if m.file %}
+                      <a href="{{ m.file.url }}" target="_blank" rel="noopener"
+                       class="inline-flex items-center rounded border border-gray-300 px-2 py-0.5 text-[11px] hover:bg-gray-50 shrink-0">
+                      📄 Матеріали
+                    </a>
+                  {% elif m.external_url %}
+                    <a href="{{ m.external_url }}" target="_blank" rel="noopener"
                        class="inline-flex items-center rounded border border-gray-300 px-2 py-0.5 text-[11px] hover:bg-gray-50 shrink-0">
                       📄 Матеріали
                     </a>

@@ -17,16 +17,28 @@
     <form method="post" enctype="multipart/form-data" class="max-w-4xl">
       {% csrf_token %}
 
-      <input type="hidden" name="external_url" id="external_url" />
-      <progress id="upload_progress" max="100" value="0" class="hidden w-full h-2"></progress>
-      <div id="upload_status" class="text-sm text-gray-600"></div>
+      {{ form.external_url }}  {# скрытый инпут, единственный! #}
 
-      <fieldset class="p-4 border border-gray-200 rounded-xl mb-4">
-        <legend class="px-2 text-gray-800 font-semibold">Матеріали</legend>
-        <div class="space-y-4">
-          {{ form.as_p }}
-        </div>
-      </fieldset>
+  <progress id="upload_progress" max="100" value="0" class="hidden w-full h-2"></progress>
+  <div id="upload_status" class="text-sm text-gray-600"></div>
+
+  <fieldset class="p-4 border border-gray-200 rounded-xl mb-4">
+    <legend class="px-2 text-gray-800 font-semibold">Матеріали</legend>
+
+    {{ form.non_field_errors }}
+
+    <p>
+      {{ form.title.label_tag }}<br>
+      {{ form.title }}<br>
+      {{ form.title.errors }}
+    </p>
+
+    <p>
+      {{ form.file.label_tag }}<br>
+      {{ form.file }}<br>
+      {{ form.file.errors }}
+    </p>
+  </fieldset>
 
 
       <div class="mt-4">
@@ -41,9 +53,14 @@
   </div>
 </div>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
-  // Если правила требуют авторизации, добавь Anonymous Auth:
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import {
+        getDownloadURL,
+        getStorage,
+        ref,
+        uploadBytesResumable
+    } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
+    // Если правила требуют авторизации, добавь Anonymous Auth:
   // import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
   const firebaseConfig = {
@@ -61,7 +78,7 @@
   // const auth = getAuth(app); await signInAnonymously(auth);
 
   const form = document.querySelector("form");
-  const extUrlInput = document.getElementById("external_url");
+  const extUrlInput = document.getElementById("id_external_url");
   const progressEl = document.getElementById("upload_progress");
   const statusEl = document.getElementById("upload_status");
 
@@ -108,11 +125,9 @@
         );
       });
 
-      const url = await getDownloadURL(task.snapshot.ref);
-
       // === 2) Подкладываем URL и удаляем инпут файла ===
-      extUrlInput.value = url;
-
+      extUrlInput.value = await getDownloadURL(task.snapshot.ref);
+      console.log(extUrlInput.value)
       // самый надёжный способ — полностью удалить ноду с файлами
       const fileParent = fileInput.parentNode;
       fileParent.removeChild(fileInput);
