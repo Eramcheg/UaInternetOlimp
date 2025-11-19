@@ -19,4 +19,8 @@ urlpatterns = [
     path("libraries/<int:library_id>/materials/new/", views.materials_edit, name="material_new"),
     path("libraries/<int:library_id>/materials/<int:pk>/edit/", views.materials_edit, name="material_edit"),
     path("libraries/<int:library_id>/materials/<int:pk>/delete/", views.materials_delete, name="material_delete"),
+
+    path("links/new/", views.links_edit, name="links_new"),
+    path("links/<int:pk>/edit/", views.links_edit, name="links_edit"),
+    path("links/<int:pk>/delete/", views.links_delete, name="links_delete"),
 ]

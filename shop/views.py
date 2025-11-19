@@ -11,7 +11,7 @@ from django.views.generic import DetailView
 from google.cloud.firestore_v1 import DocumentReference
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
-from .models import Group, Olympiad, LibraryType, Material
+from .models import Group, Olympiad, LibraryType, Material, Link
 
 from shop.firebase import get_firestore
 from shop.forms import User, ArticleForm
@@ -220,11 +220,13 @@ def admin_tools(request, feature_name):
     articles = Article.objects.all().order_by('priority')
     groups = Group.objects.all()
     libraries = LibraryType.objects.all()
+    links = Link.objects.all()
     context = {
         "feature_name": feature_name,
         "articles": articles,
         "groups": groups,
-        "libraries": libraries
+        "libraries": libraries,
+        "links": links
     }
     if feature_name == "manage_articles":
         context['form'] = ArticleForm()
@@ -469,7 +471,6 @@ class LibraryGridView(ListView):
     context_object_name = "libraries"
 
 
-
 class MaterialsListView(ListView):
     model = Olympiad
     template_name = "olymps/library_materials_list.html"
@@ -488,3 +489,9 @@ class MaterialsListView(ListView):
         ctx["library"] = self.library
         return ctx
 
+
+class LinksListView(ListView):
+    model = Link
+    template_name = "olymps/useful_links.html"
+    context_object_name = "links"
+    paginate_by = 10

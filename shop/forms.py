@@ -10,7 +10,7 @@ from django.forms import Form, inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Widget
 
-from shop.models import Banner, Article, Olympiad, Group, OlympiadTask, Material
+from shop.models import Banner, Article, Olympiad, Group, OlympiadTask, Material, Link
 
 User = get_user_model()
 
@@ -257,6 +257,12 @@ class MaterialForm(forms.ModelForm):
         if commit:
             obj.save()
         return obj
+
+
+class LinkForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        fields = ["title", "url"]
 
 
 TaskFormSet = inlineformset_factory(

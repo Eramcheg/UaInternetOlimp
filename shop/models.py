@@ -173,3 +173,20 @@ class Material(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Link(models.Model):
+    title = models.CharField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+    url = models.URLField(blank=True)
+
+    class Meta:
+        ordering = ["title"]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

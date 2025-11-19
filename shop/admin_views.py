@@ -4,8 +4,8 @@ from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
-from shop.models import Group, Olympiad, OlympiadTask, LibraryType, Material
-from shop.forms import GroupForm, OlympiadForm, TaskFormSet, MaterialForm
+from shop.models import Group, Olympiad, OlympiadTask, LibraryType, Material, Link
+from shop.forms import GroupForm, OlympiadForm, TaskFormSet, MaterialForm, LinkForm
 from shop.views import is_admin
 
 
@@ -70,6 +70,31 @@ def materials_list(request, library_id):
         .order_by('title')
     )
     return render(request, "admin_tools/AT_materials_list.html", {"library": library, "materials": materials})
+
+
+@login_required
+@user_passes_test(is_admin)
+def links_edit(request, pk=None):
+    obj = Link.objects.get(pk=pk) if pk else None
+    form = LinkForm(request.POST or None, request.FILES or None, instance=obj)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Посилання збережено")
+        return redirect("admin_tools", feature_name="link_list")
+    return render(request, "admin_tools/AT_links_edit.html", {"form": form, "obj": obj})
+
+
+@login_required
+@user_passes_test(is_admin)
+def links_delete(request, pk):
+    obj = get_object_or_404(Link, pk=pk)
+    if request.method == "POST":
+        title = obj.title
+        obj.delete()
+        messages.success(request, f"Посилання «{title}» видалено.")
+        return redirect("admin_tools", feature_name="link_list")
+    return render(request, "admin_tools/AT_confirm_delete.html",
+                  {"obj": obj, "back_url": reverse("admin_tools", args=["link_list"])})
 
 
 @login_required

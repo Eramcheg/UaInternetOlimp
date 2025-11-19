@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Корисні посилання{% endblock %}
+
+{% block content %}
+<div class="px-4 sm:px-6 lg:px-8 sm:mx-[10%] lg:mx-[20%]">
+  <h1 class="text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-8">Корисні посилання</h1>
+
+  {% if links %}
+    <div class="space-y-3">
+      {% for l in links %}
+        <div class="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-3">
+          <!-- Слева: файл -->
+          <div class="truncate text-left w-full ml-4">
+            <span class="font-medium text-gray-900 truncate" title="{{ l.title }}">{{ l.title }}</span>
+          </div>
+          <div class="shrink-0">
+              {% if l.url  %}
+                  <a href="{{ l.url }}" target="_blank" rel="noopener"
+                    class="inline-flex items-center rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100">
+                    Відкрити посилання
+                  </a>
+              {% else %}
+                <span class="text-sm text-gray-400">Посилання відсутнє</span>
+              {% endif %}
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-600">Немає посилань.</p>
+  {% endif %}
+
+  {% if is_paginated %}
+    <nav class="mt-6 flex items-center justify-center gap-6 text-sm">
+      {% if page_obj.has_previous %}
+        <a class="text-indigo-700 hover:text-indigo-900"
+           href="?page={{ page_obj.previous_page_number }}">← Попередня</a>
+      {% else %}
+        <span class="text-gray-300">← Попередня</span>
+      {% endif %}
+
+      <span class="text-gray-700">Стор. {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a class="text-indigo-700 hover:text-indigo-900"
+           href="?page={{ page_obj.next_page_number }}">Наступна →</a>
+      {% else %}
+        <span class="text-gray-300">Наступна →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

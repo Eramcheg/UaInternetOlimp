@@ -108,6 +108,8 @@ path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     path("world-olymps/", include("shop.urls", namespace="olymps")),
     path("library/", include("shop.library_urls", namespace="literature")),
+    path("useful-links/", views.LinksListView.as_view(), name='useful_links'),
+
 )
 
 if settings.DEBUG:
