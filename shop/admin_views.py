@@ -136,7 +136,7 @@ def materials_edit(request, library_id, pk=None):
     library = get_object_or_404(LibraryType, pk=library_id)
     materials = Material.objects.filter(library=library, pk=pk).first()
 
-    form = MaterialForm(request.POST or None, request.FILES, instance=materials)
+    form = MaterialForm(request.POST or None, instance=materials)
     # ✅ ensure unique check sees group
     form.instance.library = library
 
